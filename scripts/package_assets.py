@@ -6,14 +6,6 @@ import argparse
 import aiohttp
 import asyncio
 import aiofiles
-import functools
-
-async def handle_zip_completion(session, token, repo, tag_name, zip_future, tasks):
-    asset_path = zip_future.result()
-    if asset_path:
-        upload_task = asyncio.create_task(upload_release_asset(session, token, repo, tag_name, asset_path))
-        tasks.append(upload_task)
-
 
 async def prepare_dir(source_dir, version):
     result_dir = f"temp/{source_dir}/v{version}"
@@ -31,7 +23,7 @@ async def zip_dir(dirToZip):
     version = read_manifest_version(f"packages/{dirToZip}/manifest.json")
     result_dir = await prepare_dir(f"packages/{dirToZip}", version)
     archive_name = f"{os.path.dirname(result_dir)}/{dirToZip}.7z"
-    print(f"Creating archive: {archive_name}...")
+    print(f"Creating archive: {archive_name}")
     with py7zr.SevenZipFile(archive_name, mode='w') as z:
         z.writeall(result_dir, f"v{version}")
     print(f"Archive created: {archive_name}")
@@ -59,11 +51,9 @@ async def main(token, repo, tag_name):
         tasks = []
         for dir in os.listdir("./packages"):
             print(f"Processing directory: {dir}")
-            zip_task = asyncio.create_task(zip_dir(dir))
-            # Use functools.partial to correctly bind the current state to the callback
-            callback = functools.partial(handle_zip_completion, session, token, repo, tag_name, zip_task, tasks)
-            zip_task.add_done_callback(callback)
-        # Wait for all upload tasks to complete
+            zip_path = await zip_dir(dir)
+            upload_task = asyncio.create_task(upload_release_asset(session, token, repo, tag_name, zip_path))
+            tasks.append(upload_task)
         results = await asyncio.gather(*tasks, return_exceptions=True)
         for result in results:
             print(result)
@@ -76,6 +66,6 @@ if __name__ == '__main__':
     parser.add_argument("tag_name", help="Tag name from the release")
     args = parser.parse_args()
 
-    print("Starting the package process...")
+    print("Starting the upload process...")
     asyncio.run(main(args.token, args.repo, args.tag_name))
-    print("Package process completed.")
+    print("Upload process completed.")
