@@ -27,22 +27,9 @@ async def zip_dir(dirToZip):
         z.writeall(result_dir, f"v{version}")
     return archive_name
 
-async def upload_release_asset(token, repo, tag_name, asset_path):
-    """Upload a release asset to a specific release based on tag name."""
-    # Get release ID from tag name
+async def upload_release_asset(session, token, repo, tag_name, asset_path):
     release_url = f"https://api.github.com/repos/{repo}/releases/tags/{tag_name}"
     headers = {'Authorization': f'token {token}'}
-    # response = requests.get(release_url, headers=headers)
-    # release_id = response.json()['id']
-
-    # # Upload asset
-    # upload_url = f"https://uploads.github.com/repos/{repo}/releases/{release_id}/assets?name={os.path.basename(asset_path)}"
-    # headers.update({'Content-Type': 'application/octet-stream'})
-    # with open(asset_path, 'rb') as f:
-    #     data = f.read()
-    # print(f"Uploading {asset_path} file...")
-    # response = requests.post(upload_url, headers=headers, data=data)
-    # return response.json()
     async with session.get(release_url, headers=headers) as response:
         response_data = await response.json()
         release_id = response_data['id']
