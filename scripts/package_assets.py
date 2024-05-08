@@ -45,6 +45,8 @@ async def upload_release_asset(session, token, repo, tag_name, asset_path):
     return result
 
 async def main(token, repo, tag_name):
+    print("Number of CPU cores available:", os.cpu_count())
+    
     dirs_to_process = os.listdir("./packages")
     print(f"Found directories: {dirs_to_process}")
     zip_data = [prepare_zip_data(dir) for dir in dirs_to_process]
