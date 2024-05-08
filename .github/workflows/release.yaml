@@ -21,7 +21,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install py7zr
           pip install aiohttp
-          import aiofiles
+          pip install aiofiles
 
       - name: Run Release Script
         env:
