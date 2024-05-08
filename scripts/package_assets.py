@@ -5,14 +5,6 @@ import json
 import py7zr
 import shutil
 
-# def zip_dir(source_dir):
-#     """Zip files in a directory with a specific extension."""
-#     with zipfile.ZipFile(f"{source_dir}.zip", 'w', zipfile.ZIP_DEFLATED) as zipf:
-        
-#         for root, dirs, files in os.walk(f"packages/{source_dir}"):
-#             for file in files:
-#                 zipf.write(os.path.join(root, file),
-#                             os.path.relpath(os.path.join(root, file), source_dir))
 def prepare_dir(source_dir, version):
     result_dir = f"temp/{source_dir}/v{version}"
     shutil.copytree(source_dir, result_dir, dirs_exist_ok=True)
