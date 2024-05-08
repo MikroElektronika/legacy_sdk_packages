@@ -21,19 +21,11 @@ def read_manifest_version(manifest_path):
 
 async def zip_dir(dirToZip):
     version = read_manifest_version(f"packages/{dirToZip}/manifest.json")
-    result_dir = prepare_dir(f"packages/{dirToZip}", version)
+    result_dir = await prepare_dir(f"packages/{dirToZip}", version)
     archive_name = f"{os.path.dirname(result_dir)}/{dirToZip}.7z"
-    # cwd = os.getcwd()
-    # os.chdir(result_dir)
-    # os.chdir("..")
-    print(f"Creating {dirToZip}.7z")
     with py7zr.SevenZipFile(archive_name, mode='w') as z:
         z.writeall(result_dir, f"v{version}")
-       
-    result_path = f"{os.getcwd()}/{dirToZip}.7z"
-    # os.chdir(cwd)
-    
-    return result_path
+    return archive_name
 
 async def upload_release_asset(token, repo, tag_name, asset_path):
     """Upload a release asset to a specific release based on tag name."""
