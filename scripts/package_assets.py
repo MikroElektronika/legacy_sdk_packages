@@ -6,6 +6,14 @@ import argparse
 import aiohttp
 import asyncio
 import aiofiles
+import functools
+
+async def handle_zip_completion(session, token, repo, tag_name, zip_future, tasks):
+    asset_path = zip_future.result()
+    if asset_path:
+        upload_task = asyncio.create_task(upload_release_asset(session, token, repo, tag_name, asset_path))
+        tasks.append(upload_task)
+
 
 async def prepare_dir(source_dir, version):
     result_dir = f"temp/{source_dir}/v{version}"
@@ -52,17 +60,11 @@ async def main(token, repo, tag_name):
         for dir in os.listdir("./packages"):
             print(f"Processing directory: {dir}")
             zip_task = asyncio.create_task(zip_dir(dir))
-            zip_task.add_done_callback(
-                lambda zip_future: tasks.append(
-                    asyncio.create_task(
-                        upload_release_asset(
-                            session, token, repo, tag_name, zip_future.result()
-                        )
-                    )
-                )
-            )
+            # Use functools.partial to correctly bind the current state to the callback
+            callback = functools.partial(handle_zip_completion, session, token, repo, tag_name, zip_task, tasks)
+            zip_task.add_done_callback(callback)
         # Wait for all upload tasks to complete
-        results = await asyncio.gather(*tasks)
+        results = await asyncio.gather(*tasks, return_exceptions=True)
         for result in results:
             print(result)
 
