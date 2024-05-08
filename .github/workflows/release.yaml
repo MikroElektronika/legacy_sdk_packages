@@ -21,11 +21,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
           pip install py7zr
+          pip install aiohttp
 
       - name: Run Release Script
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           TAG_NAME: ${{ github.event.release.tag_name }}
-        run: python scripts/package_assets.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.event.release.tag_name }}
+        run: python -u scripts/package_assets.py ${{ secrets.GITHUB_TOKEN }} ${{ github.repository }} ${{ github.event.release.tag_name }}
 
