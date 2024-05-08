@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI_Ethernet_24j600",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_EthEnc24j600.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MSP432P401R$|^MSP432P401M$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "LCD",
+    "description": "This is a simple demonstration of LCD library functions",
+    "image" : "Lcd.png",
+    "toolchain": ["mikrocpic32"],
+    "hw" : ["Fusion for PIC32 v8","LCD"],
+    "category" : ["mikroC legacy PIC32"]
+}

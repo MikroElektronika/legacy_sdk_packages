@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_FLASH_w16_e16.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC12LF1572$|^PIC12F1572$|^PIC12F1612$|^PIC12LF1501$|^PIC12LF1612$|^PIC16LF1613$|^PIC12LF1571$|^PIC16F1613$|^PIC12F1501$|^PIC12F1571$|^PIC12LF1552$|^PIC16F1503$|^PIC16LF1503$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

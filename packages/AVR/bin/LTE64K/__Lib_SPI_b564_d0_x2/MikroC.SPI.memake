@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_SPI_b564_d0_x2.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^AT90PWM81$|^AT90PWM161$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

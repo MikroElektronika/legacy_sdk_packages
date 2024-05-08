@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.USB",
+    "global_visibility": true,
+    "arch": "P18",
+    "binaries": [
+        "__Lib_USB_genHID_P18FJ94.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC18F96J94$|^PIC18F67J94$|^PIC18F87J94$|^PIC18F65J94$|^PIC18F66J94$|^PIC18F85J94$|^PIC18F97J94$|^PIC18F95J94$|^PIC18F86J94$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

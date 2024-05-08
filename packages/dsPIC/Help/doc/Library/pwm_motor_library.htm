@@ -1,0 +1,1051 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>PWM Motor Control Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_dspic.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script type="text/javascript" src="css/tabber.js"></script>
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_C_dsPIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">PWM Motor Control Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for dsPIC30/33 and PIC24 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="pwm_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="rs-485_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Pulse-Width Modulation">PWM</acronym> Motor Control Library</h2></a>
+
+
+    <p>The PWM Motor Control module is available with a number of dsPIC30/33 MCUs. The mikroC PRO for dsPIC30/33 and PIC24 provides a library which
+    	 simplifies using the <acronym title="Pulse-Width Modulation">PWM</acronym> Motor Control module.</p>
+
+     <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	     <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>      
+       <ul>
+    	   <li>Number of <acronym title="Pulse-Width Modulation">PWM</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+         <li>Where applicable, <acronym title="Pulse-Width Modulation">PWM</acronym> library routines require you to specify the module you want to use. To use the desired <acronym title="Pulse-Width Modulation">PWM</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li> 
+       </ul>
+     </div> 
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+    
+    <ul>
+      <li><a href="#pwm_mc_init">PWMx_Mc_Init</a></li>
+      <li><a href="#pwm_mc_set_duty">PWMx_Mc_Set_Duty</a></li>
+      <li><a href="#pwm_mc_set_master_duty">PWM_Mc_Set_Master_Duty</a></li>
+      <li><a href="#pwm_mc_start">PWMx_Mc_Start</a></li>
+      <li><a href="#pwm_mc_stop">PWMx_Mc_Stop</a></li>
+      <li><a href="#pwm_mc_init_channel">PWM_MC_Init_Channel</a></li>
+    </ul>    
+
+    <!-- -->
+
+    <h3 id="pwm_mc_init">PWMx_Mc_Init</h3>
+
+
+    <!-- tabela: pwm_mc_init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p>(I) <b>unsigned int</b> PWMx_Mc_Init(<b>unsigned long</b> freq_hz, <b>unsigned int</b> pair_output_mode, <b>unsigned int</b> enable_channel, <b>unsigned int</b> clock_prescale_output_postscale);</p>
+            <p>(II) <b>unsigned int</b> PWM1_MC_Init(<b>unsigned long</b> freq_hz, <b>unsigned int</b> pair_output_mode, <b>unsigned int</b> enable_output_x, <b>unsigned int</b> clock_prescale_output_postscale);</p>
+            <p>(III) <b>unsigned int</b> PWM_MC_Init(<b>unsigned long</b> freq_hz, <b>unsigned</b> primary, <b>unsigned</b> clock_prescale);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Initializes the Motor Control <acronym title="Pulse-Width Modulation">PWM</acronym> module with duty ratio 0. 
+            <br>The function calculates timer period, writes it to the MCU's PTPER register and returns it as the function result.</p> 
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>(I)</h2>
+           	<ul>
+             	<li><code>freq_hz:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> frequency in Hz (refer to device datasheet for correct values in respect with Fosc). </li>
+             	<li><code>pair_output_mode:</code> output mode for output pin pairs. Valid values are given in the table below :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH1_PAIR_INDEPENDENT_MODE</td>
+                        <td valign="top">PWM1L and PWM1H will in independent mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CH1_PAIR_COMPLEMENTARY_MODE</td>
+                        <td valign="top">PWM1L and PWM1H will in complementary mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH2_PAIR_INDEPENDENT_MODE</td>
+                        <td valign="top">PWM2L and PWM2H will in independent mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CH2_PAIR_COMPLEMENTARY_MODE</td>
+                        <td valign="top">PWM2L and PWM2H will in complementary mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH3_PAIR_INDEPENDENT_MODE</td>
+                        <td valign="top">PWM3L and PWM3H will in independent mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CH3_PAIR_COMPLEMENTARY_MODE</td>
+                        <td valign="top">PWM3L and PWM3H will in complementary mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH4_PAIR_INDEPENDENT_MODE</td>
+                        <td valign="top">PWM4L and PWM4H will in independent mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CH4_PAIR_COMPLEMENTARY_MODE</td>
+                        <td valign="top">PWM4L and PWM4H will in complementary mode.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>	
+							<br>
+             	<li><code>enable_channel:</code> enable PWM channel. Valid values are given in the table below :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH1L</td>
+                        <td valign="top">Enable PWM1L channel.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CH2L</td>
+                        <td valign="top">Enable PWM2L channel.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH3L</td>
+                        <td valign="top">Enable PWM3L channel.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CH4L</td>
+                        <td valign="top">Enable PWM4L channel.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH1H</td>
+                        <td valign="top">Enable PWM1H channel.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CH2H</td>
+                        <td valign="top">Enable PWM2H channel.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH3H</td>
+                        <td valign="top">Enable PWM3H channel.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CH4H</td>
+                        <td valign="top">Enable PWM4H channel.</td>
+                      </tr>
+                    </tbody>
+                  </table>	
+							<br>
+             	<li><code>clock_prescale_output_postscale:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> clock prescaler/postscaler settings. Values <code><0..3> and <0..15></code> correspond to prescaler/postscaler <code><1:1, 1:4, 1:16, 1:64> and <1:1, 1:2, ..., 1:16></code></li>
+             
+             </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>(II)</h2>
+           	<ul>
+             	<li><code>freq_hz:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> frequency in Hz (refer to device datasheet for correct values in respect with Fosc)</li>
+             	<br>
+             	<li><code>pair_output_mode:</code> output mode for output pin pairs: <code>1</code> = independent, <code>0</code> = complementary (for dsPIC33EPXXGS50X, dsPIC33EPXXGS202 and dsPIC33EVXXXGM00X_10X <code>0</code> = independent, <code>1</code> = complementary)<br> 
+             		    If <code>pair_output_mode.B0</code> is equal to 1 then <acronym title="Pulse-Width Modulation">PWM</acronym> channels PWM1L and PWM1H will be independent (for dsPIC33EPXXGS50X, dsPIC33EPXXGS202 and dsPIC33EVXXXGM00X_10X complementary),<br>
+             		    If <code>pair_output_mode.B1</code> is equal to 0 then <acronym title="Pulse-Width Modulation">PWM</acronym> channels PWM2L and PWM2H will be complementary (for dsPIC33EPXXGS50X, dsPIC33EPXXGS202 and dsPIC33EVXXXGM00X_10X independent),</li>
+             	      ...
+             	      <br>If <code>pair_output_mode.Bn</code> is equal to 1 then <acronym title="Pulse-Width Modulation">PWM</acronym> channels PWM(n+1)L and PWM(n+1)H will be independent (for dsPIC33EPXXGS50X, dsPIC33EPXXGS202 and dsPIC33EVXXXGM00X_10X complementary),<br>
+              		    If <code>pair_output_mode.Bn</code> is equal to 0 then <acronym title="Pulse-Width Modulation">PWM</acronym> channels PWM(n+1)L and PWM(n+1)H will be complementary (for dsPIC33EPXXGS50X, dsPIC33EPXXGS202 and dsPIC33EVXXXGM00X_10X independent).</li>             	
+             	<br><br>
+             	<li><code>enable_output_x:</code> bits <7..0> are enabling corresponding PWM channels (<code>PWM4H, PWM3H, PWM2H, PWM1H, PWM4L, PWM3L, PWM2L, PWM1L</code>).<br> 
+             		  (for dsPIC33EPXXGS50X, dsPIC33EPXXGS202 and dsPIC33EVXXXGM00X_10X <code>PWM5H, PWM5L, PWM4H, PWM4L, PWM3H, PWM3L, PWM2H, PWM2L, PWM1H, PWM1L) </code><br>
+             		  If bit value is equal to <code>0</code> then corresponding <acronym title="Pulse-Width Modulation">PWM</acronym> channel is disabled (pin is standard I/O).<br> 
+             		  If bit value is equal to <code>1</code> then corresponding <acronym title="Pulse-Width Modulation">PWM</acronym> channel is enabled (pin is PWM output).<br> 
+             		  For detalied explanation consult the "Motor Control <acronym title="Pulse-Width Modulation">PWM</acronym> Module" section in device datasheet.</li>
+             	<br>
+             	<li><code>clock_prescale_output_postscale:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> clock prescaler/postscaler settings. Values <code><0..3> and <0..15></code> 
+             		correspond to prescaler/postscaler <code><1:1, 1:4, 1:16, 1:64> and <1:1, 1:2, ..., 1:16></code></li>
+             </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>(III)</h2>
+           	<ul>
+             	<li><code>freq_hz:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> frequency in Hz (refer to device datasheet for correct values in respect with Fosc).</li>
+             	<li><code>primary :</code> chose beetween primary and secondary clock register, valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CLK_PRIMARY</td>
+                        <td valign="top">Primary clock register.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CLK_SECONDARY</td>
+                        <td valign="top">Secondary clock register.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>	
+             	</li> 
+             	<li><code>clock_prescale:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> clock prescaler settings.</li>
+            </ul>
+    </div>
+  </div>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Calculated timer period.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>The dsPIC30/33 MCU must have the Motor Control <acronym title="Pulse-Width Modulation">PWM</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// Initializes the PWM1 module at 5KHz, complementary pin-pair output, output enabled on pins 4l..1l, no clock prescale and no clock postscale:</i>
+<b>unsigned int</b> duty_50;
+...
+duty_50 = PWM1_Mc_Init(5000, 1, 0x0F, 0);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Number of <acronym title="Pulse-Width Modulation">PWM</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li><acronym title="Pulse-Width Modulation">PWM</acronym> library routines require you to specify the module you want to use. To use the desired <acronym title="Pulse-Width Modulation">PWM</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li> 
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="pwm_mc_set_duty">PWMx_Mc_Set_Duty</h3>
+
+
+    <!-- tabela: PWMx_Mc_Set_Duty -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p>
+              <b>void</b> PWM1_Mc_Set_Duty(<b>unsigned</b> duty, <b>unsigned</b> channel);<br>
+            <p>
+            
+            <p>
+              <i>// For dsPIC 33FJ MCUs that have <acronym title="Pulse-Width Modulation">PWM</acronym>2 module :</i><br>
+              <b>void</b> PWM2_Mc_Set_Duty(<b>unsigned</b> duty);
+            </p>
+
+            <p>
+              <b>void</b> PWM_MC_Set_Duty(<b>unsigned</b> duty, <b>unsigned</b> primary, <b>unsigned</b> channel);
+            </p>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>The function changes <acronym title="Pulse-Width Modulation">PWM</acronym> duty ratio.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>duty:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> duty ratio. Valid values: <code>0</code> to timer period returned by the <a href="#pwm_mc_init">PWMx_Mc_Init</a> function. </li>
+             	<li><code>channel:</code> number of <acronym title="Pulse-Width Modulation">PWM</acronym> channel to change duty to.</li>
+             	<li><code>primary :</code> chose beetween primary and secondary clock register.
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_DUTY_PRIMARY</td>
+                        <td valign="top">Primary duty cycle register.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_DUTY_SECONDARY</td>
+                        <td valign="top">Secondary duty cycle register.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>	
+             	</li> 
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The dsPIC30/33 MCU must have the Motor Control <acronym title="Pulse-Width Modulation">PWM</acronym> module.</p>
+						<p> The <acronym title="Pulse-Width Modulation">PWM</acronym> module needs to be initalized. See the <a href="#pwm_mc_init">PWMx_Mc_Init</a> function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// Set duty ratio to 50% at channel 1:</i>
+PWM1_Mc_Init(5000,1,0xF,0);
+...
+PWM1_Mc_Set_Duty(32767, 1);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Number of <acronym title="Pulse-Width Modulation">PWM</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li><acronym title="Pulse-Width Modulation">PWM</acronym> library routines require you to specify the module you want to use. To use the desired <acronym title="Pulse-Width Modulation">PWM</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li> 
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="pwm_mc_set_master_duty">PWM_MC_Set_Master_Duty</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM_MC_Set_Master_Duty(<b>unsigned</b> duty);<p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This function updates master duty cycle register.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>duty:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> duty ratio. Valid values: <code>0</code> to timer period returned by the <a href="#pwm_mc_init">PWMx_Mc_Init</a> function.</li> 
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p> The <acronym title="Pulse-Width Modulation">PWM</acronym> module needs to be initalized. See the <a href="#pwm_mc_init">PWMx_Mc_Init</a> function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Set duty ratio to 50% :</i>
+PWM_MC_Set_Master_Duty(32768);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>This routine is avaliable only for dsPIC33EPXXX(GP/MC/MU)806/810/814 and PIC24EPXXX(GP/GU)810/814 family.</li> 
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pwm_mc_start">PWMx_Mc_Start</h3>
+
+
+    <!-- tabela: PWMx_Mc_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWMx_Mc_Start();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Starts the Motor Control <acronym title="Pulse-Width Modulation">PWM</acronym> module (channels initialized in the <a href="#pwm_mc_init">PWMx_Mc_Init</a> function).</p>
+          </td>
+        </tr>
+  
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>   
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The dsPIC30/33 MCU must have the Motor Control <acronym title="Pulse-Width Modulation">PWM</acronym> module.</p>
+						<p>The <acronym title="Pulse-Width Modulation">PWM</acronym> module needs to be initalized. See the <a href="#pwm_mc_init">PWMx_Mc_Init</a> function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// start the Motor Control PWM1 module</i>
+PWM1_Mc_Start();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Number of <acronym title="Pulse-Width Modulation">PWM</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li><acronym title="Pulse-Width Modulation">PWM</acronym> library routines require you to specify the module you want to use. To use the desired <acronym title="Pulse-Width Modulation">PWM</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li> 
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pwm_mc_stop">PWMx_Mc_Stop</h3>
+
+
+    <!-- tabela: PWMx_Mc_Stop -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWMx_Mc_Stop();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Stops the Motor Control <acronym title="Pulse-Width Modulation">PWM</acronym> module.</p>
+          </td>
+        </tr>
+  
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>   
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The dsPIC30/33 MCU must have the Motor Control <acronym title="Pulse-Width Modulation">PWM</acronym> module.</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// stop the Motor Control PWM1 module</i> 
+PWM1_Mc_Stop();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Number of <acronym title="Pulse-Width Modulation">PWM</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li><acronym title="Pulse-Width Modulation">PWM</acronym> library routines require you to specify the module you want to use. To use the desired <acronym title="Pulse-Width Modulation">PWM</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li> 
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3 id="pwm_mc_init_channel">PWM_MC_Init_Channel</h3>
+
+    <!-- tabela: PWM_MC_Init_Channel -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM_MC_Init_Channel(<b>unsigned</b> pinEnableMask, <b>unsigned</b> mode, <b>unsigned</b> clk, <b>unsigned</b> masterDutyCycle, <b>unsigned</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function initializes single <acronym title="Pulse-Width Modulation">PWM</acronym> channel.</p>
+          </td>
+        </tr>
+  
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>pinEnableMask:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> Output Pin Ownership bit, valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_ENABLE_LOW_PIN</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> module controls PWMxL pin.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_ENABLE_HIGH_PIN</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> module controls PWMxH pin.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            	</li>
+              <br>            	
+            	<li><code>mode:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> I/O Pin Mode bits, valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_TRUE_INDEPENDENT</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> I/O pin pair is in the True Independent Output mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_PUSH_PULL</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> I/O pin pair is in the Push-Pull Output mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_REDUNDANT</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> I/O pin pair is in the Redundant Output mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_COMPLEMENTARY</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> I/O pin pair is in the Complementary Output mode.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+              <br>            	
+             	<li><code>primary:</code> choose beetween primary and secondary clock register, valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CLK_PRIMARY</td>
+                        <td valign="top">Primary clock register.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_CLK_SECONDARY</td>
+                        <td valign="top">Secondary clock register.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>	
+            	</li>
+              <br>            	
+            	<li><code>masterDutyCycle:</code> Enable/disable master duty cycle register, valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_MDC_ENABLE</td>
+                        <td valign="top">Enable master duty cycle register.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM_MC_MDC_DISABLE</td>
+                        <td valign="top">Disable master duty cycle register.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>	
+            	</li>
+              <br>
+            	<li><code>channel:</code> <acronym title="Pulse-Width Modulation">PWM</acronym> channel selection, valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH1</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH2</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH3</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH4</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH5</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH6</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH7</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH8</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH9</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH10</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH11</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_PWM_MC_CH12</td>
+                        <td valign="top"><acronym title="Pulse-Width Modulation">PWM</acronym> channel 12.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>	
+            	</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>This routine should not be called after <acronym title="Pulse-Width Modulation">PWM</acronym> is started.</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+PWM_MC_Init_Channel(_PWM_MC_ENABLE_LOW_PIN, _PWM_MC_TRUE_INDEPENDENT, _PWM_MC_CLK_PRIMARY, _PWM_MC_MDC_ENABLE, _PWM_MC_CH1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>This routine is avaliable only for dsPIC33EPXXX(GP/MC/MU)806/810/814 and PIC24EPXXX(GP/GU)810/814 family.</li> 
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>The example changes <acronym title="Pulse-Width Modulation">PWM</acronym> duty ratio on channel 1 continually. 
+		   If LED is connected to the channel 1, a gradual change of emitted light will be noticeable.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>unsigned int</b> i;
+
+<b>unsigned int</b> duty_50;
+
+<b>void</b> main(){
+
+      ADPCFG = 0xFFFF;                            <i>// initialize AN pins as digital</i>
+      PORTB  = 0xAAAA;
+      TRISB  = 0;                                 <i>// initialize portb as output</i>
+      Delay_ms(1000);
+
+      duty_50 = PWM1_MC_Init(5000, 0, 0x01, 0);   <i>// Pwm_Mc_Init returns 50% of the duty</i>
+      PWM1_MC_Set_Duty(i = duty_50, 1);
+      PWM1_MC_Start();
+
+      <b>do</b>
+      {
+        i--;
+        PWM1_MC_Set_Duty(i, 1);
+        Delay_ms(10);
+        <b>if</b> (i == 0)
+          i = duty_50 * 2 - 1;                    <i>// Let us not allow the overflow</i>
+        PORTB = i;
+      }
+      <b>while</b>(1);
+
+}
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="PWM Motor Control demonstration" src="img/Schemes/scheme_pwm_mc.gif"></p>
+    <p class="center small"><acronym title="Pulse-Width Modulation">PWM</acronym> Motor Control demonstration</p>
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2018 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_GPIO_CEC1702.emcl",
+        "__Lib_System_CEC1702.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_MathDouble.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^CEC1702$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

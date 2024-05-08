@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_ADC_17xx_B.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F18323$|^PIC16LF1777$|^PIC16F1776$|^PIC16F18344$|^PIC16F18326$|^PIC16LF18324$|^PIC16F18313$|^PIC16LF1779$|^PIC16LF1778$|^PIC16F1779$|^PIC16LF1773$|^PIC16F18325$|^PIC16LF1776$|^PIC16F1773$|^PIC16F1778$|^PIC16LF18313$|^PIC16LF18326$|^PIC16LF18345$|^PIC16LF18346$|^PIC16F1777$|^PIC16LF18323$|^PIC16F18345$|^PIC16LF18344$|^PIC16F18346$|^PIC16LF18325$|^PIC16F18324$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

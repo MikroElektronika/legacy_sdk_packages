@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.CAN",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_CAN_1.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F091CB$|^STM32F042F6$|^STM32F042K4$|^STM32F091RB$|^STM32F042C4$|^STM32F042F4$|^STM32F091VB$|^STM32F072RB$|^STM32F072V8$|^STM32F072CB$|^STM32F042C6$|^STM32F042G6$|^STM32F042G4$|^STM32F091CC$|^STM32F098CC$|^STM32F072R8$|^STM32F071C8$|^STM32F098VC$|^STM32F072VB$|^STM32F042K6$|^STM32F098RC$|^STM32F091RC$|^STM32F042T6$|^STM32F072C8$|^STM32F091VC$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_I2C_32L43x_123.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L431VC$|^STM32L443VC$|^STM32L433RC$|^STM32L443RC$|^STM32L431RC$|^STM32L433CC$|^STM32L443CC$|^STM32L433VC$|^STM32L431CC$|^STM32L431CB$|^STM32L433RB$|^STM32L433CB$|^STM32L431RB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

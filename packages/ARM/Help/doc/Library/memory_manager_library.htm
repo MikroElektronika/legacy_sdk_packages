@@ -1,0 +1,623 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Memory Manager Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_arm.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Memory Manager Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="manchester_code_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="mmc_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Memory Manager Library</h2></a>
+
+
+    <p>This library provides routines for manipulating dynamic memory allocation. Dynamic memory allocation (also known as heap-based memory allocation) is the allocation of memory storage for use in a program during the runtime of that program.
+    <br>Dynamically allocated memory exists until it is released. This is in contrast to static memory allocation, which has a fixed duration. It is said that an object so allocated has a dynamic lifetime.</p>
+    
+    <p>The heap memory size can be configured in the <a href="edit_project.htm">Edit Project</a> window. Also, user can override heap memory size in the code, by setting the <code>HEAP_SIZE</code> constant.</p>
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#mm_init">MM_Init</a></li>
+      <li><a href="#malloc">Malloc</a></li>
+      <li><a href="#free">Free</a></li>
+      <li><a href="#mm_largestfreememblock">MM_LargestFreeMemBlock</a></li>
+      <li><a href="#mm_totalfreememsize">MM_TotalFreeMemSize</a></li>
+    </ul>
+
+    <!-- -->
+
+    <h3 id="mm_init">MM_Init</h3>
+
+    <!-- tabela: MM_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> MM_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets Heap size.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+MM_Init();             <i>// set Heap size</i>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="malloc">Malloc</h3>
+
+    <!-- tabela: malloc -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> *Malloc(<b>unsigned long</b> Size);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Allocates a block of size bytes of memory, returning a pointer to the beginning of the block. The content of the newly allocated block of memory is not initialized, remaining with indeterminate values..</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>Size:</code> Size of the memory block, in bytes.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns a pointer to the memory block allocated by the function.
+            <br>If the function failed to allocate the requested block of memory, a null pointer is returned.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Before calling this function, heap size must be set in the <a href="edit_project.htm">Edit Project</a> and initialized via <a href="#mm_init">MM_Init</a> function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>int</b> *pi;      <i>// pointer to integer</i>
+<b>int</b> ai[100];  <i>// array of integers</i>
+
+<b>void</b> main() {
+  pi = (<b>int</b> *)Malloc(<b>sizeof</b> ai);  <i>// pi will point to a memory block where the array is allocated</i>
+}
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The type of this pointer is always void, which can be cast to the desired type of data pointer in order to be dereferenceable.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="free">Free</h3>
+
+    <!-- tabela: free -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Free(<b>char</b> * P, <b>unsigned long</b> Size);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to free memory block allocated by <a href="#malloc">Malloc</a>.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+             	<li><code>P:</code> pointer to the memory block</li>
+             	<li><code>Size:</code> actual size of the memory block.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>int</b> *pi;      <i>// pointer to integer</i>
+<b>int</b> ai[100];  <i>// array of integers</i>
+
+<b>void</b> main() {
+  pi = (<b>int</b> *)Malloc(<b>sizeof</b> ai);  <i>// pi will point to a memory block in the Heap where the array is allocated</i>
+  Free(pi, sizeof(pi));           <i>// frees memory block from the Heap allocated by Malloc, pointed to by the pi pointer</i>
+}
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="mm_largestfreememblock">MM_LargestFreeMemBlock</h3>
+
+    <!-- tabela: mm_LargestFreeMemBlock -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> MM_LargestFreeMemBlock();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to determine largest available free memory block for the Heap.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Largest free memory block for the Heap.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> block;      
+
+<b>void</b> main() {
+  block = MM_LargestFreeMemBlock();
+}
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <h3 id="mm_totalfreememsize">MM_TotalFreeMemSize</h3>
+
+    <!-- tabela: mm_TotalFreeMemSize -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> MM_TotalFreeMemSize();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to determine total free memory size.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Total free memory size.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> total;      
+
+<b>void</b> main() {
+  block = MM_TotalFreeMemSize();
+}
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <h3>Library Example</h3>
+
+    <p>The example shows use how to use Memory Manager library.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+
+<i>// Structure that describes Item object</i>
+<b>typedef struct</b> {
+    <b>long</b>         id;     <i>// Item number</i>
+    <b>char</b> *      name;    <i>// Item name</i>
+} tItem;
+
+<i>// Allocate and initialize a new Item object and returns pointer to created Item</i>
+tItem * make_item(<b>char</b> *name) {
+    tItem * item;
+
+    item = (tItem*) malloc(<b>sizeof</b>(tItem)); <i>// Allocate a block of memory for a new Item object</i>
+    <b>if</b> (item == 0)                         <i>// If allocation failed return null</i>
+        <b>return</b> (tItem *)0;
+
+    memset(item, 0, <b>sizeof</b>(tItem));        <i>// Initialize the members of the new Item</i>
+    item-&#62;id =   -1;
+    item-&#62;name = (<b>char</b> *)0;
+
+    item-&#62;name = malloc(strlen(name) + 1); <i>// Allocate a block of memory for a name in the Item</i>
+    <b>if</b> (item-&#62;name == 0) {                 <i>// If allocation failed return null</i>
+        Free( (char*)item, <b>sizeof</b>(tItem));
+        <b>return</b> (tItem *)0;
+    }
+    strcpy(item-&#62;name, name);              <i>//Save a copy of the name in the new Item</i>
+
+    <b>return</b> item;                           <i>// Return the created Item object</i>
+}
+
+<i>// Deallocate an Item object</i>
+<b>void</b> destroy_item(tItem *item) {
+
+    <b>if</b> (item == 0)                         <i>// Check for a null object pointer</i>
+        <b>return</b>;
+
+    <b>if</b> (item-&#62;name != 0) {
+        Free(item-&#62;name, strlen(item-&#62;name) + 1);<i>// Deallocate the name string saved within the Item</i>
+        item-&#62;name = (<b>char</b> *)0;
+    }
+
+    Free((char*)item, <b>sizeof</b>(tItem));      <i>// Deallocate the Item object itself</i>
+}
+
+tItem *it[3];    <i>// Array of pointers to Item objects</i>
+<b>char</b> txt[15];
+<b>long</b> freeMemSize;
+<b>long</b> largerstFreeBlock;
+
+<b>void</b> main() {
+  MM_Init();
+
+  freeMemSize = MM_TotalFreeMemSize();          <i>// Get free memory size before allocating</i>
+  largerstFreeBlock = MM_LargestFreeMemBlock(); <i>// Get largest free memory block size before allocating</i>
+
+  it[0] = make_item(&#34;one&#34;);                     <i>// Allocate object</i>
+  it[1] = make_item(&#34;two&#34;);
+  it[2] = make_item(&#34;three&#34;);
+  freeMemSize = MM_TotalFreeMemSize();          <i>// Get free memory size</i>
+  largerstFreeBlock = MM_LargestFreeMemBlock(); <i>// Get largest free memory block size</i>
+  strcpy(txt,it[0]-&#62;name);
+  strcpy(txt,it[1]-&#62;name);
+  strcpy(txt,it[2]-&#62;name);
+
+  destroy_item(it[0]);                          <i>// Deallocate the Item object</i>
+  it[0] = make_item(&#34;instead one&#34;);             <i>// Make another Item object</i>
+  strcpy(txt,it[0]-&#62;name);
+  strcpy(txt,it[1]-&#62;name);
+  strcpy(txt,it[2]-&#62;name);
+
+  destroy_item(it[1]);                          <i>// Deallocate Items</i>
+  destroy_item(it[2]);
+  freeMemSize = MM_TotalFreeMemSize();          <i>// Get free memory size</i>
+}
+</pre>
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

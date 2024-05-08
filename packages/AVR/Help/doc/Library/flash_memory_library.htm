@@ -1,0 +1,665 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>Flash Memory Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroelektronika.co.yu">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Flash Memory Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="epson_graphic_lcd_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="graphic_lcd_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Flash Memory Library</h2></a>
+
+
+    <p>This library provides routines for accessing microcontroller Flash memory. Note that prototypes differ for MCU to MCU due to the amount of Flash memory.</p>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+      <ul>
+    	  <li>Due to the AVR family Flash specifics, Flash library is MCU dependent. Since some AVR MCU's have more or less than 64kb of Flash memory, prototypes may be different from chip to chip. <br>Please refer to datasheet before using Flash library.</li>
+        <li>When writting/erasing memory bear in mind that the memory is divided into pages; Size of the page is defined in the <code>__FLASH_PAGE_SIZE</code> constant (in program words) in the definition file of the appropriate MCU.</li>
+        <li>Writing/erasing memory is possible only from the boot section of the Flash memory.</li>
+      </ul>
+    </div>
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#flash_read_byte">FLASH_Read_Byte</a></li>
+      <li><a href="#flash_read_bytes">FLASH_Read_Bytes</a></li>
+      <li><a href="#flash_read_word">FLASH_Read_Word</a></li>
+      <li><a href="#flash_read_words">FLASH_Read_Words</a></li>
+      <li><a href="#flash_write_page">FLASH_Write_Page</a></li>
+      <li><a href="#flash_erase_page">FLASH_Erase_Page</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="flash_read_byte">FLASH_Read_Byte</h3>
+
+
+    <!-- tabela: FLASH_Read_Byte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p>
+              <i>// for MCUs with 64kb of Flash memory or less</i><br>
+              <b>char</b> FLASH_Read_Byte(<b>unsigned int</b> address);
+            </p>
+            <p>
+              <i>// for MCUs with Flash memory larger than 64kb</i><br>
+              <b>char</b> FLASH_Read_Byte(<b>unsigned long</b> address);
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns data byte from Flash memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads data from the specified <code>address</code> in Flash memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// for MCUs with Flash memory larger than 64kb</i>
+<b>unsigned long</b> tmp;
+...
+tmp = FLASH_Read_Byte(0x0D00);
+...</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+
+    <h3 id="flash_read_bytes">FLASH_Read_Bytes</h3>
+    <!-- tabela: Flash_Read_N -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p>
+              <i>// for MCUs with 64kb of Flash memory or less</i><br>
+              <b>void</b> FLASH_Read_Bytes(<b>unsigned int</b> address, <b>char</b> *buffer, <b>unsigned</b> NoBytes);
+            </p>
+            <p>
+              <i>// for MCUs with Flash memory larger than 64kb</i><br>
+              <b>void</b> FLASH_Read_Bytes(<b>unsigned long</b> address, <b>char</b> *buffer, <b>unsigned</b> NoBytes);
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads number of data bytes defined by <code>NoBytes</code> parameter from the specified <code>address</code> in Flash memory to variable pointed by <code>buffer</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// for MCUs with Flash memory larger than 64kb</i>
+<b>const long</b> F_ADDRESS = 0x200;
+<b>unsigned int</b> dat_buff[32];
+...
+FLASH_Read_Bytes(F_ADDRESS, dat_buff, 64);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="flash_read_word">FLASH_Read_Word</h3>
+
+
+    <!-- tabela: FLASH_Read_word -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p>
+              <i>// for MCUs with 64kb of Flash memory or less</i><br>
+              <b>char</b> FLASH_Read_Word(<b>unsigned int</b> address);
+            </p>
+            <p>
+              <i>// for MCUs with Flash memory larger than 64kb</i><br>
+              <b>char</b> FLASH_Read_Word(<b>unsigned long</b> address);
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns data word from Flash memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads data from the specified <code>address</code> in Flash memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// for MCUs with Flash memory larger than 64kb</i>
+<b>unsigned long</b> tmp;
+...
+tmp = FLASH_Read_Word(0x0D00);
+...</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+   <!-- -->
+
+
+   <h3 id="flash_read_words">FLASH_Read_Words</h3>
+   <!-- tabela: Flash_Read_N -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p>
+              <i>// for MCUs with 64kb of Flash memory or less</i><br>
+              <b>void</b> FLASH_Read_Words(<b>unsigned int</b> address, <b>char</b> *buffer, <b>unsigned</b> NoWords);
+            </p>
+            <p>
+              <i>// for MCUs with Flash memory larger than 64kb</i><br>
+              <b>void</b> FLASH_Read_Words(<b>unsigned long</b> address, <b>char</b> *buffer, <b>unsigned</b> NoWords);
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads number of data words defined by <code>NoWords</code> parameter from the specified <code>address</code> in Flash memory to variable pointed by <code>buffer</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// for MCUs with Flash memory larger than 64kb</i>
+<b>const long</b> F_ADDRESS = 0x200;
+<b>unsigned int</b> dat_buff[32];
+...
+FLASH_Read_Words(F_ADDRESS, dat_buff, 32);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+   <!-- -->
+
+
+   <h3 id="flash_write_page">FLASH_Write_Page</h3>
+   <!-- tabela: FLASH_Write_Page -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Write_Page(<b>unsigned int</b> address, <b>unsigned int</b> *dData);</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>void</b> FLASH_Write_Boot_Page(<b>unsigned int</b> address, <b>unsigned int</b> *wData);</p>
+            <p><b>void</b> FLASH_Write_Application_Page(<b>unsigned int</b> address, <b>unsigned int</b> *wData);</p>
+            <p><b>void</b> FLASH_Erase_Write_Boot_Page(<b>unsigned int</b> address, <b>unsigned int</b>* wdata);</p>
+            <p><b>void</b> FLASH_Erase_Write_Application_Page(<b>unsigned int</b> address, <b>unsigned int</b>* wdata);</p>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a data array pointed to by <code>dData</code> parameter to the specified <code>address</code> in Flash memory.</p>
+            <p>For XMEGA family of MCU's you can write to the both boot and application data section. Also, you can erase the appropriate page prior to writing.</p>
+            <p>Parameters :</p>
+            	<ul>
+              	<li><code>address:</code> address of the page used for writting.</li>
+              	<li><code>dData:</code> pointer to a data array which is being written.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned int</b> WRITE_ADDRESS = 0x200;
+<b>unsigned int</b> dat_buff[8];
+...
+FLASH_Write_Page(WRITE_ADDRESS, dat_buff);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+   <!-- -->
+
+
+   <h3 id="flash_erase_page">FLASH_Erase_Page</h3>
+   <!-- tabela: FLASH_Erase_Page -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Erase_Page(<b>unsigned int</b> address);</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>void</b> FLASH_Erase_Boot_Page(<b>unsigned int</b> address);</p>
+            <p><b>void</b> FLASH_Erase_Application_Page(<b>unsigned int</b> address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Erases specified page in the Flash memory.</p>
+            <p>For XMEGA family of MCU's you can erase both boot and application data section.</p>
+            <p>Parameters :</p>
+            	<ul>
+              	<li><code>address:</code> address of the page being erased.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned int</b> ERASE_ADDRESS = 0x200;
+...
+FLASH_Erase_Page(ERASE_ADDRESS);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3>Library Example</h3>
+
+    <p>The example demonstrates simple write to the Flash memory for AVR, then reads the data and displays it on PORTB, PORTC and PORTD.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>const long</b> F_ADDRESS = 0x200;
+
+<b>const unsigned int</b> data_[32] = {                               <i>// constant table</i>
+  0x0000,0x0001,0x0002,0x0003,0x0004,0x0005,0x0006,0x0007,     <i>//   in Flash at address F_ADDRESS</i>
+  0x0008,0x0009,0x000A,0x000B,0x000C,0x000D,0x000E,0x000F,
+  0x0000,0x0100,0x0200,0x0300,0x0400,0x0500,0x0600,0x0700,
+  0x0800,0x0900,0x0A00,0x0B00,0x0C00,0x0D00,0x0E00,0x0F00,
+} absolute F_ADDRESS;
+
+<b>char</b> i;
+<b>unsigned int</b> word_;
+<b>unsigned int</b> dat_buff[32];
+
+<b>void</b> main() {
+  DDRB = 0xFF;                                 <i>// Set signal port as output</i>
+  DDRC = 0xFF;                                 <i>// Set signal port as output</i>
+  DDRD = 0xFF;                                 <i>// Set signal port as output</i>
+  word_ = data_[0];                            <i>//  link const table</i>
+
+  PORTB = 1;                                   <i>// signal program progress</i>
+
+  <b>for</b> (i = 0; i&#60;64 ; i+=2) {                   <i>// reading 32 words in loop</i>
+    word_ = FLASH_Read_Word(F_ADDRESS + i);    <i>// demonstration of reading single word</i>
+    PORTD = word_;                             <i>// output low byte to PORTD</i>
+    PORTC = word_ &#62;&#62; 8;                        <i>// output high byte to PORTC</i>
+    Delay_ms(100);
+  }
+
+  PORTB = 2;                                   <i>// signal program progress</i>
+
+  i = 0;                                       <i>// initialize loop variable</i>
+  <b>while</b> ( i &#60; 64 ) {                           <i>// reading 64 bytes in loop</i>
+    PORTD = FLASH_Read_Byte(F_ADDRESS + i++);  <i>// demonstration of reading single byte</i>
+    PORTC = FLASH_Read_Byte(F_ADDRESS + i++);  <i>// demonstration of reading single byte</i>
+    Delay_ms(100);
+  }
+
+  PORTB = 3;                                   <i>// signal program progress</i>
+
+  FLASH_Read_Bytes(F_ADDRESS, dat_buff, 64);   <i>// demonstration of reading 64 bytes block</i>
+  <b>for</b> (i = 0; i&#60;32 ; i++) {                    <i>// use loop to display read block</i>
+    PORTD = dat_buff[i];                       <i>// output low byte to PORTD</i>
+    PORTC = dat_buff[i] &#62;&#62; 8;                  <i>// output high byte to PORTC</i>
+    Delay_ms(100);
+  }
+  
+  PORTB = 4;                                   <i>// signal program progress</i>
+
+  FLASH_Read_Words(F_ADDRESS, dat_buff, 32);   <i>//  demonstration of reading 32 words block</i>
+  <b>for</b> (i = 0; i&#60;32 ; i++) {                    <i>// use loop to display read block</i>
+    PORTD = dat_buff[i];                       <i>// output low byte to PORTD</i>
+    PORTC = dat_buff[i] &#62;&#62; 8;                  <i>// output high byte to PORTC</i>
+    Delay_ms(100);
+  }
+
+}</pre>
+
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

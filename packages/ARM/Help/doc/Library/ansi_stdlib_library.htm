@@ -1,0 +1,819 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>ANSI C Stdlib Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroelektronikao.yu">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_arm.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">ANSI C Stdlib Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_ansi_libraries.htm">Standard ANSI C Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="ansi_math_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="ansi_string_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="American National Standards Institute">ANSI</acronym> C Stdlib Library</h2></a>
+
+
+    <p>The mikroC PRO for ARM provides a set of standard <acronym title="American National Standards Institute">ANSI</acronym> C library functions of general utility.</p>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+      <ul>
+      	<li>Not all of the standard functions have been included.</li>
+    	  <li>The functions have been mostly implemented according to the <acronym title="American National Standards Institute">ANSI</acronym> C standard, but certain functions have been modified in order to facilitate ARM programming. Be sure to skim through the description before using standard C functions.</li>
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="C Stdlib Library Dependency Tree" src="img/dependencies/cstdlib_dependency.gif">  
+    <p></p>    
+
+    <h3>Library Functions</h3>
+
+    <ul>
+      <li><a href="#abs">abs</a></li>
+      <li><a href="#atof">atof</a></li>
+      <li><a href="#atoi">atoi</a></li>
+      <li><a href="#atol">atol</a></li>
+      <li><a href="#div">div</a></li>
+      <li><a href="#ldiv">ldiv</a></li>
+      <li><a href="#uldiv">uldiv</a></li>
+      <li><a href="#labs">labs</a></li>
+      <li><a href="#max">max</a></li>
+      <li><a href="#min">min</a></li>
+      <li><a href="#rand">rand</a></li>
+      <li><a href="#srand">srand</a></li>
+      <li><a href="#xtoi">xtoi</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="abs">abs</h3>
+
+
+    <!-- tabela: abs -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> abs(<b>int</b> a);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function returns the absolute (i.e. positive) value of <code>a</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>result = abs(-12);  // result = 12</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="atof">atof</h3>
+
+
+    <!-- tabela: atof -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>double</b> atof(<b>char</b> *s);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function converts the input string <code>s</code> into a double precision value and returns the value. Input string <code>s</code> should conform to the <a href="floating_point_constants.htm">floating point literal format</a>, with an optional whitespace at the beginning. The string will be processed one character at a time, until the function reaches a character which it doesn&#8217;t recognize (including a null character).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>doub = atof("-1.23");  // doub = -1.23</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="atoi">atoi</h3>
+
+
+    <!-- tabela: atoi -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> atoi(<b>char</b> *s);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function converts the input string <code>s</code> into an integer value and returns the value. The input string <code>s</code> should consist exclusively of decimal digits, with an optional whitespace and a sign at the beginning. The string will be processed one character at a time, until the function reaches a character which it doesn&#8217;t recognize (including a null character).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>result = atoi("32000");  // result = 32000</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="atol">atol</h3>
+
+
+    <!-- tabela: atol -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> atol(<b>char</b> *s);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function converts the input string <code>s</code> into a long integer value and returns the value. The input string <code>s</code> should consist exclusively of decimal digits, with an optional whitespace and a sign at the beginning. The string will be processed one character at a time, until the function reaches a character which it doesn&#8217;t recognize (including a null character).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>result = atol("-32560");  // result = -32560</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="div">div</h3>
+
+
+    <!-- tabela: div -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>div_t</b> div(<b>int</b> number, <b>int</b> denom);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function computes the result of division of the numerator <code>number</code> by the denominator <code>denom</code>; the function returns a structure of type <code>div_t</code> comprising quotient (<code>quot</code>) and remainder (<code>rem</code>), see <a href="#div_structures">Div Structures</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>dt = div(1234,100);</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="ldiv">ldiv</h3>
+
+
+    <!-- tabela: ldiv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>ldiv_t</b> ldiv(<b>long</b> number, <b>long</b> denom);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function is similar to the <a href="#div">div</a> function, except that the arguments and result structure members all have type <code>long</code>.</p>
+            <p>Function computes the result of division of the numerator <code>number</code> by the denominator <code>denom</code>; the function returns a structure of type <code>ldiv_t</code> comprising quotient (<code>quot</code>) and remainder (<code>rem</code>), see <a href="#div_structures">Div Structures</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>dl = ldiv(-123456, 1000);</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+    
+    <h3 id="uldiv">uldiv</h3>
+
+
+    <!-- tabela: uldiv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uldiv_t</b> uldiv(<b>unsigned long</b> number, <b>unsigned long</b> denom);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function is similar to the <a href="#div">div</a> function, except that the arguments and result structure members all have type <code>unsigned long</code>.</p>
+            <p>Function computes the result of division of the numerator <code>number</code> by the denominator <code>denom</code>; the function returns a structure of type <code>uldiv_t</code> comprising quotient (<code>quot</code>) and remainder (<code>rem</code>), see <a href="#div_structures">Div Structures</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>dul = uldiv(123456,1000);</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->    
+
+
+    <h3 id="labs">labs</h3>
+
+
+    <!-- tabela: labs -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> labs(<b>long</b> x);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function returns the absolute (i.e. positive) value of long integer <code>x</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>result = labs(-2147483647);</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="max">max</h3>
+
+
+    <!-- tabela: max -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> max(<b>int</b> a, <b>int</b> b);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function returns greater of the two integers, <code>a</code> and <code>b</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>result = max(123,67);  // function returns 123</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="min">min</h3>
+
+
+    <!-- tabela: min -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> min(<b>int</b> a, <b>int</b> b);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function returns lower of the two integers, <code>a</code> and <code>b</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>result = min(123,67);  // function returns 67</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="rand">rand</h3>
+
+
+    <!-- tabela: rand -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> rand();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function returns a sequence of pseudo-random numbers between 0 and 32767. The function will always produce the same sequence of numbers unless <a href="#srand">srand</a> is called to seed the start point.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><b>while</b>(1)
+  result = rand()
+   ;</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="srand">srand</h3>
+
+
+    <!-- tabela: srand -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> srand(<b>unsigned</b> x);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function uses <code>x</code> as a starting point for a new sequence of pseudo-random numbers to be returned by subsequent calls to <a href="#rand">rand</a>. No values are returned by this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>srand(9);</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="xtoi">xtoi</h3>
+
+
+    <!-- tabela: xtoi -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> xtoi(<b>char</b> *s);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function converts the input string <code>s</code> consisting of hexadecimal digits into an integer value. The input parameter <code>s</code> should consist exclusively of hexadecimal digits, with an optional whitespace and a sign at the beginning. The string will be processed one character at a time, until the function reaches a character which it doesn&#8217;t recognize (including a null character).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>result = xtoi("1FF");  // result = 511</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+  <h4 id="div_structures">Div Structures</h4>
+  
+  <p></p>
+  
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+ <b>typedef struct</b> divstruct {
+             <b>int</b> quot;
+             <b>int</b> rem;
+ } div_t;
+
+
+ <b>typedef struct</b> ldivstruct {
+             <b>long</b> quot;
+             <b>long</b> rem;
+ } ldiv_t;
+
+
+ <b>typedef struct</b> uldivstruct {
+             <b>unsigned long</b> quot;
+             <b>unsigned long</b> rem;
+ } uldiv_t;
+</pre>
+
+    <div class="feedback">
+      Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

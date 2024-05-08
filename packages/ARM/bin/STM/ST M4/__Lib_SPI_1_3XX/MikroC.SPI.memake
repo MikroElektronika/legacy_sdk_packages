@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_SPI_1_3XX.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F303R6$|^STM32F334C4$|^STM32F334K6$|^STM32F303C8$|^STM32F303R8$|^STM32F303K6$|^STM32F334K8$|^STM32F328C8$|^STM32F303K8$|^STM32F303C6$|^STM32F334K4$|^STM32F334R8$|^STM32F334C6$|^STM32F334R6$|^STM32F334C8$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

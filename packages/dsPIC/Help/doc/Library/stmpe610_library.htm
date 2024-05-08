@@ -1,0 +1,3412 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>STMPE610 Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_dspic.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_dspic.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">STMPE610 Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for dsPIC30/33 and PIC24 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="spi_lcd8_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="tft_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>STMPE610 Library</h2></a>
+
+    <p>The <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> is a GPIO (general purpose input/output) port expander able to interface a main digital ASIC via the two-line bidirectional bus (I2C). A 4-wire touchscreen controller is built into the STMPE610. The touchscreen controller is enhanced with a movement tracking algorithm to avoid excessive data, 128 x 32 bit buffer and a programmable active window feature. This library will focus on Touchscreen controlling part od the IC.</p>
+    <br> 
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+      <ul>
+    	  <li><acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> library routines use <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> so it is necessary to initialize <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module of the MCU before working with <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> controller.</li>
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#STMPE610_WriteReg">STMPE610_WriteReg</a></li>
+      <li><a href="#STMPE610_ReadReg">STMPE610_ReadReg</a></li>
+      <li><a href="#STMPE610_ReadID">STMPE610_ReadID</a></li>
+      <li><a href="#STMPE610_IsOperational">STMPE610_IsOperational</a></li>
+      <li><a href="#STMPE610_SetI2CAddress">STMPE610_SetI2CAddress</a></li>
+      <li><a href="#STMPE610_Reset">STMPE610_Reset</a></li>
+      <li><a href="#STMPE610_Module">STMPE610_Module</a></li>
+      <li><a href="#STMPE610_AlternateFunction">STMPE610_AlternateFunction</a></li>
+      <li><a href="#STMPE610_SetGPIOPin">STMPE610_SetGPIOPin</a></li>
+      <li><a href="#STMPE610_EnableInterrupt">STMPE610_EnableInterrupt</a></li>
+      <li><a href="#STMPE610_ConfigureInterrupt">STMPE610_ConfigureInterrupt</a></li>
+      <li><a href="#STMPE610_SetADC">STMPE610_SetADC</a></li>
+      <li><a href="#STMPE610_SetADCClock">STMPE610_SetADCClock</a></li>  
+      <li><a href="#STMPE610_ConfigureTSC">STMPE610_ConfigureTSC</a></li>
+      <li><a href="#STMPE610_SetFIFOThreshold">STMPE610_SetFIFOThreshold</a></li>
+      <li><a href="#STMPE610_ResetFIFO">STMPE610_ResetFIFO</a></li>
+	  <li><a href="#STMPE610_ZDataFraction">STMPE610_ZDataFraction</a></li>
+	  <li><a href="#STMPE610_SetTouchPressureThreshold">STMPE610_SetTouchPressureThreshold</a></li>	  
+	  <li><a href="#STMPE610_TSIDrive">STMPE610_TSIDrive</a></li>
+      <li><a href="#STMPE610_TSControl">STMPE610_TSControl</a></li>
+	  <li><a href="#STMPE610_ClearInterrupts">STMPE610_ClearInterrupts</a></li>
+	  <li><a href="#STMPE610_ClearInterruptFlagsAndFIFO">STMPE610_ClearInterruptFlagsAndFIFO</a></li>
+	  <li><a href="#STMPE610_SetSize">STMPE610_SetSize</a></li>
+	  <li><a href="#STMPE610_GetRawXYZ">STMPE610_GetRawXYZ</a></li>
+	  <li><a href="#STMPE610_GetXYZ">STMPE610_GetXYZ</a></li>
+	  <li><a href="#STMPE610_PressDetect">STMPE610_PressDetect</a></li>
+	  <li><a href="#STMPE610_GetCoordinates">STMPE610_GetCoordinates</a></li>
+	  <li><a href="#STMPE610_GetLastCoordinates">STMPE610_GetLastCoordinates</a></li>
+	  <li><a href="#STMPE610_SetCalibrationConsts">STMPE610_SetCalibrationConsts</a></li>
+	  <li><a href="#STMPE610_GetCalibrationConsts">STMPE610_GetCalibrationConsts</a></li>
+	  <li><a href="#STMPE610_SetDefaultMode">STMPE610_SetDefaultMode</a></li>
+	  <li><a href="#STMPE610_Rotate180">STMPE610_Rotate180</a></li>	  
+	  <li><a href="#STMPE610_CalibratePoint">STMPE610_CalibratePoint</a></li>	  
+    </ul>
+<!--
+    <h3>ST Specific Library Routines</h3>
+    <ul>
+      <li><a href="#STMPE610x_init_advanced">STMPE610x_Init_Advanced</a></li>
+      <li><a href="#STMPE610x_start">STMPE610x_Start</a></li>
+      <li><a href="#STMPE610x_get_status">STMPE610x_Get_Status</a></li>
+      <li><a href="#STMPE610x_is_idle">STMPE610x_Is_Idle</a></li>
+      <li><a href="#STMPE610x_read">STMPE610x_Read</a></li>
+      <li><a href="#STMPE610x_write">STMPE610x_Write</a></li>
+    </ul>
+-->
+
+    <!-- -->
+    <h3 id="STMPE610_WriteReg">STMPE610_WriteReg</h3>
+
+
+    <!-- tabela: STMPE610_WriteReg -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_WriteReg(char RegisterAddr, char RegisterValue) ;</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This function sets desired <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> register (on RegisterAddr address) with given value (RegisterValue).</p>
+          </td>
+        </tr>
+     
+		<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>RegisterAddr:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> register address.</li>
+             	<li><code>RegisterValue:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> register value to write.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Initialize the STMPE610_SYS_CTRL1_REG register with the value 0x02</i>
+STMPE610_WriteReg(STMPE610_SYS_CTRL1_REG, 0x02);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    <h3 id="STMPE610_ReadReg">STMPE610_ReadReg</h3>
+    <!-- tabela: STMPE610x_Init_Advanced -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_ReadReg(<b>char</b> RegisterAddr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+				<p>This function reads desired <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> register (on RegisterAddr address) and returns its value.</p>
+          </td>
+        </tr>
+
+		<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>RegisterAddr:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> register address.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Value of the <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> register at given address.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Initialize the STMPE610_SYS_CTRL1_REG register with the value 0x02</i>
+<b>char</b> temp;
+temp = STMPE610_WriteReg(STMPE610_SYS_CTRL1_REG, 0x02);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+<li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_ReadID">STMPE610_ReadID</h3>
+
+
+    <!-- tabela: STMPE6100_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> STMPE610_ReadID();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine reads <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> ID register, and returns its value.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>If <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> modules have been properly initialized function should return correct ID nimber and that is <b>0x0811</b>.</p>		  
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+		
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><b>unsigned int</b> temp;</i>
+temp = STMPE610_ReadID();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_IsOperational">STMPE610_IsOperational</h3>
+
+
+    <!-- tabela: STMPE610x_Disable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_IsOperational();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine checks if <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> responds correctly via <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> communication.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK if <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> responds correctly, otherwise function returns STMPE610_FAILURE.</p>		  
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+		
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>if (STMPE610_IsOperational() == STMPE610_OK) {
+<i>  // STMPE610 initialized OK</i>
+} else {
+  // STMPE610 did not initialize OK
+}</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_SetI2CAddress">STMPE610_SetI2CAddress</h3>
+
+
+    <!-- tabela: STMPE6100_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_SetI2CAddress(<b>char</b> DeviceAddr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+				<p>This procedure sets default addres which will be used fo all further commnunication with <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> IC.</p>
+          </td>
+        </tr>
+
+		<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>RegisterAddr:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> address.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Adress set must be either <b>0x82</b> or <b>0x88</b>, any other values will cause IC to not work properly.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Initialize the STMPE610 I2C communication address at 0x88</i>
+STMPE610_SetI2CAddress(STMPE610_I2C_ADDR1);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+<li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_Reset">STMPE610_Reset</h3>
+
+
+    <!-- tabela: STMPE6100_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_Reset();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is a reset routine for <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym>.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK if <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> responds correctly, otherwise function returns STMPE610_FAILURE.</p>		  
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+		
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_Reset();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_Module">STMPE610_Module</h3>
+
+
+    <!-- tabela: STMPE6100_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> STMPE610_Module(<b>char</b> module_mask, <b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enable or Disable the various <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> modules.</p> 
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>module_mask:</code> mask of <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_MODULE_ADC</td>
+                        <td valign="top">Mask to Enable/Disable ADC Module.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">STMPE610_MODULE_TS</td>
+          						  <td valign="top">Mask to Enable/Disable TouchScreen Module.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">STMPE610_MODULE_GPIO</td>
+          						  <td valign="top">Mask to Enable/Disable GPIO.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">STMPE610_MODULE_TEMPSENS</td>
+          						  <td valign="top">Mask to Enable/Disable temperature sensor.</td>
+                      </tr>
+                    </tbody>
+                  </table>				
+             	<li><code>newState:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> Enable or Disable module :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ENABLE</td>
+                        <td valign="top">Module Enable.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">STMPE610_DISABLE</td>
+          						  <td valign="top">Module disable.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+             	</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_Module(STMPE610_MODULE_TS | STMPE610_MODULE_ADC, STMPE610_ENABLE);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Multiple modules can be Enabled/Disabled at one time, as shown in example.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_AlternateFunction">STMPE610_AlternateFunction</h3>
+
+
+    <!-- tabela: STMPE610x_Master_Slave_Addr_Set -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_AlternateFunction(<b>char</b> IO_Pin, <b>char</b> NewState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets weather <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> GPIO pins will have alternate function(s) or not.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>IO_Pin:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> pin number.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN0</td>
+                        <td valign="top">GPIO Pin No 0</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN1</td>
+                        <td valign="top">GPIO Pin No 1</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN2</td>
+                        <td valign="top">GPIO Pin No 2</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN3</td>
+                        <td valign="top">GPIO Pin No 3</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN4</td>
+                        <td valign="top">GPIO Pin No 4</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN5</td>
+                        <td valign="top">GPIO Pin No 5</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN6</td>
+                        <td valign="top">GPIO Pin No 6</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN7</td>
+                        <td valign="top">GPIO Pin No 7</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PINALL</td>
+                        <td valign="top">Select all GPIO pins.</td>
+                      </tr>					  
+                    </tbody>
+                  </table>
+             	<li><code>newState:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> Enable or Disable module :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ENABLE</td>
+                        <td valign="top">Module Enable.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">STMPE610_DISABLE</td>
+          						  <td valign="top">Module disable.</td>
+                      </tr>
+                    </tbody>
+                  </table>				
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK if <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> responds correctly, otherwise function returns STMPE610_FAILURE.</p>		  
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_AlternateFunction(STMPE610_GPIO_PIN6 | STMPE610_GPIO_PIN4, _STMPE610_ENABLE);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Multiple pins can be Enabled/Disabled at one time, as shown in example.</li>
+    	      </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_SetGPIOPin">STMPE610_SetGPIOPin</h3>
+
+
+    <!-- tabela: STMPE610x_Master_Bus_Busy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_SetGPIOPin(<b>char</b> IO_Pin, <b>char</b> BitVal);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets or clears <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> GPIO pin.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>IO_Pin:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> pin number.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN0</td>
+                        <td valign="top">GPIO Pin No 0</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN1</td>
+                        <td valign="top">GPIO Pin No 1</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN2</td>
+                        <td valign="top">GPIO Pin No 2</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN3</td>
+                        <td valign="top">GPIO Pin No 3</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN4</td>
+                        <td valign="top">GPIO Pin No 4</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN5</td>
+                        <td valign="top">GPIO Pin No 5</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN6</td>
+                        <td valign="top">GPIO Pin No 6</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PIN7</td>
+                        <td valign="top">GPIO Pin No 7</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_GPIO_PINALL</td>
+                        <td valign="top">Select all GPIO pins.</td>
+                      </tr>					  
+                    </tbody>
+                  </table>
+             	<li><code>BitVal:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> GPIO pin value:
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">Set GPIO pin to zero.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+          						  <td valign="top">Set GPIO pin to one.</td>
+                      </tr>
+                    </tbody>
+                  </table>				
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+						<p>Used <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module must be initialized before using this function. See <a href="#STMPE610_init">STMPE610x_Init</a> and <a href="#STMPE610_init_advanced">STMPE610x_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_SetGPIOPin(STMPE610_GPIO_PIN7 | STMPE610_GPIO_PIN6, 1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Multiple pins can be Set/Cleared at one time, as shown in example.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_EnableInterrupt">STMPE610_EnableInterrupt</h3>
+
+
+    <!-- tabela: STMPE610x_Master_Busy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_EnableInterrupt(<b>char</b> interrupt_mask, <b>char</b> enable);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables/Disables different types of  <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> interrupt generation.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>interrupt_mask:</code> Enable/Disable <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> interrupt module.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_IE_TOUCH_DET</td>
+                        <td valign="top">Generate interrupt on screen touched.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_IE_FIFO_TH</td>
+                        <td valign="top">Generate interrupt when FIFO threshold is reached.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_IE_FIFO_0FLOW</td>
+                        <td valign="top">Generate interrupt when FIFO overflows.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_IE_FIFO_FULL</td>
+                        <td valign="top">Generate interrupt when FIFO is full.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_IE_FIFO_EMPTY</td>
+                        <td valign="top">Generate interrupt when FIFO is empty.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_IE_TEMP_SENS</td>
+                        <td valign="top">Generate interrupt from temperature sensor.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_IE_ADC</td>
+                        <td valign="top">Generate interrupt from ADC conversion.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_IE_GPIO</td>
+                        <td valign="top">Generate interrupt from GPIO.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+             	<li><code>enable:</code> <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> Enable or Disable module :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ENABLE</td>
+                        <td valign="top">Module Enable.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">STMPE610_DISABLE</td>
+          						  <td valign="top">Module disable.</td>
+                      </tr>
+                    </tbody>
+                  </table>				
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_EnableInterrupt(STMPE610_IE_ADC | STMPE610_IE_TOUCH_DET, STMPE610_ENABLE);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Multiple interrupts can be Enabled/Disabled at one time, as shown in example.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_ConfigureInterrupt">STMPE610_ConfigureInterrupt</h3>
+
+
+    <!-- tabela: STMPE610x_Master_Busy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>function</b> STMPE610_ConfigureInterrupt(interrupt_mask : byte) : byte;</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configure Interrupt Type.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>interrupt_mask:</code> Enable/Disable <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> interrupt module.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_INT_POLARITY_ACTIVE_HIGH</td>
+                        <td valign="top">Generate interrupt on low.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_INT_POLARITY_ACTIVE_LOW</td>
+                        <td valign="top">Generate interrupt on high.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_INT_TYPE_EDGE</td>
+                        <td valign="top">Interrupt is of edge type.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_INT_TYPE_LEVEL</td>
+                        <td valign="top">Interrupt is of level type.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_INT_ENABLE_ALL</td>
+                        <td valign="top">Enable all interrupts.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_INT_STOP_ALL</td>
+                        <td valign="top">Disable all interrupts.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_ConfigureInterrupt(STMPE610_INT_POLARITY_ACTIVE_HIGH <b>or</b> STMPE610_INT_TYPE_EDGE);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Multiple interrupts can be Enabled/Disabled at one time, as shown in example.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_SetADC">STMPE610_SetADC</h3>
+
+
+    <!-- tabela: STMPE610x_Rd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_SetADC(<b>char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configure <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> ADC module.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>mode:</code> Configure parameter is acquired using various predefined constants.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_SAMPLETIME_44</td>
+                        <td valign="top">Set ADC sample time to 44 clocks.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_SAMPLETIME_56</td>
+                        <td valign="top">Set ADC sample time to 56 clocks.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_SAMPLETIME_64</td>
+                        <td valign="top">Set ADC sample time to 64 clocks.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_SAMPLETIME_80</td>
+                        <td valign="top">Set ADC sample time to 80 clocks.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_SAMPLETIME_96</td>
+                        <td valign="top">Set ADC sample time to 96 clocks.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_SAMPLETIME_124</td>
+                        <td valign="top">Set ADC sample time to 124 clocks.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_ADC_12BIT</td>
+                        <td valign="top">Set ADC conversion result to 12bit.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_ADC_10BIT</td>
+                        <td valign="top">Set ADC conversion result to 10bit.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_EXT_REFERENCE</td>
+                        <td valign="top">Set ADC voltage reference to external.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL1_INT_REFERENCE</td>
+                        <td valign="top">Set ADC voltage reference to internal.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+		
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_SetADC(STMPE610_ADC_CTRL1_SAMPLETIME_56 | STMPE610_ADC_CTRL1_ADC_12BIT | STMPE610_ADC_CTRL1_INT_REFERENCE);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Set ADC using one of sample time constants, conversion result and voltage refference each, as shown in Example.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="STMPE610_SetADCClock">STMPE610_SetADCClock</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_SetADCClock(<b>char</b> clock);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configure <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> ADC clock.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>clock:</code> Configure parameter is acquired using various predefined constants.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL2_1625_kHZ</td>
+                        <td valign="top">Set ADC cock to 1625 kHZ.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL2_3250_kHZ</td>
+                        <td valign="top">Set ADC cock to 3250 kHZ.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ADC_CTRL2_6500_kHZ</td>
+                        <td valign="top">Set ADC cock to 6500 kHZ.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+		
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_SetADCClock(STMPE610_ADC_CTRL2_6500_kHZ);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+	
+    <h3 id="STMPE610_ConfigureTSC">STMPE610_ConfigureTSC</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_ConfigureTSC(<b>char</b> average_sample, <b>char</b> touch_detect_delay, <b>char</b> settling_time);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configure various parameters of <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>average_sample:</code> Decides how many samples will be taken per ADC acquisition (improves accuracy).</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_AVE_CTRL_1S</td>
+                        <td valign="top">Set 1 ADC sample as average.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_AVE_CTRL_2S</td>
+                        <td valign="top">Set 2 ADC sample as average.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_AVE_CTRL_4S</td>
+                        <td valign="top">Set 4 ADC sample as average.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_AVE_CTRL_8S</td>
+                        <td valign="top">Set 8 ADC sample as average.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+             	<li><code>touch_detect_delay:</code> Sets time for touch detect delay.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_10uS</td>
+                        <td valign="top">Set delay time to 10us.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_50uS</td>
+                        <td valign="top">Set delay time to 50us.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_100uS</td>
+                        <td valign="top">Set delay time to 100us.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_500uS</td>
+                        <td valign="top">Set delay time to 500us.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_1mS</td>
+                        <td valign="top">Set delay time to 1ms.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_5mS</td>
+                        <td valign="top">Set delay time to 5ms.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_10mS</td>
+                        <td valign="top">Set delay time to 10ms.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_50mS</td>
+                        <td valign="top">Set delay time to 50ms.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+             	<li><code>settling_time:</code> Sets time for touch panel to settle.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_SETTLING_10uS</td>
+                        <td valign="top">Set settle time to 10us.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_50uS</td>
+                        <td valign="top">Set delay time to 50us.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_100uS</td>
+                        <td valign="top">Set delay time to 100us.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_DET_DELAY_500uS</td>
+                        <td valign="top">Set delay time to 500us.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_SETTLING_1mS</td>
+                        <td valign="top">Set delay time to 1ms.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_SETTLING_5mS</td>
+                        <td valign="top">Set delay time to 5ms.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_SETTLING_10mS</td>
+                        <td valign="top">Set delay time to 10ms.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_SETTLING_50mS</td>
+                        <td valign="top">Set delay time to 50ms.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CFG_TOUCH_SETTLING_100mS</td>
+                        <td valign="top">Set delay time to 100ms.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_ConfigureTSC(STMPE610_TSC_CFG_AVE_CTRL_2S, STMPE610_TSC_CFG_TOUCH_DET_DELAY_500uS, STMPE610_TSC_CFG_TOUCH_DET_DELAY_500uS);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3 id="STMPE610_SetFIFOThreshold">STMPE610_SetFIFOThreshold</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_SetFIFOThreshold(<b>char</b> point);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configure threshold of <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> FIFO register.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>point:</code> Sets number of samples taken before <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> generates a FIFO threshold interrupt.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>FIFO threshold value must be within 1-128 range.</p>
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_SetFIFOThreshold(5);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->	
+	
+    <h3 id="STMPE610_ResetFIFO">STMPE610_ResetFIFO</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_ResetFIFO();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Procedure resets <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> FIFO register.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li>None.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_ResetFIFO();
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->		
+
+    <h3 id="STMPE610_ZDataFraction">STMPE610_ZDataFraction</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>function</b> STMPE610_ZDataFraction(_value : byte) : byte;</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Procedure sets the range and accuracy of the <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> pressure measurement.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>_drive:</code> Sets current limit value.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>			
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FRACP0_WHOLP8</td>
+                        <td valign="top">Fractional part is 0, whole part is 8.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FRACP1_WHOLP7</td>
+                        <td valign="top">Fractional part is 1, whole part is 7.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FRACP2_WHOLP6</td>
+                        <td valign="top">Fractional part is 2, whole part is 6.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FRACP3_WHOLP5</td>
+                        <td valign="top">Fractional part is 3, whole part is 5.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FRACP4_WHOLP4</td>
+                        <td valign="top">Fractional part is 4, whole part is 4.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FRACP5_WHOLP3</td>
+                        <td valign="top">Fractional part is 5, whole part is 3.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FRACP6_WHOLP2</td>
+                        <td valign="top">Fractional part is 6, whole part is 2.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FRACP7_WHOLP1</td>
+                        <td valign="top">Fractional part is 7, whole part is 1.</td>
+                      </tr>                                            
+                    </tbody>
+                  </table>				
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_ZDataFraction(STMPE610_FRACP0_WHOLP8);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- -->
+    <h3 id="STMPE610_SetTouchPressureThreshold">STMPE610_SetTouchPressureThreshold</h3>
+
+
+    <!-- tabela: STMPE610_SetTouchPressureThreshold -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_SetTouchPressureThreshold(<b>char</b> threshold);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>Use this function to set desired touch panel pressure value. This value is compare with Z readout value, based on result touch is qualified as valid or invalid. If the Z value is lager then trashold value, press is invalid. (Z value decreases with increase of touch pressure)</p>
+          </td>
+        </tr>
+     
+		<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>threshold:</code> Value of touch panel press trashold.</li>
+            </ul>
+          </td>
+        </tr>
+      
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Discard the press if Z value is grater then 45 </i>
+STMPE610_SetTouchPressureThreshold(45);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li><acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> FRACTION_Z register is set in mode: "100: Fractional part is 4, whole part is 4"</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->		
+
+    <h3 id="STMPE610_TSIDrive">STMPE610_TSIDrive</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_TSIDrive(<b>char</b> _drive);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function sets the current limit value of the <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> touchscreen drivers.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>_drive:</code> Sets current limit value.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>			
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_I_DRIVE_20mA</td>
+                        <td valign="top">Sets current limit value to 20mA.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_I_DRIVE_50mA</td>
+                        <td valign="top">Sets current limit value to 50mA.</td>
+                      </tr>
+                    </tbody>
+                  </table>				
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_TSIDrive(STMPE610_TSC_I_DRIVE_50mA);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->	
+	
+
+	    <h3 id="STMPE610_TSControl">STMPE610_TSControl</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_TSControl(<b>char</b> _ctrl);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function sets tracking index, and value ADC acquisition of <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym>.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>_ctrl:</code> Sets tracking index, and value ADC acquisition using following parameters:</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_TRACK0</td>
+                        <td valign="top">Sets tracking index to zero (no tracking).</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_TRACK4</td>
+                        <td valign="top">Sets tracking index to 4 pixels.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_TRACK8</td>
+                        <td valign="top">Sets tracking index to 8 pixels.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_TRACK16</td>
+                        <td valign="top">Sets tracking index to 16 pixels.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_TRACK32</td>
+                        <td valign="top">Sets tracking index to 32 pixels.</td>
+                      </tr>
+					  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_TRACK64</td>
+                        <td valign="top">Sets tracking index to 64 pixels.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_TRACK92</td>
+                        <td valign="top">Sets tracking index to 92 pixels.</td>
+                      </tr>
+					  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_TRACK127</td>
+                        <td valign="top">Sets tracking index to 127 pixels.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_ACQU_XYZ</td>
+                        <td valign="top">ADC acquizition generates X, Y and Z data.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_ACQU_XY</td>
+                        <td valign="top">ADC acquizition generates X and Y data.</td>
+                      </tr>
+					  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_ACQU_X</td>
+                        <td valign="top">ADC acquizition generates only X data.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_ACQU_Y</td>
+                        <td valign="top">ADC acquizition generates only Y data.</td>
+                      </tr>
+					  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_TSC_CTRL_ACQU_Z</td>
+                        <td valign="top">ADC acquizition generates only Z data.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_TSControl(STMPE610_TSC_CTRL_TRACK4 | STMPE610_TSC_CTRL_ACQU_XYZ);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Input parameter should be combination of one acquizition and one tracking index parameter, as shown in Example.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->	
+	
+	
+    <h3 id="STMPE610_ClearInterrupts">STMPE610_ClearInterrupts</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_ClearInterrupts();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Procedure clears all <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> interrupts.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li>None.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK: if all operations are OK. Other value if error.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_ClearInterrupts();
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->		
+
+	
+    <h3 id="STMPE610_ClearInterruptFlagsAndFIFO">STMPE610_ClearInterruptFlagsAndFIFO</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_ClearInterruptFlagsAndFIFO();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Procedure clears all <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> interrupt flags and resets FIFO register.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li>None.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_ClearInterruptFlagsAndFIFO();
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->		
+	
+	
+    <h3 id="STMPE610_SetSize">STMPE610_SetSize</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_SetSize(<b>unsigned int</b> display_width, <b>unsigned int</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function sets touch screen size in pixels.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>display_width:</code> Sets touch screen display width.</li>
+             	<li><code>display_height:</code> Sets touch screen display heigth.</li>				
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_SetSize(480, 272);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Use STMPE610_SetSize to change oriantation of touchscreen (should be done parallel with changing display orientation).</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->
+    <!-- -->
+    <h3 id="STMPE610_GetRawXYZ">STMPE610_GetRawXYZ</h3>
+
+
+    <!-- tabela: STMPE610_GetRawXYZ -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_GetRawXYZ(<b>unsigned int</b> *x_data, <b>unsigned int</b> *y_data, <b>unsigned short</b> *z_data);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>Function reads raw(ADC values) Touch panel values from FIFO(first in FIFO, last touched) for X, Y, and Z.</p>
+          </td>
+        </tr>
+     
+		<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>x_data</code> pointer to value that will recieve X data value.</li>
+				<li><code>y_data:</code> pointer to value that will recieve Y data value.</li>
+				<li><code>z_data</code> pointer to value that will recieve Z data value.</li>
+            </ul>
+          </td>
+        </tr>
+      
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK if reading goes OK</p>
+			<p>STMPE610_FAILURE if there are no data sets to be read.(FIFO empty)</p>
+          </td>
+        </tr>	  
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Read raw Touch panel (ADC conversion) values (X, Y, and Z)</i>
+STMPE610_GetRawXYZ(&amp;adc_x, &amp;adc_y, &amp;adc_z );
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>none.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    <!-- kraj tabele -->   
+    
+        <!-- -->
+    <h3 id="STMPE610_GetXYZ">STMPE610_GetXYZ</h3>
+
+
+    <!-- tabela: STMPE610_GetXYZ -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_GetXYZ(<b>unsigned int</b> *x_data, <b>unsigned int</b> *y_data, <b>unsigned short</b> *z_data);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			<p>Function reads Touch panel coordinate(pixel) from FIFO(first in FIFO, last touched), for X, Y, and Z</p>
+          </td>
+        </tr>
+     
+		<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>x_data:</code> pointer to value that will recieve X coordinate.</li>
+				<li><code>y_data:</code> pointer to value that will recieve Y coordinate.</li>
+				<li><code>z_data:</code> pointer to value that will recieve Z coordinate.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>STMPE610_OK if reading goes OK</p>
+			<p>STMPE610_FAILURE if there are no data sets to be read.(FIFO empty)</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//  Read raw Touch panel coordinates(pixel) (X, Y, and Z)</i>
+STMPE610_GetXYZ(&amp;x_px, &amp;y_px, &amp;z_px);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>none.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    <!-- kraj tabele -->   
+    <!-- -->
+	
+	<h3 id="STMPE610_PressDetect">STMPE610_PressDetect</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_PressDetect();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function detects it touch panel has been pressed and also returns pendown value.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li>None.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>One: if touchscreen has been pressed.</p>
+            <p>Zero: if touchscreen hasn't been pressed.</p>
+			<p>Additionaly, function returns value of PenDown (detects changes on touchscreen, PressDown or PressUp).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+  if (STMPE610_PressDetect()) {
+    ...
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Function resets FIFO buffer.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->
+	
+    <h3 id="STMPE610_GetCoordinates">STMPE610_GetCoordinates</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_GetCoordinates(<b>unsigned int</b> *x_coordinate, <b>unsigned int</b> *y_coordinate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function returns coordinates(in pixels) where touchscreen has been pressed.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>x_coordinate:</code> Pointer to 2byte variable that holds X coordinate.</li>
+             	<li><code>y_coordinate:</code> Pointer to 2byte variable that holds Y coordinate.</li>
+            </ul>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+            <p>0x00 : if returned values are correct<br>
+			       0x01 : if returned values are not valid (no data sets available)<br>
+			       0x02 : if touch pressed didnt exceed threshold</p>
+            </ul>
+          </td>
+        </tr>	       
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+  if (STMPE610_GetCoordinates(&Xcoord, &Ycoord) == 0) {
+    ...
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->		
+	
+    <!-- -->
+    <h3 id="STMPE610_GetLastCoordinates">STMPE610_GetLastCoordinates</h3>
+
+
+    <!-- tabela: STMPE610_GetLastCoordinates -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> STMPE610_GetLastCoordinates(<b>unsigned int</b> *x_coordinate, <b>unsigned int</b> *y_coordinate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>Returns last display coordinates (from FIFO register) where touch panel has been pressed.</p>
+          </td>
+        </tr>
+     
+		<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>x_coordinate</code> pointer to x coordinate.</li>
+				<li><code>y_coordinate</code> pointer to y coordinated.</li>
+            </ul>
+          </td>
+        </tr>
+      
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>0x00 : if returned values are correct<br>
+			       0x01 : if returned values are not valid (no data sets available)<br>
+			       0x02 : if touch pressed didnt exceed threshold</p>
+          </td>
+        </tr>	  
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Get last valid value from FIFO </i>
+STMPE610_GetLastCoordinates(&amp;x_c, &amp;y_c);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>If FIFO if full, 128th value is returned.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->       
+
+    <h3 id="STMPE610_SetCalibrationConsts">STMPE610_SetCalibrationConsts</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_SetCalibrationConsts(TTPConstants *TPConstsStruct);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function sets calibration constants and orientation by structure defined parameters.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>TPConstsStruct:</code> Pointer to TTPConstants previously filled with correct values.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">typedef struct {</td>
+                        <td valign="top"></td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  unsigned int X_Min;</td>
+                        <td valign="top">X Min parameter goes here.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  unsigned int X_Max;</td>
+                        <td valign="top">X Max value goes here.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  unsigned int Y_Min;</td>
+                        <td valign="top">Y Min parameter goes here.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  unsigned int Y_Max;</td>
+                        <td valign="top">Sets tracking index to 32 pixels.</td>
+                      </tr>
+					  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  char         Rotate;</td>
+                        <td valign="top">Rotation value goes here. To explain this further if minimum of display (coordinates 0,0) are at the samo spot as minimum of touchscreen (lowest X and Y values) Rotate parameter shoud be zero. Consequently, if touchscreen minimum is 90 degrees offset (clockwise rotation) rotate parameter should be one (180 degrees translates to Rotate = 2 and 270 degrees translates to Rotate = 3).</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">} TTPConstants;	</td>
+                        <td valign="top"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TTPConstants TPConstsStruct;
+
+TPConstsStruct.X_Max = 3898;
+TPConstsStruct.X_Min = 137;
+TPConstsStruct.Y_Max = 3828;
+TPConstsStruct.Y_Min = 362;
+TPConstsStruct.Rotate = 0;
+TSC_set_Calib_Consts(&TPConstsStruct);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>Manual calibration procedure does all this automaticaly upon succesful calibration of touchscreen.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->		
+	
+	
+    <h3 id="STMPE610_GetCalibrationConsts">STMPE610_GetCalibrationConsts</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_GetCalibrationConsts(TTPConstants *TPConstsStruct);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function returns calibration constants and orientation to structure previously defined.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>TPConstsStruct:</code> Pointer to TTPConstants to be filled with values from library.</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">typedef struct {</td>
+                        <td valign="top"></td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  unsigned int X_Min;</td>
+                        <td valign="top">X Min parameter goes here.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  unsigned int X_Max;</td>
+                        <td valign="top">X Max value goes here.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  unsigned int Y_Min;</td>
+                        <td valign="top">Y Min parameter goes here.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  unsigned int Y_Max;</td>
+                        <td valign="top">Sets tracking index to 32 pixels.</td>
+                      </tr>
+					  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">  char         Rotate;</td>
+                        <td valign="top">Rotation value goes here. To explain this further if minimum of display (coordinates 0,0) are at the samo spot as minimum of touchscreen (lowest X and Y values) Rotate parameter shoud be zero. Consequently, if touchscreen minimum is 90 degrees offset (clockwise rotation) rotate parameter should be one (180 degrees translates to Rotate = 2 and 270 degrees translates to Rotate = 3).</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">} TTPConstants;	</td>
+                        <td valign="top"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Properly initialized <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, and <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> module.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TTPConstants TPConstsStruct;
+
+STMPE610_GetCalibrationConsts(&TPConstsStruct);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->		
+	
+	
+    <h3 id="STMPE610_SetDefaultMode">STMPE610_SetDefaultMode</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_SetDefaultMode();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Procedure sets default <acronym title="S-Touch advanced touchscreen controller">STMPE610</acronym> touchscreen values neccesary for normal operation.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li>None.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_SetDefaultMode();
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->		
+	
+	
+	<h3 id="STMPE610_Rotate180">STMPE610_Rotate180</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_Rotate180(<b>char</b> rotate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function rotates touchscreen by 180 degrees.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>rotate:</code> Pointer to byte variable that holds information about state of pen/press (weather pen is pressed down or lifted up)</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ROTATE_0</td>
+                        <td valign="top">Rotate touchscreen back to 0 degrees (if it has been previously rotated by 180 degrees)</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_ROTATE_180</td>
+                        <td valign="top">Rotate touchscreen by 180 degrees.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>None.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+STMPE610_Rotate180(STMPE610_ROTATE_180);
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+	
+    <!-- kraj tabele -->	
+
+    <!-- -->
+
+	<h3 id="STMPE610_CalibratePoint">STMPE610_CalibratePoint</h3>
+
+
+    <!-- tabela: STMPE610x_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> STMPE610_CalibratePoint(_point : byte);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function calibrates touchscreen.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>rotate:</code> Pointer to byte variable that holds information about state of pen/press (weather pen is pressed down or lifted up)</li>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FIRST_CORNER</td>
+                        <td valign="top">First corner point.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_SECOND_CORNER</td>
+                        <td valign="top">Second corner point.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_THIRD_CORNER</td>
+                        <td valign="top">Third corner point.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">STMPE610_FOURTH_CORNER</td>
+                        <td valign="top">Fourth corner point.</td>
+                      </tr>                      
+                    </tbody>
+                  </table>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>None.</p>			
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+STMPE610_CalibratePoint(_STMPE610_FIRST_CORNER);
+</pre>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li>None.</li>
+    	      </ul>
+          </td>
+        </tr>    
+      </tbody>
+    </table>
+    <!-- kraj tabele -->	
+
+    <div class="feedback">
+            Copyright (c) 2002-2018 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+</body>
+
+</html>

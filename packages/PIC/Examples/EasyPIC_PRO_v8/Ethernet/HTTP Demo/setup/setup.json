@@ -1,0 +1,245 @@
+{
+    "board": {
+        "category": "Development board",
+        "icon": "images/easypic-pro-v8.png",
+        "mikrobus_count": 5,
+        "name": "EasyPIC PRO v8",
+        "tft_display": null,
+        "version": ""
+    },
+    "display": {
+        "icon": ":/block_icon",
+        "init_code": null,
+        "name": "No display"
+    },
+    "mcu": {
+        "architecture": "PIC",
+        "device_id": "PIC18F97J60|100|TQFP",
+        "family": "PIC18",
+        "flash": "128KB",
+        "icon": "images/micro_chip.png",
+        "isMCUCard": false,
+        "max_speed": "42MHz",
+        "name": "PIC18F97J60",
+        "pin_count": "100",
+        "ram": "3,808B",
+        "settings": {
+            "clock": 25,
+            "config_registers": [
+                {
+                    "fields": [
+                        {
+                            "key": "WDTEN",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "STVR",
+                            "value": "00000020"
+                        },
+                        {
+                            "key": "XINST",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "DEBUG",
+                            "value": "00000080"
+                        }
+                    ],
+                    "key": "CONFIG1L"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "CP0",
+                            "value": "00000004"
+                        },
+                        {
+                            "key": "SIGN",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "RESERVED",
+                            "value": "000000f0"
+                        }
+                    ],
+                    "key": "CONFIG1H"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "FOSC",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "FOSC2",
+                            "value": "00000004"
+                        },
+                        {
+                            "key": "FCMEN",
+                            "value": "00000040"
+                        },
+                        {
+                            "key": "IESO",
+                            "value": "00000080"
+                        }
+                    ],
+                    "key": "CONFIG2L"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "WDTPS",
+                            "value": "0000000f"
+                        },
+                        {
+                            "key": "RESERVED",
+                            "value": "000000f0"
+                        }
+                    ],
+                    "key": "CONFIG2H"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "EASHFT",
+                            "value": "00000008"
+                        },
+                        {
+                            "key": "MODE",
+                            "value": "00000030"
+                        },
+                        {
+                            "key": "BW",
+                            "value": "00000040"
+                        },
+                        {
+                            "key": "WAIT",
+                            "value": "00000080"
+                        }
+                    ],
+                    "key": "CONFIG3L"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "CCP2MX",
+                            "value": "00000001"
+                        },
+                        {
+                            "key": "ECCPMX",
+                            "value": "00000002"
+                        },
+                        {
+                            "key": "ETHLED",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "RESERVED",
+                            "value": "000000f0"
+                        }
+                    ],
+                    "key": "CONFIG3H"
+                }
+            ],
+            "mcu": "PIC18F97J60",
+            "package": ""
+        },
+        "vendor": "Microchip"
+    },
+    "name": "EasyPIC PRO v8 PIC18F97J60 Ethernet",
+    "prog": {
+        "description": "CODEGRIP Suite is a powerful software tool. It is used to intelligently manage programming tasks, as well as various other options and settings of the CODEGRIP.",
+        "icon": "icon.png",
+        "name": "CODEGRIP",
+        "planet_debug_compatible": "Yes",
+        "settings": {
+            "auto_start_local_gdb": true,
+            "control_port": "1235",
+            "ip_address": "127.0.0.1",
+            "port": "1234",
+            "remote_addresses": [],
+            "remote_password": "",
+            "selected_device": null,
+            "selected_options": {
+                "Erase Type": {
+                    "group": "Target Operation",
+                    "value": "Mass erase"
+                },
+                "Programming Type": {
+                    "group": "Target Connection",
+                    "value": "Low voltage"
+                },
+                "Protocol": {
+                    "group": "Target Connection",
+                    "value": "ICSP"
+                },
+                "Speed": {
+                    "group": "Target Connection",
+                    "value": "4 MHz"
+                },
+                "Verify Type": {
+                    "group": "Target Operation",
+                    "value": "Readback"
+                },
+                "Verify after Write": {
+                    "group": "Target Operation",
+                    "value": "Enabled"
+                }
+            }
+        },
+        "uid": "codegrip"
+    },
+    "sdk": {
+        "families": [
+            "PIC18",
+            "PIC16",
+            "PIC12",
+            "PIC10"
+        ],
+        "icon": "Resources/icon.png",
+        "legacy": true,
+        "name": "mikroC for PIC Legacy",
+        "sdk_development_kit": false,
+        "uuid": "sdk.mikroc.legacy.pic",
+        "version": "7.6.0"
+    },
+    "toolchain": {
+        "icon": "mikroC_pic.png",
+        "language": "MikroC",
+        "name": "mikroC AI for PIC",
+        "settings": {
+            "actions": {
+                "build": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--build all",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                },
+                "clean": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--clean",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "memake.settings": {
+                "BOARD_NAME": "BOARD_EASYPIC_PRO_V8"
+            },
+            "output_path": ""
+        },
+        "uid": "mikrocpic",
+        "vendor": "MikroElektronika",
+        "version": "1.1.1"
+    },
+    "uid": "bc16a539-56f2-4f06-9c74-cb57fc7f499e"
+}

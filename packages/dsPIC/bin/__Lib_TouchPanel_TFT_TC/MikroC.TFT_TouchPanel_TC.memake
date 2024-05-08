@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.TFT_TouchPanel_TC",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_TouchPanel_TFT_TC.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC30F4013$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

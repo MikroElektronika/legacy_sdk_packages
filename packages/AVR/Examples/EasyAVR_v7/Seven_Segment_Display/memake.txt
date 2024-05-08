@@ -1,0 +1,23 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: Seven_Segment_Display
+
+type: executable
+
+sources: {
+    Seven_Segment_Display.c
+    Display_Utils.c
+}
+
+depends: {
+    MikroC.System
+}
+
+others: {
+    ./7SEG.png
+}
+
+headers: {
+    Display_Utils.h
+}

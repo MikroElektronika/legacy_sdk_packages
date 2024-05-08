@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_UART_123_L4.+x.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L433RB$|^STM32L451CE$|^STM32L452RE$|^STM32L452VC$|^STM32L431RB$|^STM32L443RC$|^STM32L433VC$|^STM32L451VC$|^STM32L433CC$|^STM32L452RC$|^STM32L462VE$|^STM32L451CC$|^STM32L462RE$|^STM32L431VC$|^STM32L443VC$|^STM32L451RE$|^STM32L431CB$|^STM32L433RC$|^STM32L451VE$|^STM32L462CE$|^STM32L431CC$|^STM32L431RC$|^STM32L452CE$|^STM32L452CC$|^STM32L452VE$|^STM32L443CC$|^STM32L451RC$|^STM32L433CB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

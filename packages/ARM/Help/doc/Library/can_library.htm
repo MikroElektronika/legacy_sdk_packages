@@ -1,0 +1,3704 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>CAN Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroelektronika.co.yu">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">CAN Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="adc_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="canspi_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Controller Area Network">CAN</acronym> Library</h2></a>
+
+    <p>The mikroC PRO for ARM provides a library (driver) for working with the ARM <acronym title="Controller Area Network">CAN</acronym> module.</p>
+    <p>The <acronym title="Controller Area Network">CAN</acronym> is a very robust protocol that has error detection and signalization, self–checking and fault confinement. Faulty <acronym title="Controller Area Network">CAN</acronym> data and remote frames are re-transmitted automatically, similar to the Ethernet.</p>
+    <p> Data transfer rates depend on distance. For example, 1 Mbit/s can be achieved at network lengths below 40m while 250 Kbit/s can be achieved at network lengths below 250m. The greater distance the lower maximum bitrate that can be achieved. The lowest bitrate defined by the standard is 200Kbit/s. Cables used are shielded twisted pairs.</p>
+    <p><acronym title="Controller Area Network">CAN</acronym> supports two message formats:</p>
+    <ul>
+      <li>Standard format, with 11 identifier bits and</li>
+      <li>Extended format, with 29 identifier bits</li>
+    </ul>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+      <ul>
+        <li>Consult the <acronym title="Controller Area Network">CAN</acronym> standard about <acronym title="Controller Area Network">CAN</acronym> bus termination resistance.</li>    
+    	  <li><acronym title="Controller Area Network">CAN</acronym> library routines require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	  <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#canxsetoperationmode">CANxSetOperationMode</a></li>
+      <li><a href="#canxgetoperationmode">CANxGetOperationMode</a></li>
+      <li><a href="#canxinitialize">CANxInitialize</a></li>
+      <li><a href="#canxInitializeadvanced">CANxInitializeAdvanced</a></li>
+      <li><a href="#canxsetbaudrate">CANxSetBaudRate</a></li>
+      <li><a href="#canxsetmask">CANxSetMask</a></li>
+      <li><a href="#cansetmask">CANSetMask</a></li>
+      <li><a href="#canxsetfilter">CANxSetFilter</a></li>
+      <li><a href="#cansetfilterscale16">CANSetFilterScale16</a></li>
+      <li><a href="#cansetfilterscale32">CANSetFilterScale32</a></li>
+      <li><a href="#canxreadmessage">CANxReadMessage</a></li>
+      <li><a href="#canxread">CANxRead</a></li>
+      <li><a href="#canxwritemessage">CANxWriteMessage</a></li>
+      <li><a href="#canxwrite">CANxWrite</a></li>
+      <li><a href="#canxconfiguremessage">CANxConfigureMessage</a></li>
+      <li><a href="#canxbitrateset">CANxBitRateSet</a></li>
+      <li><a href="#canslavestartbank">CANSlaveStartBank</a></li>	
+
+  		<li><a href="#canx_enableoperationmode">CANx_EnableOperationMode</li>
+	    <li><a href="#canx_exitoperationmode">CANx_ExitOperationMode</li>
+			<li><a href="#canx_init">CANx_Init</li>
+			<li><a href="#canx_init_advanced">CANx_Init_Advanced</li>
+			<li><a href="#canx_setbitrate">CANx_SetBitRate</li>
+			<li><a href="#canx_setrxmasktype">CANx_SetRxMaskType</li>
+			<li><a href="#canx_setrxindividualmask">CANx_SetRxIndividualMask</li>
+			<li><a href="#canx_getreceivestatus">CANx_GetReceiveStatus</li>
+			<li><a href="#canx_setrxmbglobalmask">CANx_SetRxMbGlobalMask</li>
+			<li><a href="#canx_configrxmb">CANx_ConfigRxMb</li>
+			<li><a href="#canx_configtxmb">CANx_ConfigTxMb</li>
+			<li><a href="#canx_write">CANx_Write</li>
+			<li><a href="#canx_read">CANx_Read</li>
+			<li><a href="#canx_interrupthandler">CANx_InterruptHandler</li>
+    </ul>
+    
+    <!-- -->
+
+
+    <h3 id="canxsetoperationmode">CANxSetOperationMode</h3>
+
+
+    <!-- tabela: CANxSetOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs :</i>
+            <p><b>void</b> CANxSetOperationMode(<b>unsigned long</b> mode, <b>unsigned long</b> wait_flag);</p>
+            <i>// for ST MCUs :</i>
+            <p><b>unsigned char</b> CANxSetOperationMode(<b>unsigned char</b> CAN_OperatingMode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the <acronym title="Controller Area Network">CAN</acronym> module to requested mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+         	  <ul>
+              <li><code>mode:</code> <acronym title="Controller Area Network">CAN</acronym> module operation mode. Valid values: <code>CAN_OP_MODE</code> constants. See <a href="#canx_op_mode">CAN_OP_MODE</a> constants.</li>
+              <li><code>CAN_OperatingMode:</code> <acronym title="Controller Area Network">CAN</acronym> module operation mode for ST MCUs. Valid values: <code>CAN_OP_MODE</code> constants. See <a href="#canx_op_mode">CAN_OP_MODE</a> constants.</li>
+              <li><code>wait_flag:</code> <acronym title="Controller Area Network">CAN</acronym> mode switching verification request. If <code>WAIT == 0</code>, the call is non-blocking. The function does not verify if the <acronym title="Controller Area Network">CAN</acronym> module is switched to requested mode or not. Caller must use <a href="#canxgetoperationmode">CANxGetOperationMode</a> to verify correct operation mode before performing mode specific operation. If <code>WAIT != 0</code>, the call is blocking &#8211; the function won&#8217;t &#8220;return&#8221; until the requested mode is set.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>0:</code> if operation was successul,</li>
+            	<li><code>1:</code> if operation has failed.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set the CAN1 module into configuration mode (wait inside CAN1SetOperationMode until this mode is set)</i>
+CAN1SetOperationMode(_CAN_MODE_CONFIG, 0xFF);</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxgetoperationmode">CANxGetOperationMode</h3>
+
+
+    <!-- tabela: CANxGetOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> CANxGetOperationMode();</p>
+          </td>
+        </tr>
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function returns current operation mode of the <acronym title="Controller Area Network">CAN</acronym> module. See <a href="#canx_op_mode">CAN_OP_MODE</a> constants or device datasheet for operation mode codes.</p>
+            <p>Valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+ 
+         <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Current operation mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// check whether the CAN1 module is in Normal mode and if it is then do something.</i>
+<b>if</b> (CAN1GetOperationMode() == _CAN_MODE_NORMAL) {
+  ...
+}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxinitialize">CANxInitialize</h3>
+
+
+    <!-- tabela: CANxInitialize -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs with dedicated PORT functions and ST MCUs:</i>
+            <p><b>void</b> CANxInitialize(<b>unsigned int</b> SJW, <b>unsigned int</b> BRP, <b>unsigned int</b> PHSEG1, <b>unsigned int</b> PHSEG2, <b>unsigned int</b> PROPSEG, <b>unsigned long</b> flags);</p>
+            <i>// for Stellaris MCUs with alternative PORT functions on <acronym title="General Purpose Input/Output">GPIO</acronym> pins :</i>
+            <p><b>void</b> CANxInitialize(<b>unsigned int</b> SJW, BRP, PHSEG1, PHSEG2, PROPSEG, <b>unsigned long</b> flags, <b>const</b> Module_Struct *module);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+            <p>The internal <acronym title="Controller Area Network">CAN</acronym> module is set to :</p>
+              <ul>
+              	<li> Disable <acronym title="Controller Area Network">CAN</acronym> capture</li>
+              	<li> Continue <acronym title="Controller Area Network">CAN</acronym> operation in Idle mode</li>
+              	<li> Do not abort pending transmissions</li>
+                <li> Fcan clock : 4*Tcy (Fosc)</li>
+                <li> Baud rate is set according to given parameters</li>
+                <li> <acronym title="Controller Area Network">CAN</acronym> mode is set to Normal</li>
+                <li> Filter and mask registers IDs are set to zero</li>
+                <li> Filter and mask message frame type is set according to <code>CAN_CONFIG_FLAGS</code> value</li>
+              </ul>
+            <p><code>SAM</code>, <code>SEG2PHTS</code>, <code>WAKFIL</code> and <code>DBEN</code> bits are set according to <code>CAN_CONFIG_FLAGS</code> value.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>SJW</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>BRP</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG1</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG2</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PROPSEG</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>flags</code> is formed from predefined constants. See <a href="#canx_config_flag">CAN_CONFIG_FLAGS</a> constants.</li>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_CAN</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li> 
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// initialize the CAN1 module with appropriate baud rate and message acceptance flags along with the sampling rules</i>
+<b>unsigned int</b> can_config_flags;
+...  
+Can_Init_Flags = _CAN_CONFIG_SAMPLE_THRICE &#38;            <i>// Form value to be used</i>
+                   _CAN_CONFIG_PHSEG2_PRG_ON &#38;            <i>// with CAN1Initialize</i>
+                   _CAN_CONFIG_XTD_MSG &#38;
+                   _CAN_CONFIG_MATCH_MSG_TYPE &#38;
+                   _CAN_CONFIG_LINE_FILTER_OFF;
+
+CAN1Initialize(1,3,3,3,1,Can_Init_Flags);              <i>// initialize the CAN1 module</i></pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+            <li><acronym title="Controller Area Network">CAN</acronym> mode NORMAL will be set on exit.</li>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxinitializeadvanced">CANxInitializeAdvanced</h3>
+
+
+    <!-- tabela: CANxInitialize -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CAN1InitializeAdvanced(<b>unsigned int</b> SJW, BRP, PHSEG1, PHSEG2, PROPSEG, <b>unsigned long</b> flags, <b>const</b> Module_Struct *module);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the <acronym title="Controller Area Network">CAN</acronym> with desired <acronym title="Controller Area Network">CAN</acronym> module pinout for ST devices.</p>
+            <p>The internal <acronym title="Controller Area Network">CAN</acronym> module is set to :</p>
+              <ul>
+              	<li> Disable <acronym title="Controller Area Network">CAN</acronym> capture</li>
+              	<li> Continue <acronym title="Controller Area Network">CAN</acronym> operation in Idle mode</li>
+              	<li> Do not abort pending transmissions</li>
+                <li> Fcan clock : 4*Tcy (Fosc)</li>
+                <li> Baud rate is set according to given parameters</li>
+                <li> <acronym title="Controller Area Network">CAN</acronym> mode is set to Normal</li>
+                <li> Filter and mask registers IDs are set to zero</li>
+                <li> Filter and mask message frame type is set according to <code>CAN_CONFIG_FLAGS</code> value</li>
+              </ul>
+            <p> <code>SAM</code>, <code>SEG2PHTS</code>, <code>WAKFIL</code> and <code>DBEN</code> bits are set according to <code>CAN_CONFIG_FLAGS</code> value.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>SJW</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>BRP</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG1</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG2</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PROPSEG</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>flags</code> is formed from predefined constants. See <a href="#canx_config_flag">CAN_CONFIG_FLAGS</a> constants.</li>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_CAN</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// initialize the CAN1 module with appropriate baud rate and message acceptance flags along with the sampling rules</i>
+<b>unsigned int</b> can_config_flags;
+...  
+Can_Init_Flags = _CAN_CONFIG_SAMPLE_THRICE &#38;            <i>// Form value to be used</i>
+                   _CAN_CONFIG_PHSEG2_PRG_ON &#38;            <i>// with CAN1Initialize</i>
+                   _CAN_CONFIG_XTD_MSG &#38;
+                   _CAN_CONFIG_MATCH_MSG_TYPE &#38;
+                   _CAN_CONFIG_LINE_FILTER_OFF;
+
+CAN1Initialize(1,3,3,3,1,Can_Init_Flags, @_GPIO_MODULE_CAN1_PA11_12);              <i>// initialize the CAN1 module</i>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+            <li><acronym title="Controller Area Network">CAN</acronym> mode NORMAL will be set on exit.</li>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxsetbaudrate">CANxSetBaudRate</h3>
+
+
+    <!-- tabela: CANxSetBaudRate -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxSetBaudRate(<b>unsigned int</b> SJW, <b>unsigned int</b> BRP, <b>unsigned int</b> PHSEG1, <b>unsigned int</b> PHSEG2, <b>unsigned int</b> PROPSEG);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets <acronym title="Controller Area Network">CAN</acronym> baud rate. Due to complexity of the <acronym title="Controller Area Network">CAN</acronym> protocol, you can not simply force a bps value. Instead, use this function when <acronym title="Controller Area Network">CAN</acronym> is in Config mode. Refer to datasheet for details.</p>
+            <p><code>SAM</code>, <code>SEG2PHTS</code> and <code>WAKFIL</code> bits are set according to <code>CAN_CONFIG_FLAGS</code> value. Refer to datasheet for details.</p>
+            <p>Valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>SJW</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>BRP</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG1</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG2</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PROPSEG</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+CAN1SetBaudRate(1,3,3,3,1);             <i>// set the CAN1 module baud rate</i></pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxsetmask">CANxSetMask</h3>
+
+
+    <!-- tabela: CANxSetMask -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxSetMask(<b>unsigned long</b> objID, <b>unsigned long</b> maskValue, <b>unsigned long</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function configures appropriate mask for advanced message filtering.</p>
+            <p>Valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>objID:</code> message object ID values. Valid values : 1 - 32.</li>
+              <li><code>maskValue:</code> mask value for message object.</li>
+              <li><code>flags:</code> selects type of message to filter. See <a href="#canx_mask">CAN_MASK</a> constants.</li>	    
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// set appropriate filter mask and message type value</i>
+CAN1SetOperationMode(_CAN_MODE_CONFIG,0xFF);              <i>// set CONFIGURATION mode (CAN1 module must be in config mode for mask settings)</i>
+CAN1SetMask(_CAN_MASK_0, -1, _CAN_CONFIG_USE_DIR_FILTER &#38; _CAN_CONFIG_XTD_MSG);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cansetmask">CANSetMask</h3>
+
+
+    <!-- tabela: CANxSetMask -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSetMask(<b>unsigned char</b> Filter_Number, <b>unsigned long</b> maskValue, <b>unsigned char</b> CAN_FILTAR_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function configures appropriate mask for advanced message filtering.</p>
+            <p>Valid only for ST devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>Filter_Number:</code> filter number.</li>
+              <li><code>maskValue:</code> mask value for message object.</li>
+              <li><code>CAN_FILTAR_FLAGS:</code> selects type of message to filter. See <a href="#canx_mask">CAN_MASK</a> constants.</li>	    
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// set appropriate filter mask and message type value</i>
+CAN1SetOperationMode(_CAN_MODE_CONFIG,0xFF);              <i>// set CONFIGURATION mode (CAN1 module must be in config mode for mask settings)</i>
+CANSetMask(1, -1, _CAN_FILTER_ENABLED);   <i>// set all mask1 bits to ones</i>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxsetfilter">CANxSetFilter</h3>
+
+
+    <!-- tabela: CANxSetFilter -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxSetFilter(<b>unsigned long</b> objID, <b>unsigned long</b> filterValue, <b>unsigned long</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets message filter. Given <code>filterValue</code> is bit adjusted to appropriate buffer mask registers.</p>
+            <p>Valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>objID:</code> message object ID values. Valid values : 1 - 32.</li>
+              <li><code>filterValue:</code> filter value for message object.</li>
+              <li><code>flags:</code> selects type of message to filter. See <a href="#canx_filter">CAN_FILTER</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// set appropriate filter value and message type</i>
+CAN1SetOperationMode(_CAN_MODE_CONFIG,0xFF);                  <i>// set CONFIGURATION mode (CAN1 module must be in config mode for filter settings)</i>
+
+CAN1SetFilter(1, -1, _CAN_CONFIG_XTD_MSG);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cansetfilter">CANSetFilter</h3>
+
+
+    <!-- tabela: CANxSetFilter -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSetFilter(<b>unsigned char</b> Filter_Number, <b>unsigned long</b> ID, <b>unsigned long</b> CAN_FILTAR_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets message filter. Given <code>filterValue</code> is bit adjusted to appropriate buffer mask registers.</p>
+            <p>Valid only for ST devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>Filter_Number:</code> Filter number.</li>
+              <li><code>ID:</code> filter ID.</li>
+              <li><code>CAN_FILTAR_FLAGS:</code> selects type of message to filter. See <a href="#canx_filter">CAN_FILTER</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for ST devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cansetfilterscale16">CANSetFilterScale16</h3>
+
+
+    <!-- tabela: CANxSetFilter -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSetFilter(<b>unsigned char</b> Filter_Number, <b>unsigned char</b> CAN_FILTAR_FLAGS, <b>unsigned long</b> ID, <b>unsigned long</b> mask_or_ID, <b>unsigned long</b> ID1, <b>unsigned long</b> mask1_or_ID1);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>To optimize and adapt the filters to the application needs, each filter can be scaled independently. This routine applies two 16-bit filters to the STDID[10:0], RTR and IDE bits.
+            <p>Valid only for ST devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>Filter_Number:</code> Filter number.</li>
+              <li><code>CAN_FILTAR_FLAGS:</code> selects type of message to filter. See <a href="#canx_filter">CAN_FILTER</a> constants.</li>
+              <li><code>ID:</code> and <code>ID1</code>: filter IDs.</li>
+              <li><code>mask_or_ID</code> and <code>mask_or_ID</code>: Id/Mask mode or Identifier list mode for the filters.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for ST devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cansetfilterscale32">CANSetFilterScale32</h3>
+
+
+    <!-- tabela: CANxSetFilter -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSetFilter(<b>unsigned char</b> Filter_Number, <b>unsigned char</b> CAN_FILTAR_FLAGS, <b>unsigned long</b> ID, <b>unsigned long</b> mask_or_ID);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>To optimize and adapt the filters to the application needs, each filter can be scaled independently. This routine applies one 32-bit filter to the STDID[10:0], IDE, EXTID[17:0] and RTR bits.
+            <p>Valid only for ST devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>Filter_Number:</code> Filter number.</li>
+              <li><code>CAN_FILTAR_FLAGS:</code> selects type of message to filter. See <a href="#canx_filter">CAN_FILTER</a> constants.</li>
+              <li><code>ID:</code> filter ID.</li>
+              <li><code>mask_or_ID:</code> Id/Mask mode or Identifier list mode for the filter.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>When using this function and CAN2 module, used filters must be in the range from 14 to 27, while for the CAN1 module filters must be in the range from 0 to 13.</li>
+            <li>Valid only for ST devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxreadmessage">CANxReadMessage</h3>
+
+
+    <!-- tabela: CANxReadBuffer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> CANxReadMessage(<b>unsigned long</b> objID, <b>unsigned long</b> *msgId, <b>unsigned char</b> *pMsgData, <b>unsigned long</b> *msgLen, <b>unsigned long</b> *flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function reads message from the desired message object and processes it in the following way :</p>
+            	<ul>
+            		<li>Object ID is retrieved and stored to location pointed by <code>objID</code> pointer.</li>
+            		<li>Message ID is retrieved and stored to location pointed by <code>msgId</code> pointer.</li>
+            		<li>Message data is retrieved and stored to array pointed by <code>pMsgData</code> pointer.</li>
+            		<li>Message length is retrieved and stored to location pointed by <code>msgLen</code> pointer.</li>
+            		<li>Message flags are retrieved and stored to location pointed by <code>flags</code> pointer.</li>
+            	</ul>		
+            <p>Valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>objID:</code> message object ID to be read from. Valid values : 1 - 32.</li>
+              <li><code>msgId:</code> message object memory address.</li>
+              <li><code>pMsgData:</code> message data address.</li>
+              <li><code>msgLen:</code> message length address.</li>
+              <li><code>flags:</code> message flags address. For message receive flags format refer to <a href="#canx_rx_msg_flag">CAN_RX_MSG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+   
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li><code>0</code> if nothing is received.</li>
+              <li><code>0xFFFF</code> if message is received.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+            <p>The <acronym title="Controller Area Network">CAN</acronym> module must be in a mode in which receiving is possible. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre> 
+if (msg_rcvd = CAN1ReadMessage(objID, &msgId, pMsgData, &msgLen, &flags)) {
+  ...
+}</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxread">CANxRead</h3>
+
+
+    <!-- tabela: CANxRead -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris devices</i>
+            <p><b>unsigned long</b> CANxRead(<b>unsigned long</b> *msgId, <b>unsigned char</b> *pMsgData, <b>unsigned long</b> *msgLen, <b>unsigned long</b> *flags);</p>
+            <i>// for ST devices</i>
+            <p><b>unsigned char</b> CANxRead(<b>unsigned char</b> FIFONumber, <b>unsigned long</b> *id, <b>unsigned char</b> *data_, <b>unsigned long</b> *datalen, <b>unsigned long</b> *CAN_RX_MSG_FLAGS);<p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function reads and processes the message from the first message object configured for reception that has received data in the following way :</p>
+            	<ul>
+            		<li>Message ID is retrieved and stored to location pointed by <code>msgId (id)</code> pointer.</li>
+            		<li>Message data is retrieved and stored to array pointed by <code>pMsgData (data_)</code> pointer.</li>
+            		<li>Message length is retrieved and stored to location pointed by <code>msgLen (datalen)</code> pointer.</li>
+            		<li>Message flags are retrieved and stored to location pointed by <code>flags (CAN_RX_MSG_FLAGS)</code> pointer.</li>
+            	</ul>		
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>FIFONumber:</code> number of FIFO register. Valid only for ST devices.</li>
+              <li><code>msgId:</code> message object memory address.</li>
+              <li><code>pMsgData:</code> message data address.</li>
+              <li><code>msgLen:</code> message length address.</li>
+              <li><code>flags:</code> message flags address. For message receive flags format refer to <a href="#canx_rx_msg_flag">CAN_RX_MSG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+   
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li><code>0</code> if nothing is received.</li>
+              <li><code>0xFFFF</code> if message is received.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+            <p>The <acronym title="Controller Area Network">CAN</acronym> module must be in a mode in which receiving is possible. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// check the CAN1 module for received messages. If any was received do something.</i> 
+<b>unsigned int</b> msg_rcvd, rx_flags, data_len;
+<b>char</b> data[8];
+<b>unsigned long</b> msg_id;
+...
+CAN1SetOperationMode(_CAN_MODE_NORMAL,0xFF);                  <i>// set NORMAL mode (CAN1 module must be in mode in which receive is possible)</i>
+...
+rx_flags = 0;                                                <i>// clear message flags</i>
+if (msg_rcvd = CAN1Read(&msg_id, &pMsgData, &msgLen, &flags)) {
+  ...
+}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxwritemessage">CANxWriteMessage</h3>
+
+
+    <!-- tabela: CANxWrite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> CANxWriteMessage(<b>unsigned long</b> objID, <b>unsigned long</b> msgID, <b>char</b> *pMsgData, <b>unsigned long</b> msgLen, <b>unsigned long</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function writes the message to the desired message object.</p>
+            <p>Valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>objID:</code> message object ID to be written to. Valid values : 1 - 32.</li>
+              <li><code>msgId:</code> message ID.</li>
+              <li><code>pMsgData:</code> message data address.</li>
+              <li><code>msgLen:</code> message length.</li>
+              <li><code>flags:</code> message flags. For message transmit flags format refer to <a href="#canx_tx_msg_flag">CAN_TX_MSG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li><code>0</code> if all message objects are busy.</li>
+              <li><code>0xFFFF</code> if at least one message object is available.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+            <p>The <acronym title="Controller Area Network">CAN</acronym> module must be in mode in which transmission is possible. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+					</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// send message extended CAN message with appropriate ID and data</i>
+<b>unsigned int</b> tx_flags;
+<b>char</b> data[8];
+<b>unsigned long</b> msg_id;
+...
+CAN1SetOperationMode(_CAN_MODE_NORMAL,0xFF);                  <i>// set NORMAL mode (CAN1 must be in mode in which transmission is possible)</i>
+
+tx_flags = _CAN_TX_PRIORITY_0 &#38;            
+           _CAN_TX_XTD_FRAME &#38;             
+           _CAN_TX_NO_RTR_FRAME;                       <i>// set message flags</i>
+CAN1WriteMessage(msg_id, data, _CAN_BUFFER_0, 1, tx_flags);</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxwrite">CANxWrite</h3>
+
+
+    <!-- tabela: CANxWrite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> CANxWrite(<b>unsigned long</b> msgID, <b>char</b> *pMsgData, <b>unsigned long</b> msgLen, <b>unsigned long</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function writes message in the first available message object configured for transmission.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>msgId:</code> message ID.</li>
+              <li><code>pMsgData:</code> message data address.</li>
+              <li><code>msgLen:</code> message length.</li>
+              <li><code>flags:</code> message flags. For message transmit flags format refer to <a href="#canx_tx_msg_flag">CAN_TX_MSG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+              <ul>
+              	<li>Return the number of mailbox that is used for transmission - 0, 1 or 2.</li>
+              	<li>If there are no empty mailboxes, function will return 0xFF.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+            <p>The <acronym title="Controller Area Network">CAN</acronym> module must be in mode in which transmission is possible. See <a href="#canxsetoperationmode">CANxSetOperationMode</a>.</p>
+					</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// send message extended CAN message with appropriate ID and data</i>
+<b>unsigned int</b> tx_flags;
+<b>char</b> data[8];
+<b>unsigned long</b> msg_id;
+...
+CAN1SetOperationMode(_CAN_MODE_NORMAL,0xFF);                  <i>// set NORMAL mode (CAN1 must be in mode in which transmission is possible)</i>
+
+tx_flags = _CAN_TX_PRIORITY_0 &#38;            
+           _CAN_TX_XTD_FRAME &#38;             
+           _CAN_TX_NO_RTR_FRAME;                       <i>// set message flags</i>
+CAN1Write(msg_id, data, 1, tx_flags);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxconfiguremessage">CANxConfigureMessage</h3>
+
+
+    <!-- tabela: CANxWrite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxConfigureMessage(<b>unsigned long</b> objID, <b>unsigned long</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function configures message object.</p>
+            <p>Valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>objID:</code> message object. Valid values : 1 - 32.</li>
+              <li><code>flags:</code> message flags. For message flags format refer to <a href="#canx_message_object">CAN_MESSAGE_OBJECT</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+					</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canxbitrateset">CANxBitRateSet</h3>
+
+
+    <!-- tabela: CANxBitRateSet -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> CANxBitRateSet(<b>unsigned long</b> ulSourceClock, <b>unsigned long</b> bitRate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to set the CAN bit timing values to a nominal setting based on a desired bit rate.</p>
+            <p>Valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>ulSourceClock:</code> system clock for the device in Hz.</li>
+              <li><code>BitRate:</code> desired bit rate.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li>conifgured bit rate or <code>0</code> if the bit rate is not valid</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Stellaris devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canslavestartbank">CANSlaveStartBank</h3>
+
+
+    <!-- tabela: CANxBitRateSet -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSlaveStartBank(<b>unsigned char</b> CAN_BankNumber);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to set the starting bank filter for the CAN slave module.</p>
+            <p>Valid only for ST devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>CAN_BankNumber:</code> start slave bank filter from 1..27.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li>conifgured bit rate or <code>0</code> if the bit rate is not valid</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for ST devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_enableoperationmode">CANx_EnableOperationMode</h3>
+
+
+    <!-- tabela: CANx_EnableOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANx_EnableOperationMode(<b>unsigned long</b> operationMode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to enable a CAN operation mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>operationMode:</code> desiured operation mode. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_NORMAL</td>
+                        <td valign="top">Normal mode (User or Supervisor).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_LISTENONLY</td>
+                        <td valign="top">Listen-Only mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_LOOPBACK</td>
+                        <td valign="top">Loop-Back mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_FREEZE</td>
+                        <td valign="top">Freeze mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_DISABLE</td>
+                        <td valign="top">Module Disable mode.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+							</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_exitoperationmode">CANx_ExitOperationMode</h3>
+
+    <!-- tabela: CANx_ExitOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_ExitOperationMode(<b>unsigned long</b> operationMode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to disable a CAN operation mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>operationMode:</code> desiured operation mode. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_NORMAL</td>
+                        <td valign="top">Normal mode (User or Supervisor).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_LISTENONLY</td>
+                        <td valign="top">Listen-Only mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_LOOPBACK</td>
+                        <td valign="top">Loop-Back mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_FREEZE</td>
+                        <td valign="top">Freeze mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_DISABLE</td>
+                        <td valign="top">Module Disable mode.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+							</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_init">CANx_Init</h3>
+
+    <!-- tabela: CANx_Init -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_Init(<b>unsigned long</b> config, <b>unsigned long</b> maxMsgBuff);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to initialize CAN module. This function will enable CAN clock, reset module to the default state, set max number for message buffer and set operational mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>config:</code> desiured operation mode. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_CLOCK_OSC</td>
+                        <td valign="top">Normal mode (User or Supervisor).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_CLOCK_PERIPHERAL_CLK</td>
+                        <td valign="top">Normal mode (User or Supervisor).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_NORMAL</td>
+                        <td valign="top">Normal mode (User or Supervisor).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_LISTENONLY</td>
+                        <td valign="top">Listen-Only mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_LOOPBACK</td>
+                        <td valign="top">Loop-Back mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_FREEZE</td>
+                        <td valign="top">Freeze mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_DISABLE</td>
+                        <td valign="top">Module Disable mode.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+							</li>
+              <li><code>maxMsgBuff:</code> maximum number of message buffers.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_init_advanced">CANx_Init_Advanced</h3>
+
+    <!-- tabela: CANx_ExitOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_Init_Advanced(<b>unsigned long</b> config, <b>unsigned long</b> maxMsgBuff, Module_Struct *module);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to initialize CAN module. This function will enable CAN clock, reset module to the default state, set max number for message buffer, set operational mode and initialize it on PB19 and PB18 pins.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>config:</code> desiured operation mode. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_CLOCK_OSC</td>
+                        <td valign="top">Normal mode (User or Supervisor).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_CLOCK_PERIPHERAL_CLK</td>
+                        <td valign="top">Normal mode (User or Supervisor).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_NORMAL</td>
+                        <td valign="top">Normal mode (User or Supervisor).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_LISTENONLY</td>
+                        <td valign="top">Listen-Only mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_LOOPBACK</td>
+                        <td valign="top">Loop-Back mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_FREEZE</td>
+                        <td valign="top">Freeze mode.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_CFG_MODE_DISABLE</td>
+                        <td valign="top">Module Disable mode.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+							</li>
+              <li><code>maxMsgBuff:</code> maximum number of message buffers.</li>
+              <li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_CAN</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_setbitrate">CANx_SetBitRate</h3>
+
+    <!-- tabela: CANx_SetBitRate -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANx_SetBitRate(<b>unsigned long</b> propSeg, <b>unsigned long</b> phaseSeg2, <b>unsigned long</b> phaseSeg1, <b>unsigned long</b> preDivider, <b>unsigned long</b> RJW);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will set all CAN time segments which define the length of Propagation Segment in the bit time, the length of Phase Buffer Segment 2 in the bit time, the length of Phase Buffer Segment 1 in the bit time, the ratio between the PE clock frequency and the Serial Clock (Sclock) frequency, and the maximum number of time quanta that a bit time can be changed by one resynchronization. (One time quantum is equal to the Sclock period.).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>propSeg</code> Propagation Segment, as defined in MCU's datasheet.</li>
+              <li><code>phaseSeg2</code> Phase Segment 2, as defined in MCU's datasheet.</li>
+              <li><code>phaseSeg1</code> Phase Segment 1, as defined in MCU's datasheet.</li>
+              <li><code>preDivider</code> Prescaler Division Factor, as defined in MCU's datasheet.</li>
+              <li><code>RJW</code> Resync Jump Width, as defined in MCU's datasheet.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_setrxmasktype">CANx_SetRxMaskType</h3>
+
+    <!-- tabela: CANx_SetBitRate -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANx_SetRxMaskType(<b>unsigned long</b> type);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will set the RX masking type.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>type:</code> RX masking type. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_RXMASK_GLOBAL</td>
+                        <td valign="top">Global masking.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_RXMASK_INDIVIDUAL</td>
+                        <td valign="top">Individual masking.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_setrxindividualmask">CANx_SetRxIndividualMask</h3>
+
+    <!-- tabela: CANx_SetRxIndividualMask -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANx_SetRxIndividualMask(<b>unsigned long</b> msgBuffIdType, <b>unsigned long</b> msgBuffIdx, <b>unsigned long</b> mask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will Set Rx individual mask as the 11-bit standard mask or the 29-bit extended mask.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>msgBuffIdType:</code> RX individual masking type. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_STD</td>
+                        <td valign="top">Standard mask.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_EXT</td>
+                        <td valign="top">Extended mask.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+              <li><code>msgBuffIdx:</code> message buffer index.</li>
+              <li><code>mask:</code> 11bit or 29bit format.</li>              	
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_getreceivestatus">CANx_GetReceiveStatus</h3>
+
+    <!-- tabela: CANx_GetReceiveStatus -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_GetReceiveStatus();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will check if CAN is receiving message.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+ 					  <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>0:</code> CAN is not receiving a message,</li>
+							<li><code>1:</code> CAN is receiving a message.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_setrxmbglobalmask">CANx_SetRxMbGlobalMask</h3>
+
+    <!-- tabela: canx_setrxmbglobalmask -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_SetRxMbGlobalMask(<b>unsigned long</b> idType, <b>unsigned long</b> mask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will set Rx message buffer global mask as the 11-bit standard mask or the 29-bit extended mask.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>idType:</code> RX individual masking type. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_STD</td>
+                        <td valign="top">Standard mask.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_EXT</td>
+                        <td valign="top">Extended mask.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+              <li><code>mask:</code> 11bit or 29bit format.</li>              	
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_configrxmb">CANx_ConfigRxMb</h3>
+
+    <!-- tabela: CANx_ConfigRxMb -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_ConfigRxMb(<b>unsigned long</b> mbIndex, <b>unsigned long</b> msgIdType, <b>unsigned long</b> dataLength, <b>unsigned long</b> msgId);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will set configure a Rx message buffer.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>mbIndex:</code> message buffer index.</li>
+              <li><code>msgIdType:</code> RX individual masking type. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_STD</td>
+                        <td valign="top">Standard mask.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_EXT</td>
+                        <td valign="top">Extended mask.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+              <li><code>dataLength:</code> length of data.</li>
+              <li><code>msgId:</code> message ID.</li>              	
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+						<li>This function will set up the message buffer fields, configure the message buffer code for Rx message buffer as NOT_USED, enable the Message Buffer interrupt, 
+					  <br>configure the message buffer code for Rx message buffer as INACTIVE, copy user's buffer into the message buffer data area, and configure the message buffer code for Rx message buffer as EMPTY.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_configtxmb">CANx_ConfigTxMb</h3>
+
+    <!-- tabela: CANx_ConfigTxMb -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_ConfigTxMb(<b>unsigned long</b> mbIndex, <b>unsigned long</b> msgIdType, <b>unsigned long</b> dataLength, <b>unsigned long</b> msgId);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will set configure a Tx message buffer.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>mbIndex:</code> message buffer index.</li>
+              <li><code>msgIdType:</code> TX individual masking type. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_STD</td>
+                        <td valign="top">Standard mask.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_EXT</td>
+                        <td valign="top">Extended mask.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+              <li><code>dataLength:</code> length of data.</li>
+              <li><code>msgId:</code> message ID.</li>              	
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+						<li>This function will set up the message buffer fields, configure the message buffer code for Tx buffer as INACTIVE, and enable the Message Buffer interrupt.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_write">CANx_Write</h3>
+
+    <!-- tabela: CANx_Write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_Write(<b>unsigned long</b> mbIndex, <b>unsigned long</b> msgIdType, <b>unsigned long</b> dataLength, <b>unsigned long</b> msgId, <b>unsigned char</b> *dataBuffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will initiate (start) a transmit by beginning the process of sending data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>mbIndex:</code> message buffer index.</li>
+              <li><code>msgIdType:</code> individual masking type. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_STD</td>
+                        <td valign="top">Standard mask.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_CAN_MSGID_EXT</td>
+                        <td valign="top">Extended mask.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+              <li><code>dataLength:</code> length of data.</li>
+              <li><code>msgId:</code> message ID.</li>              	
+              <li><code>dataBuffer:</code> pointer to data.</li>    
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_read">CANx_Read</h3>
+
+    <!-- tabela: CANx_Read -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> CANx_Read(<b>unsigned long</b> msgBuffIdx, <b>unsigned long</b> *msgId, <b>unsigned char</b> *dataReceived);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will check for received message. If there is a message, get received data and ID.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>msgBuffIdx:</code> message buffer index.</li>
+              <li><code>msgId:</code> message ID.</li>              	
+              <li><code>dataBuffer:</code> retrieved and stored to location pointed by this pointer.</li>    
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="canx_interrupthandler">CANx_InterruptHandler</h3>
+
+    <!-- tabela: CANx_Read -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANx_InterruptHandler();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Interrupt handler for CAN. This handler read data from MB or FIFO, and then clears the interrupt flags.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+						<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>_CAN_STATUS_OK:</code> if operation was performed correctly,</li>
+							<li><code>_CAN_STATUS_INVALIDE_ARG:</code> if argument is invalid.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            <li>Valid only for Kinetis devices.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="can_constants"><acronym title="Controller Area Network">CAN</acronym> Constants</h3>
+    <p>There is a number of constants predefined in <acronym title="Controller Area Network">CAN</acronym> library. To be able to use the library effectively, you need to be familiar with these. You might want to check the example at the end of the chapter.</p>
+
+    <h4 id="can_op_mode">CAN_OP_MODE Constants</h4>
+    <p><code>CAN_OP_MODE</code> constants define <acronym title="Controller Area Network">CAN</acronym> operation mode. Function <a href="#canxsetoperationmode">CANxSetOperationMode</a> expects one of these as its argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program"><i>// Stellaris Constants</i>
+<i>// Stellaris Constants</i>
+_CAN_MODE_NORMAL
+_CAN_MODE_DISABLE
+_CAN_MODE_LOOP
+_CAN_MODE_SILENT
+_CAN_MODE_CONFIG
+_CAN_MODE_BASIC
+_CAN_MODE_LOOP_WITH_SILENT
+
+<i>// ST Constants</i>
+_CAN_OperatingMode_Initialization
+_CAN_OperatingMode_Normal
+_CAN_OperatingMode_Sleep
+</pre>
+
+    <p></p>
+    <h4 id="canx_config_flag">CAN_CONFIG_FLAGS Constants</h4>
+    <p><code>CAN_CONFIG_FLAGS</code> constants define flags related to <acronym title="Controller Area Network">CAN</acronym> module configuration. Functions <a href="#canxinitialize">CANxInitialize</a> and <a href="#canxsetbaudrate">CANxSetBaudRate</a> expect one of these (or a bitwise combination) as their argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+_CAN_CONFIG_AUTO_RETRY_ENABLED
+_CAN_CONFIG_AUTO_RETRY_DISABLED
+</pre>
+
+    <h4 id="canx_tx_msg_flag">CAN_TX_MSG_FLAGS Constants</h4>
+    <p><code>CAN_TX_MSG_FLAGS</code> are flags related to transmission of a <acronym title="Controller Area Network">CAN</acronym> message:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+_CAN_TX_STD_FRAME
+_CAN_TX_XTD_FRAME
+_CAN_TX_NO_RTR_FRAME
+_CAN_TX_RTR_FRAME
+</pre>
+
+    <p>You may use bitwise AND (<code>&#38;</code>) to adjust the appropriate flags. For example:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>// form value to be used with CANSendMessage:</i>
+send_config = _CAN_TX_XTD_FRAME  &#38;
+              _CAN_TX_NO_RTR_FRAME;
+...
+CAN1Write(id, <b>data</b>, 1, send_config);
+</pre>
+
+    <h4 id="canx_rx_msg_flag">CAN_RX_MSG_FLAGS Constants</h4>
+    <p><code>CAN_RX_MSG_FLAGS</code> are flags related to reception of <acronym title="Controller Area Network">CAN</acronym> message. If a particular bit is set; corresponding meaning is TRUE or else it will be FALSE.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>// Stellaris Constants</i>
+_CAN_RX_REMOTE_FRAME     <i>// Set if this is a remote frame</i>
+_CAN_RX_DATA_LOST        <i>// Set if some data is lost</i>
+_CAN_RX_NEW_DATA         <i>// Indicate that there is new data in this message</i>
+_CAN_RX_EXTENDED_ID      <i>// Set if extended message</i>
+_CAN_RX_USE_ID_FILTER    <i>// Set the flag to indicate if ID masking was used</i>
+_CAN_RX_USE_EXT_FILTER   <i>// Set if extended bit was used in filtering</i>
+_CAN_RX_USE_DIR_FILTER   <i>// Set if direction filtering was enabled</i>
+
+<i>// ST Constants</i>
+_CAN_RX_XTD_FRAME
+_CAN_RX_RTR_FRAME
+</pre>
+
+    <p>You may use bitwise AND (<code>&#38;</code>) to adjust the appropriate flags. For example:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>if</b> (MsgFlag &#38; _CAN_RX_DATA_LOST != 0) {
+  ...
+  <i>// We have lost our previous message.</i>
+}</pre>
+
+
+    <h4 id="canx_message_object">CAN_MESSAGE_OBJECT Constants</h4>
+    <p><code>CAN_MESSAGE_OBJECT</code> constants define CAN message object configuration. Function <a href="#canxconfiguremessage">CANxConfigureMessage</a> expects one of these as its argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+  _CAN_CONFIG_TYPE_TX 
+  _CAN_CONFIG_TYPE_TX_REMOTE 
+  _CAN_CONFIG_TYPE_RX
+  _CAN_CONFIG_TYPE_RX_REMOTE
+  _CAN_CONFIG_TYPE_RXTX_REMOTE
+  _CAN_CONFIG_FIFO
+  _CAN_CONFIG_TX_INT_ENABLE
+  _CAN_CONFIG_RX_INT_ENABLE
+  _CAN_CONFIG_XTD_MSG
+  _CAN_CONFIG_STD_MSG
+</pre>
+
+    <h4 id="canx_mask">CAN_MASK Constants</h4>
+    <p><code>CAN_MASK</code> constants define mask codes. Function <a href="#canxsetmask">CANxSetMask</a> expects one of these as its argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>// Stellaris Constants</i>
+_CAN_CONFIG_XTD_MSG
+_CAN_CONFIG_STD_MSG
+_CAN_CONFIG_USE_DIR_FILTER
+
+<i>// ST Constants</i>
+_CAN_FILTER_ID_MASK_MODE
+_CAN_FILTER_ID_LIST_MODE
+_CAN_FILTER_USE_FIFO0
+_CAN_FILTER_USE_FIFO1
+_CAN_FILTER_STD_MSG
+_CAN_FILTER_XTD_MSG
+_CAN_FILTER_DISABLED
+_CAN_FILTER_ENABLED
+</pre>
+
+    <p></p>
+    <h4 id="canx_filter">CAN_FILTER Constants</h4>
+    <p><code>CAN_FILTER</code> constants define filter codes. Function <a href="#canxsetfilter">CANxSetFilter</a> expects one of these as its argument:</p>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+_CAN_CONFIG_XTD_MSG
+_CAN_CONFIG_STD_MSG
+
+<i>// ST Constants</i>
+_CAN_FILTER_ID_MASK_MODE
+_CAN_FILTER_ID_LIST_MODE
+_CAN_FILTER_USE_FIFO1
+_CAN_FILTER_DISABLED
+_CAN_FILTER_ENABLED
+</pre>
+
+
+    <h3>Library Example</h3>
+
+    <p>The example demonstrates <acronym title="Controller Area Network">CAN</acronym> protocol. The 1st node initiates the communication with the 2nd node by sending some
+      data to its address. The 2nd node responds by sending back the data incremented by 1. The 1st node then does the same and sends incremented data
+      back to the 2nd node, etc.</p>
+
+    <p>Code for the first CAN node:</p>
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<b>unsigned int</b> Can_Init_Flags, Can_Send_Flags, Can_Rcv_Flags;  <i>// can flags</i>
+<b>unsigned int</b> Rx_Data_Len;                                    <i>// received data length in bytes</i>
+<b>char</b> RxTx_Data[8];   
+<b>char</b> Msg_Rcvd;                                               <i>// reception flag</i>
+<b>const unsigned long</b> ID_1st = 12111, ID_2nd = 3;              <i>// node IDs</i>
+<b>unsigned long</b> Rx_ID;
+
+<b>void</b> main() {
+  GPIO_Digital_Output(&#38;GPIO_PORTJ, _GPIO_PINMASK_ALL);
+  GPIO_PORTJ_DATA = 0;
+
+  Can_Rcv_Flags  = 0;
+
+  Can_Send_Flags = _CAN_TX_XTD_FRAME &#38; _CAN_TX_NO_RTR_FRAME;  <i>// form value to be used with CAN0Write</i>
+
+  Can_Init_Flags = _CAN_CONFIG_AUTO_RETRY_ENABLED;           <i>// CAN init flags</i>
+
+  CAN0Initialize(1,3,3,3,1,Can_Init_Flags);                   <i>// initialize CAN0</i>
+
+  CAN0SetOperationMode(_CAN_MODE_CONFIG,0xFF);                <i>// set CONFIGURATION mode</i>
+
+  CAN0ConfigureMessage(1, _CAN_CONFIG_XTD_MSG &#38; _CAN_CONFIG_TYPE_TX); <i>// configure message object for transmitting</i>
+  CAN0ConfigureMessage(2, _CAN_CONFIG_XTD_MSG &#38; _CAN_CONFIG_TYPE_RX); <i>// congigure message object for receiving</i>
+
+  CAN0SetMask(2, 0xFFFFFFFF, _CAN_CONFIG_XTD_MSG);            <i>// set all mask bits to ones</i>
+  CAN0SetFilter(2, ID_2nd, _CAN_CONFIG_XTD_MSG);              <i>// set filter</i>
+
+  CAN0SetOperationMode(_CAN_MODE_NORMAL,0xFF);                <i>// set NORMAL mode</i>
+
+  RxTx_Data[0] = 0xFE;
+  CAN0WriteMessage(1, ID_1st, RxTx_Data, 1, Can_Send_Flags);
+  
+  <b>while</b>(1){
+    Msg_Rcvd = CAN0ReadMessage(2, &#38;Rx_ID, RxTx_Data, &#38;Rx_Data_Len, &#38;Can_Rcv_Flags);  <i>// receive message</i>
+    <b>if</b> ((Rx_ID == ID_2nd) &#38;&#38; Msg_Rcvd) {                                   <i>// if message received check id</i>
+      GPIO_PORTJ_DATA = RxTx_Data[0];                                      <i>// id correct, output data at PORTJ</i>
+      RxTx_Data[0]++;                                                      <i>// increment received data</i>
+      delay_ms(10);
+      CAN0WriteMessage(1, ID_1st, RxTx_Data, 1, Can_Send_Flags);                     <i>// send incremented data back</i>
+    }
+  }
+
+}
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+unsigned long Can_Init_Flags;
+unsigned char Can_Send_Flags, Can_Rcv_Flags; // can flags
+unsigned char Rx_Data_Len;                                   // received data length in bytes
+char RxTx_Data[8];                                           // can rx/tx data buffer
+char Msg_Rcvd;                                               // reception flag
+const long ID_1st = 12111, ID_2nd = 3;                       // node IDs
+long Rx_ID;
+
+void main() {
+
+  GPIO_Digital_Output(&GPIOE_BASE, 0xFF00);
+  GPIOE_ODR  = 0;
+    DMA1_CCR1bits.
+
+  Can_Init_Flags = 0;                                       //
+  Can_Send_Flags = 0;                                       // clear flags
+  Can_Rcv_Flags  = 0;                                       //
+
+  Can_Send_Flags = _CAN_TX_XTD_FRAME &                      //     with CANWrite
+                   _CAN_TX_NO_RTR_FRAME;
+
+  Can_Init_Flags = _CAN_CONFIG_AUTOMATIC_RETRANSMISSION &              // form value to be used
+                   _CAN_CONFIG_RX_FIFO_NOT_LOCKED_ON_OVERRUN &         // with CANInit
+                   _CAN_CONFIG_TIME_TRIGGERED_MODE_DISABLED &
+                   _CAN_CONFIG_TX_FIFO_PRIORITY_BY_IDINTIFIER &
+                   _CAN_CONFIG_WAKE_UP;
+
+  CAN1InitializeAdvanced(1,5,4,4,1,Can_Init_Flags, &_GPIO_MODULE_CAN1_PD01); // Initialize CAN module
+  CAN1SetOperationMode(_CAN_OperatingMode_Initialization);                   // set CONFIGURATION mode
+
+  CANSetFilterScale32(0, _CAN_FILTER_ENABLED & _CAN_FILTER_ID_MASK_MODE & _CAN_FILTER_XTD_MSG, ID_2nd, -1);
+
+  CAN1SetOperationMode(_CAN_OperatingMode_Normal); // set NORMAL mode
+
+  RxTx_Data[0] = 9;                                // set initial data to be sent
+
+  CAN1Write(ID_1st, RxTx_Data, 1, Can_Send_Flags); // send initial message
+
+  while(1) {  // endless loop
+    Msg_Rcvd = CAN1Read(0, &Rx_ID , RxTx_Data , &Rx_Data_Len, &Can_Rcv_Flags);  // receive message
+    if ((Rx_ID == ID_2nd) && Msg_Rcvd) {                                        // if message received check id
+      GPIOE_ODR  = RxTx_Data[0] << 8;                                           // id correct, output data at PORTE
+      RxTx_Data[0]++ ;                                                          // increment received data
+      Delay_ms(10);
+      CAN1Write(ID_1st, RxTx_Data, 1, Can_Send_Flags);                          // send incremented data back
+    }
+  }
+}
+</pre>
+    </div>
+  </div>
+
+
+
+    <p>Code for the second CAN node:</p>
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+unsigned int Can_Init_Flags, Can_Send_Flags, Can_Rcv_Flags;  // can flags
+unsigned int Rx_Data_Len;                                    // received data length in bytes
+char RxTx_Data[8];                                           // can rx/tx data buffer
+char Msg_Rcvd;                                               // reception flag
+const unsigned long ID_1st = 12111, ID_2nd = 3;              // node IDs
+unsigned long Rx_ID;
+
+void main() {
+  GPIO_Digital_Output(&GPIO_PORTJ, _GPIO_PINMASK_ALL);
+  GPIO_PORTJ_DATA = 0;
+
+  Can_Rcv_Flags  = 0;
+
+  Can_Send_Flags = _CAN_TX_XTD_FRAME & _CAN_TX_NO_RTR_FRAME;  // form value to be used with CAN0Write
+
+  Can_Init_Flags = _CAN_CONFIG_AUTO_RETRY_ENABLED;           // CAN init flags
+
+//  CAN0Initialize(1,3,3,3,1,Can_Init_Flags);                   // initialize CAN0
+  CAN0InitializeAdvanced(1,3,3,3,1,Can_Init_Flags,&_GPIO_MODULE_CAN0_D01);                   // initialize CAN0
+
+  CAN0SetOperationMode(_CAN_MODE_CONFIG,0xFF);                // set CONFIGURATION mode
+
+  CAN0ConfigureMessage(1, _CAN_CONFIG_XTD_MSG & _CAN_CONFIG_TYPE_TX); // configure message object for transmitting
+  CAN0ConfigureMessage(2, _CAN_CONFIG_XTD_MSG & _CAN_CONFIG_TYPE_RX); // congigure message object for receiving
+
+  CAN0SetMask(2, 0xFFFFFFFF, _CAN_CONFIG_XTD_MSG);            // set all mask bits to ones
+  CAN0SetFilter(2, ID_1st, _CAN_CONFIG_XTD_MSG);              // set filter
+
+  CAN0SetOperationMode(_CAN_MODE_NORMAL,0xFF);                // set NORMAL mode
+  RxTx_Data[0] = 0;
+
+  while(1) {
+    Msg_Rcvd = CAN0ReadMessage(2, &Rx_ID , RxTx_Data , &Rx_Data_Len, &Can_Rcv_Flags); // receive message
+    if ((Rx_ID == ID_1st) && Msg_Rcvd) {                                              // if message received check id
+      GPIO_PORTJ_DATA = RxTx_Data[0];                                                 // id correct, output data at PORTJ
+      RxTx_Data[0]++;                                                                 // increment received data
+      CAN0WriteMessage(1, ID_2nd, RxTx_Data, 1, Can_Send_Flags);                      // send incremented data back
+    }
+  }
+
+}
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+unsigned char Can_Init_Flags, Can_Send_Flags, Can_Rcv_Flags; // can flags
+unsigned char Rx_Data_Len;                                   // received data length in bytes
+char RxTx_Data[8];                                           // can rx/tx data buffer
+char Msg_Rcvd;                                               // reception flag
+const long ID_1st = 12111, ID_2nd = 3;                       // node IDs
+long Rx_ID;
+
+void main() {
+
+  GPIO_Digital_Output(&GPIOE_BASE, 0xFF00);
+  GPIOE_ODR = 0;
+  
+  Can_Init_Flags = 0;                                       //
+  Can_Send_Flags = 0;                                       // clear flags
+  Can_Rcv_Flags  = 0;                                       //
+
+  Can_Send_Flags = _CAN_TX_XTD_FRAME &                      //     with CANWrite
+                   _CAN_TX_NO_RTR_FRAME;
+
+  Can_Init_Flags = _CAN_CONFIG_AUTOMATIC_RETRANSMISSION &          // form value to be used
+                   _CAN_CONFIG_RX_FIFO_NOT_LOCKED_ON_OVERRUN &     // with CANInit
+                   _CAN_CONFIG_TIME_TRIGGERED_MODE_DISABLED &
+                   _CAN_CONFIG_TX_FIFO_PRIORITY_BY_IDINTIFIER &
+                   _CAN_CONFIG_WAKE_UP;
+
+  CAN1InitializeAdvanced(1,5,4,4,1,Can_Init_Flags, &_GPIO_MODULE_CAN1_PD01);  // Initialize CAN module
+  CAN1SetOperationMode(_CAN_OperatingMode_Initialization);                    // set CONFIGURATION mode
+  CANSetFilterScale32(0, _CAN_FILTER_ENABLED & _CAN_FILTER_ID_MASK_MODE & _CAN_FILTER_XTD_MSG, ID_1st, -1);
+
+  CAN1SetOperationMode(_CAN_OperatingMode_Normal);               // set NORMAL mode
+
+  while (1) {                                                                  // endless loop
+    Msg_Rcvd = CAN1Read(0, &Rx_ID , RxTx_Data , &Rx_Data_Len, &Can_Rcv_Flags); // receive message
+    if ((Rx_ID == ID_1st) && Msg_Rcvd) {                                       // if message received check id
+      GPIOE_ODR  = RxTx_Data[0] << 8;                                          // id correct, output data at PORTE
+      RxTx_Data[0]++ ;                                                         // increment received data
+      CAN1Write(ID_2nd, RxTx_Data, 1, Can_Send_Flags);                         // send incremented data back
+    }
+  }
+}
+</pre>
+    </div>
+  </div>
+
+
+    <!-- -->
+
+<!--
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Example of interfacing CAN transceiver with MCU and bus" src="img/Schemes/scheme_can.gif"></p>
+    <p class="center small">Example of interfacing <acronym title="Controller Area Network">CAN</acronym> transceiver with MCU and <acronym title="Controller Area Network">CAN</acronym> bus</p>
+-->
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

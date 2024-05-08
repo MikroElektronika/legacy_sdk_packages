@@ -1,0 +1,8 @@
+{
+    "name": "UART",
+    "description": "This simple example demonstrates usage of mikroC's UART libraries",
+    "image" : "usb_uart.png",
+    "toolchain": ["mikrocarm"],
+    "hw" : ["Fusion for TIVA"],
+    "category" : ["mikroC legacy ARM"]
+}

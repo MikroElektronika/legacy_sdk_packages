@@ -1,0 +1,8 @@
+{
+    "name": "Ethernet Demo - Basic Realm",
+    "description": "This code shows how to use the Ethernet library",
+    "image" : "../Ethernet.png",
+    "toolchain": ["mikrocpic"],
+    "hw" : ["EasyPIC PRO v8"],
+    "category" : ["mikroC legacy PIC"]
+}

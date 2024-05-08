@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_PWM_2_21.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L011E4$|^STM32L011G3$|^STM32L011D3$|^STM32L011K3$|^STM32L021D4$|^STM32L011D4$|^STM32L021F4$|^STM32L011E3$|^STM32L011F4$|^STM32L021K4$|^STM32L011F3$|^STM32L011G4$|^STM32L011K4$|^STM32L021G4$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

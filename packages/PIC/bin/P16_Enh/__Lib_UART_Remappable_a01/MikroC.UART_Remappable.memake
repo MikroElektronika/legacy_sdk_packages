@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART_Remappable",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_UART_Remappable_a01.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F18313$|^PIC16LF18313$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

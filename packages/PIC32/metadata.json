@@ -1,0 +1,9 @@
+{
+    "mcu.uid": "PIC32MX795F512L",
+    "commit.hash": "{5d3da283e12bc0de1026566710e2df475efb6f08}",
+    "toolchain.uid": "mikrocpic32",
+    "mikrosdk.version": "v4.0.0",
+    "board.uid": "generic",
+    "mikrosdk.name": "mikroC PRO for PIC32 Libraries",
+    "guid": "sdk.mikroc.legacy.pic32"
+}

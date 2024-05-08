@@ -1,0 +1,8 @@
+{
+    "name": "LCD",
+    "description": "This is a simple demonstration of LCD library functions",
+    "image" : "Lcd.png",
+    "toolchain": ["mikrocpic"],
+    "hw" : ["EasyPIC PRO v8","LCD"],
+    "category" : ["mikroC legacy PIC"]
+}

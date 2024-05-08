@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_ADC_32L0x_13ch.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L071C8$|^STM32L081CZ$|^STM32L072CB$|^STM32L071CZ$|^STM32L082CZ$|^STM32L071CB$|^STM32L072CZ$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

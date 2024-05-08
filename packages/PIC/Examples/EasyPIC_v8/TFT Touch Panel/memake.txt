@@ -1,0 +1,43 @@
+:: Base project template
+
+:: project: TFT_Touch_Panel
+target: TFT_Touch_Panel
+
+type: executable
+
+
+uses: {
+    MikroC.System
+    MikroC.Conversions
+    MikroC.C_Math
+    MikroC.C_Stdlib
+    MikroC.C_Type
+    MikroC.C_String
+    MikroC.TFT_TouchPanel
+    MikroC.ADC
+    MikroC.TFT
+    MikroC.TFT_Defs
+    MikroC.TFT_TouchPanel_TC
+}
+
+depends: {
+    MikroC.System
+    MikroC.Conversions
+    MikroC.C_Math
+    MikroC.C_Stdlib
+    MikroC.C_Type
+    MikroC.C_String
+    MikroC.TFT_TouchPanel
+    MikroC.ADC
+    MikroC.TFT
+    MikroC.TFT_Defs
+    MikroC.TFT_TouchPanel_TC
+}
+
+sources: {
+    Calculator_main.c
+    Calculator_events_code.c
+    Calculator_driver.c
+    Calculator_resources.c
+}
+

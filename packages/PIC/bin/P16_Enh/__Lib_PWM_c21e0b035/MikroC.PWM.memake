@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_PWM_c21e0b035.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F1789$|^PIC16F1784$|^PIC16F1787$|^PIC16LF1789$|^PIC16LF1784$|^PIC16LF1787$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

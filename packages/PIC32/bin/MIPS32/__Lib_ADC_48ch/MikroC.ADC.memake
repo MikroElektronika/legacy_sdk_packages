@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_ADC_48ch.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX130F128L$|^PIC32MX530F128L$|^PIC32MX150F256L$|^PIC32MX170F512L$|^PIC32MX230F128L$|^PIC32MX570F512L$|^PIC32MX250F256L$|^PIC32MX270F512L$|^PIC32MX550F256L$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

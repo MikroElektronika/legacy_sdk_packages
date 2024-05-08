@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM_Remappable",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_PWM_Remappable_1278.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F1779$|^PIC16LF1779$|^PIC16F1777$|^PIC16LF1777$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

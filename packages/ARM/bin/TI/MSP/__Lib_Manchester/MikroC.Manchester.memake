@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Manchester",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_Manchester.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MSP432P401R$|^MSP432P401M$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

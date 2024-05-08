@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FT5XX6_Gesture_Decoder",
+    "global_visibility": true,
+    "arch": "MICROAPTIV",
+    "binaries": [
+        "__Lib_FT5XX6_gesture_decoder.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32(.+)$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

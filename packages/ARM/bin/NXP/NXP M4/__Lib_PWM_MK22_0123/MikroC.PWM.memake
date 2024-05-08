@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_PWM_MK22_0123.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK22FX512.+12$|^MK22FN512.+12$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_ADC_123_32F46x_47x_12ch.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F479IG$|^STM32F469AE$|^STM32F469NE$|^STM32F469NI$|^STM32F469ZG$|^STM32F469ZE$|^STM32F479BI$|^STM32F479ZI$|^STM32F469BE$|^STM32F479VI$|^STM32F469AI$|^STM32F469ZI$|^STM32F479AG$|^STM32F469BG$|^STM32F479BG$|^STM32F469IE$|^STM32F479NG$|^STM32F469VG$|^STM32F469AG$|^STM32F479ZG$|^STM32F469II$|^STM32F469NG$|^STM32F469VE$|^STM32F469IG$|^STM32F469VI$|^STM32F469BI$|^STM32F479VG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,1113 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>PWM 16 bit Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">PWM 16 bit Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="pwm_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="rs-485_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Pulse-width modulation">PWM</acronym> 16 bit Library</h2></a>
+
+
+    <p><acronym title="Capture/Match/Output">CMO</acronym> module is available with a number of AVR MCUs. mikroC PRO for AVR provides library which simplifies using <acronym title="Pulse-width modulation">PWM</acronym> HW Module.</p>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+      <ul>
+      	PWM library handles and initializes the PWM module on the given AVR MCU, but it is up to user to set the correct pins as PWM output, this topic will be covered later in this section.
+      </ul>
+    </div>
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#pwm16bit_init">PWM16bit_Init</a></li>
+      <li><a href="#pwm16bit_set_duty">PWM16bit_Set_Duty</a></li>
+      <li><a href="#pwm16bit_enable">PWM16bit_Enable</a></li>
+      <li><a href="#pwm16bit_disable">PWM16bit_Disable</a></li>
+      <li><a href="#pwm16bit_set_output">PWM16bit_Set_Output</a></li>
+      <li><a href="#pwm16bit_start">PWM16bit_Start</a></li>
+      <li><a href="#pwm16bit_stop">PWM16bit_Stop</a></li>
+    </ul>
+
+  <!-- -->
+
+   <h3>Predefined constants used in PWM-16bit library</h3>
+
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="25%">The following variables are used in PWM-16bit library functions:</th>
+          <th width="45%">Description : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_PHASE_CORRECT_MODE_8BIT</code></td>
+          <td align="left">Selects Phase Correct, 8-bit mode.</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_PHASE_CORRECT_MODE_9BIT</code></td>
+          <td align="left">Selects Phase Correct, 9-bit mode.</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_PHASE_CORRECT_MODE_10BIT</td>
+          <td align="left">Selects Phase Correct, 10-bit mode.</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_FAST_MODE_8BIT</code></td>
+          <td align="left">Selects Fast, 8-bit mode.</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_FAST_MODE_9BIT</code></td>
+          <td align="left">Selects Fast, 9-bit mode.</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_FAST_MODE_10BIT</code></td>
+          <td align="left">Selects Fast, 10-bit mode.</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_PRESCALER_16bit_1</code></td>
+          <td align="left">Sets prescaler value to 1 (No prescaling).</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_PRESCALER_16bit_8</code></td>
+          <td align="left">Sets prescaler value to 8.</td>
+        </tr>        
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_PRESCALER_16bit_64</code></td>
+          <td align="left">Sets prescaler value to 64.</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_PRESCALER_16bit_256</code></td>
+          <td align="left">Sets prescaler value to 256.</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_PRESCALER_16bit_1024</code></td>
+          <td align="left">Sets prescaler value to 1024.</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_INVERTED</code></td>
+          <td align="left">Selects the inverted PWM-16bit mode.</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_PWM16_NON_INVERTED</code></td>
+          <td align="left">Selects the normal (non inverted) PWM-16bit mode.</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_TIMER1</code></td>
+          <td align="left">Selects the Timer/Counter1 (used with <a href="#pwm16bit_start">PWM16bit_Start</a> and <a href="#pwm16bit_stop">PWM16bit_Stop</a>.</td>
+        </tr>
+        																																																													     																											
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_TIMER3</code></td>
+          <td align="left">Selects the Timer/Counter3 (used with <a href="#pwm16bit_start">PWM16bit_Start</a> and <a href="#pwm16bit_stop">PWM16bit_Stop</a>.</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_TIMER1_CH_A</code></td>
+          <td align="left">Selects the channel A on Timer/Counter1 (used with <a href="#pwm16bit_change_duty">PWM16bit_Change_Duty</a>).</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_TIMER1_CH_B</code></td>
+          <td align="left">Selects the channel B on Timer/Counter1 (used with <a href="#pwm16bit_change_duty">PWM16bit_Change_Duty</a>).</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_TIMER1_CH_C</code></td>
+          <td align="left">Selects the channel C on Timer/Counter1 (used with <a href="#pwm16bit_change_duty">PWM16bit_Change_Duty</a>).</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_TIMER3_CH_A</code></td>
+          <td align="left">Selects the channel A on Timer/Counter3 (used with <a href="#pwm16bit_change_duty">PWM16bit_Change_Duty</a>).</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_TIMER3_CH_B</code></td>
+          <td align="left">Selects the channel B on Timer/Counter3 (used with <a href="#pwm16bit_change_duty">PWM16bit_Change_Duty</a>).</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code>_TIMER3_CH_C</code></td>
+          <td align="left">Selects the channel C on Timer/Counter3 (used with <a href="#pwm16bit_change_duty">PWM16bit_Change_Duty</a>).</td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+    
+    <p></p>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+      <ul>
+        Not all of the MCUs have 16bit PWM, and not all of the MCUs have both Timer/Counter1 and Timer/Counter3. Sometimes, like its the case with ATmega168, MCU has only Timer/Counter1 and channels A and B. Therefore constants that have in their name 
+    	  Timer3 or channel C are invalid (for ATmega168) and will not be visible from <a href="code_editor.htm#code_assistant">Code Assistant</a>. It is highly advisable to use this feature, since it handles all the constants (available) and eliminates any chance of typing error.
+      </ul>
+    </div>
+
+
+    <h3 id="pwm16bit_init">PWM16bit_Init</h3>
+
+
+    <!-- tabela: PWM_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM16bit_Init(<b>unsigned short</b> wave_mode, <b>unsigned short</b> prescaler, <b>unsigned short</b> inverted, <b>unsigned short</b> duty, <b>unsigned int</b> timer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the <acronym title="Pulse-width modulation">PWM</acronym> module. Parameter <code>wave_mode</code> is a desired 
+            <acronym title="Pulse-width modulation">PWM-16bit</acronym> mode. <br>There are several modes included :</p> 
+            	<ul>
+	            	<LI type="disc">PWM, Phase Correct, 8-bit</li>
+	            	<LI type="disc">PWM, Phase Correct, 9-bit</li>
+	            	<LI type="disc">PWM, Phase Correct, 10-bit</li>
+	            	<LI type="disc">Fast PWM, 8-bit</li>
+	            	<LI type="disc">Fast PWM, 9-bit</li>
+	            	<LI type="disc">Fast PWM, 10-bit</li>
+              </ul>
+            	<p>Parameter 
+            	<code>prescaler</code> chooses prescale value N = 1,8,64,256 or 1024 (some modules support 32 and 128, but for this you will need to 
+            	check the datasheet for the desired MCU). Paremeter<code> inverted</code>
+							is for choosing between inverted and non inverted PWM signal. Parameter<code> duty</code> sets duty ratio from 0 to TOP value (this value varies on the PWM wave mode selected). 
+							PWM signal graphs and formulas are shown below.</p>
+            <img src="img/pwm16bit_graphs01.gif" alt="PWM-16bit Graphs01">
+            <br><br><br>
+            <p>The N variable represents the <code>prescaler</code> factor (1, 8, 64, 256, or 1024).</p>
+            <img src="img/pwm16bit_graphs02.gif" alt="PWM-16bit Graphs02">
+            <br><br>
+            <p>The N variable represents the <code>prescaler</code> factor (1, 8, 64, 256, or 1024). </p>
+            <p><a href="#pwm16bit_init">PWM16bit_Init</a> must be called before using other functions from <acronym title="Pulse-width modulation">PWM</acronym> Library.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You need a <acronym title="Compare/Match/Output">CMO</acronym> on the given MCU (that supports PWM-16bit). </p>            
+						Before calling this routine you must set the output pin for the PWM (according to the datasheet):<br> 
+            	 <code>
+									DDB1_bit = 1; // set PORTB pin 1 as output for the PWM-16bit
+              </code>
+              <p>This code example is for ATmega168, for different MCU please consult datasheet for the correct pinout of the PWM module or modules.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Initialize PWM-16bit module:</p>
+
+<pre>
+PWM16bit_Init(_PWM16_PHASE_CORRECT_MODE_8BIT, _PWM16_PRESCALER_16bit_8, _PWM16_NON_INVERTED, 255, 1);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pwm16bit_set_duty">PWM16bit_Set_Duty</h3>
+
+
+    <!-- tabela: PWM16bit_Set_Duty -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM16bit_Set_Duty(<b>unsigned</b> duty, <b>unsigned short</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets <acronym title="Pulse-width modulation">PWM</acronym> duty ratio. Parameter <code>duty</code> takes values shown on the table below. 
+            	Where 0 is 0%, and TOP value is 100% duty ratio. Other specific values for duty ratio can be calculated as 
+            	<code>(Percent*TOP)/100</code>.</p>
+            		    <!-- tabela: Ext_depend -->
+
+  						<table class="Dependencies" width="75%">
+  						
+  						  <tbody>
+  						
+  						    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+  						      <th width="15%">Timer/Counter Mode of Operation :</th>
+  						      <th width="10%">TOP :</th>
+  						      <th width="10%">Update of OCRnX at :</th>
+  						      <th width="10%">TOVn Flag Set on :</th>
+  						    </tr>
+  						
+  						    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+  						      <td align="left">PWM, Phase Correct, 8 bit</td>
+  						      <td align="left">0x00FF</td>
+  						      <td align="left">TOP</td>
+  						      <td align="left">BOTTOM</td>
+  						    </tr>
+  						
+  						    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+  						      <td align="left">PWM, Phase Correct, 9 bit</td>
+  						      <td align="left">0x01FF</td>
+  						      <td align="left">TOP</td>
+  						      <td align="left">BOTTOM</td>
+  						    </tr>
+  						    
+  						    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+  						      <td align="left">PWM, Phase Correct, 10 bit</td>
+  						      <td align="left">0x03FF</td>
+  						      <td align="left">TOP</td>
+  						      <td align="left">BOTTOM</td>
+  						    </tr>
+  						
+  						    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+  						      <td align="left">Fast PWM, 8 bit</td>
+  						      <td align="left">0x00FF</td>
+  						      <td align="left">TOP</td>
+  						      <td align="left">TOP</td>
+  						    </tr>
+
+  						    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+  						      <td align="left">Fast PWM, 9 bit</td>
+  						      <td align="left">0x01FF</td>
+  						      <td align="left">TOP</td>
+  						      <td align="left">TOP</td>
+  						    </tr>
+  						 
+  						    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+  						      <td align="left">Fast PWM, 10 bit</td>
+  						      <td align="left">0x03FF</td>
+  						      <td align="left">TOP</td>
+  						      <td align="left">TOP</td>
+  						    </tr>  						      						    
+  						  </tbody>
+  						
+  						</table>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>PWM module must to be initialised (<a href="#pwm16bit_init">PWM16bit_Init</a>) before using PWM_Set_Duty function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Example lets set duty ratio to :</p>
+
+<pre>
+PWM16bit_Set_Duty(300, _TIMER1_CH_A );</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pwm16bit_enable">PWM16bit_Enable</h3>
+
+
+    <!-- tabela: PWM16bit_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM16bit_Enable(<b>unsigned short</b> inverted, <b>unsigned short</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables <acronym title="Pulse-width modulation">PWM</acronym> module on desired timer/channel.</p>
+            <p>Parameters :</p>
+            <ul>
+	            <li><code>inverted</code>: <acronym title="Pulse-width modulation">PWM</acronym> mode. Values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_INVERTED</td>
+          						  <td valign="top"><acronym title="Pulse-width modulation">PWM</acronym> inverted mode</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_NON_INVERTED</td>
+          						  <td valign="top"><acronym title="Pulse-width modulation">PWM</acronym> non-inverted mode</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+	            </li>
+            	<br>
+            	<li><code>channel:</code> set desired channel. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER1_CH_A</td>
+          						  <td valign="top">Timer1, Channel A</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER2_CH_A</td>
+          						  <td valign="top">Timer2, Channel B</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER1_CH_B</td>
+          						  <td valign="top">Timer1, Channel A</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER2_CH_B</td>
+          						  <td valign="top">Timer2, Channel B</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>PWM module must to be initialised (<a href="#pwm16bit_init">PWM16bit_Init</a>) before using this routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+PWM16bit_Enable(_PWM16_NON_INVERTED, _PWM16_TIMER1_CH_A );
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pwm16bit_disable">PWM16bit_Disable</h3>
+
+
+    <!-- tabela: PWM16bit_Disable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM16bit_Disable(<b>unsigned short</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Disables <acronym title="Pulse-width modulation">PWM</acronym> module on desired timer/channel.</p>
+            <p>Parameters :</p>
+            <ul>
+            	<li><code>channel:</code> set desired channel. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER1_CH_A</td>
+          						  <td valign="top">Timer1, Channel A</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER2_CH_A</td>
+          						  <td valign="top">Timer2, Channel B</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER1_CH_B</td>
+          						  <td valign="top">Timer1, Channel A</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER2_CH_B</td>
+          						  <td valign="top">Timer2, Channel B</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>PWM module must to be initialised (<a href="#pwm16bit_init">PWM16bit_Init</a>) before using this routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+PWM16bit_Disable(_PWM16_TIMER1_CH_A );
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pwm16bit_set_output">PWM16bit_Set_Output</h3>
+
+
+    <!-- tabela: PWM16bit_Disable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM16bit_Set_Output(<b>unsigned short</b> timer, chOutputSelectA, chOutputSelectB);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine sets <acronym title="Pulse-width modulation">PWM</acronym> module output on desired timer/channel.</p>
+            <p>Parameters :</p>
+            <ul>
+            	<li><code>timer:</code> set desired timer. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER1</td>
+          						  <td valign="top">Timer1</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_TIMER2</td>
+          						  <td valign="top">Timer2</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<br>
+            	<li><code>chOutputSelectA:</code> TOCCn output for channel A. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_A_OUT_TOCC1</td>
+          						  <td valign="top">Sets TOCC1 output for channel A</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_A_OUT_TOCC3</td>
+          						  <td valign="top">Sets TOCC3 output for channel A</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_A_OUT_TOCC5</td>
+          						  <td valign="top">Sets TOCC5 output for channel A</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_A_OUT_TOCC7</td>
+          						  <td valign="top">Sets TOCC7 output for channel A</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_A_OUT_NONE</td>
+          						  <td valign="top">Channel A will have no output.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<br>
+            	<li><code>chOutputSelectB:</code> TOCCn output for channel B. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_B_OUT_TOCC0</td>
+          						  <td valign="top">Sets TOCC0 output for channel B</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_B_OUT_TOCC2</td>
+          						  <td valign="top">Sets TOCC2 output for channel B</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_B_OUT_TOCC4</td>
+          						  <td valign="top">Sets TOCC4 output for channel B</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_B_OUT_TOCC6</td>
+          						  <td valign="top">Sets TOCC6 output for channel B</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_PWM16_CH_B_OUT_NONE</td>
+          						  <td valign="top">Channel B will have no output.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+
+            </ul>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>PWM module must to be initialised (<a href="#pwm16bit_init">PWM16bit_Init</a>) before using this routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+PWM16bit_Set_Output(_PWM16_TIMER1, _PWM16_CH_A_OUT_TOCC1, _PWM16_CH_B_OUT_TOCC0);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pwm16bit_start">PWM16bit_Start</h3>
+
+
+    <!-- tabela: Pwm_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM16bit_Start(<b>unsigned int</b> timer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Starts <acronym title="Pulse-width modulation">PWM-16bit</acronym>  module with alredy preset values (wave mode, prescaler, inverted and duty) given in the <a href="#pwm16bit_init">PWM16bit_Init</a>.
+            	 </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU must have <acronym title="Compare/Match/Output">CMO</acronym> module to use this library. 
+            	<a href="#pwm16bit_init">PWM16bit_Init</a> must be called before <br>using this routine, otherwise it will have no effect as the PWM module is not initialised. </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+PWM16bit_Start(_TIMER1 );		<i>// Starts the PWM-16bit module on Timer/Counter1	</i></pre>
+<p>or</p>
+<pre>
+PWM16bit_Start(_TIMER3 );		<i>// Starts the PWM-16bit module on Timer/Counter3	</i></pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pwm16bit_stop">PWM16bit_Stop</h3>
+
+
+    <!-- tabela: Pwm_Stop -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PWM16_Stop(<b>unsigned int</b> timer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Stops the <acronym title="Pulse-width modulation">PWM-16bit</acronym> module, connected to Timer/Counter set in this stop function. 
+            	</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU must have <acronym title="Compare/Match/Output">CMO</acronym> module to use this library. Like in 
+            	<a href="#pwm16bit_start">PWM16bit_Start</a> before, <a href="#pwm16bit_init">PWM16bit_Init</a> must be called before <br>using this routine
+, otherwise it will have no effect as the PWM module is not running.            	
+            	</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+PWM16bit_Stop(_TIMER1 );		<i>// Stops the PWM-16bit module on Timer/Counter1	</i></pre>
+<p>or</p>
+<pre>
+PWM16bit_Stop(_TIMER3 );		<i>// Stops the PWM-16bit module on Timer/Counter3	</i></pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>The example changes <acronym title="Pulse-width modulation">PWM</acronym> duty ratio continually by pressing buttons on PORTC (0-3). 
+    	If LED is connected to PORTB.B1 or PORTB.B2 ,you can observe the gradual change of emitted light. This example is written for ATmega168. 
+    	This AVR MCU has only Timer/Counter1 split over two channels A and B. In this example we are changing the duty ratio on both of these channels.
+    	 </p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>char</b> current_duty;
+<b>char</b> current_duty1;
+
+<b>void</b> main(){
+
+  DDC0_bit = 0;                   <i>// Set PORTC pin 0 as input</i>
+  DDC1_bit = 0;                   <i>// Set PORTC pin 1 as input</i>
+
+  DDC2_bit = 0;                   <i>// Set PORTC pin 2 as input</i>
+  DDC3_bit = 0;                   <i>// Set PORTC pin 3 as input</i>
+
+  current_duty     = 255;         <i>// initial value for current_duty</i>
+  current_duty1    = 255;         <i>// initial value for current_duty</i>
+
+  DDRB.B1 = 1;                    <i>// Set PORTB pin 1 as output pin for the PWM (according to datasheet)</i>
+  DDRB.B2 = 1;                    <i>// Set PORTB pin 2 as output pin for the PWM (according to datasheet)</i>
+  
+  PWM16bit_Init(_PWM16_FAST_MODE_9BIT, _PWM16_PRESCALER_16bit_1, _PWM16_INVERTED, 255, 1);
+
+  <b>do</b> {
+    <b>if</b> (PINC.B0) {                             			<i>// Detect if PORTC pin 0 is pressed</i>
+      Delay_ms(40);                             			<i>// Small delay to avoid deboucing effect</i>
+      current_duty++;                           			<i>// Increment duty ratio</i>
+      PWM16bit_Change_Duty(current_duty, _TIMER1_CH_A);       		<i>// Set incremented duty</i>
+    }
+    <b>else</b>
+      <b>if</b> (PINC.B1) {                            			<i>// Detect if PORTC pin 1 is pressed</i>
+        Delay_ms(40);                           			<i>// Small delay to avoid deboucing effect</i>
+        current_duty--;                         			<i>// Decrement duty ratio</i>
+        PWM16bit_Change_Duty(current_duty, _TIMER1_CH_A);     		<i>// Set decremented duty ratio</i>
+      }
+      <b>else</b>
+        <b>if</b> (PINC.B2) {                          			<i>// Detect if PORTC pin 2 is pressed</i>
+          Delay_ms(40);                         			<i>// Small delay to avoid deboucing effect</i>
+          current_duty1++;                      			<i>// Increment duty ratio</i>
+          PWM16bit_Change_Duty(current_duty1, _TIMER1_CH_B);  		<i>// Set incremented duty</i>
+        }
+        <b>else</b>
+          <b>if</b> (PINC.B3) {                        			<i>// Detect if PORTC pin 3 is pressed</i>
+            Delay_ms(40);                       			<i>// Small delay to avoid deboucing effect</i>
+            current_duty1--;                    			<i>// Decrement duty ratio</i>
+            PWM16bit_Change_Duty(current_duty1, _TIMER1_CH_B);		<i>// Set decremented duty ratio</i>
+          }
+
+  } <b>while</b>(1);                       <i>// Endless loop</i>
+     
+  }
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="PWM demonstration" src="img/schemes/scheme_pwm16bit.gif"></p>
+    <p class="center small">PWM demonstration</p>
+
+
+    <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>

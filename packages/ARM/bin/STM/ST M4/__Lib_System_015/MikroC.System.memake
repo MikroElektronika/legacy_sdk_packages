@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_GPIO_32L43x_Defs.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32L43x.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_System_L4xx_HSI48.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L431VC$|^STM32L443VC$|^STM32L443RC$|^STM32L433RC$|^STM32L433CC$|^STM32L431RC$|^STM32L443CC$|^STM32L433VC$|^STM32L431CC$|^STM32L433RB$|^STM32L431CB$|^STM32L433CB$|^STM32L431RB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_UART_c23_d23_e23.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA64D3$|^ATXMEGA64C3$|^ATXMEGA32C3$|^ATXMEGA32D3$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

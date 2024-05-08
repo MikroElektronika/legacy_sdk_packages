@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM1",
+    "global_visibility": true,
+    "arch": "P18",
+    "binaries": [
+        "__Lib_PWM_c21.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC18LF8520$|^PIC18LF8622$|^PIC18LF6723$|^PIC18LF6527$|^PIC18LF6622$|^PIC18LF8410$|^PIC18LF6520$|^PIC18LF6628$|^PIC18LF8628$|^PIC18LF8723$|^PIC18LF6310$|^PIC18LF8627$|^PIC18LF8722$|^PIC18LF6627$|^PIC18LF6722$|^PIC18LF8310$|^PIC18LF8720$|^PIC18LF6410$|^PIC18LF8527$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

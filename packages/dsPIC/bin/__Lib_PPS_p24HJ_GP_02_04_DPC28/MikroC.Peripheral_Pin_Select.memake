@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Peripheral_Pin_Select",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_PPS_p24HJ_GP_02_04_DPC28.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC24HJ64GP202$|^PIC24HJ32GP302$|^PIC24HJ128GP202$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

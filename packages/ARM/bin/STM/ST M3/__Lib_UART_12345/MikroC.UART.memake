@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M3",
+    "binaries": [
+        "__Lib_UART_12345.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L151ZE$|^STM32L162QD$|^STM32L151VD$|^STM32L152RE$|^STM32L152VE$|^STM32L151QD$|^STM32L151RD$|^STM32L151RE$|^STM32L162VE$|^STM32L162ZD$|^STM32L152QD$|^STM32L152ZE$|^STM32L162RD$|^STM32L152VD_X$|^STM32L152ZD$|^STM32L151VE$|^STM32L151ZD$|^STM32L151VD_X$|^STM32L152RD$|^STM32L162ZE$|^STM32L152VD$|^STM32L151QE$|^STM32L162VD$|^STM32L152QE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}
+

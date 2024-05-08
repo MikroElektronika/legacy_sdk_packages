@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_I2C_01.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK22FN1M0.+12$|^MK22FX512.+12$|^MK22FN128.+10$|^MK22FN256.+12$|^MK22FN128.+12$|^MK22FN512.+12$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

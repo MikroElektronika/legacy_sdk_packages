@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ETHERNET",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_ETHERNET.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX675F512L$|^PIC32MX675F512H$|^PIC32MX764F128H$|^PIC32MX775F256H$|^PIC32MX664F128H$|^PIC32MX695F512L$|^PIC32MX664F064H$|^PIC32MX675F256H$|^PIC32MX695F512H$|^PIC32MX795F512H$|^PIC32MX675F256L$|^PIC32MX664F128L$|^PIC32MX775F512H$|^PIC32MX775F256L$|^PIC32MX664F064L$|^PIC32MX795F512L$|^PIC32MX775F512L$|^PIC32MX764F128L$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

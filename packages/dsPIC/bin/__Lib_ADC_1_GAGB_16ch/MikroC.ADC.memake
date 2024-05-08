@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_ADC_1_GAGB_16ch.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC24FJ64GA406$|^PIC24FJ256GA406$|^PIC24FJ256GA606$|^PIC24FJ1024GA606$|^PIC24FJ512GB606$|^PIC24FJ1024GB606$|^PIC24FJ64GB406$|^PIC24FJ128GA606$|^PIC24FJ128GB406$|^PIC24FJ256GB606$|^PIC24FJ128GA406$|^PIC24FJ256GB406$|^PIC24FJ512GA606$|^PIC24FJ128GB606$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

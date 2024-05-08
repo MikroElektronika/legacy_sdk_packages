@@ -1,0 +1,484 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Keypad Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_dspic.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+
+
+	
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_C_dsPIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Keypad Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for dsPIC30/33 and PIC24 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="i2c_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="lcd_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Keypad Library</h2></a>
+
+
+    <p>The mikroC PRO for dsPIC30/33 and PIC24 provides a library for working with 4x4 keypad. 
+    	The library routines can also be used with 4x1, 4x2, or 4x3 keypad. 
+    	For connections explanation see schematic at the bottom of this page.</p>
+
+    <!-- -->
+
+    <h3>External dependencies of Keypad Library</h3>
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variable must be defined in all projects using Keypad Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="center"><code><b>extern sfr unsigned int</b> keypadPort;</code></td>
+          <td valign="center">Keypad Port.</td>
+          <td valign="center"><code><b>unsigned</b> keypadPort <b>at</b> PORTB;</code></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#keypad_init">Keypad_Init</a></li>
+      <li><a href="#keypad_key_press">Keypad_Key_Press</a></li>
+      <li><a href="#keypad_key_click">Keypad_Key_Click</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="keypad_init">Keypad_Init</h3>
+
+    <!-- tabela: Keypad_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Keypad_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes given port for working with keypad.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>External dependencies of the library from the top of the page must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Keypad module connections</i>
+<b>char</b> unsigned <b>at</b> PORTB;
+<i>// End of keypad module connections</i>
+...
+Keypad_Init();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The Keypad library uses lower byte (bits <7..0>) of <code>keypadPort</code>.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="keypad_key_press">Keypad_Key_Press</h3>
+
+
+    <!-- tabela: Keypad_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> Keypad_Key_Press();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads the key from keypad when key gets pressed.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>The code of a pressed key (1..16).</p>
+            <p>If no key is pressed, returns 0.</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port needs to be initialized for working with the Keypad library, see <a href="#keypad_init">Keypad_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned</b> kp;
+...
+kp = Keypad_Key_Press();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="keypad_key_click">Keypad_Key_Click</h3>
+
+
+    <!-- tabela: Keypad_Released -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> Keypad_Key_Click();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Call to <code>Keypad_Key_Click</code> is a blocking call: the function waits until some key is pressed and released. When released, the function returns 1 to 16, depending on the key.
+            	If more than one key is pressed simultaneously the function will wait until all pressed keys are released.
+            	 After that the function will return the code of the first pressed key.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>The code of a clicked key (1..16).</p>
+            <p>If no key is clicked, returns 0.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port needs to be initialized for working with the Keypad library, see <a href="#keypad_init">Keypad_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>kp = Keypad_Key_Click();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+    <p>The following code can be used for testing the keypad. It is written for keypad_4x3 or _4x4.  The code returned by the keypad functions (1..16) is transformed into ASCII codes [0..9,A..F], and then sent via UART1.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>unsigned short</b> kp, oldstate = 0;
+<b>char</b> txt[6];
+
+<i>// Keypad module connections</i>
+<b>unsigned</b> keypadPort <b>at</b> PORTB;
+<b>unsigned</b> keypadPort_Direction <b>at</b> TRISB;
+<i>// End Keypad module connections</i>
+
+<b>void</b> main() {
+  ADPCFG = 0xFFFF;
+  UART1_Init(9600);
+  Delay_ms(100);
+  Keypad_Init();                           <i>// Initialize Keypad</i>
+
+  <b>do</b> {
+    kp = 0;                                <i>// Reset key code variable</i>
+
+    <i>// Wait for key to be pressed and released</i>
+    <b>do</b>
+      <i>// kp = Keypad_Key_Press();          // Store key code in kp variable</i>
+      kp = Keypad_Key_Click();             <i>// Store key code in kp variable</i>
+    <b>while</b> (!kp);
+   <i>// Prepare value for output, transform key to it's ASCII value</i>
+    <b>switch</b> (kp) {
+      <i>//case 10: kp = 42; break;  // '*'   // Uncomment this block for keypad4x3</i>
+      <i>//case 11: kp = 48; break;  // '0'</i>
+      <i>//case 12: kp = 35; break;  // '#'</i>
+      <i>//default: kp += 48;</i>
+
+      <b>case</b>  1: kp = 49; <b>break</b>; <i>// 1        // Uncomment this block for keypad4x4</i>
+      <b>case</b>  2: kp = 50; <b>break</b>; <i>// 2</i>
+      <b>case</b>  3: kp = 51; <b>break</b>; <i>// 3</i>
+      <b>case</b>  4: kp = 65; <b>break</b>; <i>// A</i>
+      <b>case</b>  5: kp = 52; <b>break</b>; <i>// 4</i>
+      <b>case</b>  6: kp = 53; <b>break</b>; <i>// 5</i>
+      <b>case</b>  7: kp = 54; <b>break</b>; <i>// 6</i>
+      <b>case</b>  8: kp = 66; <b>break</b>; <i>// B</i>
+      <b>case</b>  9: kp = 55; <b>break</b>; <i>// 7</i>
+      <b>case</b> 10: kp = 56; <b>break</b>; <i>// 8</i>
+      <b>case</b> 11: kp = 57; <b>break</b>; <i>// 9</i>
+      <b>case</b> 12: kp = 67; <b>break</b>; <i>// C</i>
+      <b>case</b> 13: kp = 42; <b>break</b>; <i>// *</i>
+      <b>case</b> 14: kp = 48; <b>break</b>; <i>// 0</i>
+      <b>case</b> 15: kp = 35; <b>break</b>; <i>// #</i>
+      <b>case</b> 16: kp = 68; <b>break</b>; <i>// D</i>
+
+    }
+    UART1_Write(kp);                       <i>// Send value of pressed button to UART</i>
+  } <b>while</b> (1);
+}
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="4x4 Keypad connection scheme" src="img/Schemes/scheme_keypad4x4.gif"></p>
+    <p class="center small">4x4 Keypad connection scheme</p>
+
+
+    <div class="feedback">
+      Copyright (c) 2002-2018 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

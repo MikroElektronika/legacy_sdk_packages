@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.DAC",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_DAC_1.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F051R4$|^STM32F051R8$|^STM32F051C6$|^STM32F051R6$|^STM32F051K4$|^STM32F051K6$|^STM32F051C8$|^STM32F051T8$|^STM32F051K8$|^STM32F051C4$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,168 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Creating New Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Goran Pavlovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Creating New Library</div><div class="navigation">&nbsp;&nbsp;Tutorials &gt; Creating New Library &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="compilation.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="faq.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <id="adding_new_library">
+    <a name="top_of_page"><h2>Creating New Library</h2></a>
+
+		<p>mikroC PRO for PIC32 allows you to create your own libraries.
+    	 In order to create a library in mikroC PRO for PIC32 follow the steps bellow:</p>
+				
+				<ol>
+					<li>Create a new source file, see <a href="source_files.htm#managing_source_files">Managing Source Files</a></li>
+					<li>Save the file in one of the subfolders of the compiler's Uses folder:<br>
+						  <code>DriveName:\Program Files\Mikroelektronika\mikroC PRO for PIC32\Uses\</code><br>
+					<li>Write a code for your library and save it.</li>
+					<li>Add <code>__Lib_Example</code> file in some project, see <a href="project_manager.htm">Project Manager</a>. Recompile the project.<br>If you wish to use this library for all MCUs, then you should go to <b>Tools &#8250; Options &#8250; <a href="options.htm#output_settings">Output settings</a></b>, and check <b>Build all files as library</b> box. <br>This will build libraries in a common form which will work with all MCUs. If this box is not checked, then library will be built for selected MCU. <br>Bear in mind that compiler will report an error if a library built for specific MCU is used for another one.</li>
+					<li>Compiled file <code>__Lib_Example.emcl</code> should appear in <code>...\mikroC PRO for PIC32\Uses\</code> folder.</li>
+					<li>Open the definition file for the MCU that you want to use. This file is placed in the compiler's Defs folder:<br>
+              <code>DriveName:\Program Files\Mikroelektronika\mikroC PRO for PIC32\Defs\</code><br>
+              and it is named <code>MCU_NAME.mlk</code>, for example <code>P32MX460F512L.mlk</code></li>
+					<li>Add the the following segment of code to <code>&lt;LIBRARIES&gt;</code> node of the definition file (definition file is in XML format):
+					<code><br>&lt;LIB&gt;
+			          <br>&nbsp;&nbsp;&lt;ALIAS&gt;Example_Library&lt;/ALIAS&gt;
+			          <br>&nbsp;&nbsp;&lt;FILE&gt;__Lib_Example&lt;/FILE&gt;
+			          <br>&nbsp;&nbsp;&lt;TYPE&gt;REGULAR&lt;/TYPE&gt;
+		            <br>&lt;/LIB&gt;
+		      </code>
+          <li>Add Library to mlk file for each MCU that you want to use with your library.</li>
+					<li>Click Refresh button in <a href="library_manager.htm">Library Manager</a> </li>					
+				  <li><code>Example_Library</code> should appear in the Library manager window.</li>				
+				</ol>
+		
+		
+				
+		<h3 id="multiple_library_versions">Multiple Library Versions</h3>
+
+		<p>Library Alias represents unique name that is linked to corresponding Library <code>.emcl</code> file.
+			 For example UART library for P32MX460F512L is different from UART library for P32MX675F512L MCU. 
+			 Therefore, two different UART Library versions were made, see <code>mlk</code> files for these two MCUs. 
+			 Note that these two libraries have the same Library Alias (UART) in both <code>mlk</code> files.
+			 This approach enables you to have identical representation of UART library for both MCUs 
+			 in <a href="library_manager.htm">Library Manager</a>.</p>
+				
+		
+    <!-- -->
+    
+   
+<p class="related">Related topics: <a href="library_manager.htm">Library Manager</a>, <a href="project_manager.htm">Project Manager</a>, <a href="source_files.htm#managing_source_files">Managing Source Files</a></p>
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+</body>
+
+</html>

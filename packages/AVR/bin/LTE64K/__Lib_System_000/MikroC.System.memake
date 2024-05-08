@@ -1,0 +1,18 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_System_nocall.mcl",
+        "__Lib_Math_NoHwMul.mcl",
+        "__Lib_MathDouble.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATTINY48$|^ATTINY13$|^ATTINY84A$|^ATTINY24$|^ATTINY45$|^ATTINY44A$|^ATTINY828$|^ATTINY13A$|^ATTINY861$|^ATTINY461$|^ATTINY2313A$|^ATTINY461A$|^ATTINY88$|^ATTINY261A$|^ATTINY841$|^ATTINY25$|^ATTINY861A$|^ATTINY43U$|^ATTINY24A$|^ATTINY441$|^ATTINY85$|^ATTINY4313$|^ATTINY261$|^ATTINY2313$|^ATTINY84$|^ATTINY44$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

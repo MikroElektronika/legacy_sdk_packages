@@ -1,0 +1,8 @@
+{
+    "name": "TFT Cube Rotation",
+    "description": "Gesture demonstration",
+    "image" : "Cube.png",
+    "toolchain": ["mikrocpic"],
+    "hw" : ["EasyPIC PRO v8","TFT Board 4 Capacitive"],
+    "category" : ["mikroC legacy PIC"]
+}

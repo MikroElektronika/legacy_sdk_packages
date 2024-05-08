@@ -1,0 +1,1164 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Secure Hash Algorithm library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Secure Hash Algorithm library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="crypto_library.htm">Crypto Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="rng_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="crc_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Secure Hash Algorithm Library</h2></a>
+
+    <p>This Library provides a set of routines for easier handling of the Secure Hash Algorithm module available on CEC1x02.</p>
+
+    <!-- -->
+
+    <h3>Library Routines</h3>
+
+		<ul>
+			<li><a href="#hash_status">hash_status</a></li>
+			<li><a href="#hash_busy">hash_busy</a></li>
+			<li><a href="#hash_start">hash_start</a></li>
+			<li><a href="#hash_done_status">hash_done_status</a></li>
+			<li><a href="#sha12_init">sha12_init</a></li>
+			<li><a href="#sha35_init">sha35_init</a></li>
+			<li><a href="#sha12_update">sha12_update</a></li>
+			<li><a href="#sha35_update">sha35_update</a></li>
+			<li><a href="#sha12_finalize">sha12_finalize</a></li>
+			<li><a href="#sha35_finalize">sha35_finalize</a></li>
+			<li><a href="#sha_init">sha_init</a></li>
+			<li><a href="#sha_update">sha_update</a></li>
+			<li><a href="#sha_final">sha_final</a></li>
+		</ul>
+
+    <h3 id="hash_status">hash_status</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint32_t</b> hash_status();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine returns the status of the hash block.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <p>Returns the status of the HASH block. The status register is read only. The bit definition is provided below :</p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Bit Number</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+          						  <td valign="top">If 0, there is no error. If 1, it indicates that AHB error has occurred.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="hash_busy">hash_busy</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> hash_busy();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to check if the HASH block is busy.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+					  	<li><code>1</code> - block is busy,</li>
+					  	<li><code>0</code> - otherwise.</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="hash_start">hash_start</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> hash_start(<b>uint8_t</b> ien);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to start the HASH engine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+							<li><code>ien:</code> a Boolean value indicating the state of interrupts.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Once started, the GIRQ18 bit 9 reflects the done status (1 if done). It must be cleared after it is set.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="hash_done_status">hash_done_status</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> hash_done_status(<b>uint32_t</b> *hw_status);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to check the done status of HASH block. The status register value is updated into the pointer passed by the buffer.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+							<li><code>hw_status:</code> pointer where the status value will be stored. The bit definitions are listed below :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Bit Numbers</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">31:16</td>
+          						  <td valign="top">Hash Status Register Value.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">15:0</td>
+          						  <td valign="top">Hash Control Register Value.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+							</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+					  	<li><code>1</code> - if the done status,</li>
+					  	<li><code>0</code> - otherwise.</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="sha12_init">sha12_init</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> sha12_init(<b>SHA12_CONTEXT_T</b> * psha12_ctx, <b>uint8_t</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine initializes the <code>SHA12_CONTEXT_T</code> Data structure for the specified mode. This routine does not effect a change on the Hash Hardware.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+							<li><code>psha12_ctx:</code> pointer to the <acronym title="Secure Hash Algorithm">SHA</acronym> context structure. The structure definition is given below :
+<pre class="program">
+<b>typedef struct</b> sha12_context_s SHA12_CONTEXT_T;
+<b>struct</b> sha12_context_s {
+    SHA12_DIGEST_U hash;
+    <b>union</b> {
+        <b>uint32_t</b> w[(SHA12_BLOCK_WLEN) * 2];
+        <b>uint8_t</b> b[(SHA12_BLOCK_BLEN) * 2];
+    } block;
+    <b>uint8_t</b> mode;
+    <b>uint8_t</b> block_len;
+    <b>uint8_t</b> rsvd[2];
+#ifdef SHA_ENABLE_64BIT_MSG_LEN
+    <b>uint64_t</b> total_msg_len;
+#else
+    <b>uint32_t</b> total_msg_len;
+#endif
+<b>#endif</b>
+};
+</pre>
+
+<p>The structure definition of <code>SHA12_DIGEST_U</code> is given below :</p>
+<pre class="program">
+<b>typedef union</b> {
+  <b>uint32_t</b> w[SHA2_WLEN];
+  <b>uint8_t</b> b[SHA2_BLEN];
+} SHA12_DIGEST_U; 
+</pre>
+							</li>
+              <li><code>mode:</code> indicates the mode of SHA. The permitted modes are <code>SHA_MODE_256</code> and <code>SHA_MODE_1</code>.</li> 
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+					  	<li><code>SHA_RET_ERR_BAD_ADDR</code> - if <code>sha12_ctx2</code> points to NULL,</li>
+					  	<li><code>SHA_RET_ERR_UNSUPPORTED</code> - if <code>sha_mode</code> has a value other than the permitted ones,</li>
+					  	<li><code>SHA_RET_OK</code> - returned if the operation requested is successful.</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="sha35_init">sha35_init</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> sha35_init(<b>SHA35_CONTEXT</b> *psha35_ctx, <b>uint8_t</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine initializes the <code>SHA35_CONTEXT_T</code> data structure for the mode specified.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>psha35_ctx:</code> pointer to the <code>SHA35_CONTEXT_T</code> data structure. The structure definition is given below :
+<pre class="program">
+<b>typedef struct</b> sha35_context_s SHA35_CONTEXT_T;
+<b>struct</b> sha35_context_s {
+    SHA35_DIGEST_U hash;
+    <b>union</b> {
+        <b>uint32_t</b> w[(SHA35_BLOCK_WLEN) * 2];
+        <b>uint8_t</b>  b[(SHA35_BLOCK_BLEN) * 2];
+    } block;
+    <b>uint8_t</b> mode;
+    <b>uint8_t</b> block_len;
+    <b>uint8_t</b> rsvd[2];
+#ifdef SHA_ENABLE_64BIT_MSG_LEN
+    <b>uint64_t</b> total_msg_len[2];
+#else
+    <b>uint32_t</b> total_msg_len;
+#endif
+} aligned(8);
+</pre>
+
+<p>The structure definition of <code>SHA35_DIGEST_U</code> is given below :</p>
+<pre class="program">
+<b>typedef union</b> {
+  <b>uint32_t</b> w[SHA5_WLEN];
+  <b>uint8_t</b> b[SHA5_BLEN];
+} SHA35_DIGEST_U; 
+</pre>
+
+         			</li>
+           		<li><code>mode:</code> the permitted mode for this operation is <code>SHA_MODE_512</code>.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+					  	<li><code>SHA_RET_ERR_BAD_ADDR</code> - if <code>sha35_ctx2</code> points to NULL,</li>
+					  	<li><code>SHA_RET_ERR_UNSUPPORTED</code> - if <code>sha_mode</code> has a value other than the permitted ones,</li>
+					  	<li><code>SHA_RET_OK</code> - returned if the operation requested is successful.</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Valid only for CEC1702 MCU.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+     <!-- -->
+
+    <h3 id="sha12_update">sha12_update</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> sha12_update(<b>SHA12_CONTEXT_T</b> *psha12_ctx, <b>const uint32_t</b> *pdata, <b>uint32_t</b> num_bytes);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine runs Hash block on data and updates the <code>SHA12_CONTEXT_T</code> data structure with the number of bytes processed. The data must be aligned to a 4-byte boundary for SHA1 or SHA256. 
+            <br>If data length is not a multiple of 64-bytes, then the remaining bytes will be copied into <code>SHA12_CONTEXT_T</code> data structure to be processed by <a href="#sha12_finalize">sha12_finalize</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+							<li><code>psha12_ctx:</code> pointer to the <acronym title="Secure Hash Algorithm">SHA</acronym> context structure. The structure definition is given below :
+<pre class="program">
+<b>typedef struct</b> sha12_context_s SHA12_CONTEXT_T;
+<b>struct</b> sha12_context_s {
+    SHA12_DIGEST_U hash;
+    <b>union</b> {
+        <b>uint32_t</b> w[(SHA12_BLOCK_WLEN) * 2];
+        <b>uint8_t</b> b[(SHA12_BLOCK_BLEN) * 2];
+    } block;
+    <b>uint8_t</b> mode;
+    <b>uint8_t</b> block_len;
+    <b>uint8_t</b> rsvd[2];
+#ifdef SHA_ENABLE_64BIT_MSG_LEN
+    <b>uint64_t</b> total_msg_len;
+#else
+    <b>uint32_t</b> total_msg_len;
+#endif
+<b>#endif</b>
+};
+</pre>
+
+<p>The structure definition of <code>SHA12_DIGEST_U</code> is given below :</p>
+<pre class="program">
+<b>typedef union</b> {
+  <b>uint32_t</b> w[SHA2_WLEN];
+  <b>uint8_t</b> b[SHA2_BLEN];
+} SHA12_DIGEST_U; 
+</pre>
+							</li>
+              <li><code>pdata:</code> pointer to constant data consisting of data to be updated.</li>
+              <li><code>num_bytes:</code> length of data.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+					  	<li><code>SHA_RET_ERR_BAD_ADDR</code> - if either <code>sha12_ctx3</code> or <code>data1</code> points to NULL,</li>
+					  	<li><code>SHA_RET_ERR_UNSUPPORTED</code> - if <code>sha_mode</code> has a value other than the permitted ones,</li>
+					  	<li><code>SHA_RET_OK</code> - returned if the operation requested is successful.</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <h3 id="sha35_update">sha35_update</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> sha35_update(<b>SHA35_CONTEXT</b> *psha35_ctx, <b>const uint32_t</b> *pdata, <b>uint32_t</b> num_bytes);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine runs Hash block on data and updates the <code>SHA35_CONTEXT_T</code> data structure with the number of bytes processed. The data must be aligned to a 4-byte boundary for SHA1 or SHA256. 
+            <br>If data length is not a multiple of 64-bytes, then the remaining bytes will be copied into <code>SHA35_CONTEXT_T</code> data structure to be processed by <a href="#sha35_finalize">sha35_finalize</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+							<li><code>psha35_ctx:</code> pointer to the <acronym title="Secure Hash Algorithm">SHA</acronym> context structure. The structure definition is given below :
+<pre class="program">
+<b>typedef struct</b> sha35_context_s SHA35_CONTEXT_T;
+<b>struct</b> sha35_context_s {
+    SHA35_DIGEST_U hash;
+    <b>union</b> {
+        <b>uint32_t</b> w[(SHA35_BLOCK_WLEN) * 2];
+        <b>uint8_t</b>  b[(SHA35_BLOCK_BLEN) * 2];
+    } block;
+    <b>uint8_t</b> mode;
+    <b>uint8_t</b> block_len;
+    <b>uint8_t</b> rsvd[2];
+#ifdef SHA_ENABLE_64BIT_MSG_LEN
+    <b>uint64_t</b> total_msg_len[2];
+#else
+    <b>uint32_t</b> total_msg_len;
+#endif
+} aligned(8);
+</pre>
+
+<p>The structure definition of <code>SHA35_DIGEST_U</code> is given below :</p>
+<pre class="program">
+<b>typedef union</b> {
+  <b>uint32_t</b> w[SHA5_WLEN];
+  <b>uint8_t</b> b[SHA5_BLEN];
+} SHA35_DIGEST_U; 
+</pre>
+							</li>
+              <li><code>pdata:</code> pointer to constant data consisting of data to be updated.</li>
+              <li><code>num_bytes:</code> length of data.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+					  	<li><code>SHA_RET_ERR_BAD_ADDR</code> - if either <code>sha12_ctx3</code> or <code>data1</code> points to NULL,</li>
+					  	<li><code>SHA_RET_ERR_UNSUPPORTED</code> - if <code>sha_mode</code> has a value other than the permitted ones,</li>
+					  	<li><code>SHA_RET_OK</code> - returned if the operation requested is successful.</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Valid only for CEC1702 MCU.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <h3 id="sha12_finalize">sha12_finalize</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> sha12_finalize(<b>SHA12_CONTEXT_T</b> *psha12_ctx);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine applies <acronym title="Federal Information Processing Standard">FIPS</acronym> padding to SHA256 and performs final hash calculations. It must be used in sequence, sha256_init, sha256_update_start, wait for hash engine to finish, sha256_finalize. 
+            <br>The <code>SHA256_CONTEXT_T</code> object will be filled in with nay remaining bytes on the last call to sha256_update_start. <acronym title="Secure Hash Algorithm">SHA</acronym> engine is approximately 1 cycle per byte for SHA1 and SHA256. It is 64 cycles per 64-byte block.</p>
+            <p>If the original message length has greater than 56 remaining bytes, the API will need to hash two additional blocks, one for the remaining 56 bytes and one to hold the message bit length.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+							<li><code>psha12_ctx</code> pointer to the <acronym title="Secure Hash Algorithm">SHA</acronym> context structure. The structure definition is given below :
+<pre class="program">
+<b>typedef struct</b> sha12_context_s SHA12_CONTEXT_T;
+<b>struct</b> sha12_context_s {
+    SHA12_DIGEST_U hash;
+    <b>union</b> {
+        <b>uint32_t</b> w[(SHA12_BLOCK_WLEN) * 2];
+        <b>uint8_t</b> b[(SHA12_BLOCK_BLEN) * 2];
+    } block;
+    <b>uint8_t</b> mode;
+    <b>uint8_t</b> block_len;
+    <b>uint8_t</b> rsvd[2];
+#ifdef SHA_ENABLE_64BIT_MSG_LEN
+    <b>uint64_t</b> total_msg_len;
+#else
+    <b>uint32_t</b> total_msg_len;
+#endif
+<b>#endif</b>
+};
+</pre>
+
+<p>The structure definition of <code>SHA12_DIGEST_U</code> is given below :</p>
+<pre class="program">
+<b>typedef union</b> {
+  <b>uint32_t</b> w[SHA2_WLEN];
+  <b>uint8_t</b> b[SHA2_BLEN];
+} SHA12_DIGEST_U; 
+</pre>
+							</li>
+						</ul>
+          </td>
+        </tr>
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+					  	<li><code>SHA_RET_ERR_BAD_ADDR</code> - if <code>sha12_ctx2</code> points to NULL,</li>
+					  	<li><code>SHA_RET_ERR_BUSY</code> - this error value is returned if hash block is busy,</li>
+					  	<li><code>SHA_RET_START</code> - returned if the operation requested is successful.</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="sha35_finalize">sha35_finalize</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> sha35_finalize(<b>SHA35_CONTEXT_T</b> *psha35_ctx);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Finalizes the Hash operations by running Hash engine if bytes are left over and adds <acronym title="Federal Information Processing Standard">FIPS</acronym> padding.</p.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+							<li><code>psha35_ctx</code> pointer to the <acronym title="Secure Hash Algorithm">SHA</acronym> context structure. The structure definition is given below :
+<pre class="program">
+<b>typedef struct</b> sha35_context_s SHA35_CONTEXT_T;
+<b>struct</b> sha35_context_s {
+    SHA35_DIGEST_U hash;
+    <b>union</b> {
+        <b>uint32_t</b> w[(SHA35_BLOCK_WLEN) * 2];
+        <b>uint8_t</b>  b[(SHA35_BLOCK_BLEN) * 2];
+    } block;
+    <b>uint8_t</b> mode;
+    <b>uint8_t</b> block_len;
+    <b>uint8_t</b> rsvd[2];
+#ifdef SHA_ENABLE_64BIT_MSG_LEN
+    <b>uint64_t</b> total_msg_len[2];
+#else
+    <b>uint32_t</b> total_msg_len;
+#endif
+} aligned(8);
+</pre>
+
+<p>The structure definition of <code>SHA35_DIGEST_U</code> is given below :</p>
+<pre class="program">
+<b>typedef union</b> {
+  <b>uint32_t</b> w[SHA5_WLEN];
+  <b>uint8_t</b> b[SHA5_BLEN];
+} SHA35_DIGEST_U; 
+</pre>
+							</li>
+						</ul>
+          </td>
+        </tr>
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+					  	<li><code>SHA_RET_ERR_BAD_ADDR</code> - if <code>sha35_ctx</code> points to NULL,</li>
+					  	<li><code>SHA_RET_ERR_BUSY</code> - this error value is returned if hash block is busy,</li>
+					  	<li><code>SHA_RET_START</code> - returned if the operation requested is successful.</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Valid only for CEC1702 MCU.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="sha_init">sha_init</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for CEC1302 MCU :</i>          	
+            <br><p><b>uint8_t</b> sha_init(<b>uint8_t</b> mode, <b>uint32_t</b> *pdigest);</p>
+            <i>// for CEC1702 MCU :</i>
+            <br><p><b>uint8_t</b> sha_init(<b>uint8_t</b> mode, <b>uint16_t</b> *pdigest);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine initializes the hash engine for <acronym title="Secure Hash Algorithm">SHA</acronym> operation. Programs supported <acronym title="Secure Hash Algorithm">SHA</acronym> operation’s initial value, digest address and operation (SHA1, SHA256 or SHA384). 
+            <br>Hash engine does not need to be started. SHA1 and SHA256 require 4 byte alignment, while SHA384 require 8-byte alignment.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+							<li><code>mode:</code> paramteter indicating the mode. Permitted modes are <code>SHA_MODE_1<code> and <code>SHA_MODE_256</code>.</li>
+              <li><code>pdigest:</code> pointer to digest.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>0</code> - Success.</li>
+							<li><code>1</code> - Hash Engine Busy.</li>
+							<li><code>2</code> - Unsupported SHA operation.</li>
+							<li><code>3</code> - Bad digest pointer, NULL or mis-aligned.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="sha_update">sha_update</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> sha_update(<b>const uint32_t</b> *<b>pdata</b>, <b>uint16_t</b> nblocks, <b>uint8_t</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine programs hash engine with data address and the number of data blocks to process. <acronym title="Secure Hash Algorithm">SHA</acronym> block must be initialized before this routine is called. 
+            <br>SHA1 and SHA256 require 4 byte alignment while SHA384 require 8-byte alignment. Hash engine is not started, if return value is non-zero caller must call <a href="#hash_start">hash_start</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>pdata:</code> pointer to data,</li>
+           		<li><code>nblocks:</code> number of blocks,</li>
+           		<li><code>flags:</code> Bit 0 indicates clear status(1-clear), bit enable interrupt status(1-enable) and bit indicates start/stop (1-start).</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>0</code> - Success.</li>
+							<li><code>1</code> - Hash Engine Busy.</li>
+							<li><code>2</code> - <code>pdata</code> is a null pointer.</li>
+							<li><code>3</code> - data is misaligned.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="sha_final">sha_final</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> sha_final(<b>uint32_t</b> *padbuf, <b>uint32_t</b> total_msg_len, <b>const uint8_t</b> *prem, <b>uint8_t</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine implement the standard <acronym title="Secure Hash Algorithm">SHA</acronym> padding described in the <acronym title="Federal Information Processing Standard">FIPS</acronym> standard.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>padbuf:</code> pointer to the message padded according to the rules of fips standard.</li>
+           		<li><code>total_msg_len:</code>	length of message.</li>
+           		<li><code>prem:</code>	to constant data consisting of …?</li>
+           		<li><code>flags:</code>	Bit 0 indicates clear status(1-clear), bit enable interrupt status(1-enable) and bit indicates start/stop (1-start).</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>0</code> - Success.</li>
+							<li><code>1</code> - Hash Engine Busy.</li>
+							<li><code>2</code> - <code>pdata</code> is a null pointer.</li>
+							<li><code>3</code> - data is misaligned.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

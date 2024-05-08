@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_Flash_FTFA.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MKV42F256.+16$|^MK80FN256.+15$|^MKV46F128.+16$|^MKV44F128.+16$|^MK22FN128.+10$|^MK82FN256.+15$|^MKV42F64.+16$|^MK22FN256.+12$|^MK22FN128.+12$|^MK22FN512.+12$|^MKV46F256.+16$|^MKV44F64.+16$|^MKV42F128.+16$|^MKV44F256.+16$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

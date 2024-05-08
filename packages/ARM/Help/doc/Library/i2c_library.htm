@@ -1,0 +1,2987 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>I2C Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">I2C Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="graphic_lcd_library.htm" title="Previous"><img src="template/btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="keypad_library.htm" title="Next"><img src="template/btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Library</h2></a>
+
+
+    <p>The <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> full master <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module is available with a number of the ARM MCU models. The mikroC PRO for ARM provides a library which supports the master <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> mode.</p>
+    <br> 
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+      <ul>
+    	  <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	  <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	  <li>Library routine prototypes may vary from family to family, so please pay attention to the desired routine section.</li>
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#i2c_init">I2Cn_Init</a></li>
+      <li><a href="#i2c_init_advanced">I2Cn_Init_Advanced</a></li>
+      <li><a href="#i2cn_enable">I2Cn_Enable</a></li>
+      <li><a href="#i2cn_disable">I2Cn_Disable</a></li>
+      <li><a href="#i2cn_start">I2Cn_Start</a></li>
+      <li><a href="#i2c_get_status">I2Cn_Get_Status</a></li>
+      <li><a href="#i2c_is_idle">I2Cn_Is_Idle</a></li>
+      <li><a href="#i2cn_master_slave_addr_set">I2Cn_Master_Slave_Addr_Set</a></li>
+      <li><a href="#i2c_master_bus_busy">I2Cn_Master_Bus_Busy</a></li>
+      <li><a href="#i2c_master_busy">I2Cn_Master_Busy</a></li>
+      <li><a href="#i2cn_read">I2Cn_Read</a></li>
+      <li><a href="#i2cn_write">I2Cn_Write</a></li>
+      <li><a href="#i2cn_settimeoutcallback">I2Cn_SetTimeoutCallback</a></li>   
+      <li><a href="#i2c_set_active">I2C_Set_Active</a></li>
+    </ul>
+
+    <h4>Generic Routines</h4>
+
+    <ul>
+      <li><a href="#i2c_enable">I2C_Enable</a></li>  
+      <li><a href="#i2c_disable">I2C_Disable</a></li>
+      <li><a href="#i2c_start">I2C_Start</a></li>  
+      <li><a href="#i2c_master_slave_addr_set">I2C_Master_Slave_Addr_Set</a></li>
+      <li><a href="#i2c_read">I2C_Read</a></li>  
+      <li><a href="#i2c_write">I2C_Write</a></li>    
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_init">I2Cn_Init</h3>
+
+
+    <!-- tabela: I2Cn_Init -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cn_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This function configures and initializes the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module with the standard 100kbps bitrate.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Initialize the I2C1 module with the standard bitrate of 100000</i>
+I2C1_Init();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+            	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>I2C modules are set on the following pins :
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+							<ul>
+								<li>I2C0 :
+								<ul>
+								  <li><b>PB3/PB3</b> - all Cortex M3 and M4 MCUs.</li>
+								</ul>
+								</li>
+								<li>I2C1 :
+								<ul>
+									<li><b>PG0/PG1</b> - TM4C129x Cortex M4 MCUs.</li>
+									<li><b>PA6/PA7</b> - all other Cortex M4 MCUs not listed before.</li>
+									<li><b>PA0/PA1</b> - all Cortex M3 MCUs.</li>
+								</ul>
+							 </li>	
+								<li>I2C2 :
+								<ul>
+									<li><b>PL0/PL1</b> - TM4C129x Cortex M4 MCUs.</li>
+									<li><b>PE4/PB5</b> - all other Cortex M4 MCUs not listed before.</li>
+								</ul>
+								</li>
+								<li>I2C3 :
+								<ul>
+									<li><b>PK4/PK5</b> - TM4C129x Cortex M4 MCUs.</li>
+									<li><b>PD0/PD1</b> - all other Cortex M4 MCUs not listed before.</li>
+								</ul>
+								</li>
+								<li>I2C4 :
+								<ul>
+									<li><b>PK6/PK7</b> - TM4C129x Cortex M4 MCUs.</li>
+									<li><b>PG2/PG3</b> - all other Cortex M4 MCUs not listed before.</li>
+								</ul>
+								</li>
+								<li>I2C5 :
+								<ul>
+									<li><b>PB0/PB1</b> - TM4C129x Cortex M4 MCUs.</li>
+									<li><b>PG6/PG7</b> - LM4F112x, LM4F122x, LM4F132x, LM4F212x and LM4F232x Cortex M4 MCUs.</li>
+									<li><b>PB6/PB7</b> - all other Cortex M4 MCUs not listed before.</li>
+								</ul>
+								</li>
+								<li>I2C6 :
+								<ul>
+									<li><b>PA6/PA7</b> - TM4C129x Cortex M4 MCUs.</li>
+								</ul>
+								</li>
+								<li>I2C7 :
+								<ul>
+									<li><b>PD0/PD1</b> - TM4C129x Cortex M4 MCUs.</li>
+								</ul>
+								</li>
+								<li>I2C8 :
+								<ul>
+									<li><b>PA2/PA3</b> - TM4C129x Cortex M4 MCUs.</li>
+								</ul>
+								</li>
+								<li>I2C9 :
+								<ul>
+									<li><b>PA0/PA1</b> - TM4C129x Cortex M4 MCUs.</li>
+								</ul>
+								</li>
+						  </li>
+							</ul>						  
+            <br>
+              <ul>
+              <p>Refer to the table below for correct values of the bit rate in respect with system clock :</p>
+                <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">System Clock</th>
+                        <th valign="top">Standard Mode</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td valign="top">4 MHz</td>
+                        <td valign="top">100 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">6 MHz</td>
+                        <td valign="top">100 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td valign="top">12.5 MHz</td>
+                        <td valign="top">89 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">16.7 MHz</td>
+          						  <td valign="top">93 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">20 MHz</td>
+          						  <td valign="top">100 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">25 MHz</td>
+          						  <td valign="top">96.2 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">33 MHz</td>
+          						  <td valign="top">97.1 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">40 MHz</td>
+          						  <td valign="top">100 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">50MHz</td>
+          						  <td valign="top">100 Kbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">80 MHz</td>
+          						  <td valign="top">100 Kbps</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+							<ul>
+								<li>I2C0 :
+								<ul>
+									<li><b>PA6/PA7</b></li>
+								</ul>
+							 </li>									
+								<li>I2C1 :
+								<ul>
+									<li><b>PC12/PC13</b></li>
+								</ul>
+							 </li>	
+								<li>I2C2 :
+								<ul>
+									<li><b>PB6/PB7</b></li>
+								</ul>
+								</li>
+								<li>I2C3 :
+								<ul>
+									<li><b>PE10/PE11</b></li>
+								</ul>
+								</li>
+							</ul>
+
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+							<ul>
+								<li>I2C1 :
+								<ul>
+									<li><b>PB6/PB7</b> all Cortex M0, M3 and M4 MCUs.</li>
+								</ul>
+							 </li>	
+								<li>I2C2 :
+								<ul>
+									<li><b>PB10/PB11</b> - all Cortex M0 and M3 MCUs.</li>
+									<li><b>PA9/PA10</b> - STM32F302x, STM32F303x, STM32F313x, STM32F358x, STM32F373x, STM32F378x, and STM32F383x Cortex M4 MCUs.</li>
+									<li><b>PF1/PF0</b> - STM32F301x Cortex M4 MCUs.</li>
+									<li><b>PB10/PB3</b> - STM32F401x and STM32F411x Cortex M4 MCUs.</li>
+								</ul>
+								</li>
+								<li>I2C3 :
+								<ul>
+									<li><b>PH7/PH8</b> - all Cortex M3 MCUs.</li>
+									<li><b>PA8/PC9</b> - STM32F302x Cortex M4 MCUs.</li>
+									<li><b>PD0/PD1</b> - STM32F401x and STM32F411x Cortex M4 MCUs.</li>
+								</ul>
+								</li>
+							</ul>
+            <br>
+            <p>The peripheral input clock frequency must be at least :</p>
+    	      <ul>  
+            	<li>2 MHz in Standard mode (100 Kbps)</li>
+            	<li>4 MHz in Fast mode (400 Kbps)</li>
+            </ul>
+
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1302</h2>
+							<ul>
+								<li>I2C0 :
+								<ul>
+									<li><b>P015/P016</b></li>
+								</ul>
+							  </li>	
+								<li>I2C1 :
+								<ul>
+									<li><b>P022/P023</b></li>
+								</ul>
+								</li>
+								<li>I2C2 :
+								<ul>
+									<li><b>P020/P021</b></li>
+								</ul>
+								</li>								
+								<li>I2C3 :
+								<ul>
+									<li><b>P024/P025</b></li>
+								</ul>
+								</li>
+							</ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1702</h2>
+							<ul>
+								<li>I2C0 :
+								<ul>
+									<li><b>P004/P003</b></li>
+								</ul>
+							  </li>	
+								<li>I2C1 :
+								<ul>
+									<li><b>P155/P154</b></li>
+								</ul>
+								</li>
+								<li>I2C2 :
+								<ul>
+									<li><b>P010/P007</b></li>
+								</ul>
+								</li>								
+								<li>I2C3 :
+								<ul>
+									<li><b>P013/P012</b></li>
+								</ul>
+								</li>
+							</ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>Kinetis</h2>
+							<ul>
+								<li>I2C0 :
+								<ul>
+									<li><b>PE24/PE25</b></li>
+								</ul>
+							  </li>	
+								<li>I2C1 :
+								<ul>
+									<li><b>PE1/PE0</b></li>
+								</ul>
+								</li>
+								<li>I2C2 :
+								<ul>
+									<li><b>PA12/PA11</b></li>
+								</ul>
+								</li>								
+							</ul>
+    </div>
+    
+  </div>
+</li>
+     	      </ul>  
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_init_advanced">I2Cn_Init_Advanced</h3>
+
+
+    <!-- tabela: I2Cn_Init_Advanced -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs :</i> 
+            <p><b>void</b> I2Cn_Init_Advanced(<b>unsigned long</b> bitrate);</p>
+            <i>// for Stellaris MCUs with alternative PORT functions on <acronym title="General Purpose Input/Output">GPIO</acronym> pins :</i>
+            <p><b>void</b> I2Cn_Init_Advanced(<b>unsigned long</b> bitrate, <b>const</b> Module_Struct *module);</p>
+            <i>// for CEC1x02, ST and Kinetis MCUs :</i> 
+            <p><b>void</b> I2Cn_Init_Advanced(<b>unsigned long</b> : I2C_ClockSpeed, <b>const</b> Module_Struct *module);</p>
+            <i>// for MSP432 :</i> 
+            <p><b>void</b> I2Cn_Init_Advanced(<b>unsigned long</b> I2C_ClockSpeed, <b>unsigned long</b> clockSource, <b>const</b> Module_Struct *module);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This function configures and initializes the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module using custom bitrate setting.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+           	<ul>
+             	<li><code>bitrate:</code> requested serial clock rate :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_BITRATE_STANDARD_MODE</td>
+                        <td valign="top">100 kbps bit rate.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_BITRATE_FAST_MODE</td>
+          						  <td valign="top">400 kbps bit rate.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_BITRATE_FAST_MODE_PLUS</td>
+                        <td valign="top">Fast-mode plus, 1 Mbps (available only for Stellaris Cortex M4 devices).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_BITRATE_HIGH_SPEED_MODE</td>
+          						  <td valign="top">High-speed mode, 3.33 Mbps (available only for Stellaris Cortex M4 devices).</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+             	</li>
+          	
+             	<p></p>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_I2C</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+            </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+           	<ul>
+             	<li><code>I2C_ClockSpeed:</code> requested serial clock rate.</li>
+            		<li><code>clockSource:</code> clock source for <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module. Valid values :
+ 	                <table>
+                    <tr align="center">
+								  		<td bgcolor=#f5f2ec><b>Description</b></td>
+								  		<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                    </tr>
+
+								  	<tr align="center">
+								  		<td><code>Externally provided clock</code></td>
+								  		<td><code>_I2C_CLOCK_SOURCE_UCLK</code></td>
+                    </tr>
+
+
+								  	<tr align="center">
+								  		<td><code>Auxiliary clock</code></td>
+								  		<td><code>_I2C_CLOCK_SOURCE_ACLK</code></td>
+                    </tr>
+
+								  	<tr align="center">
+								  		<td><code>Low-speed subsystem master clock</code></td>
+								  		<td><code>_I2C_CLOCK_SOURCE_SMCLK</code></td>
+                    </tr>
+                    
+            		  </table>
+           			</li><p align="justify"></p>             	
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_I2C</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+            </ul>
+    </div>
+
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+           	<ul>
+             	<li><code>I2C_ClockSpeed:</code> requested serial clock rate.
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_I2C</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+            </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+           	<ul>
+             	<li><code>I2C_ClockSpeed:</code> requested serial clock rate. Valid values </p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_100KHZ</td>
+                        <td valign="top">Standard mode, 100 kbps bit rate.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_400KHZ</td>
+          						  <td valign="top">Full speed, 400 kbps bit rate.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_1MHZ</td>
+                        <td valign="top">Fast mode, 1 Mbps bit rate.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_I2C</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+            </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>Kinetis</h2>
+           	<ul>
+             	<li><code>I2C_ClockSpeed:</code> requested serial clock rate.</li>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_I2C</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+            </ul>
+    </div>
+
+  </div>
+   
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+<i>// Initialize the I2C1 module in fast mode</i>
+I2C1_Init_Advanced(_I2C_BITRATE_FAST_MODE);
+
+<i>// Initialize the I2C1 module in fast mode on GPIO_PORTJ</i>
+I2C1_Init_Advanced(_I2C_BITRATE_FAST_MODE, &_GPIO_MODULE_I2C1_J01);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+<i>// Initialize the I2C1 module with 100Kbps speed on PA6/PA7</i>
+I2C1_Init_Advanced(100000, _I2C_CLOCK_SOURCE_SMCLK, &_GPIO_MODULE_I2CB0_A67);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<pre>
+<i>// Initialize the I2C1 module with 100Kbps speed on PORTB</i>
+I2C1_Init_Advanced(100000, &_GPIO_MODULE_I2C1_PB67);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+<pre>
+<i>// Initialize the I2C0 module with 100Kbps speed</i>
+I2C0_Init_Advanced(_I2C_100KHZ, &_GPIO_MODULE_I2C0_P015_P016);
+</pre>
+    </div>
+    <div class="tabbertab">
+    <h2>Kinetis</h2>
+<pre>
+<i>// Initialize the I2C0 module with 100Kbps speed</i>
+I2C0_Init_Advanced(100000, &_GPIO_MODULE_I2C0_PE24_25);
+</pre>
+    </div>
+
+  </div>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	        <li>For available working modes for a specific MCU please read the appropriate datasheet.</li>  
+    	      </ul>
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+    	      <ul>    	
+              <li>Refer to the table below for correct values of the bit rate in respect with system clock :
+                <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">System Clock</th>
+                        <th valign="top">Standard Mode</th>
+                        <th valign="top">Fast Mode</th>
+                        <th valign="top">Fast Mode Plus</th>
+                        <th valign="top">High-Speed Mode</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td valign="top">4 MHz</td>
+                        <td valign="top">100 Kbps</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">6 MHz</td>
+                        <td valign="top">100 Kbps</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td valign="top">12.5 MHz</td>
+                        <td valign="top">89 Kbps</td>
+                        <td valign="top">312 Kbps</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">16.7 MHz</td>
+          						  <td valign="top">93 Kbps</td>
+                        <td valign="top">278 Kbps</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">20 MHz</td>
+          						  <td valign="top">100 Kbps</td>
+                        <td valign="top">333 Kbps</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">25 MHz</td>
+          						  <td valign="top">96.2 Kbps</td>
+                        <td valign="top">312 Kbps</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">33 MHz</td>
+          						  <td valign="top">97.1 Kbps</td>
+                        <td valign="top">330 Kbps</td>
+                        <td valign="top">-</td>
+                        <td valign="top">-</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">40 MHz</td>
+          						  <td valign="top">100 Kbps</td>
+                        <td valign="top">400 Kbps</td>
+                        <td valign="top">1000 Kbps</td>
+                        <td valign="top">3.33 Mbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">50MHz</td>
+          						  <td valign="top">100 Kbps</td>
+                        <td valign="top">357 Kbps</td>
+                        <td valign="top">833 Kbps</td>
+                        <td valign="top">2.77 Mbps</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">80 MHz</td>
+          						  <td valign="top">100 Kbps</td>
+                        <td valign="top">400 Kbps</td>
+                        <td valign="top">1000 Kbps</td>
+                        <td valign="top">3.33 Mbps</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+              </li>
+    	      </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+            <br>The peripheral input clock frequency must be at least :</p>
+    	      <ul>  
+            	<li>2 MHz in Standard mode (100 Kbps)</li>
+            	<li>4 MHz in Fast mode (400 Kbps)</li>
+            </ul>
+    </div>
+  </div>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="i2cn_enable">I2Cn_Enable</h3>
+
+
+    <!-- tabela: I2C0_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cn_Enable();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine enables <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master block.</p>
+            <p>This routine is valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Enable I2C1 Master block</i>
+I2C1_Enable();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>This routine is valid only for Stellaris devices.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2cn_disable">I2Cn_Disable</h3>
+
+
+    <!-- tabela: I2Cn_Disable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cn_Disable();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine disables <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master block.</p>
+            <p>This routine is valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Disable I2C1 Master block</i>
+I2C1_Disable();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>This routine is valid only for Stellaris devices.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2cn_start">I2Cn_Start</h3>
+
+    <!-- tabela: I2C0_Enable -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> I2Cn_Start();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Determines if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free and issues START signal.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>If there is no error, routine returns 0.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Start I2C1 module</i>
+I2C1_Start();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>This routine is valid for CEC1x02, ST and Kinetis devices.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_get_status">I2Cn_Get_Status</h3>
+
+
+    <!-- tabela: I2C0_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> I2Cn_Get_Status();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine returns the values of both <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> status registers, SR1 and SR2, combined in one 32-bit value.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Values of both <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> status registers.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Get Status for I2C1 module</i>
+<b>unsigned long</b> stat;
+
+stat = I2C1_Get_Status();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>This routine is valid for ST, Kinetis and MSP432 devices.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_is_idle">I2Cn_Is_Idle</h3>
+
+
+    <!-- tabela: I2C0_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> I2Cn_Is_Idle();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Tests if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns 1 if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free, otherwise returns 0.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (I2C1_Is_Idle() {
+...
+</pre></pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>This routine is valid only for ST, Kinetis and MSP432 devices.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2cn_master_slave_addr_set">I2Cn_Master_Slave_Addr_Set</h3>
+
+
+    <!-- tabela: I2Cn_Master_Slave_Addr_Set -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cn_Master_Slave_Addr_Set(<b>char</b> slave_addr, <b>char</b> dir);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the address that the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master will place on the bus, i.e. Slave address.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>slave_addr:</code> <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> slave address.</li>
+             	<li><code>dir:</code> <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master transceiver direction :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_DIR_MASTER_RECEIVE</td>
+                        <td valign="top">Master receive.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_DIR_MASTER_TRANSMIT</td>
+          						  <td valign="top">Master transmit.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+             	</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set address which will be used by Master to transmit data to</i>
+I2C1_Master_Slave_Addr_Set(0x0A, _I2C_DIR_MASTER_TRANSMIT);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>This routine is valid only for Stellaris devices.</li>
+              <li>Device address is shifted to the left by one place in the library and the R/W bit is added automatically.</li>              
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_master_bus_busy">I2Cn_Master_Bus_Busy</h3>
+
+
+    <!-- tabela: I2Cn_Master_Bus_Busy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> I2Cn_Master_Bus_Busy();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Indicates whether or not the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is busy.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>            
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is busy,</li>
+            	<li><code>0</code> - otherwise.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// If I2C bus is free :</i>
+<b>if</b> (!I2C1_Master_Bus_Busy) {
+...
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>This routine is valid only for Stellaris devices.</li>
+    	      </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_master_busy">I2Cn_Master_Busy</h3>
+
+
+    <!-- tabela: I2Cn_Master_Busy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> I2Cn_Master_Busy();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Indicates whether or not the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master is busy.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>            
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master is busy,</li>
+            	<li><code>0</code> - otherwise.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// If I2C Master is free :</i>
+<b>if</b> (!I2C1_Master_Busy) {
+...
+}
+</pre>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>This routine is valid only for Stellaris devices.</li>
+    	      </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2cn_read">I2Cn_Read</h3>
+
+
+    <!-- tabela: I2Cn_Rd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs :</i> 
+            <p><b>char</b> I2Cn_Read(<b>char</b> *dat, <b>char</b> mode);</p>
+            <i>// for CEC1x02, ST, Kinetis and MSP432 MCUs :</i> 
+            <p><b>void</b> I2Cn_Read(<b>char</b> slave_address, <b>char</b> *ptrdata, <b>unsigned long</b> count, <b>unsigned long</b> END_mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Receives a byte from the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+
+           	<ul>
+             	<li><code>dat:</code> received data.</li>
+              <li><code>mode:</code> mode parameter. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_MASTER_MODE_SINGLE_RECEIVE</td>
+                        <td valign="top">Single byte receive.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_MASTER_MODE_BURST_RECEIVE_START</td>
+          						  <td valign="top">Start receiving burst of data (used when receiving first byte of data burst).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_MASTER_MODE_BURST_RECEIVE_CONT</td>
+                        <td valign="top">Continue receiving burst of data (used when receiving data burst bytes other than first and last).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_MASTER_MODE_BURST_RECEIVE_FINISH</td>
+          						  <td valign="top">End of data burst reception (used when receiving last byte of data burst).</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+             </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02, STM32 and Kinetis</h2>
+
+           	<ul>
+              <li><code>slave_address:</code> slave address.</li>
+              <li><code>ptrdata:</code> pointer to the received data.</li>
+              <li><code>count:</code> number of bytes to be received.</li>
+              <li><code>END_mode:</code> mode in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module will be set after the reading. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">END_MODE_RESTART</td>
+                        <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a restart.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">END_MODE_STOP</td>
+          						  <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a stop.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+             </ul>
+    </div>
+  </div>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>0</code> if there were no errors.</li>
+           	  <li><code>1</code> if write collision was detected on the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</li>
+            	<li>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+I2C0_Master_Slave_Addr_Set(0x50, _I2C_DIR_MASTER_RECEIVE); <i>// set slave address, and read operation</i>
+I2C0_Read(res, _I2C_MASTER_MODE_SINGLE_RECEIVE);       <i>// issue I2C start, and read byte.</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02, STM32, MSP432 and Kinetis</h2>
+<pre>
+I2C1_Read(0x50, data_, num_bytes, END_MODE_STOP);          <i>// receive num_bytes, store it to data_, and issue a stop condition .</i>
+</pre>
+    </div>
+  </div>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	      </ul>
+          </td>
+        </tr>  
+  
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2cn_write">I2Cn_Write</h3>
+
+
+    <!-- tabela: I2Cn_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs :</i> 
+            <p><b>unsigned</b> I2Cn_Write(<b>char</b> dat, <b>char</b> mode);</p>
+            <i>// for CEC1x02, ST, MSP432 and Kinetis MCUs :</i> 
+            <p><b>unsigned</b> I2Cn_Write(<b>unsigned char</b> slave_address, <b>unsigned char</b> *buf, <b>unsigned long</b> count, <b>unsigned long</b> END_mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends data byte via the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+           	<ul>
+             	<li><code>dat:</code> data to be sent.</li>           	
+              <li><code>mode:</code> mode parameter. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_MASTER_MODE_SINGLE_SEND</td>
+                        <td valign="top">Single byte transmit.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_MASTER_MODE_BURST_SEND_START</td>
+          						  <td valign="top">Start transmitting burst of data (used when transmitting first byte of data burst).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_MASTER_MODE_BURST_SEND_CONT</td>
+                        <td valign="top">Continue transmitting burst of data (used when transmitting data burst bytes other than first and last).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_MASTER_MODE_BURST_SEND_FINISH</td>
+          						  <td valign="top">End of data burst transmission (used when transmitting last byte of data burst).</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+             </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02, STM32, MSP432 and Kinetis</h2>
+           	<ul>
+              <li><code>slave_address:</code> slave address.</li>
+              <li><code>buf:</code> pointer to the data to be transmitted.</li>
+              <li><code>count:</code> number of bytes to be transmitted.</li>
+              <li><code>END_mode:</code> mode in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module will be set after the writing. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">END_MODE_RESTART</td>
+                        <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a restart.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">END_MODE_STOP</td>
+          						  <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a stop.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>             	
+             </ul>
+    </div>
+  </div>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>0</code> if there were no errors.</li>
+           	  <li><code>1</code> if write collision was detected on the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+I2C0_Master_Slave_Addr_Set(0x50, _I2C_DIR_MASTER_TRANSMIT); <i>// set slave address, and write operation</i>
+I2C0_Write(rAddr, _I2C_MASTER_MODE_SINGLE_SEND);    <i>// issue I2C start, and send byte (address of EEPROM location)</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02, STM32, MSP432 and Kinetis</h2>
+<pre>
+I2C1_Write(0x50, data_, num_bytes, END_MODE_STOP);          <i>// write num_bytes, stored in data_, and issue a stop condition.</i>
+</pre>
+    </div>
+  </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>9</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+              <li>CEC1x02 and ST Specific: Device address is shifted to the left by one place in the library and the R/W bit is added automatically.</li>
+    	      </ul>
+          </td>
+        </tr>  
+  
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="i2cn_settimeoutcallback">I2Cn_SetTimeoutCallback</h3>
+
+    <!-- tabela: I2C1_SetTimeoutCallback -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cn_SetTimeoutCallback(<b>unsigned long</b> timeout, <b>void</b> (*I2C_timeout)(<b>char</b>));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function checks for a <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> timeout condition in a user defined time period, after which it jumps to a callback function if this condition is met.
+            <br>Different <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> operations can cause a timeout (read, write, etc.) so user may test which one caused it, as in the example below.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>timeout:</code> Represents a number of <code>while</code> loops in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> timeout condition is checked.</li>
+            	<li><code>I2C_timeout:</code> pointer to the callback function. Callback function must be written according to this function prototype :
+<pre class="program">
+<b>void</b> I2C1_TimeoutCallback(<b>char</b> errorCode) {
+
+}	
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c_init">I2Cn_Init</a> or <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// define callback function</i>
+<b>void</b> I2C1_TimeoutCallback(<b>char</b> errorCode) {
+
+   <b>if</b> (errorCode == _I2C_TIMEOUT_RD) {
+     <i>// do something if timeout is caused during read</i>
+   }
+
+   <b>if</b> (errorCode == _I2C_TIMEOUT_WR) {
+     <i>// do something if timeout is caused during write</i>
+   }
+
+   <b>if</b> (errorCode == _I2C_TIMEOUT_WAIT_FOR_IDLE) {
+     <i>// do something if timeout is caused during wait for idle</i>            
+   }
+
+   <b>if</b> (errorCode == _I2C_TIMEOUT_IDLE) {
+     <i>// do something if timeout is caused during idle</i>            
+   }
+
+   <b>if</b> (errorCode == _I2C_TIMEOUT_STOP) {
+     <i>// do something if timeout is caused during stop</i>
+   }
+
+   <b>if</b> (errorCode == _I2C_TIMEOUT_START) {
+     <i>// do something if timeout is caused during start</i>            
+   }
+
+   <b>if</b> (errorCode == _I2C_TIMEOUT_INIT) {
+     <i>// do something if timeout is caused during initialization</i>            
+   }
+}	
+
+<i>// initialize I2C module</i>
+I2C1_Init(100000);
+
+<i>// set timeout period and callback function</i>
+I2C1_SetTimeoutCallback(1000, I2C1_TimeoutCallback);
+</pre>
+
+          </td>
+        </tr>
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module, simply change the letter <b>n</b> in the routine prototype for a number from <b>0</b> to <b>3</b>.</li>
+    	      	<li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	      </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="i2c_set_active">I2C_Set_Active</h3>
+
+
+    <!-- tabela: I2C_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs :</i> 
+            <p><b>void</b> I2C_Set_Active(<b>void</b> (*enable_ptr)(<b>void</b>), <b>void</b> (*master_slave_addr_set_ptr)(<b>char</b>, <b>char</b>), <b>char</b> (*write_ptr)(<b>char</b>, <b>char</b>), <b>char</b> (*read_ptr)(<b>char</b>*, <b>char</b>), <b>void</b> (*disable_ptr)(<b>void</b>));</p>
+            <i>// for MSP432 MCUs :</i> 
+            <p><b>void</b> I2C_Set_Active(<b>void</b> (*read_ptr)(<b>unsigned char</b>, <b>unsigned char</b>*, <b>unsigned long</b>, <b>unsigned long</b>), <b>unsigned</b> (*write_ptr)(<b>unsigned char</b>, <b>unsigned</b> char*, <b>unsigned long</b>, <b>unsigned long</b>));</p>
+            <i>// for CEC1x02, ST and Kinetis MCUs :</i> 
+            <p><b>void</b> I2C_Set_Active(<b>unsigned</b> (*start_ptr)(<b>void</b>), <b>void</b> (*read_ptr)(<b>unsigned char</b>, <b>unsigned char</b>*, <b>unsigned long</b>, <b>unsigned long</b>), <b>unsigned</b> (*write_ptr)(<b>unsigned char</b>, <b>unsigned</b> char*, <b>unsigned long</b>, <b>unsigned long</b>));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module which will be used by the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+            	<ul>
+            		<li><code>enable_ptr:</code> <a href="#i2cn_enable">I2Cn_Enable</a> handler</li>
+            		<li><code>master_slave_addr_set_ptr:</code> <a href="#i2cn_master_slave_addr_set">I2Cn_Master_Slave_Addr_Set</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#i2cn_write">I2Cn_Write</a> handler</li>
+            		<li><code>read_ptr:</code> <a href="#i2cn_read">I2Cn_Read</a> handler</li>
+            		<li><code>disable_ptr:</code> <a href="#i2cn_disable">I2Cn_Disable</a> handler</li>
+            	</ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+            	<ul>
+            		<li><code>read_ptr:</code> <a href="#i2cn_read">I2Cn_Read</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#i2cn_write">I2Cn_Write</a> handler</li>
+            	</ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32, CEC1x02 and Kinetis</h2>
+            	<ul>
+            		<li><code>start_ptr:</code> <a href="#i2cn_start">I2Cn_Start</a> handler</li>
+            		<li><code>read_ptr:</code> <a href="#i2cn_read">I2Cn_Read</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#i2cn_write">I2Cn_Write</a> handler</li>
+            	</ul>
+    </div>
+  </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See the  
+            	<a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+I2C_Set_Active(&I2C1_Enable, &I2C1_Master_Slave_Addr_Set, &I2C1_Write, &I2C1_Read, &I2C1_Disable); // Sets the I2C1 module active
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+I2C_Set_Active(&I2C1_Read, &I2C1_Write); // Sets the I2C1 module active
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32, CEC1x02 and Kinetis</h2>
+<pre>
+I2C_Set_Active(&I2C1_Start, &I2C1_Read, &I2C1_Write); // Sets the I2C1 module active
+</pre>
+    </div>
+  </div>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <p>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</p>    	      
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+
+    <h3 id="i2c_enable">I2C_Enable</h3>
+
+
+    <!-- tabela: I2C0_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2C_Enable();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine enables <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master block.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>       
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C_Set_Active(&I2C1_Enable, &I2C1_Master_Slave_Addr_Set, &I2C1_Read, &I2C1_Write, &I2C1_Disable); <i>// Sets the I2C1 module active</i>
+...
+<i>// Enable I2C1 Master block</i>
+I2C_Enable();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+              <li>This routine is valid only for Stellaris devices.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_disable">I2C_Disable</h3>
+
+
+    <!-- tabela: I2Cn_Disable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2C_Disable();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine disables <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master block.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>       
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>            
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C_Set_Active(&I2C1_Enable, &I2C1_Master_Slave_Addr_Set, &I2C1_Read, &I2C1_Write, &I2C1_Disable); <i>// Sets the I2C1 module active</i>
+...
+<i>// Disable I2C1 Master block</i>
+I2C_Disable();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+              <li>This routine is valid only for Stellaris devices.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="i2c_start">I2C_Start</h3>
+
+
+    <!-- tabela: I2C0_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> I2C_Start();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Determines if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free and issues START signal.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>            
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>If there is no error, routine returns 0.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C_Set_Active(&I2C1_Start, &I2C1_Read, &I2C1_Write); <i>// Sets the I2C1 module active</i>
+...
+<i>// Start I2C1 module</i>
+error = I2C_Start();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+              <li>This routine is valid for CEC1x02, ST and Kinetis devices.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="i2c_master_slave_addr_set">I2C_Master_Slave_Addr_Set</h3>
+
+
+    <!-- tabela: I2Cn_Master_Slave_Addr_Set -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cn_Master_Slave_Addr_Set(<b>char</b> slave_addr, <b>char</b> dir);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the address that the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master will place on the bus, i.e. Slave address.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>                       
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>slave_addr:</code> <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> slave address.</li>
+             	<li><code>dir:</code> <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Master transceiver direction :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_DIR_MASTER_RECEIVE</td>
+                        <td valign="top">Master receive.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_DIR_MASTER_TRANSMIT</td>
+          						  <td valign="top">Master transmit.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+             	</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C_Set_Active(&I2C1_Enable, &I2C1_Master_Slave_Addr_Set, &I2C1_Read, &I2C1_Write, &I2C1_Disable); <i>// Sets the I2C1 module active</i>
+...
+<i>// Set address which will be used by Master to transmit data to</i>
+I2C_Master_Slave_Addr_Set(0x0A, _I2C_DIR_MASTER_TRANSMIT);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+              <li>This routine is valid only for Stellaris devices.</li>
+              <li>Device address is shifted to the left by one place in the library and the R/W bit is added automatically.</li>
+    	      </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="i2c_read">I2C_Read</h3>
+
+
+    <!-- tabela: I2Cn_Rd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs :</i> 
+            <p><b>char</b> I2C_Read(<b>char</b> *dat, <b>char</b> mode);</p>
+            <i>// for CEC1x02, ST, MSP432 and Kinetis MCUs :</i> 
+            <p><b>void</b> I2C_Read(<b>char</b> slave_address, <b>char</b> *ptrdata, <b>unsigned long</b> count, <b>unsigned long</b> END_mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Receives a byte from the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+
+           	<ul>
+             	<li><code>dat:</code> received data.</li>
+              <li><code>mode:</code> mode parameter. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_MASTER_MODE_SINGLE_RECEIVE</td>
+                        <td valign="top">Single byte receive.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_MASTER_MODE_BURST_RECEIVE_START</td>
+          						  <td valign="top">Start receiving burst of data (used when receiving first byte of data burst).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_MASTER_MODE_BURST_RECEIVE_CONT</td>
+                        <td valign="top">Continue receiving burst of data (used when receiving data burst bytes other than first and last).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_MASTER_MODE_BURST_RECEIVE_FINISH</td>
+          						  <td valign="top">End of data burst reception (used when receiving last byte of data burst).</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+             </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02, STM32, MSP432 and Kinetis</h2>
+
+           	<ul>
+              <li><code>slave_address:</code> slave address.</li>
+              <li><code>ptrdata:</code> pointer to the received data.</li>
+              <li><code>count:</code> number of bytes to be received.</li>
+              <li><code>END_mode:</code> mode in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module will be set after the reading. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">END_MODE_RESTART</td>
+                        <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a restart.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">END_MODE_STOP</td>
+          						  <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a stop.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+             </ul>
+    </div>
+  </div>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>0</code> if there were no errors.</li>
+           	  <li><code>1</code> if write collision was detected on the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</li>
+            	<li>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+I2C_Set_Active(&I2C1_Enable, &I2C1_Master_Slave_Addr_Set, &I2C1_Read, &I2C1_Write, &I2C1_Disable); <i>// Sets the I2C1 module active</i>
+...
+I2C_Read(res, _I2C_MASTER_MODE_SINGLE_RECEIVE);       <i>// issue I2C start, and read byte.</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02, STM32, MSP432 and Kinetis</h2>
+<pre>
+I2C_Set_Active(&I2C1_Start, &I2C1_Read, &I2C1_Write); <i>// Sets the I2C1 module active</i>
+...
+I2C_Read(0x50, data_, num_bytes, END_MODE_STOP);          <i>// receive num_bytes, store it to data_, and issue a stop condition .</i>
+</pre>
+    </div>
+  </div>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+              <li>CEC1x02 and ST Specific: Device address is shifted to the left by one place in the library and the R/W bit is added automatically.</li>
+    	      </ul>
+          </td>
+        </tr>  
+  
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="i2c_write">I2C_Write</h3>
+
+
+    <!-- tabela: I2Cn_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs :</i> 
+            <p><b>unsigned</b> I2C_Write(<b>char</b> dat, <b>char</b> mode);</p>
+            <i>// for CEC1x02, ST, MSP432 and Kinetis MCUs :</i> 
+            <p><b>unsigned</b> I2C_Write(<b>unsigned char</b> slave_address, <b>unsigned char</b> *buf, <b>unsigned long</b> count, <b>unsigned long</b> END_mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends data byte via the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>            
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+           	<ul>
+             	<li><code>dat:</code> data to be sent.</li>
+              <li><code>mode:</code> mode parameter. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_MASTER_MODE_SINGLE_SEND</td>
+                        <td valign="top">Single byte transmit.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_MASTER_MODE_BURST_SEND_START</td>
+          						  <td valign="top">Start transmitting burst of data (used when transmitting first byte of data burst).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_MASTER_MODE_BURST_SEND_CONT</td>
+                        <td valign="top">Continue transmitting burst of data (used when transmitting data burst bytes other than first and last).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_MASTER_MODE_BURST_SEND_FINISH</td>
+          						  <td valign="top">End of data burst transmission (used when transmitting last byte of data burst).</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>             	
+             </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02, STM32, MSP432 and Kinetis</h2>
+           	<ul>
+              <li><code>slave_address:</code> slave address.</li>
+              <li><code>buf:</code> pointer to the data to be transmitted.</li>
+              <li><code>count:</code> number of bytes to be transmitted.</li>
+              <li><code>END_mode:</code> mode in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module will be set after the writing. Available modes :
+                  <table class="small">
+              		  <thead>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+        </tr>
+                    </thead>
+                    <tbody>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">END_MODE_RESTART</td>
+                        <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a restart.</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">END_MODE_STOP</td>
+          						  <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a stop.</td>
+        </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+             </ul>
+    </div>
+  </div>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>0</code> if there were no errors.</li>
+           	  <li><code>1</code> if write collision was detected on the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> with at least one <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+						<p>Used <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module must be initialized before using this function. See <a href="#i2c_init">I2Cn_Init</a> and <a href="#i2c_init_advanced">I2Cn_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+I2C_Set_Active(&I2C1_Start, &I2C1_Read, &I2C1_Write); <i>// Sets the I2C1 module active</i>
+...
+I2C_Write(rAddr, _I2C_MASTER_MODE_SINGLE_SEND);    <i>// issue I2C start, and send byte (address of EEPROM location)</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02, STM32, MSP432 and Kinetis</h2>
+<pre>
+I2C_Set_Active(&I2C1_Start, &I2C1_Read, &I2C1_Write); <i>// Sets the I2C1 module active</i>
+...
+I2C_Write(0x50, data_, num_bytes, END_MODE_STOP);          <i>// write num_bytes, stored in data_, and issue a stop condition.</i>
+</pre>
+    </div>
+  </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+              <li>CEC1x02 and ST Specific: Device address is shifted to the left by one place in the library and the R/W bit is added automatically.</li>
+    	      </ul>
+          </td>
+        </tr>  
+  
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <!--
+
+    
+    <h3>Library Example</h3>
+
+    <p>This code demonstrates working with the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library. Program sends data to <acronym title="Electrically-Erasable Programmable Read-Only Memory">EEPROM</acronym> (data is written at the address 2). After that, program reads data from the same EEPROM address and displays it on GPIO_PORTE for visual check. See the figure below how to interface the 24C02 to ARM.</p>
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<b>void</b> EEPROM_24C02_Init() {
+  I2C0_Init();
+}
+
+<i>//--------------- Writes data to 24C02 EEPROM - signle location</i>
+<b>void</b> EEPROM_24C02_WrSingle(<b>unsigned short</b> wAddr, <b>unsigned short</b> wData) {
+  
+  I2C0_Master_Slave_Addr_Set(0x50, _I2C_DIR_MASTER_TRANSMIT); <i>// set slave address, and write operation</i>
+  I2C0_Write(wAddr, _I2C_MASTER_MODE_BURST_SEND_START);  <i>// issue I2C start, and send byte (address of EEPROM location)</i>
+  I2C0_Write(wData, _I2C_MASTER_MODE_BURST_SEND_FINISH); <i>// send data (data to be written), and finish transmit</i>
+}
+
+<i>//--------------- Reads data from 24C02 EEPROM - single location (random)</i>
+<b>unsigned short</b> EEPROM_24C02_RdSingle(<b>unsigned short</b> rAddr) {
+  <b>unsigned short</b> reslt;
+  
+  I2C0_Master_Slave_Addr_Set(0x50, _I2C_DIR_MASTER_TRANSMIT); <i>// set slave address, and write operation</i>
+  I2C0_Write(rAddr, _I2C_MASTER_MODE_SINGLE_SEND);       <i>// issue I2C start, and send byte (address of EEPROM location)</i>
+
+  I2C0_Master_Slave_Addr_Set(0x50, _I2C_DIR_MASTER_RECEIVE); <i>// set slave address, and read operation</i>
+  I2C0_Read(&#38;reslt, _I2C_MASTER_MODE_SINGLE_RECEIVE);    <i>// issue I2C start, and read byte.</i>
+  <b>return</b> reslt;
+}
+
+<b>unsigned short</b> i;
+<b>char</b> b;
+<b>void</b> main(){
+
+  GPIO_Digital_Output(&#38;GPIO_PORTD_DATA_BITS, _GPIO_PINMASK_ALL);  <i>// Configure GPIO_PORTD as output</i>
+  GPIO_PORTD_DATA = 0;                                            <i>// Set GPIO_PORTD value to zero</i>
+  GPIO_Digital_Output(&#38;GPIO_PORTE_DATA_BITS, _GPIO_PINMASK_ALL);  <i>// Configure GPIO_PORTE as output</i>
+  GPIO_PORTE_DATA = 0;                                            <i>// Set GPIO_PORTE value to zero</i>
+
+  EEPROM_24C02_Init();        <i>// performs I2C initialization</i>
+  b = 0x00;
+  <b>for</b>(i = 0x00; i&#60;0x80; i++) {
+    EEPROM_24C02_WrSingle(i,b);
+    b++;
+    delay_ms(5);
+  }
+  <b>for</b>(i = 0x00; i &#60; 0x80; i++){
+    GPIO_PORTD_DATA = i;
+    GPIO_PORTE_DATA = EEPROM_24C02_RdSingle(i);
+    delay_ms(50);
+  }
+}
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>char</b> data_[256];
+
+<i>//--------------- Writes data to 24C02 EEPROM - signle location</i>
+<b>void</b> EEPROM_24C02_WrSingle(<b>unsigned short</b> wAddr, <b>unsigned short</b> wData) {
+  data_[0] = wAddr;
+  data_[1] = wData;
+  I2C1_Start();
+  <i>// issue I2C start signal</i>
+  I2C1_Write(0x50,data_,2,END_MODE_STOP);
+}<i>//~</i>
+
+<i>//--------------- Reads data from 24C02 EEPROM - single location (random)</i>
+<b>unsigned short</b> EEPROM_24C02_RdSingle(<b>unsigned short</b> rAddr) {
+  data_[0] = rAddr;
+  I2C1_Start();              <i>// issue I2C start signal</i>
+  I2C1_Write(0x50,data_,1,END_MODE_RESTART);
+  I2C1_Read(0x50,data_,1,END_MODE_STOP);
+
+  <b>return</b> data_[0];
+}
+
+<b>void</b> main(){
+  <b>unsigned short</b> i;
+
+  GPIO_Digital_Output(&#38;GPIOD_BASE, _GPIO_PINMASK_ALL);
+
+  I2C1_Init();        <i>// performs I2C initialization</i>
+
+  GPIOD_ODR = 0xFFFF;
+  Delay_ms(1000);
+
+  <b>for</b>(i = 0; i&#60;0x80; i++) {
+    EEPROM_24C02_WrSingle(i,i);
+    GPIOD_ODR++;
+    delay_ms(5);
+  }
+
+  Delay_ms(500);
+  GPIOD_ODR = 0xFFFF;
+  Delay_ms(1000);
+
+  <b>for</b>(i = 0x00; i &#60; 0x80; i++){
+    GPIOD_ODR = EEPROM_24C02_RdSingle(i);
+    delay_ms(100);
+  }
+
+}
+</pre>
+    </div>
+  </div>
+
+    -->
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

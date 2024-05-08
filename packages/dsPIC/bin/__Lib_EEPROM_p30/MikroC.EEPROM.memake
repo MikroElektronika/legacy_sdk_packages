@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.EEPROM",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_EEPROM_p30.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC30F2010$|^dsPIC30F5011E$|^dsPIC30F6014A$|^dsPIC30F4013E$|^dsPIC30F5013E$|^dsPIC30F6013A$|^dsPIC30F2011E$|^dsPIC30F6013$|^dsPIC30F2011$|^dsPIC30F5015$|^dsPIC30F4012E$|^dsPIC30F4012$|^dsPIC30F4013$|^dsPIC30F5013$|^dsPIC30F3010E$|^dsPIC30F4011$|^dsPIC30F5011$|^dsPIC30F3014E$|^dsPIC30F3012E$|^dsPIC30F2023$|^dsPIC30F6010A$|^dsPIC30F1010$|^dsPIC30F6010$|^dsPIC30F3010$|^dsPIC30F3011$|^dsPIC30F3013$|^dsPIC30F6014$|^dsPIC30F5016$|^dsPIC30F6011$|^dsPIC30F5015E$|^dsPIC30F3013E$|^dsPIC30F6011A$|^dsPIC30F3011E$|^dsPIC30F3012$|^dsPIC30F6015$|^dsPIC30F3014$|^dsPIC30F2010E$|^dsPIC30F6012$|^dsPIC30F6012A$|^dsPIC30F4011E$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

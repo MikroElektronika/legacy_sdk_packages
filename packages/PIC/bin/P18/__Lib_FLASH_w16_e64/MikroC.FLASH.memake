@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "P18",
+    "binaries": [
+        "__Lib_FLASH_w16_e64.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC18LF14K50$|^PIC18LF14K22$|^PIC18F2450$|^PIC18F4450$|^PIC18F43K20$|^PIC18F14K22$|^PIC18LF2450$|^PIC18F14K50$|^PIC18F23K20$|^PIC18LF4450$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

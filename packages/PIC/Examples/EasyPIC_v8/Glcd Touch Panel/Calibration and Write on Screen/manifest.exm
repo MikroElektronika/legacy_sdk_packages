@@ -1,0 +1,8 @@
+{
+    "name": "GLCD Touch Panel",
+    "description": "This example shows how to calibrate touch panel and how to write on the screen.",
+    "image" : "GLCD.png",
+    "toolchain": ["mikrocpic"],
+    "hw" : ["EasyPIC v8","GLCD"],
+    "category" : ["mikroC legacy PIC"]
+}

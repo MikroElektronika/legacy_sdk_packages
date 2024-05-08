@@ -1,0 +1,657 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>PS/2 Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Nikola Topalovic & Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">PS/2 Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="port_expander_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="pwm_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>PS/2 Library</h2></a>
+
+
+    <p>The mikroC PRO for PIC32 provides a library for communication with the common PS/2 keyboard.</p>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>   
+      <ul>
+      	<li>The library does not utilize interrupts for data retrieval, and requires the oscillator clock to be at least 6MHz.</li>
+      	<li>The pins to which a PS/2 keyboard is attached should be connected to the pull-up resistors.</li>
+      	<li>Although PS/2 is a two-way communication bus, this library does not provide MCU-to-keyboard communication; e.g. pressing the <kbd>Caps&#160;Lock</kbd> key will not turn on the Caps Lock LED.</li>
+      </ul>
+    </div>
+    <p></p>
+
+   <h3>External dependencies of PS/2 Library</h3>
+
+    <!-- tabela: Ext_depend -->
+  
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using PS/2 Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+			  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> PS2_Data;</code></td>
+          <td align="left">PS/2 Data line.</td>
+          <td align="left"><code><b>sbit</b> PS2_Data <b>at</b> RB0_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> PS2_Clock;</code></td>
+          <td align="left">PS/2 Clock line.</td>
+          <td align="left"><code><b>sbit</b> PS2_Clock <b>at</b> RB1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> PS2_Data_Direction;</code></td>
+          <td align="left">Direction of the PS/2 Data pin.</td>
+          <td align="left"><code><b>sbit</b> PS2_Data_Direction <b>at</b> TRISB0_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> PS2_Clock_Direction;</code></td>
+          <td align="left">Direction of the PS/2 Clock pin.</td>
+          <td align="left"><code><b>sbit</b> PS2_Clock_Direction <b>at</b> TRISB1_bit;</code></td>
+        </tr> 
+        
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+		
+		<h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#ps2_config">Ps2_Config</a></li>
+      <li><a href="#ps2_key_read">Ps2_Key_Read</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="ps2_config">Ps2_Config</h3>
+
+
+    <!-- tabela: Ps2_Config -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Ps2_Config();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Initializes the MCU for work with the PS/2 keyboard.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	 <p>Global variables :	
+          	 	<ul>
+                <li><code>PS2_Data: </code>Data signal line</li>
+                <li><code>PS2_Clock: </code>Clock signal line</li>
+                <li><code>PS2_Data_Direction: </code>Direction of the Data pin </li>
+                <li><code>PS2_Clock_Direction: </code>Direction of the Clock pin</li>              
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// PS2 pinout definition</i> 
+<b>sbit</b> PS2_Data <b>at</b> RB0_bit;
+<b>sbit</b> PS2_Clock <b>at</b> RB1_bit;
+<b>sbit</b> PS2_Data_Direction <b>at</b> TRISB0_bit;
+<b>sbit</b> PS2_Clock_Direction <b>at</b> TRISB1_bit;
+<i>// End of PS2 pinout definition</i>
+...
+Ps2_Config();         <i>// Init PS/2 Keyboard</i>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+  
+  
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="ps2_key_read">Ps2_Key_Read</h3>
+
+
+    <!-- tabela: Ps2_Key_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Ps2_Key_Read(<b>unsigned short</b> *value, <b>unsigned short</b> *special, <b>unsigned short</b> *pressed);         
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function retrieves information on key pressed.</p>
+          </td>  
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>value:</code> holds the value of the key pressed. For characters, numerals, punctuation marks, and space
+             		 <code>value</code> will store the appropriate <acronym title="American Standard Code for Information Interchange">ASCII</acronym> code. 
+             		 Routine &#8220;recognizes&#8221; the function of <kbd>Shift</kbd> and <kbd>Caps&#160;Lock</kbd>, and behaves appropriately. 
+             		 For special function keys see <a href="#special_function_keys">Special Function Keys</a> Table.</li>
+             	<li><code>special:</code>  is a flag for special function keys (<kbd>F1</kbd>, <kbd>Enter</kbd>, <kbd>Esc</kbd>, etc). 
+             		If key pressed is one of these, <code>special</code> will be set to 1, otherwise 0.</li>
+             	<li><code>pressed:</code> is set to 1 if the key is pressed, and 0 if it is released.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+            	<ul>
+              	<li><code>1</code> if reading of a key from the keyboard was successful</li>
+              	<li><code>0</code> if no key was pressed</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>PS/2 keyboard needs to be initialized. See <a href="#ps2_config">Ps2_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned short</b> keydata = 0, special = 0, down = 0;
+...
+<i>// Press Enter to continue:</i>
+<b>do</b> {
+  <b>if</b> (Ps2_Key_Read(&#38;keydata, &#38;special, &#38;down)) {
+    <b>if</b> (down &#38;&#38; (keydata == 16)) <b>break</b>;
+  }
+} <b>while</b> (1);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    
+    <!-- kraj tabele -->
+
+    
+    <!-- -->
+    
+    
+    <h4 id="special_function_keys">Special Function Keys</h4>
+
+    <!-- tabela: Special Function Keys -->
+
+    <table class="small">
+
+      <!--
+      <caption></caption>
+      -->
+
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="120" valign="top">Key</th>
+          <th width="120" valign="top">Value returned</th>
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F1</td>
+          <td valign="top">1</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F2</td>
+          <td valign="top">2</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F3</td>
+          <td valign="top">3</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F4</td>
+          <td valign="top">4</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F5</td>
+          <td valign="top">5</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F6</td>
+          <td valign="top">6</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F7</td>
+          <td valign="top">7</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F8</td>
+          <td valign="top">8</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F9</td>
+          <td valign="top">9</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F10</td>
+          <td valign="top">10</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F11</td>
+          <td valign="top">11</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">F12</td>
+          <td valign="top">12</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Enter</td>
+          <td valign="top">13</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Page Up</td>
+          <td valign="top">14</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Page Down</td>
+          <td valign="top">15</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Backspace</td>
+          <td valign="top">16</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Insert</td>
+          <td valign="top">17</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Delete</td>
+          <td valign="top">18</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Windows</td>
+          <td valign="top">19</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Ctrl</td>
+          <td valign="top">20</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Shift</td>
+          <td valign="top">21</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Alt</td>
+          <td valign="top">22</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Print Screen</td>
+          <td valign="top">23</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Pause</td>
+          <td valign="top">24</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Caps Lock</td>
+          <td valign="top">25</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">End</td>
+          <td valign="top">26</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Home</td>
+          <td valign="top">27</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Scroll Lock</td>
+          <td valign="top">28</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Num Lock</td>
+          <td valign="top">29</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Left Arrow</td>
+          <td valign="top">30</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Right Arrow</td>
+          <td valign="top">31</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Up Arrow</td>
+          <td valign="top">32</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Down Arrow</td>
+          <td valign="top">33</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Escape</td>
+          <td valign="top">34</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">Tab</td>
+          <td valign="top">35</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>This simple example reads values of the pressed keys on the PS/2 keyboard and sends them via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">keydata</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">special</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">down;
+</span><span class="cpp1-space">&nbsp;
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">PS2_Data</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RD0_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">PS2_Clock</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RD1_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">PS2_Data_Direction</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD0_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">PS2_Clock_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD1_bit;
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CHECON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x32</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">AD1PCFG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Configure&nbsp;AN&nbsp;pins&nbsp;as&nbsp;digital&nbsp;I/O
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">TRISD</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">LATD</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;
+&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Init(</span><span class="cpp1-number">56000</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;UART&nbsp;module&nbsp;at&nbsp;19200&nbsp;bps
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Ps2_Config();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Init&nbsp;PS/2&nbsp;Keyboard
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">100</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Wait&nbsp;for&nbsp;keyboard&nbsp;to&nbsp;finish
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(</span><span class="cpp1-string">&quot;Ready&quot;</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-number">10</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Line&nbsp;Feed
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-number">13</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Carriage&nbsp;return
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">do</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(Ps2_Key_Read(&amp;keydata,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;special,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;down))</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(down</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(keydata</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">==</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">16</span><span class="cpp1-symbol">))</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Backspace
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-hexadecimal">0x08</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">else</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(down</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(keydata</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">==</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">13</span><span class="cpp1-symbol">))</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Enter
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-character">'\r'</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;send&nbsp;carriage&nbsp;return&nbsp;to&nbsp;usart&nbsp;terminal
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//UART1_Write('\n');&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;uncomment&nbsp;this&nbsp;line&nbsp;if&nbsp;usart&nbsp;terminal&nbsp;also&nbsp;expects&nbsp;line&nbsp;feed
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;for&nbsp;new&nbsp;line&nbsp;transition
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">else</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(down</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">!special</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">keydata)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(keydata);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Send&nbsp;key&nbsp;to&nbsp;usart&nbsp;terminal
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Debounce&nbsp;period
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">while</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+}
+</span></code>
+</pre>
+	
+	
+	  <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Example PS2 keyboard connection" src="img/Schemes/scheme_ps2.gif"></p>
+    <p class="center small">Example of PS2 keyboard connection</p>
+    
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

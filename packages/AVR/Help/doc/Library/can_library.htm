@@ -1,0 +1,1111 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>CAN Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroelektronika.co.yu">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_avr.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">CAN Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="adc_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="canspi_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    <a name="top_of_page"><h2>CAN Library</h2></a>
+
+    <br>
+    <p>The mikroC PRO for AVR provides a library (driver) for working with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+    <p>The <acronym title="Controller Area Network">CAN</acronym> is a very robust protocol that has error detection and signalization, self–checking and fault confinement. Faulty <acronym title="Controller Area Network">CAN</acronym> data and remote frames are re-transmitted automatically, similar to the Ethernet.</p>
+    <p> Data transfer rates depend on distance. For example, 1 Mbit/s can be achieved at network lengths below 40m while 250 Kbit/s can be achieved at network lengths below 250m. The greater distance the lower maximum bitrate that can be achieved. The lowest bitrate defined by the standard is 200Kbit/s. Cables used are shielded twisted pairs.</p>
+    <p><acronym title="Controller Area Network">CAN</acronym> supports two message formats:</p>
+    <ul>
+      <li>Standard format, with 11 identifier bits, and</li>
+      <li>Extended format, with 29 identifier bits.</li>
+    </ul>
+    
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+      <ul>
+        <li><acronym title="Controller Area Network">CAN</acronym> library routines are supported for these devices : <b>AT90CAN32</b>, <b>AT90CAN64</b>, <b>AT90CAN128</b>, <b>ATMEGA16M1</b>, <b>ATMEGA32M1</b> and <b>ATMEGA64M1</b>.</li>
+        <li>Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</li>
+        <li>Consult the <acronym title="Controller Area Network">CAN</acronym> standard about <acronym title="Controller Area Network">CAN</acronym> bus termination resistance.</li>    
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#cansetoperationmode">CANSetOperationMode</a></li>
+      <li><a href="#cangetoperationmode">CANGetOperationMode</a></li>
+      <li><a href="#caninitialize">CANInitialize</a></li>
+      <li><a href="#cansetbaudrate">CANSetBaudRate</a></li>
+      <li><a href="#cansetmask">CANSetMask</a></li>
+      <li><a href="#cansetfilter">CANSetFilter</a></li>
+      <li><a href="#canread">CANRead</a></li>
+      <li><a href="#canwrite">CANWrite</a></li>
+    </ul>
+    
+
+    <!-- -->
+
+
+    <h3 id="cansetoperationmode">CANSetOperationMode</h3>
+
+
+    <!-- tabela: CANSetOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSetOperationMode(<b>unsigned short</b> mode, <b>unsigned short</b> wait_flag);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets <acronym title="Controller Area Network">CAN</acronym> to requested mode, i.e. copies <code>mode</code> to CANSTAT. Parameter <code>mode</code> needs to be one of <code>CAN_OP_MODE</code> constants (see <a href="#can_constants">CAN constants</a>).</p>
+            <p>Parameter <code>wait_flag</code> needs to be either 0 or 0xFF:</p>
+            <ul>
+              <li>If set to 0xFF, this is a blocking call &#8211; the function won&#8217;t &#8220;return&#8221; until the requested mode is set.</li>
+              <li>If 0, this is a non-blocking call. It does not verify if CAN module is switched to requested mode or not. Caller must use <code>CANGetOperationMode</code> to verify correct operation mode before performing mode specific operation.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Controller Area Network">CAN</acronym> routines are currently supported only by AT90CANXXX and ATMEGAXXM1 MCUs. Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+CANSetOperationMode(_CAN_MODE_CONFIG, 0xFF);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cangetoperationmode">CANGetOperationMode</h3>
+
+
+    <!-- tabela: CANGetOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> CANGetOperationMode();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Current opmode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function returns current operational mode of <acronym title="Controller Area Network">CAN</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Controller Area Network">CAN</acronym> routines are currently supported only by AT90CANXXX and ATMEGAXXM1 MCUs. Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (CANGetOperationMode() == _CAN_MODE_NORMAL) { ... };</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="caninitialize">CANInitialize</h3>
+
+
+    <!-- tabela: CANInitialize -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANInitialize(<b>char</b> SJW, <b>char</b> BRP, <b>char</b> PHSEG1, <b>char</b> PHSEG2, <b>char</b> PROPSEG, <b>char</b> CAN_CONFIG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes <acronym title="Controller Area Network">CAN</acronym>. All pending transmissions are aborted. Sets all mask registers to 0 to allow all messages. The Config mode is internaly set by this function. Upon a execution of this function Normal mode is set.</p>
+            <p>Filter registers are set according to flag value:</p>
+<pre>
+<b>if</b> (CAN_CONFIG_FLAGS &#38; _CAN_CONFIG_XTD_MSG != 0)
+  <i>// Set all filters to XTD_MSG</i>
+<b>else if</b> (config &#38; _CAN_CONFIG_STD_MSG != 0)
+  <i>// Set all filters to STD_MSG</i>
+<b>else</b>
+  <i>// Set half of the filters to STD, and the rest to XTD_MSG.</i></pre>
+
+            <p>Parameters:</p>
+            <ul>
+              <li><code>SJW</code> as defined in MCU's datasheet</li>
+              <li><code>BRP</code> as defined in MCU's datasheet</li>
+              <li><code>PHSEG1</code> as defined in MCU's datasheet</li>
+              <li><code>PHSEG2</code> as defined in MCU's datasheet</li>
+              <li><code>PROPSEG</code> as defined in MCU's datasheet</li>
+              <li><code>CAN_CONFIG_FLAGS</code> is formed from predefined constants (see <a href="#can_constants">CAN constants</a>)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Controller Area Network">CAN</acronym> routines are currently supported only by AT90CANXXX and ATMEGAXXM1 MCUs. Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+init = _CAN_CONFIG_SAMPLE_THRICE &#38;
+       _CAN_CONFIG_MSG_TYPE_BIT &#38;
+       _CAN_CONFIG_STD_MSG;
+...
+CANInitialize(1, 1, 3, 3, 1, init);   <i>// initialize CAN</i></pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cansetbaudrate">CANSetBaudRate</h3>
+
+
+    <!-- tabela: CANSetBaudRate -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSetBaudRate(<b>char</b> SJW, <b>char</b> BRP, <b>char</b> PHSEG1, <b>char</b> PHSEG2, <b>char</b> PROPSEG, <b>char</b> CAN_CONFIG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets <acronym title="Controller Area Network">CAN</acronym> baud rate. Due to complexity of <acronym title="Controller Area Network">CAN</acronym> protocol, you cannot simply force a bps value. Instead, use this function when <acronym title="Controller Area Network">CAN</acronym> is in Config mode. Refer to datasheet for details.</p>
+            <p>Parameters:</p>
+            <ul>
+              <li><code>SJW</code> as defined in MCU's datasheet</li>
+              <li><code>BRP</code> as defined in MCU's datasheet</li>
+              <li><code>PHSEG1</code> as defined in MCU's datasheet</li>
+              <li><code>PHSEG2</code> as defined in MCU's datasheet</li>
+              <li><code>PROPSEG</code> as defined in MCU's datasheet</li>
+              <li><code>CAN_CONFIG_FLAGS</code> is formed from predefined constants (see <a href="#can_constants">CAN constants</a>)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode; otherwise the function will be ignored.</p>
+            <p><acronym title="Controller Area Network">CAN</acronym> routines are currently supported only by AT90CANXXX and ATMEGAXXM1 MCUs. Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+init = _CAN_CONFIG_SAMPLE_THRICE &#38;
+       _CAN_CONFIG_MSG_TYPE_BIT &#38;
+       _CAN_CONFIG_STD_MSG;
+...
+CANSetBaudRate(1, 1, 3, 3, 1, init);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cansetmask">CANSetMask</h3>
+
+
+    <!-- tabela: CANSetMask -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSetMask(<b>char</b> CAN_MASK, <b>long</b> value, <b>char</b> CAN_CONFIG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets mask for advanced filtering of messages. Given <code>value</code> is bit adjusted to appropriate buffer mask registers.</p>
+            <p>Parameters:</p>
+            <ul>
+              <li><code>CAN_MASK</code> is one of predefined constant values (see <a href="#can_constants">CAN constants</a>)</li>
+              <li><code>value</code> is the mask register value</li>
+              <li><code>CAN_CONFIG_FLAGS</code> selects type of message to filter, either <code>_CAN_CONFIG_XTD_MSG</code> or <code>_CAN_CONFIG_STD_MSG</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode; otherwise the function will be ignored.</p>
+            <p><acronym title="Controller Area Network">CAN</acronym> routines are currently supported only by AT90CANXXX and ATMEGAXXM1 MCUs. Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set all mask bits to 1, i.e. all filtered bits are relevant:</i>
+CANSetMask(_CAN_MASK_B1, -1, _CAN_CONFIG_XTD_MSG);
+
+<i>// Note that -1 is just a cheaper way to write 0xFFFFFFFF.
+   Complement will do the trick and fill it up with ones.</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cansetfilter">CANSetFilter</h3>
+
+
+    <!-- tabela: CANSetFilter -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANSetFilter(<b>char</b> CAN_FILTER, <b>long</b> value, <b>char</b> CAN_CONFIG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets message filter. Given <code>value</code> is bit adjusted to appropriate buffer mask registers.</p>
+            <p>Parameters:</p>
+            <ul>
+              <li><code>CAN_FILTER</code> is one of predefined constant values (see <a href="#can_constants">CAN constants</a>)</li>
+              <li><code>value</code> is the filter register value</li>
+              <li><code>CAN_CONFIG_FLAGS</code> selects type of message to filter, either <code>_CAN_CONFIG_XTD_MSG</code> or <code>_CAN_CONFIG_STD_MSG</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode; otherwise the function will be ignored.</p>
+            <p><acronym title="Controller Area Network">CAN</acronym> routines are currently supported only by AT90CANXXX and ATMEGAXXM1 MCUs. Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set id of filter F1 to 3:</i>
+CANSetFilter(CAN_RX_FILTER_1, 3, _CAN_CONFIG_XTD_MSG);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canread">CANRead</h3>
+
+
+    <!-- tabela: CANRead -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> CANRead(<b>long</b> *id, <b>char</b> *data, <b>char</b> *datalen, <b>char</b> *CAN_RX_MSG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Message from receive buffer or zero if no message found.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function reads message from receive buffer. If at least one full receive buffer is found, it is extracted and returned. If none found, function returns zero.</p>
+            <p>Parameters:</p>
+            <ul>
+              <li><code>id</code> is message identifier</li>
+              <li><code>data</code> is an array of bytes up to 8 bytes in length</li>
+              <li><code>datalen</code> is data length, from 1&#8211;8.</li>
+              <li><code>CAN_RX_MSG_FLAGS</code> is value formed from constants (see <a href="#can_constants">CAN constants</a>)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Controller Area Network">CAN</acronym> must be in mode in which receiving is possible.</p>
+            <p><acronym title="Controller Area Network">CAN</acronym> routines are currently supported only by AT90CANXXX and ATMEGAXXM1 MCUs. Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> rcv, rx, len, data[8];
+<b>long</b> id;
+
+<i>// ...</i>
+rx = 0;
+<i>// ...</i>
+rcv = CANRead(id, data, len, rx);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="canwrite">CANWrite</h3>
+
+
+    <!-- tabela: CANWrite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> CANWrite(<b>long</b> id, <b>char</b> *data_, <b>char</b> datalen, <b>char</b> CAN_TX_MSG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns zero if message cannot be queued (buffer full).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>If at least one empty transmit buffer is found, function sends message on queue for transmission. If buffer is full, function returns 0.</p>
+            <p>Parameters:</p>
+            <ul>
+              <li><code>id</code> is CAN message identifier. Only 11 or 29 bits may be used depending on message type (standard or extended)</li>
+              <li><code>data</code> is array of bytes up to 8 bytes in length</li>
+              <li><code>datalen</code> is data length from 1&#8211;8</li>
+              <li><code>CAN_TX_MSG_FLAGS</code> is value formed from constants (see <a href="#can_constants">CAN constants</a>)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Controller Area Network">CAN</acronym> must be in Normal mode.</p>
+            <p><acronym title="Controller Area Network">CAN</acronym> routines are currently supported only by AT90CANXXX and ATMEGAXXM1 MCUs. Microcontroller must be connected to <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> tx, data;
+<b>long</b> id;
+
+<i>// ...</i>
+tx = _CAN_TX_PRIORITY_0 &#38;
+     _CAN_TX_XTD_FRAME;
+<i>// ...</i>
+CANWrite(id, data, 2, tx);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can_constants"><acronym title="Controller Area Network">CAN</acronym> Constants</h3>
+
+    <p>There is a number of constants predefined in <acronym title="Controller Area Network">CAN</acronym> library. To be able to use the library effectively, you need to be familiar with these. You might want to check the example at the end of the chapter.</p>
+
+    <h4>CAN_OP_MODE</h4>
+
+    <p><code>CAN_OP_MODE</code> constants define <acronym title="Controller Area Network">CAN</acronym> operation mode. Function <code>CANSetOperationMode</code> expects one of these as its argument:</p>
+
+<pre class="program">
+<b>const char</b>
+    _CAN_MODE_BITS    = 0x0A,   <i>// Use this to access opmode  bits</i>
+    _CAN_MODE_STANDBY = 0x00,
+    _CAN_MODE_ENABLE  = 0x02,
+    _CAN_MODE_LISTEN  = 0x08</pre>
+
+
+    <h4><br>CAN_CONFIG_FLAGS</h4>
+
+    <p><code>CAN_CONFIG_FLAGS</code> constants define flags related to <acronym title="Controller Area Network">CAN</acronym> module configuration. Functions <code>CANInitialize</code> and <code>CANSetBaudRate</code> expect one of these (or a bitwise combination) as their argument:</p>
+
+<pre class="program">
+<b>const char</b>
+    _CAN_CONFIG_SAMPLE_BIT      = 0x01,
+    _CAN_CONFIG_SAMPLE_ONCE     = 0xFE,   <i>// XXXX XXX0</i>
+    _CAN_CONFIG_SAMPLE_THRICE   = 0xFF,   <i>// XXXX XXX1</i>
+
+    _CAN_CONFIG_MSG_TYPE_BIT    = 0x10,
+    _CAN_CONFIG_STD_MSG         = 0xEF,   <i>// XXX0 XXXX</i>
+    _CAN_CONFIG_XTD_MSG         = 0xFF;   <i>// XXX1 XXXX</i></pre>
+
+    <p>You may use bitwise AND (<code>&#38;</code>) to form config byte out of these values. For example:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+init = _CAN_CONFIG_SAMPLE_THRICE &#38;
+       _CAN_CONFIG_STD_MSG       &#38;
+...
+CANInitialize(1, 1, 3, 3, 1, init);   <i>// initialize CAN</i></pre>
+
+
+    <h4>CAN_TX_MSG_FLAGS</h4>
+
+    <p><code>CAN_TX_MSG_FLAGS</code> are flags related to transmission of a <acronym title="Controller Area Network">CAN</acronym> message:</p>
+
+<pre class="program">
+<b>const char</b>
+    _CAN_CONMOB_DIS        = 0x3F,   <i>// 00XX XXXX   messsage objects work modes</i>
+    _CAN_CONMOB_EN_TX      = 0x7F,   <i>// 01XX XXXX</i>
+    _CAN_CONMOB_EN_RX      = 0xBF,   <i>// 10XX XXXX</i>
+    _CAN_CONMOB_EN_FRAME   = 0xFF,   <i>// 11XX XXXX</i>
+
+    _CAN_IDE_FRAME_BIT     = 0x10,   <i>// Identifier Extension</i>
+    _CAN_IDE_STD_FRAME     = 0xEF,   <i>// XXX0 XXXX</i>
+    _CAN_IDE_XTD_FRAME     = 0xFF,   <i>// XXX1 XXXX</i>
+
+    _CAN_RTR_BIT           = 0x20,
+    _CAN_NO_RTR_FRAME      = 0xFF,   <i>// XX1XXXXX</i>
+    _CAN_RTR_FRAME         = 0xDF,   <i>// XX0XXXXX</i>
+
+    _CAN_TX                = 0x01,   <i>// Transmitter Busy</i>
+    _CAN_TX_NO_BSY         = 0xFE,   <i>// XXXX XXX0</i>
+    _CAN_TX_BSY            = 0xFF;   <i>// XXXX XXX1</i></pre>
+
+    <p>You may use bitwise AND (<code>&#38;</code>) to adjust the appropriate flags. For example:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>// form value to be used with CANSendMessage:</i>
+send_config = _CAN_CONMOB_DIS &#38;
+              _CAN_TX_XTD_FRAME  &#38;
+              _CAN_TX_NO_RTR_FRAME;
+...
+CANWrite(id, data, 1, send_config);</pre>
+
+    <h4>CAN_RX_MSG_FLAGS</h4>
+
+    <p><code>CAN_RX_MSG_FLAGS</code> are flags related to reception of <acronym title="Controller Area Network">CAN</acronym> message. If a particular bit is set; corresponding meaning is TRUE or else it will be FALSE.</p>
+
+<pre class="program">
+<b>const char</b>
+    _CAN_RX                = 0x08,   <i>// Receiver Busy</i>
+    _CAN_RX_NO_BSY         = 0xF7,   <i>// XXXX 0XXX</i>
+    _CAN_RX_BSY            = 0xFF;   <i>// XXXX 1XXX</i>
+</pre>
+    <p>You may use bitwise AND (<code>&#38;</code>) to adjust the appropriate flags. For example:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>if</b> (MsgFlag &#38; _CAN_RX_BSY != 0) {
+  ...
+  <i>// Receiver is busy.</i>
+}</pre>
+
+    <h4>CAN_MASK</h4>
+
+    <p><code>CAN_MASK</code> constants define mask codes. Function <code>CANSetMask</code> expects one of these as its argument:</p>
+
+<pre class="program">
+<b>const char</b>
+    CAN_RX_MASK_0  = 0x00,
+    CAN_RX_MASK_1  = 0x01,
+    CAN_RX_MASK_2  = 0x02,
+    CAN_RX_MASK_3  = 0x03,
+    CAN_RX_MASK_4  = 0x04,
+    CAN_RX_MASK_5  = 0x05,
+    CAN_RX_MASK_6  = 0x06,
+    CAN_RX_MASK_7  = 0x07,
+    CAN_RX_MASK_8  = 0x08,
+    CAN_RX_MASK_9  = 0x09,
+    CAN_RX_MASK_10 = 0x0A,
+    CAN_RX_MASK_11 = 0x0B,
+    CAN_RX_MASK_12 = 0x0C,
+    CAN_RX_MASK_13 = 0x0D,
+    CAN_RX_MASK_14 = 0x0E;</pre>
+
+
+    <h4><br>CAN_FILTER</h4>
+
+    <p><code>CAN_FILTER</code> constants define filter codes. Function <code>CANSetFilter</code> expects one of these as its argument:</p>
+
+<pre class="program">
+<b>const char</b>
+    CAN_RX_FILTER_0  = 0x00,
+    CAN_RX_FILTER_1  = 0x01,
+    CAN_RX_FILTER_2  = 0x02,
+    CAN_RX_FILTER_3  = 0x03,
+    CAN_RX_FILTER_4  = 0x04,
+    CAN_RX_FILTER_5  = 0x05,
+    CAN_RX_FILTER_6  = 0x06,
+    CAN_RX_FILTER_7  = 0x07,
+    CAN_RX_FILTER_8  = 0x08,
+    CAN_RX_FILTER_9  = 0x09,
+    CAN_RX_FILTER_10 = 0x0A,
+    CAN_RX_FILTER_11 = 0x0B,
+    CAN_RX_FILTER_12 = 0x0C,
+    CAN_RX_FILTER_13 = 0x0D,
+    CAN_RX_FILTER_14 = 0x0E;</pre>
+
+
+    <h4><br>CAN_MOB</h4>
+
+    <p><code>CAN_MOB</code> constants define flags related to transmission of a CAN message :</p>
+
+<pre class="program">
+ <b>const char</b>
+    _CAN_EN_MOB0_BIT    = 0x0001, <i>// Flags, set to 1 if the appropriate MOb is in use. When the appropriate operation ends, TXOK or RXOK are set to 1</i>
+    _CAN_EN_MOB1_BIT    = 0x0002,
+    _CAN_EN_MOB2_BIT    = 0x0004,
+    _CAN_EN_MOB3_BIT    = 0x0008,
+    _CAN_EN_MOB4_BIT    = 0x0010,
+    _CAN_EN_MOB5_BIT    = 0x0020,
+    _CAN_EN_MOB6_BIT    = 0x0040,
+    _CAN_EN_MOB7_BIT    = 0x0080,
+    _CAN_EN_MOB8_BIT    = 0x0100,
+    _CAN_EN_MOB9_BIT    = 0x0200,
+    _CAN_EN_MOB10_BIT   = 0x0400,
+    _CAN_EN_MOB11_BIT   = 0x0800,
+    _CAN_EN_MOB12_BIT   = 0x1000,
+    _CAN_EN_MOB13_BIT   = 0x2000,
+    _CAN_EN_MOB14_BIT   = 0x4000,
+
+    _CAN_CONFIG_STMOB_TXOK  = 0x40,   <i>// X1XX XXXX  From the CAN MOb Status Register</i>
+    _CAN_CONFIG_STMOB_RXOK  = 0x20,   <i>// XX1X XXXX  Receive OK</i>
+    _CAN_CONFIG_STMOB_BERR  = 0x10,   <i>// XXX1 XXXX  Bit Error (Only in transmission)</i>
+    _CAN_CONFIG_STMOB_SERR  = 0x08,   <i>// XXXX 1XXX  Stuff Error</i>
+    _CAN_CONFIG_STMOB_CERR  = 0x04,   <i>// XXXX X1XX  CRC Error</i>
+    _CAN_CONFIG_STMOB_FERR  = 0x02,   <i>// XXXX XX1X  Form Error</i>
+    _CAN_CONFIG_STMOB_AERR  = 0x01;   <i>// XXXX XXX1  Acknowledgment Error</i></pre>
+
+    <!-- -->
+
+		<h3>Library Example</h3>
+
+    <p>This is a simple demonstration of <acronym title="Controller Area Network">CAN</acronym> Library routines usage.
+    	 First node initiates the communication with the second node by sending some data to its address. The second node responds by sending back the data 
+    	 incremented by 1. First node then does the same and sends incremented data back to second node, etc.</p>
+    <p>Code for the first CAN node:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>unsigned char</b> Can_Init_Flags, Can_Send_Flags, Can_Rcv_Flags;                    <i>// can flags</i>
+<b>unsigned char</b> Rx_Data_Len;                                                      <i>// received data length in bytes</i>
+<b>char</b> RxTx_Data[8];                                                              <i>// can rx/tx data buffer</i>
+<b>char</b> Msg_Rcvd = 0;                                                              <i>// reception flag</i>
+<b>const long</b> ID_1st = 12111, ID_2nd = 3;                                          <i>// node IDs</i>
+<b>long</b> Rx_ID;
+
+<b>void</b> main() {
+
+  PORTC = 0x00;                                                  <i>// clear PORTC</i>
+  DDRC  = 0xFF;                                                  <i>// set PORTC as output</i>
+  
+
+  Can_Init_Flags = 0;                                            <i>//</i>
+  Can_Send_Flags = 0;                                            <i>// clear flags</i>
+  Can_Rcv_Flags  = 0;                                            <i>//</i>
+
+  Can_Send_Flags = _CAN_IDE_XTD_FRAME                            <i>// form value to be used</i>
+                 &#38; _CAN_NO_RTR_FRAME;                            <i>// with CANWrite</i>
+
+  Can_Init_Flags = _CAN_CONFIG_SAMPLE_THRICE                     <i>// form value to be used</i>
+                 &#38; _CAN_CONFIG_XTD_MSG;                          <i>// with CANInit</i>
+
+  CANInitialize(1,6,3,3,1,Can_Init_Flags);                       <i>// initialize external CAN module</i>
+  CANSetOperationMode(_CAN_MODE_STANDBY,0xFF);                   <i>// set STANDBY mode</i>
+  
+
+  <i>//----------------------------------------------------------//</i>
+  CANSetFilter(CAN_RX_FILTER_3,  -1, _CAN_CONFIG_XTD_MSG);    <i>//</i>
+  CANSetFilter(CAN_RX_FILTER_4, ID_2nd, _CAN_CONFIG_XTD_MSG); <i>// set ID filter of 4th filter to 2nd node ID</i>
+  CANSetFilter(CAN_RX_FILTER_5,  -1, _CAN_CONFIG_XTD_MSG);    <i>// and ones to other filters</i>
+  CANSetFilter(CAN_RX_FILTER_6,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_7,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_8,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_9,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_10, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_11, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_12, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_13, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_14, -1, _CAN_CONFIG_XTD_MSG);
+<i>//----------------------------------------------------------//</i>
+  
+  <i>//----------------------------------------------------------//</i>
+  CANSetMask(CAN_RX_MASK_3,  -1, _CAN_CONFIG_XTD_MSG);        <i>// set all mask bits of masks[3..14] to all ones</i>
+  CANSetMask(CAN_RX_MASK_4,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_5,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_6,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_7,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_8,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_9,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_10, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_11, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_12, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_13, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_14, -1, _CAN_CONFIG_XTD_MSG);
+<i>//----------------------------------------------------------//</i>
+  
+  CANSetOperationMode(_CAN_MODE_ENABLE,0xFF);                                   <i>// set ENABLE mode</i>
+
+  RxTx_Data[0] = 9;                                                             <i>// set initial data to be sent</i>
+
+  CANWrite(ID_1st, RxTx_Data, 1, Can_Send_Flags);                               <i>// send initial message</i>
+
+  <b>while</b>(1) {                                                                    <i>// endless loop</i>
+    Msg_Rcvd = CANRead(&#38;Rx_ID, RxTx_Data, &#38;Rx_Data_Len, &#38;Can_Rcv_Flags);        <i>// receive message</i>
+    <b>if</b> ((Rx_ID == ID_2nd) &#38;&#38; Msg_Rcvd) {                                        <i>// if message received check id</i>
+      PORTC = RxTx_Data[0];                                                     <i>// id correct, output data at PORTC</i>
+      RxTx_Data[0]++;                                                             <i>// increment received data</i>
+      Delay_ms(10);
+      CANWrite(ID_1st, RxTx_Data, 1, Can_Send_Flags);                           <i>// send incremented data back</i>
+    }
+  }
+}
+</pre>		
+
+    <p>Code for the second CAN node:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>unsigned char</b> Can_Init_Flags, Can_Send_Flags, Can_Rcv_Flags;     <i>// can flags</i>
+<b>unsigned char</b> Rx_Data_Len;                                       <i>// received data length in bytes</i>
+<b>char</b> RxTx_Data[8];                                               <i>// can rx/tx data buffer</i>
+<b>char</b> Msg_Rcvd = 0;                                               <i>// reception flag</i>
+<b>const long</b> ID_1st = 12111, ID_2nd = 3;                           <i>// node IDs</i>
+<b>long</b> Rx_ID;
+
+<b>void</b> main() {
+
+  PORTC = 0x00;                                                  <i>// clear PORTC</i>
+  DDRC  = 0xFF;                                                  <i>// set PORTC as output</i>
+
+  Can_Init_Flags = 0;                                            <i>//</i>
+  Can_Send_Flags = 0;                                            <i>// clear flags</i>
+  Can_Rcv_Flags  = 0;                                            <i>//</i>
+
+  Can_Send_Flags = _CAN_IDE_XTD_FRAME                            <i>// form value to be used</i>
+                 &#38; _CAN_NO_RTR_FRAME;                            <i>// with CANWrite</i>
+
+  Can_Init_Flags = _CAN_CONFIG_SAMPLE_THRICE                     <i>// form value to be used</i>
+                 &#38; _CAN_CONFIG_XTD_MSG;                          <i>// with CANInit</i>
+
+  CANInitialize(1,6,3,3,1,Can_Init_Flags);                       <i>// initialize external CAN module</i>
+
+  CANSetOperationMode(_CAN_MODE_STANDBY,0xFF);                   <i>// set STANDBY mode</i>
+
+  <i>//----------------------------------------------------------//</i>
+  CANSetFilter(CAN_RX_FILTER_3,  -1, _CAN_CONFIG_XTD_MSG);    <i>//</i>
+  CANSetFilter(CAN_RX_FILTER_4,  -1, _CAN_CONFIG_XTD_MSG);    <i>//</i>
+  CANSetFilter(CAN_RX_FILTER_5,  -1, _CAN_CONFIG_XTD_MSG);    <i>//</i>
+  CANSetFilter(CAN_RX_FILTER_6,  -1, _CAN_CONFIG_XTD_MSG);    <i>//</i>
+  CANSetFilter(CAN_RX_FILTER_7, ID_1st, _CAN_CONFIG_XTD_MSG); <i>// set ID filter of 7th filter to 2nd node ID</i>
+  CANSetFilter(CAN_RX_FILTER_8,  -1, _CAN_CONFIG_XTD_MSG);    <i>// and ones to other filters</i>
+  CANSetFilter(CAN_RX_FILTER_9,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_10, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_11, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_12, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_13, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetFilter(CAN_RX_FILTER_14, -1, _CAN_CONFIG_XTD_MSG);
+  <i>//----------------------------------------------------------//</i>
+  
+  <i>//----------------------------------------------------------//</i>
+  CANSetMask(CAN_RX_MASK_3,  -1, _CAN_CONFIG_XTD_MSG);        <i>// set all mask bits of masks[3..14] to all ones</i>
+  CANSetMask(CAN_RX_MASK_4,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_5,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_6,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_7,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_8,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_9,  -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_10, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_11, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_12, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_13, -1, _CAN_CONFIG_XTD_MSG);
+  CANSetMask(CAN_RX_MASK_14, -1, _CAN_CONFIG_XTD_MSG);
+  <i>//----------------------------------------------------------//</i>
+  
+  CANSetOperationMode(_CAN_MODE_ENABLE,0xFF);               <i>// set ENABLE mode</i>
+
+  <b>while</b> (1) {                                                              <i>// endless loop</i>
+    Msg_Rcvd = CANRead(&#38;Rx_ID, &#38;RxTx_Data, &#38;Rx_Data_Len, &#38;Can_Rcv_Flags);   <i>// receive message</i>
+    <b>if</b> ((Rx_ID == ID_1st) &#38;&#38; Msg_Rcvd) {                                   <i>// if message received check id</i>
+      PORTC = RxTx_Data[0];                                                <i>// id correct, output data at PORTC</i>
+      RxTx_Data[0]++;                                                     <i>// increment received data</i>
+      CANWrite(ID_2nd, RxTx_Data, 1, Can_Send_Flags);                      <i>// send incremented data back</i>
+    }
+  }
+}
+</pre>	
+	
+		<!-- -->
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

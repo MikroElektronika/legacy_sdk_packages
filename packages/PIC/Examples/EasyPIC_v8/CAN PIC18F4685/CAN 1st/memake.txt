@@ -1,0 +1,20 @@
+:: Base project template
+
+:: project: CAN_1st
+target: CAN_1st
+
+type: executable
+
+sources: {
+    Can_1st.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.CAN
+}
+
+uses: {
+    MikroC.System
+    MikroC.CAN
+}

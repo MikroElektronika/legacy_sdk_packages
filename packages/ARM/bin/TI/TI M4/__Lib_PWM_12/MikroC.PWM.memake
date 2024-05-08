@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_PWM_12.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^TM4C1290NCPDT$|^TM4C1294KCPDT$|^TM4C129CNCPDT$|^TM4C1292NCPDT$|^TM4C1294NCPDT$|^TM4C129DNCPDT$|^TM4C129ENCPDT$|^TM4C129EKCPDT$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

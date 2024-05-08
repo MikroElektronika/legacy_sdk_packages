@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_MathDouble.emcl",
+        "__Lib_System_3XX.emcl",
+        "__Lib_GPIO_32F378x_Defs.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_GPIO_32F3xx.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F378CC$|^STM32F378VC$|^STM32F378RC$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

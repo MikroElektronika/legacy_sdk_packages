@@ -1,0 +1,8 @@
+{
+    "name": "Button",
+    "description": "Simple demonstration on usage of the Button() function",
+    "image" : "io_group.png",
+    "toolchain": ["mikrocdspic"],
+    "hw" : ["EasyPIC v8 for dsPIC30"],
+    "category" : ["mikroC legacy dsPIC"]
+}

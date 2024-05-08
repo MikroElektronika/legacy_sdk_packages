@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_ADC_1234_30X.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F303ZD$|^STM32F358RC$|^STM32F303CB$|^STM32F303RB$|^STM32F303VB$|^STM32F303VC$|^STM32F303CC$|^STM32F303RD$|^STM32F358CC$|^STM32F358VC$|^STM32F398VE$|^STM32F303VD$|^STM32F303RC$|^STM32F303VE$|^STM32F303RE$|^STM32F303ZE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

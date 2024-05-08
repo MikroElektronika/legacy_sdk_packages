@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_SPI_b5432_x2.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATMEGA48$|^ATMEGA168PA$|^ATMEGA88PA$|^ATMEGA48PB$|^ATTINY48$|^ATMEGA8A$|^ATMEGA48A$|^ATMEGA88PB$|^ATMEGA88P$|^ATMEGA328$|^ATMEGA48PA$|^ATMEGA88A$|^ATMEGA48P$|^ATMEGA168$|^ATTINY88$|^ATMEGA328P$|^ATMEGA88$|^ATMEGA168A$|^ATMEGA8$|^ATMEGA168PB$|^ATMEGA168P$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.Timer",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "GT64K",
+    "binaries": [
+        "__Lib_Timer_xB1.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA128B1$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

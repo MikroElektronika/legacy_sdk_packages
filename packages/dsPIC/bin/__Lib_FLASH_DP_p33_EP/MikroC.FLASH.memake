@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_FLASH_DP_p33_EP.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33EP128GS806$|^dsPIC33EP64GS805$|^dsPIC33EP64GS808$|^dsPIC33EP32GS505$|^dsPIC33EP64GS806$|^dsPIC33EP128GS704$|^dsPIC33EP16GS504$|^dsPIC33EP64GS804$|^dsPIC33EP32GS502$|^dsPIC33EP128GS702$|^dsPIC33EP16GS505$|^dsPIC33EP128GS705$|^dsPIC33EP64GS506$|^dsPIC33EP128GS706$|^dsPIC33EP128GS804$|^dsPIC33EP32GS506$|^dsPIC33EP128GS708$|^dsPIC33EP32GS504$|^dsPIC33EP64GS505$|^dsPIC33EP64GS708$|^dsPIC33EP128GS805$|^dsPIC33EP128GS808$|^dsPIC33EP16GS506$|^dsPIC33EP64GS502$|^dsPIC33EP64GS504$|^dsPIC33EP16GS502$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

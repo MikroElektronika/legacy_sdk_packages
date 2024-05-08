@@ -1,0 +1,19 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: EEPROM
+
+type: executable
+
+sources: {
+    EEPROM.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.TWI
+}
+
+others: {
+    ./Serial_EEPROM.png
+}

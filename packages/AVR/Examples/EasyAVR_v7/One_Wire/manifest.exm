@@ -1,0 +1,8 @@
+{
+    "name": "One Wire",
+    "description": "This simple project will display current temperature via digital DS1820 sensor and LCD device.",
+    "image" : "One_Wire.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7", "LCD", "DS1820"],
+    "category" : ["mikroC legacy AVR"]
+}

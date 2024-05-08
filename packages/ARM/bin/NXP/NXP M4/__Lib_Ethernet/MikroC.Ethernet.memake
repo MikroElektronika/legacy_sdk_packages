@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Ethernet",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_Ethernet.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK64FN1M0.+12$|^MK64FX512.+12$|^MK66FN2M0.+18$|^MK66FX1M0.+18$|^MK65FN2M0.+18$|^MK65FX1M0.+18$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

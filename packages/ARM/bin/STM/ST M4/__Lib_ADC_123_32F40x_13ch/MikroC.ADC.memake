@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_ADC_123_32F40x_13ch.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F405OG$|^STM32F405OE$|^STM32F415OG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

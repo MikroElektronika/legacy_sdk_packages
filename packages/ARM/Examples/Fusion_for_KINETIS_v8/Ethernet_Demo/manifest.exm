@@ -1,0 +1,8 @@
+{
+    "name": "Ethernet Demo",
+    "description": "This code shows how to use the Ethernet library",
+    "image" : "ethernet.png",
+    "toolchain": ["mikrocarm"],
+    "hw" : ["Fusion for KINETIS"],
+    "category" : ["mikroC legacy ARM"]
+}

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_FLASH_32F42x_43x_2048.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F479AI$|^STM32F427ZI$|^STM32F469NI$|^STM32F479BI$|^STM32F429VI$|^STM32F479ZI$|^STM32F437AI$|^STM32F439NI$|^STM32F429AI$|^STM32F439BI$|^STM32F479NI$|^STM32F479VI$|^STM32F429NI$|^STM32F469AI$|^STM32F427AI$|^STM32F469ZI$|^STM32F437VI$|^STM32F427II$|^STM32F439VI$|^STM32F427VI$|^STM32F437ZI$|^STM32F429BI$|^STM32F429ZI$|^STM32F439II$|^STM32F429II$|^STM32F439ZI$|^STM32F469II$|^STM32F437II$|^STM32F479II$|^STM32F439AI$|^STM32F469VI$|^STM32F469BI$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

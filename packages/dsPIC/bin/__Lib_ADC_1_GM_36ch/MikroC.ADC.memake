@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_ADC_1_GM_36ch.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33EV64GM106$|^dsPIC33EV64GM006$|^dsPIC33EV32GM006$|^dsPIC33EV32GM106$|^dsPIC33EV128GM006$|^dsPIC33EV128GM106$|^dsPIC33EV256GM006$|^dsPIC33EV256GM106$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

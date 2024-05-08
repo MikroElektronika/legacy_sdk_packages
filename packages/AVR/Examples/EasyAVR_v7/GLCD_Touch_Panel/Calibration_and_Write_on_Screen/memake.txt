@@ -1,0 +1,22 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: Calibration_and_Write_on_Screen
+
+type: executable
+
+sources: {
+    Calibration_and_Write_on_Screen.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.ADC
+    MikroC.Glcd_Fonts
+    MikroC.Glcd
+    MikroC.TouchPanel
+}
+
+others: {
+   ../GLCD.png
+}

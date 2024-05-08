@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "P16",
+    "binaries": [
+        "__Lib_ADC_72x.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16LF723$|^PIC16F726$|^PIC16F724$|^PIC16F723A$|^PIC16F727$|^PIC16LF726$|^PIC16F722$|^PIC16LF722$|^PIC16LF724$|^PIC16F723$|^PIC16LF723A$|^PIC16LF722A$|^PIC16F722A$|^PIC16LF727$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

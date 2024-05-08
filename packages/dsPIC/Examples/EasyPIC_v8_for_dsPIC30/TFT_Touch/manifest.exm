@@ -1,0 +1,8 @@
+{
+    "name": "TFT Touch Panel",
+    "description": "Simple EasyTFT Touch Panel example.",
+    "image" : "ETFT.png",
+    "toolchain": ["mikrocdspic"],
+    "hw" : ["EasyPIC v8 for dsPIC30","EasyTFT"],
+    "category" : ["mikroC legacy dsPIC"]
+}

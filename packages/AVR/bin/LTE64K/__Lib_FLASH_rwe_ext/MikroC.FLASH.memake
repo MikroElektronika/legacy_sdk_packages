@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_FLASH_rwe_ext.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATMEGA1284P$|^AT90USB1286$|^AT90USB1287$|^ATMEGA1281$|^AT90CAN128$|^ATMEGA1280$|^ATMEGA1284$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

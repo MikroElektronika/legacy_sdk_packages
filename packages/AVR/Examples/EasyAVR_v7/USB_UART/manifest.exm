@@ -1,0 +1,8 @@
+{
+    "name": "USB UART",
+    "description": "This code demonstrates how to use UART library routines.",
+    "image" : "USB_UART.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7"],
+    "category" : ["mikroC legacy AVR"]
+}

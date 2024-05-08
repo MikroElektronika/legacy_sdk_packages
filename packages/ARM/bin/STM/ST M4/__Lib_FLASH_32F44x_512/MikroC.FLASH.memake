@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_FLASH_32F44x_512.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F446RE$|^STM32F446ZE$|^STM32F446VE$|^STM32F446ME$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

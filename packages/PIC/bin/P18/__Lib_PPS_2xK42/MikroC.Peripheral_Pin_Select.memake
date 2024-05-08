@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Peripheral_Pin_Select",
+    "global_visibility": true,
+    "arch": "P18",
+    "binaries": [
+        "__Lib_PPS_2xK42.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC18LF26K42$|^PIC18LF25K42$|^PIC18F24K42$|^PIC18F25K42$|^PIC18F27K42$|^PIC18F26K42$|^PIC18LF24K42$|^PIC18LF27K42$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

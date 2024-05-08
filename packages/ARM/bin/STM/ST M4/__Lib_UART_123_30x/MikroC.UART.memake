@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_UART_123_30x.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F302C6$|^STM32F301C8$|^STM32F334K8$|^STM32F302R6$|^STM32F303R6$|^STM32F303R8$|^STM32F334C6$|^STM32F301C6$|^STM32F303C8$|^STM32F301R8$|^STM32F318C8$|^STM32F334R8$|^STM32F301R6$|^STM32F302R8$|^STM32F303C6$|^STM32F334C4$|^STM32F318K8$|^STM32F302C8$|^STM32F334C8$|^STM32F328C8$|^STM32F334R6$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

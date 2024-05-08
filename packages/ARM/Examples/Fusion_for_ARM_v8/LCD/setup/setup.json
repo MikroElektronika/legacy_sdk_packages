@@ -1,0 +1,262 @@
+{
+    "board": {
+        "category": "Development board",
+        "icon": "images/fusion-for-arm-v8.png",
+        "mikrobus_count": 5,
+        "name": "Fusion for ARM v8",
+        "tft_display": null,
+        "version": ""
+    },
+    "display": {
+        "icon": ":/block_icon",
+        "init_code": null,
+        "name": "No display"
+    },
+    "mcu": {
+        "architecture": "ARM Cortex-M7",
+        "device_id": "STM32F767ZG|144|Tx",
+        "family": "STM32",
+        "flash": "1024KB",
+        "icon": "images/stm.png",
+        "isMCUCard": false,
+        "max_speed": "216MHz",
+        "name": "STM32F767ZG",
+        "pin_count": "144",
+        "ram": "512KB",
+        "settings": {
+            "clock": 216,
+            "config_registers": [
+                {
+                    "fields": [
+                        {
+                            "key": "HSION",
+                            "value": "00000001"
+                        },
+                        {
+                            "key": "HSEON",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "HSEBYP",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "CSSON",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "PLLON",
+                            "value": "01000000"
+                        },
+                        {
+                            "key": "PLLI2SON",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "HSITRIM",
+                            "value": "00000080"
+                        },
+                        {
+                            "key": "PLLSAION",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "RCC_CR"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "PLLM",
+                            "value": "00000010"
+                        },
+                        {
+                            "key": "PLLN",
+                            "value": "00005400"
+                        },
+                        {
+                            "key": "PLLP",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "PLLSRC",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "PLLQ",
+                            "value": "07000000"
+                        },
+                        {
+                            "key": "PLLR",
+                            "value": "20000000"
+                        }
+                    ],
+                    "key": "RCC_PLLCFGR"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "SW",
+                            "value": "00000002"
+                        },
+                        {
+                            "key": "HPRE",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "PPRE1",
+                            "value": "00001400"
+                        },
+                        {
+                            "key": "PPRE2",
+                            "value": "00008000"
+                        },
+                        {
+                            "key": "RTCPRE",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "MCO1",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "I2SSRC",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "MCO1PRE",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "MCO2PRE",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "MCO2",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "RCC_CFGR"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "VRANGE",
+                            "value": "00000003"
+                        }
+                    ],
+                    "key": "SVRANGE"
+                }
+            ],
+            "mcu": "STM32F767ZG",
+            "package": "Tx"
+        },
+        "vendor": "STMicroelectronics"
+    },
+    "name": "Fusion for ARM v8 STM32F767ZG",
+    "prog": {
+        "description": "CODEGRIP Suite is a powerful software tool. It is used to intelligently manage programming tasks, as well as various other options and settings of the CODEGRIP.",
+        "icon": "icon.png",
+        "name": "CODEGRIP",
+        "planet_debug_compatible": "Yes",
+        "settings": {
+            "auto_start_local_gdb": true,
+            "control_port": "1235",
+            "ip_address": "127.0.0.1",
+            "port": "1234",
+            "remote_addresses": [],
+            "remote_password": "",
+            "selected_device": null,
+            "selected_options": {
+                "Connection": {
+                    "group": "Target Connection",
+                    "value": "Normal"
+                },
+                "Erase Type": {
+                    "group": "Target Operation",
+                    "value": "Sector erase"
+                },
+                "Halt on Connect": {
+                    "group": "Target Connection",
+                    "value": "Disabled"
+                },
+                "Protocol": {
+                    "group": "Target Connection",
+                    "value": "SWD"
+                },
+                "Reset Type": {
+                    "group": "Target Connection",
+                    "value": "Hardware reset"
+                },
+                "Speed": {
+                    "group": "Target Connection",
+                    "value": "4 MHz"
+                },
+                "Verify Type": {
+                    "group": "Target Operation",
+                    "value": "CRC"
+                },
+                "Verify after Write": {
+                    "group": "Target Operation",
+                    "value": "Enabled"
+                }
+            }
+        },
+        "uid": "codegrip"
+    },
+    "sdk": {
+        "families": [
+            "STM32",
+            "MSP432",
+            "CEC",
+            "Stellaris",
+            "Tiva",
+            "Kinetis K Series",
+            "Kinetis V Series"
+        ],
+        "icon": "Resources/icon.png",
+        "legacy": true,
+        "name": "mikroC for ARM Legacy",
+        "sdk_development_kit": false,
+        "uuid": "sdk.mikroc.legacy.arm",
+        "version": "6.2.0"
+    },
+    "toolchain": {
+        "icon": "mikroC_arm.png",
+        "language": "MikroC",
+        "name": "mikroC AI for ARM",
+        "settings": {
+            "actions": {
+                "build": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--build all",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                },
+                "clean": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--clean",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "memake.settings": {
+                "BOARD_NAME": "BOARD_FUSION_FOR_ARM_V8"
+            },
+            "output_path": ""
+        },
+        "uid": "mikrocarm",
+        "vendor": "MikroElektronika",
+        "version": "1.1.0"
+    },
+    "uid": "7695d1d1-f11c-40c8-a8e8-5efe24b673d5"
+}

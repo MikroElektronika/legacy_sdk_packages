@@ -1,0 +1,219 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Library Manager</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Goran Pavlovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_dsPIC.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+
+
+	
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_C_dsPIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Library Manager</div><div class="navigation">&nbsp;&nbsp;mikroC PRO for dsPIC30/33 and PIC24 Environment &gt; <A href="ide_overview.htm">mikroC PRO for dsPIC30/33 and PIC24 IDE</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="project_explorer.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="libstock_manager.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+	
+	
+    <div id="main">
+
+			<a name="top_of_page"><h2>Library Manager</h2></a>
+			
+		<p>Library Manager enables simple handling libraries being used in a project. Library Manager window lists all libraries (extension <code>.mcl</code>) which are instantly stored in the compiler <i>Uses</i> folder.
+    <br>The desirable library is added to the project by selecting check box next to the library name (only the selected libraries will be linked).</p>
+				
+		<p><img alt="Library Manager Window" src="img/ide/window_library_manager.gif"></p>
+			
+		<p>In order to have all library functions accessible, simply press the button <b>Check All</b> <img alt="Check All" src="img/icons/include_all_icon.gif" border="0" align="absmiddle"> and all libraries will be selected.
+		<br>In case none library is needed in a project, press the button <b>Clear All</b> <img alt="Clear All" src="img/icons/clear_all_icon.gif" border="0" align="absmiddle"> and all libraries will be cleared from the project.</p>
+			
+    <p>To find a particular library or a routine, simply type its name in the search box and Library Manager will list the items found :</p>
+
+		<p><img alt="Library Manager Search" src="img/ide/window_library_manager_search.gif"></p>
+			
+    <p>All options available by the Library Manager are presented in the table below :</p>
+		
+		<table>
+
+     <thead>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th class="center" width="10%">Icon</th>
+          <th class="center" width="80%">Description</th>
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" class="center"><img alt="Refresh Library" src="img/icons/refresh_icon.gif"></th>
+          <td width="10%"> 
+          			Refresh Library by scanning files in "Uses" folder.Useful when new libraries are added by copying files to "Uses" folder. 
+          </td>          
+       </tr>
+       <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" class="center"><img alt="Rebuild Libraries" src="img/icons/rebuild_icon.gif"></th>
+          <td width="10%"> 
+          			Rebuild all available libraries. Useful when library sources are available and need refreshing.
+
+          </td>          
+       </tr>
+       <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" class="center"><img alt="Check All" src="img/icons/include_all_icon.gif"></th>
+          <td width="10%"> 
+          		 Include all available libraries in current project.
+          </td>          
+       </tr>
+       <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" class="center"><img alt="Clear All" src="img/icons/clear_all_icon.gif"></th>
+          <td width="10%"> 
+        			 No libraries from the list will be included in current project.
+          </td>          
+       </tr>
+       
+       <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" class="center"><img alt="Restore" src="img/icons/restore_icon.gif"></th>
+          <td width="10%"> 
+        				Restore library to the state just before last project saving.
+          </td>          
+       </tr>      
+             
+       <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" class="center"><img alt="Back up All Packages" src="img/icons/backup_packages_icon.gif"></th>
+          <td width="10%"> 
+        			Back up all installed packages. Please see <a href="libstock_manager.htm">LibStock Manager</a> chapter for details regarding packages handling.
+          </td>
+       </tr>
+
+       <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" class="center"><img alt="Restore All Backed Up Packages" src="img/icons/restore_backup_packages_icon.gif"></th>
+          <td width="10%"> 
+        				Restore all backed up packages.  Please see <a href="libstock_manager.htm">LibStock Manager</a> chapter for details regarding packages handling.
+          </td>
+       </tr>
+
+      </tbody>
+    </table>
+    
+    <h3>Library Categorization</h3>
+
+    <p>Libraries listed in the Library Manager are grouped in three general categories (also presented on the picture below) :</p>
+    <ul>
+    	<li><b><font color="green">System Libraries</font></b> - Default libraries available upon compiler installation (cannot be uninstalled),</li>
+    	<li><b><font color="#1d789d">mikroSDK Libraries</font></b> - mikroSDK related libraries, usually created for Click boards,</li>
+    	<li><b><font color="#a69e7b">Additional Libraries</font></b> - Various other libraries.</li>
+    </ul>
+
+		<p><img alt="Library Categorization" src="img/ide/window_library_manager_categorization.gif"></p>
+
+    
+
+<!---->
+    				
+    <h3>Handling Library Routines</h3>
+
+		<p>To add the desired routine name to your current source file, simply drag and drop the routine from the library node to Code Editor or press <kbd>Insert</kbd> when routine is selected in the Library Manager.</p>
+		<p>The routine prototype will pop-up when mouse pointer is positioned above the desired routine.</p>
+
+			<p class="related">Related topics: <a href="mikroC_libraries.htm">mikroC PRO for dsPIC30/33 and PIC24 Libraries</a>, <a href="creating_new_library.htm">Creating New Library</a>  </p>
+			
+    <div class="feedback">
+      Copyright (c) 2002-2018 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+</body>
+
+</html>

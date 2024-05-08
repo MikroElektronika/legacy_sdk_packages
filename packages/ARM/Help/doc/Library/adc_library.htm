@@ -1,0 +1,2951 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>ADC Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_arm.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">ADC Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="mikroC_hardware_libraries.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="can_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>ADC Library</h2></a>
+
+
+    <p>ADC (Analog to Digital Converter) module is available with a number of ARM MCU modules. <acronym title="Analog to Digital Converter">ADC</acronym> is an electronic circuit that converts continuous signals to discrete digital numbers. <acronym title="Analog to Digital Converter">ADC</acronym> Library provides you a comfortable work with the module.</p>
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#adcx_init">ADCx_Init</a></li>
+      <li><a href="#adcx_init_advanced">ADCx_Init_Advanced</a></li>
+      <li><a href="#adc_set_input_channel">ADC_Set_Input_Channel</a></li>
+      <li><a href="#adcx_get_sample">ADCx_Get_Sample</a></li>
+      <li><a href="#adcx_read">ADCx_Read</a></li>
+      <li><a href="#adc_configure_single_sample_mode">ADC_Configure_Single_Sample_Mode</a></li>
+      <li><a href="#adc_configure_multi_sequence_mode">ADC_Configure_Multi_Sequence_Mode</a></li>
+      <li><a href="#adc_configure_conversion_memory">ADC_Configure_Conversion_Memory</a></li>
+      <li><a href="#adc_enable_sample_timer">ADC_Enable_Sample_Timer</a></li>
+      <li><a href="#adc_enable_conversion">ADC_Enable_Conversion</a></li>
+      <li><a href="#adc_disable_conversion">ADC_Disable_Conversion</a></li>
+      <li><a href="#adc_start_conversion">ADC_Start_Conversion</a></li>
+    </ul>
+
+    <!-- -->
+    
+    <h3 id="adcx_init">ADCx_Init</h3>
+
+
+    <!-- tabela: ADCx_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> ADCx_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routines configures <acronym title="Analog to Digital Conversion">ADC</acronym> module.</p>
+          	<p>The internal <acronym title="Analog to Digital Conversion">ADC</acronym> module is set to:
+              <ul>
+                <li>single channel conversion</li>
+              	<li>10-bit conversion resolution for Stellaris devices and CEC1x02, 12-bit resolution for ST devices, 12-bit resolution for Kinetis devices and 14-bit for MSP432 devices.</li>
+              	<li>unsigned integer data format</li>
+              	<li>VRef+ : AVdd, VRef- : AVss</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+ADC1_Init();  <i>// Initialize ADC module with default settings</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	        <li><acronym title="Analog to Digital Converter">ADC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Analog to Digital Converter">ADC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>1</b>.</li>
+    	        <li>Number of <acronym title="Analog to Digital Converter">ADC</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="adcx_init_advanced">ADCx_Init_Advanced</h3>
+
+
+    <!-- tabela: ADCx_Init_Advanced -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> ADCx_Init_Advanced(<b>unsigned short</b> _external_reference);</p>
+            <i>// for MCUs with selectable ADC resolution</i>
+            <p><b>void</b> ADCx_Init_Advanced(<b>unsigned short</b> _external_reference, <b>unsigned short</b> _adc_resolution);</p>
+            <i>// for MSP432</i>
+            <p><b>void</b> ADC_Init_Advanced(<b>unsigned long</b> moduleclockSource, <b>unsigned long</b> moduleclockpredivider, <b>unsigned long</b> moduleclockdivider, <b>unsigned long</b> moduleinternalChannelMask);</p>
+            <i>// for ST M4, L4 subfamily :</i>
+            <p><b>void</b> ADCx_Init_Advanced(<b>char</b> reference);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routine configures the internal <acronym title="Analog to Digital Conversion">ADC</acronym> module to work with user defined settings.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+            	<ul>
+              <li><code>moduleclockSource:</code> clock source. Valid values :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_CLOCKSOURCE_ADCOSC</td>
+          					  <td valign="top">Internal low-power oscillator.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_CLOCKSOURCE_SYSOSC</td>
+          					  <td valign="top">System Oscillator.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_CLOCKSOURCE_ACLK</td>
+          					  <td valign="top">Auxiliary clock.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_CLOCKSOURCE_MCLK</td>
+          					  <td valign="top">Master clock.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_CLOCKSOURCE_SMCLK</td>
+          					  <td valign="top">Low-speed subsystem master clock.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_CLOCKSOURCE_HSMCLK</td>
+          					  <td valign="top">Subsystem master clock.</td>
+                    </tr>
+                    
+                  </tbody>
+                </table> 
+              </li>
+              <p></p>
+              <li><code>moduleclockpredivider:</code> clock predivider. Valid values :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_PREDIVIDER_1</td>
+          					  <td valign="top">Predivide by 1.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_PREDIVIDER_4</td>
+          					  <td valign="top">Predivide by 4.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_PREDIVIDER_32</td>
+          					  <td valign="top">Predivide by 32.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_PREDIVIDER_64</td>
+          					  <td valign="top">Predivide by 64.</td>
+                    </tr>
+                    
+                  </tbody>
+                </table> 
+              </li>
+
+              <p></p>
+              <li><code>moduleclockdivider:</code> clock divider. Valid values :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_DIVIDER_1</td>
+          					  <td valign="top">Divide by 1.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_DIVIDER_2</td>
+          					  <td valign="top">Divide by 2.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_DIVIDER_3</td>
+          					  <td valign="top">Divide by 3.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_DIVIDER_4</td>
+          					  <td valign="top">Divide by 4.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_DIVIDER_5</td>
+          					  <td valign="top">Divide by 5.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_DIVIDER_6</td>
+          					  <td valign="top">Divide by 6.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_DIVIDER_7</td>
+          					  <td valign="top">Divide by 7.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_DIVIDER_8</td>
+          					  <td valign="top">Divide by 8.</td>
+                    </tr>
+                    
+                  </tbody>
+                </table> 
+              </li>
+
+              <p></p>
+              <li><code>moduleinternalChannelMask:</code> internal channel selection. Valid values :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_MAPINTCH3</td>
+          					  <td valign="top">Controls internal channel 3 selection to ADC input channel MAX-5.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_MAPINTCH2</td>
+          					  <td valign="top">Controls internal channel 2 selection to ADC input channel MAX-4.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_MAPINTCH1</td>
+          					  <td valign="top">Controls internal channel 1 selection to ADC input channel MAX-3.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_MAPINTCH0</td>
+          					  <td valign="top">Controls internal channel 0 selection to ADC input channel MAX-2.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_TEMPSENSEMAP</td>
+          					  <td valign="top">Controls temperature sensor ADC input channel selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_BATTMAP</td>
+          					  <td valign="top">Controls 1/2 AVCC ADC input channel selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_NOROUTE</td>
+          					  <td valign="top">No channel routing.</td>
+                    </tr>
+
+                  </tbody>
+                </table> 
+              </li>
+              </ul>              
+
+    </div>
+
+    <div class="tabbertab">
+    <h2>ST M4, L4 subfamily</h2>
+            	<ul>
+              <li><code>reference :</code> voltage reference used in <acronym title="Analog to Digital Conversion">ADC</acronym> process :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_EXTERNAL_VREFH</td>
+          					  <td valign="top">Vref+ pin as voltage reference.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_INTERNAL_FVRH2_048V</td>
+          					  <td valign="top">2.048V internal voltage reference.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top"> _ADC_INTERNAL_FVRH2_5V</td>
+          					  <td valign="top">2.5V internal voltage reference.</td>
+                    </tr>
+
+                  </tbody>
+                </table> 
+              </li>
+              </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>Other</h2>
+            	<ul>
+              <li><code>_external_reference:</code> voltage reference used in <acronym title="Analog to Digital Conversion">ADC</acronym> process :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_EXTERNAL_REF</td>
+          					  <td valign="top">External voltage reference.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_EXTERNAL_REF_3V</td>
+          					  <td valign="top">3V external voltage reference.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_EXTERNAL_REF_1V</td>
+          					  <td valign="top">1V external voltage reference.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_INTERNAL_REF</td>
+          					  <td valign="top">Internal voltage reference.</td>
+                    </tr>
+                  </tbody>
+                </table> 
+              </li>
+              <p></p>
+              <li><code>_adc_resolution:</code> voltage reference used in <acronym title="Analog to Digital Conversion">ADC</acronym> process :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_RESOLUTION_10BIT</td>
+          					  <td valign="top">10-bit <acronym title="Analog to Digital Conversion">ADC</acronym> resolution.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_RESOLUTION_12BIT</td>
+          					  <td valign="top">12-bit <acronym title="Analog to Digital Conversion">ADC</acronym> resolution..</td>
+                    </tr>
+                  </tbody>
+                </table> 
+              </li>
+              </ul>
+    </div>
+
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// MSP432</i>
+ADC1_Init_Advanced(_ADC_CLOCKSOURCE_SYSOSC, _ADC_PREDIVIDER_1, _ADC_DIVIDER_1, _ADC_MAPINTCH3);	
+
+<i>// Stellaris</i>
+ADC1_Init_Advanced(_ADC_INTERNAL_REF);  <i>// set internal reference used</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+    	        <li><acronym title="Analog to Digital Converter">ADC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Analog to Digital Converter">ADC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>1</b>.</li>
+    	        <li>Number of <acronym title="Analog to Digital Converter">ADC</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="adc_set_input_channel">ADC_Set_Input_Channel</h3>
+
+
+    <!-- tabela: ADCx_Get_Sample -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris Cortex M3 devices and ST devices with 16 ADC channels or less :</i>
+            <p><b>void</b> ADC_Set_Input_Channel(<b>unsigned</b> input_mask);</p>
+            <i>// for MSP432, Stellaris Cortex M4 devices and ST devices with more than 16 ADC channels :</i>
+            <p><b>void</b> ADC_Set_Input_Channel(<b>unsigned long</b> input_mask);</p>
+            <i>// for CEC1x02 :</i>
+            <p><b>void</b> ADC1_Set_Input_Channel(<b>unsigned char</b> input_mask);</p>
+            <i>// for Kinetis devices :</i>
+            <p><b>void</b> ADCx_Set_Input_Channel(<b>unsigned long</b> input_mask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets appropriate <acronym title="Analog to Digital Conversion">ADC</acronym> channel as an analog input.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>channel:</code> represents the channel which will be set as an analog input:
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_2</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_3</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_4</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_5</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_6</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_7</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_8</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_9</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_10</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_11</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_12</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 12.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_13</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 13.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_14</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 14.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_15</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 15.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_16</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 16.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_17</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 17.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_18</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 18.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_19</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 19.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_20</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 20.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_21</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 21.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_22</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 22.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_23</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 23.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_24</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 24.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_25</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 25.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_26</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 26.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_27</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 27.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_28</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 28.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_29</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 29.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_30</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 30.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_31</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 31.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_ALL</td>
+                        <td valign="top">All <acronym title="Analog to Digital Conversion">ADC</acronym> channels.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// sets ADC channels 0 and 1 as analog inputs</i>
+ADC_Set_Input_Channel(_ADC_CHANNEL_0 | _ADC_CHANNEL_1);
+
+<i>// sets ADC channels 0 and 1 as analog inputs for CEC1x02 and Kinetis</i>
+ADC1_Set_Input_Channel(_ADC_CHANNEL_0 | _ADC_CHANNEL_1);
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is available only for MCUs with <acronym title="Analog to Digital Conversion">ADC</acronym> module located on <acronym title="General Purpose Input/Output">GPIO</acronym> pins.</li>
+            	<li>Refer to the appropriate Datasheet for the number of available channels.</li>
+    	        <li>For Kinetis devices, this routine require you to specify the module you want to use. To select the desired <acronym title="Analog to Digital Converter">ADC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>1</b>.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele --> 
+
+    <!-- -->
+    
+    <h3 id="adcx_get_sample">ADCx_Get_Sample</h3>
+
+
+    <!-- tabela: ADCx_Get_Sample -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> ADCx_Get_Sample(<b>unsigned</b> channel);</p>
+            <i>// for MSP432 :</i>
+            <p><b>unsigned</b> ADC_Get_Sample(<b>unsigned</b> channel);</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function enables <acronym title="Analog to Digital Conversion">ADC</acronym> module and reads the specified analog channel input.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>channel:</code> represents the channel from which the analog value is to be acquired :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">2</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">3</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">4</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">5</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">6</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">7</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">8</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">9</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">10</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">11</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">12</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 12.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">13</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 13.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">14</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 14.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">15</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 15.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">16</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 16.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">17</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 17.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">18</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 18.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">19</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 19.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">20</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 20.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">21</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 21.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">22</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 22.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">23</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 23.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">24</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 24.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">25</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 25.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">26</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 26.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">27</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 27.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">28</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 28.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">29</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 29.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">30</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 30.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">31</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 31.</td>
+                      </tr>
+
+<!--
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_ALL</td>
+                        <td valign="top">All <acronym title="Analog to Digital Conversion">ADC</acronym> channels.</td>
+                      </tr>
+-->
+                    </tbody>
+                  </table>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>10-bit (CEC1x02 and Stellaris devices), 12-bit (ST and Kinetis devices), 14-bit (MSP432 devices) unsigned value from the specified <code>channel</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            	<li>Prior to using this routine, appopriate <acronym title="Analog to Digital Conversion">ADC</acronym> channels must be set as an analog input. Please see <a href="#adc_set_input_channel">ADC_Set_Input_Channel</a>.</li>
+            	<li>Also, <acronym title="Analog to Digital Conversion">ADC</acronym> module needs to be previously initialized. See <a href="#adcx_init">ADCx_Init</a> and <a href="#adcx_init_advanced">ADCx_Init_Advanced</a>.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> adc_value;
+...
+ADC_Set_Input_Channel(_ADC_CHANNEL_10); <i>// Set ADC channel 10 as an analog input</i>
+ADC1_Init();                            <i>// Initialize ADC module</i>
+adc_value = ADC1_Get_Sample(10);        <i>// read analog value from ADC module channel 10</i></pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Refer to the appropriate Datasheet for the number of available channels.</li>
+    	        <li><acronym title="Analog to Digital Converter">ADC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Analog to Digital Converter">ADC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>1</b>.</li>
+    	        <li>Number of <acronym title="Analog to Digital Converter">ADC</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele --> 
+
+    <!-- -->
+
+    <h3 id="adcx_read">ADCx_Read</h3>
+
+
+    <!-- tabela: ADCx_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris and Tiva :</i>
+            <p><b>unsigned</b> ADCx_Read(<b>unsigned</b> channel, <b>unsigned short</b> _external_reference);</p>
+            <i>// for CEC1x02 :</i>
+            <p><b>unsigned</b> ADCx_Read(<b>unsigned char</b> channel);</p>
+            <i>// for Kinetis :</i>
+            <p><b>unsigned</b> ADCx_Read(<b>unsigned long</b> channel);</p>
+            <i>// for MSP432 and ST :</i>
+            <p><b>unsigned</b> ADC_Read(<b>unsigned</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets appropriate <acronym title="Analog to Digital Conversion">ADC</acronym> channel as an analog input, enables <acronym title="Analog to Digital Conversion">ADC</acronym> module, initializes <acronym title="Analog to Digital Conversion">ADC</acronym> module and reads the specified analog channel input.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>channel:</code> represents the channel from which the analog value is to be acquired :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">2</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">3</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">4</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">5</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">6</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">7</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">8</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">9</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">10</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">11</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">12</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 12.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">13</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 13.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">14</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 14.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">15</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 15.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">16</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 16.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">17</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 17.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">18</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 18.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">19</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 19.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">20</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 20.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">21</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 21.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">22</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 22.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">23</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 23.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">24</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 24.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">25</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 25.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">26</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 26.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">27</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 27.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">28</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 28.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">29</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 29.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">30</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 30.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">31</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 31.</td>
+                      </tr>
+<!--
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_ALL</td>
+                        <td valign="top">All <acronym title="Analog to Digital Conversion">ADC</acronym> channels.</td>
+                      </tr>
+-->
+                    </tbody>
+                  </table>
+              </li>
+              <p></p>
+              <li><code>_external_reference:</code> voltage reference used in <acronym title="Analog to Digital Conversion">ADC</acronym> process :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_ADC_EXTERNAL_REF</td>
+          					  <td valign="top">External voltage reference.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_ADC_INTERNAL_REF</td>
+          					  <td valign="top">Internal voltage reference.</td>
+                    </tr>
+                    </tbody>
+                  </table>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>10-bit (CEC1x02 and Stellaris devices), 12-bit (ST and Kinetis devices), 14-bit (MSP432) unsigned value from the specified <code>channel</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> adc_value;
+...
+adc_value = ADC1_Read(10);    <i>// read analog value from ADC1 module channel 10</i></pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Not all MCUs support external reference configuration. Please, read the appropriate datasheet before utilizing this library.</li>
+            	<li>Refer to the appropriate Datasheet for the number of available channels.</li>
+    	        <li><acronym title="Analog to Digital Converter">ADC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Analog to Digital Converter">ADC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>1</b>.</li>
+    	        <li>Number of <acronym title="Analog to Digital Converter">ADC</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	        <li>Since this routine enables, initializes and reads value from <acronym title="Analog to Digital Converter">ADC</acronym> module, its execution will be much slower than the <a href="#adcx_get_sample">ADCx_Get_Sample</a> which only samples analog value. 
+    	        <br>If the speed is a key factor, it is advisable to initialize the <acronym title="Analog to Digital Converter">ADC</acronym> module first, and then sample analog value, rather than using <a href="#adcx_read">ADCx_Read</a> routine.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="adc_configure_single_sample_mode">ADC_Configure_Single_Sample_Mode</h3>
+
+
+    <!-- tabela: ADCx_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> ADC_Configure_Single_Sample_Mode(<b>unsigned long</b> memoryDestination, <b>unsigned short</b> repeatMode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function configures single sampling mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>memoryDestination:</code> coversion memory register. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM2</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM3</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM4</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM5</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM6</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM7</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM8</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM9</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM10</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM11</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM12</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 12.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM13</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 13.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM14</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 14.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM15</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 15.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM16</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 16.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM17</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 17.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM18</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 18.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM19</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 19.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM20</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 20.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM21</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 21.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM22</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 22.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM23</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 23.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM24</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 24.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM25</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 25.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM26</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 26.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM27</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 27.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM28</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 28.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM29</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 29.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM30</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 30.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM31</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 31.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+              
+              <p></p>
+              <li><code>repeatMode:</code> repeat mode. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> repeat mode disabled.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> repeat mode enabled.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>2:</code> if conversion is still running,</li>
+           		<li><code>1:</code> if invalid memory selection,</li>           		           		
+           		<li><code>0:</code> if there were no errors.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Available only for MSP432 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="adc_configure_multi_sequence_mode">ADC_Configure_Multi_Sequence_Mode</h3>
+
+
+    <!-- tabela: ADC_Configure_Multi_Sequence_Mode -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> ADC_Configure_Multi_Sequence_Mode(<b>unsigned long</b> memoryStart, <b>unsigned long</b> memoryEnd, <b>unsigned short</b> repeatMode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function configures multi sequence sampling mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>memoryStart:</code> starting memory conversion register. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM2</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM3</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM4</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM5</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM6</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM7</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM8</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM9</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM10</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM11</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM12</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 12.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM13</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 13.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM14</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 14.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM15</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 15.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM16</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 16.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM17</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 17.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM18</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 18.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM19</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 19.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM20</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 20.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM21</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 21.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM22</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 22.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM23</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 23.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM24</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 24.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM25</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 25.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM26</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 26.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM27</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 27.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM28</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 28.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM29</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 29.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM30</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 30.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM31</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 31.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+
+              <p></p>
+              <li><code>memoryEnd:</code> ending memory conversion register. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM2</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM3</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM4</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM5</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM6</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM7</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM8</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM9</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM10</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM11</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM12</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 12.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM13</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 13.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM14</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 14.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM15</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 15.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM16</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 16.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM17</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 17.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM18</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 18.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM19</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 19.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM20</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 20.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM21</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 21.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM22</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 22.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM23</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 23.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM24</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 24.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM25</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 25.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM26</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 26.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM27</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 27.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM28</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 28.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM29</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 29.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM30</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 30.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM31</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 31.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+
+							<p></p>
+              <li><code>repeatMode:</code> repeat mode. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> repeat mode disabled.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> repeat mode enabled.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>2:</code> if conversion is still running,</li>
+           		<li><code>1:</code> if invalid memory selection,</li>           		           		
+           		<li><code>0:</code> if there were no errors.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Available only for MSP432 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="adc_configure_conversion_memory">ADC_Configure_Conversion_Memory</h3>
+
+
+    <!-- tabela: ADC_Configure_Multi_Sequence_Mode -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> ADC_Configure_Conversion_Memory(<b>unsigned long</b> memorySelect, <b>unsigned long</b> refSelect, <b>unsigned long</b> channelSelect,  <b>unsigned short</b> differntialMode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function configures conversion memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>memorySelect:</code> conversion memory register. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM2</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM3</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM4</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM5</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM6</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM7</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM8</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM9</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM10</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM11</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM12</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 12.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM13</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 13.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM14</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 14.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM15</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 15.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM16</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 16.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM17</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 17.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM18</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 18.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM19</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 19.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM20</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 20.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM21</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 21.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM22</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 22.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM23</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 23.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM24</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 24.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM25</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 25.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM26</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 26.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM27</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 27.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM28</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 28.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM29</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 29.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MEM30</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 30.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_MEM31</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> conversion memory register 31.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+
+              <p></p>
+              <li><code>refSelect:</code> voltage reference selection. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_VREFPOS_AVCC_VREFNEG_VSS</td>
+                        <td valign="top">V(R+) = AVCC, V(R-) = AVSS.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_VREFPOS_INTBUF_VREFNEG_VSS</td>
+                        <td valign="top">V(R+) = VREF buffered, V(R-) = AVSS.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_VREFPOS_EXTPOS_VREFNEG_EXTNEG</td>
+                        <td valign="top">V(R+) = VeREF+, V(R-) = VeREF-.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_VREFPOS_EXTBUF_VREFNEG_EXTNEG</td>
+                        <td valign="top">VeREF+ buffered, V(R-) = VeREF.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+              
+              <p></p>
+              <li><code>channelSelect:</code> channel select. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_0</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_1</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_2</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_3</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_4</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 4.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_5</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 5.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_6</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 6.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_7</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 7.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_8</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 8.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_9</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 9.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_10</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 10.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_11</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 11.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_12</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 12.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_13</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 13.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_14</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 14.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_15</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 15.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_16</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 16.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_17</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 17.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_18</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 18.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_19</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 19.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_20</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 20.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_21</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 21.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_CHANNEL_22</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 22.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_23</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> channel 23.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_CHANNEL_ALL</td>
+                        <td valign="top">All <acronym title="Analog to Digital Conversion">ADC</acronym> channels.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+              <p></p>
+              <li><code>differntialMode:</code> differential mode. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">Differential mode disabled.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+                        <td valign="top">Differential mode enabled.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+              
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>2:</code> if conversion is still running,</li>
+           		<li><code>1:</code> if invalid memory selection,</li>           		           		
+           		<li><code>0:</code> if there were no errors.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Available only for MSP432 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="adc_enable_sample_timer">ADC_Enable_Sample_Timer</h3>
+
+
+    <!-- tabela: ADC_Enable_Sample_Timer -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> ADC_Enable_Sample_Timer(<b>unsigned long</b> multiSampleConvert);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function enables sampling timer.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>multiSampleConvert:</code> conversion memory register. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_ADC_MANUAL_ITERATION</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> manual iteration.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_ADC_AUTOMATIC_ITERATION</td>
+                        <td valign="top"><acronym title="Analog to Digital Conversion">ADC</acronym> automatic iteration.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>1:</code> if invalid memory selection,</li>           		           		
+           		<li><code>0:</code> if there were no errors.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Available only for MSP432 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="adc_enable_conversion">ADC_Enable_Conversion</h3>
+
+
+    <!-- tabela: ADC_Enable_Sample_Timer -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> ADC_Enable_Conversion();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function enables <acronym title="Analog to Digital Conversion">ADC</acronym> conversion.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>2:</code> if conversion is still running,</li>                  		
+           		<li><code>1:</code> if <acronym title="Analog to Digital Conversion">ADC</acronym> module is off,</li>
+           		<li><code>0:</code> if there were no errors.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Available only for MSP432 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="adc_disable_conversion">ADC_Disable_Conversion</h3>
+
+
+    <!-- tabela: ADC_Disable_Conversion -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> ADC_Disable_Conversion();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function disables <acronym title="Analog to Digital Conversion">ADC</acronym> conversion.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>2:</code> if conversion is still running,</li>                  		
+           		<li><code>1:</code> if <acronym title="Analog to Digital Conversion">ADC</acronym> module is off,</li>
+           		<li><code>0:</code> if there were no errors.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Available only for MSP432 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="adc_start_conversion">ADC_Start_Conversion</h3>
+
+
+    <!-- tabela: ADC_Start_Conversion -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> ADC_Start_Conversion();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function starts <acronym title="Analog to Digital Conversion">ADC</acronym> conversion.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>2:</code> if conversion is still running,</li>                  		
+           		<li><code>1:</code> if <acronym title="Analog to Digital Conversion">ADC</acronym> module is off,</li>
+           		<li><code>0:</code> if there were no errors.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Available only for MSP432 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+<!--
+    <h3>Library Example</h3>
+
+    <p>This code snippet reads analog value from the channel 1 and sends readings as a text over UART1.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+
+</pre>	
+-->
+
+    <!-- -->
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,1029 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Touch Panel Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Touch Panel Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="tft_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="tft_touch_panel_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Touch Panel Library</h2></a>
+
+
+    <p>The mikroC PRO for PIC32 provides a library for working with Touch Panel.</p>
+  
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="Touch Panel Library Dependency Tree" src="img/dependencies/touchpanel_dependency.gif">  
+    <p></p>
+
+
+    <h3>External dependencies of Touch Panel Library</h3>
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Touch Panel Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> DriveA;</code></td>
+          <td align="left">DriveA line.</td>
+          <td align="left"><code><b>sbit</b> DriveA <b>at</b> LATC13_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> DriveB;</code></td>
+          <td align="left">DriveB line.</td>
+          <td align="left"><code><b>sbit</b> DriveB <b>at</b> LATC14_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> DriveA_Direction;</code></td>
+          <td align="left">Direction of the DriveA pin.</td>
+          <td align="left"><code><b>sbit</b> DriveA_Direction <b>at</b> TRISC13_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> DriveB_Direction;</code></td>
+          <td align="left">Direction of the DriveB pin.</td>
+          <td align="left"><code><b>sbit</b> DriveB_Direction <b>at</b> TRISC14_bit;</code></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#tp_init">TP_Init</a></li>
+      <li><a href="#tp_set_adc_threshold">TP_Set_ADC_Threshold</a></li>
+      <li><a href="#tp_press_detect">TP_Press_Detect</a></li>
+      <li><a href="#tp_get_coordinates">TP_Get_Coordinates</a></li>
+      <li><a href="#tp_calibrate_bottom_left">TP_Calibrate_Bottom_Left</a></li>
+      <li><a href="#tp_calibrate_upper_right">TP_Calibrate_Upper_Right</a></li>
+      <li><a href="#tp_get_calibration_consts">TP_Get_Calibration_Consts</a></li>
+      <li><a href="#tp_set_calibration_consts">TP_Set_Calibration_Consts</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="tp_init">TP_Init</h3>
+
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TP_Init(<b>unsigned int</b> display_width, <b>unsigned int</b> display_height, <b>unsigned int</b> readX_ChNo, <b>unsigned int</b> readY_ChNo);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initialize touch panel display. Default touch panel <acronym title="Analog to Digital Converter">ADC</acronym> threshold value is set to 3900.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>display_width:</code> set display width.</li>
+           		<li><code>display_height:</code> set display height.</li>
+           		<li><code>readX_ChNo:</code> read X coordinate from desired <acronym title="Analog to Digital Converter">ADC</acronym> channel.</li>
+           		<li><code>readY_ChNo:</code> read Y coordinate from desired <acronym title="Analog to Digital Converter">ADC</acronym> channel.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Before calling this function initialize <acronym title="Analog to Digital Converter">ADC</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+ADC1_Init();               <i>// Initalize ADC module</i>
+TP_Init(128, 64, 6, 7);    <i>// Initialize touch panel, dimensions 128x64</i>
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="tp_set_adc_threshold">TP_Set_ADC_Threshold</h3>
+
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TP_Set_ADC_Threshold(<b>unsigned int</b> threshold);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Set custom <acronym title="Analog to Digital Converter">ADC</acronym> threshold value, call this function after <code><a href="#tp_init">TP_Init</a></code>.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>threshold:</code> custom <acronym title="Analog to Digital Converter">ADC</acronym> threshold value.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><code><a href="#tp_init">TP_Init</a></code> has to be called before using this routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+TP_Set_ADC_Threshold(3900);    <i>// Set touch panel ADC threshold</i>
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tp_press_detect">TP_Press_Detect</h3>
+
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TP_Press_Detect();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Detects if the touch panel has been pressed.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>1</code> - if touch panel is pressed.</li>
+							<li><code>0</code> - otherwise.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>DriveA:</code> DriveA.</li>
+                <li><code>DriveB:</code> DriveB.</li>
+                <li><code>DriveA_Direction:</code> Direction of DriveA pin.</li>
+                <li><code>DriveB_Direction:</code> Direction of DriveB pin.</li>                
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Touch Panel module connections</i>
+<b>sbit</b> DriveA <b>at</b> LATC13_bit;
+<b>sbit</b> DriveB <b>at</b> LATC14_bit;
+<b>sbit</b> DriveA_Direction <b>at</b> TRISC13_bit;
+<b>sbit</b> DriveB_Direction <b>at</b> TRISC14_bit;
+<i>// End Touch Panel module connections</i>
+
+<b>if</b> (TP_Press_Detect()) {
+  ...
+}
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+
+    <!-- -->
+
+
+    <h3 id="tp_get_coordinates">TP_Get_Coordinates</h3>
+
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TP_Get_Coordinates(<b>unsigned int</b> *x_coordinate, <b>unsigned int</b> *y_coordinate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Get touch panel coordinates and store them in <code>x_coordinate</code> and <code>y_coordinate</code> parameters.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_coordinate:</code> x coordinate of the place of touch.</li>
+           		<li><code>y_coordinate:</code> y coordinate of the place of touch.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>0</code> - if reading is within display dimension range.</li>
+							<li><code>1</code> - if reading is out of display dimension range.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>if</b> (TP_Get_Coordinates(&x_coord, &y_coord) == 0) {
+ ...
+}
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>   
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tp_calibrate_bottom_left">TP_Calibrate_Bottom_Left</h3>
+
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TP_Calibrate_Bottom_Left();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Calibrate bottom left corner of the touch Panel.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+TP_Calibrate_Bottom_Left();    <i>// Calibration of bottom left corner</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tp_calibrate_upper_right">TP_Calibrate_Upper_Right</h3>
+
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TP_Calibrate_Upper_Right();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Calibrate upper right corner of the touch panel.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+TP_Calibrate_Upper_Right();    <i>// Calibration of upper right corner</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>   
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tp_get_calibration_consts">TP_Get_Calibration_Consts</h3>
+
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TP_Get_Calibration_Consts(<b>unsigned int</b> *x_min, <b>unsigned int</b> *x_max, <b>unsigned int</b> *y_min, <b>unsigned int</b> *y_max);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Gets calibration constants after calibration is done and stores them in <code>x_min</code>, <code>x_max</code>, <code>y_min</code> and <code>y_max</code> parameters.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+       			<ul>
+							<li><code>x_min:</code> x coordinate of the bottom left corner of the working area.</li>
+							<li><code>x_max:</code> x coordinate of the upper right corner of the working area.</li>
+							<li><code>y_min:</code> y coordinate of the bottom left corner of the working area.</li>
+							<li><code>y_max:</code> y coordinate of the upper right corner of the working area.</li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+TP_Get_Calibration_Consts(&x_min, &y_min, &x_max, &y_max);    <i>// Get calibration constants</i>
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tp_set_calibration_consts">TP_Set_Calibration_Consts</h3>
+
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TP_Set_Calibration_Consts(<b>unsigned int</b> x_min, <b>unsigned int</b> x_max, <b>unsigned int</b> y_min, <b>unsigned int</b> y_max);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets calibration constants.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+       			<ul>
+							<li><code>x_min:</code> x coordinate of the bottom left corner of the working area.</li>
+							<li><code>x_max:</code> x coordinate of the upper right corner of the working area.</li>
+							<li><code>y_min:</code> y coordinate of the bottom left corner of the working area.</li>
+							<li><code>y_max:</code> y coordinate of the upper right corner of the working area.</li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+TP_Set_Calibration_Consts(148, 3590, 519, 3370);    <i>// Set calibration constants</i>
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3>Library Example</h3>
+
+    <p>The following drawing demo tests routines of the Touch Panel library :</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>// Glcd module connections</i>
+<b>sbit</b> GLCD_D7 <b>at</b> RD3_bit;
+<b>sbit</b> GLCD_D6 <b>at</b> RD2_bit;
+<b>sbit</b> GLCD_D5 <b>at</b> RD1_bit;
+<b>sbit</b> GLCD_D4 <b>at</b> RD0_bit;
+<b>sbit</b> GLCD_D3 <b>at</b> RB3_bit;
+<b>sbit</b> GLCD_D2 <b>at</b> RB2_bit;
+<b>sbit</b> GLCD_D1 <b>at</b> RB1_bit;
+<b>sbit</b> GLCD_D0 <b>at</b> RB0_bit;
+<b>sbit</b> GLCD_D7_Direction <b>at</b> TRISD3_bit;
+<b>sbit</b> GLCD_D6_Direction <b>at</b> TRISD2_bit;
+<b>sbit</b> GLCD_D5_Direction <b>at</b> TRISD1_bit;
+<b>sbit</b> GLCD_D4_Direction <b>at</b> TRISD0_bit;
+<b>sbit</b> GLCD_D3_Direction <b>at</b> TRISB3_bit;
+<b>sbit</b> GLCD_D2_Direction <b>at</b> TRISB2_bit;
+<b>sbit</b> GLCD_D1_Direction <b>at</b> TRISB1_bit;
+<b>sbit</b> GLCD_D0_Direction <b>at</b> TRISB0_bit;
+
+<b>sbit</b> GLCD_CS1 <b>at</b> LATB4_bit;
+<b>sbit</b> GLCD_CS2 <b>at</b> LATB5_bit;
+<b>sbit</b> GLCD_RS  <b>at</b> LATF0_bit;
+<b>sbit</b> GLCD_RW  <b>at</b> LATF1_bit;
+<b>sbit</b> GLCD_EN  <b>at</b> LATF4_bit;
+<b>sbit</b> GLCD_RST <b>at</b> LATF5_bit;
+<b>sbit</b> GLCD_CS1_Direction <b>at</b> TRISB4_bit;
+<b>sbit</b> GLCD_CS2_Direction <b>at</b> TRISB5_bit;
+<b>sbit</b> GLCD_RS_Direction  <b>at</b> TRISF0_bit;
+<b>sbit</b> GLCD_RW_Direction  <b>at</b> TRISF1_bit;
+<b>sbit</b> GLCD_EN_Direction  <b>at</b> TRISF4_bit;
+<b>sbit</b> GLCD_RST_Direction <b>at</b> TRISF5_bit;
+<i>// End Glcd module connections</i>
+
+<i>// Touch Panel module connections</i>
+<b>sbit</b> DriveA <b>at</b> LATC13_bit;
+<b>sbit</b> DriveB <b>at</b> LATC14_bit;
+<b>sbit</b> DriveA_Direction <b>at</b> TRISC13_bit;
+<b>sbit</b> DriveB_Direction <b>at</b> TRISC14_bit;
+<i>// End Touch Panel module connections</i>
+
+<b>bit</b>          write_erase;
+<b>char</b>         pen_size;
+<b>char</b> write_msg[] = &#34;WRITE&#34;;                                <i>// GLCD menu messages</i>
+<b>char</b> clear_msg[] = &#34;CLEAR&#34;;
+<b>char</b> erase_msg[] = &#34;ERASE&#34;;
+<b>unsigned int</b> x_coord, y_coord;
+
+<b>void</b> Initialize() {
+  ADPCFG = 0xFF3F;                                         <i>// set AN6 and AN7 channel pins as analog</i>
+
+  DriveA_Direction = 0;                                    <i>// Set DriveA pin as output</i>
+  DriveB_Direction = 0;                                    <i>// Set DriveB pin as output</i>
+
+  Glcd_Init();                                             <i>// Initialize GLCD</i>
+  Glcd_Fill(0);                                            <i>// Clear GLCD</i>
+
+  ADC1_Init();                                             <i>// Initalize ADC module</i>
+  TP_Init(128, 64, 6, 7);                                  <i>// Initialize touch panel</i>
+  TP_Set_ADC_Threshold(3900);                              <i>// Set touch panel ADC threshold</i>
+}
+
+<b>void</b> Calibrate() {
+
+  Glcd_Dot(0,63,1);                                        <i>// Draw bottom left dot</i>
+  Glcd_Write_Text(&#34;TOUCH BOTTOM LEFT&#34;,12,3,1);
+  TP_Calibrate_Bottom_Left();                              <i>// Calibration of bottom left corner</i>
+  Delay_ms(1000);
+
+  Glcd_Dot(0,63,0);                                        <i>// Clear bottom left dot</i>
+  Glcd_Dot(127,0,1);                                       <i>// Draw upper right dot</i>
+  Glcd_Write_Text(&#34;                 &#34;,12,3,1);
+  Glcd_Write_Text(&#34;TOUCH UPPER RIGHT&#34;,12,4,1);
+  TP_Calibrate_Upper_Right();                              <i>// Calibration of upper right corner</i>
+
+  Delay_ms(1000);
+}
+
+<b>void</b> main() {
+
+  Initialize();
+
+  Glcd_Write_Text(&#34;CALIBRATION&#34;,12,3,1);
+  Delay_ms(1000);
+  Glcd_Fill(0);                                            <i>// Clear GLCD</i>
+  Calibrate();
+
+  Glcd_Fill(0);
+  Glcd_Write_Text(&#34;WRITE ON SCREEN&#34;, 20, 5, 1) ;
+  Delay_ms(1000);
+
+  Glcd_Fill(0);                                            <i>// Clear GLCD</i>
+  Glcd_V_Line(0,7,0,1);
+  Glcd_Write_Text(clear_msg,1,0,0);
+  Glcd_V_Line(0,7,97,1);
+  Glcd_Write_Text(erase_msg,98,0,0);
+
+  <i>// Pen Menu:</i>
+  Glcd_Rectangle(41,0,52,9,1);
+  Glcd_Box(45,3,48,6,1);
+  Glcd_Rectangle(63,0,70,7,1);
+  Glcd_Box(66,3,67,4,1);
+  Glcd_Rectangle(80,0,86,6,1);
+  Glcd_Dot(83,3,1);
+
+  write_erase = 1;
+  pen_size = 1;
+  <b>while</b> (1) {
+
+    <b>if</b> (TP_Press_Detect()) {
+      <i>// After a PRESS is detected read X-Y and convert it to 128x64 space</i>
+      <b>if</b> (TP_Get_Coordinates(&#38;x_coord, &#38;y_coord) == 0) {
+
+        <b>if</b> ((x_coord &#60; 31) &#38;&#38; (y_coord &#60; 8)) {
+
+          Glcd_Fill(0);
+
+          <i>// Pen Menu:</i>
+          Glcd_Rectangle(41,0,52,9,1);
+          Glcd_Box(45,3,48,6,1);
+          Glcd_Rectangle(63,0,70,7,1);
+          Glcd_Box(66,3,67,4,1);
+          Glcd_Rectangle(80,0,86,6,1);
+          Glcd_Dot(83,3,1);
+
+          Glcd_V_Line(0,7,0,1);
+          Glcd_Write_Text(clear_msg,1,0,0);
+          Glcd_V_Line(0,7,97,1);
+          <b>if</b> (write_erase)
+            Glcd_Write_Text(erase_msg,98,0,0);
+          <b>else</b>
+            Glcd_Write_Text(write_msg,98,0,0);
+          }
+
+        <i>// If write/erase is pressed</i>
+        <b>if</b> ((x_coord &#62; 96) &#38;&#38; (y_coord &#60; 8)) {
+          <b>if</b> (write_erase) {
+            write_erase = 0;
+            Glcd_Write_Text(write_msg,98,0,0);
+            Delay_ms(500);
+            }
+          <b>else</b> {
+            write_erase = 1;
+            Glcd_Write_Text(erase_msg,98,0,0);
+            Delay_ms(500);
+            }
+          }
+
+        <i>// If pen size is selected</i>
+        <b>if</b> ((x_coord &#62;= 41) &#38;&#38; (x_coord &#60;= 52) &#38;&#38; (y_coord &#60;= 9))
+          pen_size = 3;
+
+        <b>if</b> ((x_coord &#62;= 63) &#38;&#38; (x_coord &#60;= 70) &#38;&#38; (y_coord &#60;= 7))
+          pen_size = 2;
+
+        <b>if</b> ((x_coord &#62;= 80) &#38;&#38; (x_coord &#60;= 86) &#38;&#38; (y_coord &#60;= 6))
+          pen_size = 1;
+
+        <b>if</b> (y_coord &#60; 11)
+          <b>continue</b>;
+
+        <b>switch</b> (pen_size) {
+          <b>case</b> 1 : {
+                     <b>if</b> ( (x_coord &#62;= 0) &#38;&#38; (y_coord &#62;= 0) &#38;&#38; (x_coord &#60;= 127) &#38;&#38; (y_coord &#60;= 63) )
+                       Glcd_Dot(x_coord, y_coord, write_erase);
+                     <b>break</b>;
+                   }
+          <b>case</b> 2 : {
+                     <b>if</b> ( (x_coord &#62;= 0) &#38;&#38; (y_coord &#62;= 0) &#38;&#38; (x_coord &#60;= 127-1) &#38;&#38; (y_coord &#60;= 63-1) )
+                       Glcd_Box(x_coord, y_coord, x_coord + 1, y_coord + 1, write_erase);
+                     <b>break</b>;
+                   }
+          <b>case</b> 3 : {
+                     <b>if</b> ( (x_coord &#62;= 1) &#38;&#38; (y_coord &#62;= 1) &#38;&#38; (x_coord &#60;= 127-2) &#38;&#38; (y_coord &#60;= 63-2) )
+                       Glcd_Box(x_coord-1, y_coord-1, x_coord + 2, y_coord + 2, write_erase);
+                     <b>break</b>;
+                   }
+        }
+      }
+    }
+  }
+}
+</pre>
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

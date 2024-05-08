@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "M3",
+    "binaries": [
+        "__Lib_ADC_32L.+_21ch.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L151RC$|^STM32L162RC_A$|^STM32L151RD$|^STM32L151RC_A$|^STM32L151UC$|^STM32L152RE$|^STM32L151RE$|^STM32L162RE$|^STM32L151CC$|^STM32L152CC$|^STM32L152RC_A$|^STM32L152RC$|^STM32L162RC$|^STM32L162RD$|^STM32L152RD$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}
+

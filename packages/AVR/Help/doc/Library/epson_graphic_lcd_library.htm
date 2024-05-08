@@ -1,0 +1,2533 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>Epson S1D13700 Graphic Lcd Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Epson S1D13700 Graphic Lcd Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="eeprom_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="flash_memory_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    <a name="top_of_page"><h2>Epson S1D13700 Graphic <acronym title="Liquid Crystal Display">Lcd</acronym> Library</h2></a>
+
+    <p>The mikroC PRO for AVR provides a library for working with Glcds based on Epson S1D13700 controller. 
+    
+    <p>The S1D13700 Glcd is capable of displaying both text and graphics on an LCD panel. The S1D13700 Glcd allows layered text and graphics, scrolling of the display in any direction, and partitioning of the display into multiple screens. 
+    <br>It includes 32K bytes of embedded SRAM display memory which is used to store text, character codes, and bit-mapped graphics.</p>
+
+    <p>The S1D13700 Glcd handles display controller functions including :</p>
+    <ul>
+    	<li>Transferring data from the controlling microprocessor to the buffer memory</li>
+    	<li>Reading memory data, converting data to display pixels</li>
+    	<li>Generating timing signals for the LCD panel</li>
+    </ul>
+
+    <p>The S1D13700 Glcd is designed with an internal character generator which supports 160, 5x7 pixel characters in internal mask ROM (CGROM) and 64, 8x8 pixel characters incharacter generator RAM (CGRAM). 
+    <br>When the CGROM is not used, up to 256, 8x16 pixel characters are supported in CGRAM.</p>
+
+    <h3>External dependencies of the Epson S1D13700 Graphic Lcd Library</h3>
+
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using S1D13700 Graphic Lcd library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr char</b> S1D13700_DATA;</code></td>
+          <td align="left">System data bus.</td>
+          <td align="left"><code><b>char</b> S1D13700_DATA <b>at</b> PORTD;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_WR;</code></td>
+          <td align="left">Write signal.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_WR <b>at</b> PORTC2_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_RD;</code></td>
+          <td align="left">Read signal.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_RD <b>at</b> PORTC1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_A0;</code></td>
+          <td align="left">System Address pin.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_A0 <b>at</b> PORTC0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_RES;</code></td>
+          <td align="left">Reset signal.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_RES <b>at</b> PORTC4_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_CS;</code></td>
+          <td align="left">Chip select.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_CS <b>at</b> PORTC4_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_DATA_Direction;</code></td>
+          <td align="left">Direction of the system data bus pins.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_DATA_Direction <b>at</b> DDRD;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_WR_Direction;</code></td>
+          <td align="left">Direction of the Write pin.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_WR_Direction <b>at</b> DDC2_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_RD_Direction;</code></td>
+          <td align="left">Direction of the Read pin.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_RD_Direction <b>at</b> DDC1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_A0_Direction;</code></td>
+          <td align="left">Direction of the System Address pin.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_A0_Direction <b>at</b> DDC2_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_RES_Direction;</code></td>
+          <td align="left">Direction of the Reset pin.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_RES_Direction <b>at</b> DDC0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> S1D13700_CS_Direction;</code></td>
+          <td align="left">Direction of the Chip select pin.</td>
+          <td align="left"><code><b>sbit</b> S1D13700_CS_Direction <b>at</b> DDC4_bit;</code></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#s1d13700_init">S1D13700_Init</a></li>
+      <li><a href="#s1d13700_write_command">S1D13700_Write_Command</a></li>
+      <li><a href="#s1d13700_write_parameter">S1D13700_Write_Parameter</a></li>
+      <li><a href="#s1d13700_read_parameter">S1D13700_Read_Parameter</a></li>
+      <li><a href="#s1d13700_fill">S1D13700_Fill</a></li>
+			<li><a href="#s1d13700_grfill">S1D13700_GrFill</a></li>
+			<li><a href="#s1d13700_txtfill">S1D13700_TxtFill</a></li>
+			<li><a href="#s1d13700_display_grlayer">S1D13700_Display_GrLayer</a></li>
+			<li><a href="#s1d13700_display_txtlayer">S1D13700_Display_TxtLayer</a></li>
+			<li><a href="#s1d13700_set_cursor">S1D13700_Set_Cursor</a></li>
+			<li><a href="#s1d13700_display_cursor">S1D13700_Display_Cursor</a></li>
+      <li><a href="#s1d13700_write_char">S1D13700_Write_Char</a></li>
+			<li><a href="#s1d13700_write_text">S1D13700_Write_Text</a></li>
+      <li><a href="#s1d13700_dot">S1D13700_Dot</a></li>
+			<li><a href="#s1d13700_line">S1D13700_Line</a></li>
+			<li><a href="#s1d13700_h_line">S1D13700_H_Line</a></li>
+			<li><a href="#s1d13700_v_line">S1D13700_V_Line</a></li>
+			<li><a href="#s1d13700_rectangle">S1D13700_Rectangle</a></li>
+			<li><a href="#s1d13700_box">S1D13700_Box</a></li>
+			<li><a href="#s1d13700_rectangle_round_edges">S1D13700_Rectangle_Round_Edges</a></li>
+			<li><a href="#s1d13700_rectangle_round_edges_fill">S1D13700_Rectangle_Round_Edges_Fill</a></li>
+			<li><a href="#s1d13700_circle">S1D13700_Circle</a></li>
+			<li><a href="#s1d13700_circle_fill">S1D13700_Circle_Fill</a></li>
+			<li><a href="#s1d13700_image">S1D13700_Image</a></li>
+			<li><a href="#s1d13700_partialimage">S1D13700_PartialImage</a></li>
+    </ul>
+
+    <!-- -->
+
+    <h3 id="s1d13700_init">S1D13700_Init</h3>
+
+
+    <!-- tabela: S1D13700_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Init(<b>unsigned int</b> width, <b>unsigned char</b> height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p> Initializes S1D13700 Graphic Lcd controller.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the Glcd panel.</li>
+                <li><code>height:</code> height of the Glcd panel.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>S1D13700_Data_Port:</code> Data Bus Port.</li>
+                <li><code>S1D13700_WR:</code> Write signal pin.</li>
+                <li><code>S1D13700_RD:</code> Read signal pin.</li>
+                <li><code>S1D13700_A0:</code> Command/Data signal pin.</li>
+                <li><code>S1D13700_RES:</code> Reset signal pin.</li>
+                <li><code>S1D13700_CS:</code> Chip Select signal pin.</li>
+                <br>
+                <br>
+                <li><code>S1D13700_Data_Port_Direction:</code> Data Bus Port Direction.</li>
+                <li><code>S1D13700_WR_Direction:</code> Direction of Write signal pin.</li>
+                <li><code>S1D13700_RD_Direction:</code> Direction of Read signal pin.</li>
+                <li><code>S1D13700_A0_Direction:</code> Direction of Command/Data signal pin.</li>
+                <li><code>S1D13700_RES_Direction:</code> Direction of Reset signal pin.</li>                
+                <li><code>S1D13700_CS_Direction:</code> Direction of Chip Select signal pin.</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// S1D13700 module connections</i>
+<b>char</b> S1D13700_Data_Port <b>at</b> PORTD;
+<b>sbit</b> S1D13700_WR  <b>at</b> PORTC2_bit;
+<b>sbit</b> S1D13700_RD  <b>at</b> PORTC1_bit;
+<b>sbit</b> S1D13700_A0  <b>at</b> PORTC0_bit;
+<b>sbit</b> S1D13700_RES <b>at</b> PORTC4_bit;
+<b>sbit</b> S1D13700_CS  <b>at</b> PORTC5_bit;
+
+<b>char</b> S1D13700_Data_Port_Direction <b>at</b> DDRD;
+<b>sbit</b> S1D13700_WR_Direction  <b>at</b> DDC2_bit;
+<b>sbit</b> S1D13700_RD_Direction  <b>at</b> DDC1_bit;
+<b>sbit</b> S1D13700_A0_Direction  <b>at</b> DDC0_bit;
+<b>sbit</b> S1D13700_RES_Direction <b>at</b> DDC4_bit;
+<b>sbit</b> S1D13700_CS_Direction <b>at</b> DDC5_bit;
+<i>// End of S1D13700 module connections</i>
+...
+<i>// init display for 320 pixel width, 240 pixel height</i>
+S1D13700_Init(320, 240);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_write_command">S1D13700_Write_Command</h3>
+
+
+    <!-- tabela: S1D13700_Write_Command -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Write_Command(<b>char</b> command);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a command to S1D13700 controller.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>command:</code> command to be issued :</li>
+              </ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class ="center">Value</th>
+                    <th valign="top" class ="center">Description</th>
+                  </tr>									                
+
+                  <tr align="center">
+										<td><code>S1D13700_SYSTEM_SET</code></td>
+										<td>General system settings.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_POWER_SAVE</code></td>
+										<td>Enter into power saving mode.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_DISP_ON</code></td>
+										<td>Turn the display on.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_DISP_OFF </code></td>
+										<td>Turn the display off.</td>
+                  </tr>                    
+
+                  <tr align="center">
+										<td><code>S1D13700_SCROLL</code></td>
+										<td>Setup text and graphics address regions.</td>
+                  </tr>                  
+
+                  <tr align="center">
+										<td><code>S1D13700_CS_RIGHT</code></td>
+										<td>Cursor moves right after write to display memory.</td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>S1D13700_CS_LEFT</code></td>
+										<td>Cursor moves left after write to display memory.</td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>S1D13700_CS_UP</code></td>
+										<td>Cursor moves up after write to display memory.</td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>S1D13700_CS_DOWN</code></td>
+										<td>Cursor moves down after write to display memory.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_OVLAY</code></td>
+										<td>Configure how layers overlay.</td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>S1D13700_CGRAM_ADR</code></td>
+										<td>Configure character generator RAM address.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_HDOT_SCR</code></td>
+										<td>Set horizontal scroll rate.</td>
+                  </tr>                                                    
+
+									<tr align="center">
+										<td><code>S1D13700_CSRW</code></td>
+										<td>Set the cursor address.</td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>S1D13700_CSRR</code></td>
+										<td>Read the cursor address.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_GRAYSCALE</code></td>
+										<td>Selects the gray scale depth, in bits-per-pixel (bpp).</td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>S1D13700_MEMWRITE</code></td>
+										<td>Write to display memory.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_MEMREAD</code></td>
+										<td>Read from display memory.</td>
+                  </tr>  
+
+                </table> 
+              </ul> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Turn the display on</i>
+S1D13700_Write_Command(S1D13700_DISP_ON);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_write_parameter">S1D13700_Write_Parameter</h3>
+
+
+    <!-- tabela: S1D13700_Write_Parameter  -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Write_Parameter(<b>char</b> parameter);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a parameter to S1D13700 controller.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>parameter:</code> parameter to be written.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+            <p>Previously, a command must be sent through <a href="#s1d13700_write_command">S1D13700_Write_Command</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Write_Command(S1D13700_CSRW); // set cursor address
+S1D13700_Write_Parameter(Lo(start)); // send lower byte of cursor address
+S1D13700_Write_Parameter(Hi(start)); // send higher byte cursor address
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_read_parameter">S1D13700_Read_Parameter</h3>
+
+
+    <!-- tabela: S1D13700_Read_Parameter -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> S1D13700_Read_Parameter();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads a parameter from GLCD port.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+parameter = S1D13700_Read_Parameter();
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_fill">S1D13700_Fill</h3>
+
+
+    <!-- tabela: S1D13700_fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Fill(<b>char</b> d, <b>unsigned int</b> start, <b>unsigned int</b> len);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills Glcd memory block with given byte.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>d:</code> byte to be written.</li>
+            		<li><code>start:</code> starting address of the memory block.</li>
+            		<li><code>len:</code> length of the memory block in bytes.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// from the starting address of 0x3000, fill the memory block size of 0x7FFF with 0x20</i>
+S1D13700_Fill(0x20, 0x3000, 0x7FFF);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_grfill">S1D13700_GrFill</h3>
+
+
+    <!-- tabela: S1D13700_GrFill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_GrFill(<b>char</b> d);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fill graphic layer with appropriate value (0 to clear).</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>d:</code> value to fill graphic layer with.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// clear current graphic panel</i> 
+S1D13700_GrFill(0);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    
+    <!-- -->
+
+
+    <h3 id="s1d13700_txtfill">S1D13700_TxtFill</h3>
+
+
+    <!-- tabela: S1D13700_TxtFill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_TxtFill(<b>char</b> d);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fill current text panel with appropriate value (0 to clear).</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>d:</code> this value will be used to fill text panel.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// clear current text panel</i>
+S1D13700_TxtFill(0);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_display_grlayer">S1D13700_Display_GrLayer</h3>
+
+
+    <!-- tabela: S1D13700_Display_GrLayer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Display_GrLayer(<b>char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Display selected graphic layer.</p>
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>mode:</code> graphic layer mode. Valid values :</li>
+							</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class ="center">Value</th>
+                    <th valign="top" class ="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_LAYER_OFF</code></td>
+										<td>Turn off graphic layer.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_LAYER_ON</code></td>
+										<td>Turn on graphic layer.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_LAYER_FLASH_2Hz</code></td>
+										<td>Turn on graphic layer and flash it at the rate of 2 Hz.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_LAYER_FLASH_16Hz</code></td>
+										<td>Turn on graphic layer and flash it at the rate of 16 Hz.</td>
+                  </tr>
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Turn on graphic layer</i>
+S1D13700_Display_GrLayer(S1D13700_LAYER_ON);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_display_txtlayer">S1D13700_Display_TxtLayer</h3>
+
+
+    <!-- tabela: S1D13700_Display_TxtLayer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Display_TxtLayer(<b>char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Display selected text layer.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>mode:</code> text layer mode. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class ="center">Value</th>
+                    <th valign="top" class ="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_LAYER_OFF</code></td>
+										<td>Turn off graphic layer.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_LAYER_ON</code></td>
+										<td>Turn on graphic layer.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_LAYER_FLASH_2Hz</code></td>
+										<td>Turn on graphic layer and flash it at the rate of 2 Hz.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_LAYER_FLASH_16Hz</code></td>
+										<td>Turn on graphic layer and flash it at the rate of 16 Hz.</td>
+                  </tr>
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Display on text layer</i>
+S1D13700_Display_TxtLayer(S1D13700_LAYER_ON);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    
+    <!-- -->
+
+
+    <h3 id="s1d13700_set_cursor">S1D13700_Set_Cursor</h3>
+
+
+    <!-- tabela: S1D13700_Set_Cursor -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Set_Cursor(<b>char</b> width, <b>char</b> height, <b>char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets cursor properties.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> in pixels-1 (must be less than or equal to the horizontal char size).</li>
+            		<li><code>height:</code> in lines-1 (must be less than or equal to the vertical char size).</li>
+            		<li><code>mode:</code> cursor mode. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class ="center">Value</th>
+                    <th valign="top" class ="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_CURSOR_UNDERSCORE</code></td>
+										<td>Set cursor shape - underscore.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_CURSOR_BLOCK</code></td>
+										<td>Set cursor shape - block.</td>
+                  </tr>
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set cursor with the following properties : width 5px, height 10px, cursor shape - block</i>
+S1D13700_Set_Cursor(5, 10, S1D13700_CURSOR_BLOCK);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_display_cursor">S1D13700_Display_Cursor</h3>
+
+
+    <!-- tabela: S1D13700_Display_Cursor -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Display_Cursor(<b>char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays cursor.</p>
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>mode:</code> mode parameter. Valid values:</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class ="center">Value</th>
+                    <th valign="top" class ="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_CURSOR_OFF</code></td>
+										<td>Turn off graphic layer.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_CURSOR_ON</code></td>
+										<td>Turn on graphic layer.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_CURSOR_FLASH_2Hz</code></td>
+										<td>Turn on graphic layer and flash it at the rate of 2 Hz.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_CURSOR_FLASH_16Hz</code></td>
+										<td>Turn on graphic layer and flash it at the rate of 16 Hz.</td>
+                  </tr>
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set cursor on</i>
+S1D13700_Display_Cursor(S1D13700_CURSOR_ON);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table> 
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_write_char">S1D13700_Write_Char</h3>
+
+    <!-- tabela: S1D13700_write_char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Write_Char(<b>unsigned char</b> c, <b>unsigned int</b> x, <b>unsigned int</b> y, <b>unsigned char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a char in the current text layer of Glcd at coordinates (x, y).</p>
+		 				<p>Parameters :</p>
+            	<ul>
+            		<li><code>c:</code> char to be written.</li>
+            		<li><code>x:</code> char position on x-axis (column).</li>
+            		<li><code>y:</code> char position on y-axis (row).</li>
+            		<li><code>mode:</code> mode parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_OVERLAY_OR</code></td>
+										<td>In the OR-Mode, text and graphics can be displayed and the data is logically "OR-ed". <br>This is the most common way of combining text and graphics, for example labels on buttons.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_OVERLAY_XOR</code></td>
+										<td>In this mode, the text and graphics data are combined via the logical "exclusive OR". <br.This can be useful to display text in the negative mode, i.e. white text on black background.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_OVERLAY_AND</code></td>
+										<td>The text and graphic data shown on display are combined via the logical "AND function".</td>
+                  </tr>
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Write_Char('A',22,23,S1D13700_OVERLAY_OR);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_write_text">S1D13700_Write_Text</h3>
+
+
+    <!-- tabela: S1D13700_write_text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Write_Text(<b>unsigned char</b> *str, <b>unsigned char</b> x, <b>unsigned char</b> y, <b>char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text in the current text panel of Glcd at coordinates (x, y).</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>str:</code> text to be written.</li>
+            		<li><code>x:</code> text position on x-axis (column).</li>
+            		<li><code>y:</code> text position on y-axis (row).</li>
+            		<li><code>mode:</code> mode parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_OVERLAY_OR</code></td>
+										<td>In the OR-Mode, text and graphics can be displayed and the data is logically "OR-ed". <br>This is the most common way of combining text and graphics, for example labels on buttons.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_OVERLAY_XOR</code></td>
+										<td>In this mode, the text and graphics data are combined via the logical "exclusive OR". <br.This can be useful to display text in the negative mode, i.e. white text on black background.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_OVERLAY_AND</code></td>
+										<td>The text and graphic data shown on display are combined via the logical "AND function".</td>
+                  </tr>
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+S1D13700_Write_Text("EPSON LIBRARY DEMO, WELCOME !", 0, 0, S1D13700_OVERLAY_OR);	
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_dot">S1D13700_Dot</h3>
+
+
+    <!-- tabela: S1D13700_dot -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Dot(<b>unsigned int</b> x, <b> unsigned int</b> y, <b>unsigned short</b> color);</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a dot in the current graphic panel of Glcd at coordinates (x, y). 
+		        </p>
+		        <p>Parameters :
+            	<ul>
+            		<li><code>x:</code> dot position on x-axis.</li>
+            		<li><code>y:</code> dot position on y-axis.</li>
+            		<li><code>color:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Dot(50, 50, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+
+    <h3 id="s1d13700_line">S1D13700_Line</h3>
+
+
+    <!-- tabela: S1D13700_line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Line(<b>unsigned int</b> x0, <b>unsigned int</b> y0, <b>unsigned int</b> x1, <b>unsigned int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a line from (x0, y0) to (x1, y1).</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>x0:</code> x coordinate of the line start.</li>
+            		<li><code>y0:</code> y coordinate of the line end.</li>
+            		<li><code>x1:</code> x coordinate of the line start.</li>
+            		<li><code>y1:</code> y coordinate of the line end.</li>
+            		<li><code>pcolor:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Line(0, 0, 239, 127, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="s1d13700_h_line">S1D13700_H_Line</h3>
+
+
+    <!-- tabela: S1D13700_H_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_H_Line(<b>unsigned int</b> x_start, <b>unsigned int</b> x_end, <b>unsigned int</b> y_pos, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a horizontal line.</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>x_start:</code> x coordinate of the line start.</li>
+            		<li><code>x_end:</code> x coordinate of the line end.</li>
+            		<li><code>y_pos:</code> line position on the y axis.</li>
+            		<li><code>pcolor:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Line(0, 0, 239, 127, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_v_line">S1D13700_V_Line</h3>
+
+
+    <!-- tabela: S1D13700_V_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_V_Line(<b>unsigned int</b> y_start, <b>unsigned int</b> y_end, <b>unsigned int</b> x_pos, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a horizontal line.</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>y_start:</code> y coordinate of the line start.</li>
+            		<li><code>y_end:</code> y coordinate of the line end.</li>
+            		<li><code>x_pos:</code> line position on the x axis.</li>
+            		<li><code>pcolor:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Line(0, 0, 239, 127, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_rectangle">S1D13700_Rectangle</h3>
+
+
+    <!-- tabela: S1D13700_rectangle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Rectangle(<b>unsigned int</b> x0, <b>unsigned int</b> y0, <b>unsigned int</b> x1, <b>unsigned int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rectangle on Glcd.</p>
+		    		<p>Parameters :
+            	<ul>
+            		<li><code>x0:</code> x coordinate of the upper left rectangle corner.</li>
+            		<li><code>y0:</code> y coordinate of the upper left rectangle corner.</li>
+            		<li><code>x1:</code> x coordinate of the lower right rectangle corner.</li>
+            		<li><code>y1:</code> y coordinate of the lower right rectangle corner.</li>
+            		<li><code>pcolor:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_rectangle(20, 20, 219, 107, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="s1d13700_box">S1D13700_Box</h3>
+
+
+    <!-- tabela: S1D13700_box -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Box(<b>unsigned int</b> x0, <b>unsigned int</b> y0, <b>unsigned int</b> x1, <b>unsigned int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a box on Glcd.</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>x0:</code> x coordinate of the upper left box corner.</li>
+            		<li><code>y0:</code> y coordinate of the upper left box corner.</li>
+            		<li><code>x1:</code> x coordinate of the lower right box corner.</li>
+            		<li><code>y1:</code> y coordinate of the lower right box corner.</li>
+            		<li><code>pcolor:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Box(0, 119, 239, 127, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_rectangle_round_edges">S1D13700_Rectangle_Round_Edges</h3>
+
+
+    <!-- tabela: S1D13700_rectangle_round_edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Rectangle_Round_Edges(<b>unsigned int</b> x_upper_left, <b>unsigned int</b> y_upper_left, <b>unsigned int</b> x_bottom_right, <b>unsigned int</b> y_bottom_right, <b>unsigned short</b> round_radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rounded edge rectangle on Glcd.</p>
+		    		<p>Parameters :
+            	<ul>
+            		<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner.</li>
+            		<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner.</li>
+            		<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner.</li>
+            		<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner.</li>
+            		<li><code>round_radius:</code> radius of the rounded edge.</li>
+            		<li><code>pcolor:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Rectangle_Round_Edges(20, 20, 219, 107, 12, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+     <!-- -->
+
+
+    <h3 id="s1d13700_rectangle_round_edges_fill">S1D13700_Rectangle_Round_Edges_Fill</h3>
+
+
+    <!-- tabela: S1D13700_rectangle_round_edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Rectangle_Round_Edges_Fill(<b>unsigned int</b> x0, <b>unsigned int</b> y0, <b>unsigned int</b> x1, <b>unsigned int</b> y1, <b>unsigned short</b> round_radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled rounded edge rectangle on Glcd.</p>
+		    		<p>Parameters :
+            	<ul>
+            		<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner.</li>
+            		<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner.</li>
+            		<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner.</li>
+            		<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner.</li>
+            		<li><code>round_radius:</code> radius of the rounded edge.</li>
+            		<li><code>pcolor:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Rectangle_Round_Edges_Fill(20, 20, 219, 107, 12, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_circle">S1D13700_Circle</h3>
+
+
+    <!-- tabela: S1D13700_circle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Circle(<b>unsigned int</b> x_center, <b>unsigned int</b> y_center, <b>unsigned int</b> radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a circle on Glcd.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>x_center:</code> x coordinate of the circle center.</li>
+            		<li><code>y_center:</code> y coordinate of the circle center.</li>
+            		<li><code>radius:</code> radius size.</li>
+            		<li><code>color:</code> color parameter. Valid values : </li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Circle(120, 64, 110, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_circle_fill">S1D13700_Circle_Fill</h3>
+
+
+    <!-- tabela: S1D13700_circle_fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Circle_Fill(<b>unsigned int</b> x_center, <b>unsigned int</b> y_center, <b>unsigned int</b> radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled circle on Glcd.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>x_center:</code> x coordinate of the circle center.</li>
+            		<li><code>y_center:</code> y coordinate of the circle center.</li>
+            		<li><code>radius:</code> radius size.</li>
+            		<li><code>color:</code> color parameter. Valid values :</li>
+            	</ul>
+            	<ul>
+                <table class="small">
+                  <tr align="center">
+                    <th valign="top" class="center">Value</th>
+                    <th valign="top" class="center">Description</th>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_BLACK</code></td>
+										<td>Black color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_WHITE</code></td>
+										<td>White color.</td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>S1D13700_INVERT</code></td>
+										<td>Invert color.</td>
+                  </tr>
+
+                </table>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Circle_Fill(120, 64, 110, S1D13700_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="s1d13700_image">S1D13700_Image</h3>
+
+
+    <!-- tabela: S1D13700_image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_Image(<b>const code char</b> *pic);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays bitmap on Glcd.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>image:</code> image to be displayed. Bitmap array is located in code memory.</li>
+              </ul>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              Image dimension must match the display dimension.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+S1D13700_Image(image);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="s1d13700_partialimage">S1D13700_PartialImage</h3>
+
+
+    <!-- tabela: S1D13700_image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> S1D13700_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>code const unsigned short</b> * image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image on a desired location.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+            		<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+            		<li><code>width:</code> desired image width.</li>
+            		<li><code>height:</code> desired image height.</li>
+            		<li><code>picture_width:</code> width of the original image.</li>
+            		<li><code>picture_height:</code> height of the original image.</li>
+            		<li><code>image:</code> image to be displayed. Bitmap array is located in code memory.</li>
+              </ul>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              Image dimension must match the display dimension.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#s1d13700_init">S1D13700_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Draws a 10x15 part of the image starting from the upper left corner on the coordinate (10,12). Original image size is 16x32.</i> 
+S1D13700_PartialImage(10, 12, 10, 15, 16, 32, image);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

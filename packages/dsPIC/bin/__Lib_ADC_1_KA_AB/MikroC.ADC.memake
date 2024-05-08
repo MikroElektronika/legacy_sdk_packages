@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_ADC_1_KA_AB.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC24F16KA302$|^PIC24F32KA301$|^PIC24F32KA302$|^PIC24F16KA301$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

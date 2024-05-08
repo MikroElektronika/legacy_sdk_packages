@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_UART_012345.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK64FN1M0.+12$|^MK64FX512.+12$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

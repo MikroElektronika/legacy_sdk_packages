@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.DAC",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_DAC_0_AIPS1.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK80FN256.+15$|^MK82FN256.+15$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

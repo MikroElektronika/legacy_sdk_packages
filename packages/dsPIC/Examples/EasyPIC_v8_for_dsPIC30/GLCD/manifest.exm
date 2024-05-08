@@ -1,0 +1,8 @@
+{
+    "name": "GLCD",
+    "description": "This is a simple demonstration of the GLCD library routines.",
+    "image" : "GLCD.png",
+    "toolchain": ["mikrocdspic"],
+    "hw" : ["EasyPIC v8 for dsPIC30","GLCD"],
+    "category" : ["mikroC legacy dsPIC"]
+}

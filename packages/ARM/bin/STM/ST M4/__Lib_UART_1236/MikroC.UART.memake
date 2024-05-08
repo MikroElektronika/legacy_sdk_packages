@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_UART_1236.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F412ZG$|^STM32F412RE$|^STM32F412VE$|^STM32F412ZE$|^STM32F412CE$|^STM32F412RG$|^STM32F412VG$|^STM32F412CG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

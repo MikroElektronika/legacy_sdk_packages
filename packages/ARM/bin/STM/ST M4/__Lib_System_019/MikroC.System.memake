@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32F410T_Defs.emcl",
+        "__Lib_GPIO_32F410.emcl",
+        "__Lib_System_4XX.emcl",
+        "__Lib_Math.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F410T8$|^STM32F410TB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

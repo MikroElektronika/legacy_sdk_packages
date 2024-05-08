@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_GPIO.emcl",
+        "__Lib_GPIO_MK66_Defs.emcl",
+        "__Lib_System_K66.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_Math.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK66FN2M0.+18$|^MK66FX1M0.+18$|^MK65FN2M0.+18$|^MK65FX1M0.+18$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

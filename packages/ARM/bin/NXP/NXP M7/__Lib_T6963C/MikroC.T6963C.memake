@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.T6963C",
+    "global_visibility": true,
+    "arch": "M7",
+    "binaries": [
+        "__Lib_T6963C.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MKV58F1M0.+24$|^MKV56F1M0.+24$|^MKV56F512.+24$|^MKV58F512.+24$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

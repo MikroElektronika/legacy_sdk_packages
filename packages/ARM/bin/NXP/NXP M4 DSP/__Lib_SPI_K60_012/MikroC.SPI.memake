@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "M4DSP",
+    "binaries": [
+        "__Lib_SPI_K60_012.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK60DN256.+10$|^MK60DN512.+10$|^MK60DX256.+10$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

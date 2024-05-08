@@ -1,0 +1,8 @@
+{
+    "name": "Button",
+    "description": "Simple demonstration on usage of the Button() function",
+    "image" : "io_group.png",
+    "toolchain": ["mikrocpic32"],
+    "hw" : ["Fusion for PIC32 v8"],
+    "category" : ["mikroC legacy PIC32"]
+}

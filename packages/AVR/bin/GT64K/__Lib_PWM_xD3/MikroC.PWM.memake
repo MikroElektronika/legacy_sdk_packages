@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "GT64K",
+    "binaries": [
+        "__Lib_PWM_xD3.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA256D3$|^ATXMEGA384D3$|^ATXMEGA128D3$|^ATXMEGA192D3$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

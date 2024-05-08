@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FT5XX6",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_FT5XX6.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32(.+)$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.CAN",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_CAN_12.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX775F256L$|^PIC32MX795F512L$|^PIC32MX775F512L$|^PIC32MX775F256H$|^PIC32MX775F512H$|^PIC32MX795F512H$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

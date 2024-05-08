@@ -1,0 +1,8 @@
+{
+    "name": "EEPROM",
+    "description": "This simple project utilises Two-Wire Interface in order to communicate to EEPROM chip.",
+    "image" : "Serial_EEPROM.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7"],
+    "category" : ["mikroC legacy AVR"]
+}

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_PWM_MKV4x_013.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MKV42F256.+16$|^MKV46F128.+16$|^MKV42F64.+16$|^MKV46F256.+16$|^MKV42F128.+16$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

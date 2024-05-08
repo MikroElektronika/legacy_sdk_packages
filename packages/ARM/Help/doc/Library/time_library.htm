@@ -1,0 +1,463 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Time Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_arm.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Time Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_miscellaneous_libraries.htm">Miscellaneous Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="sprint_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="trigonometry_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Time Library</h2></a>
+
+		<p>The Time Library contains functions and type definitions for time calculations
+       in the UNIX time format which counts the number of seconds since the "epoch". This is very convenient
+       for programs that work with time intervals: the difference between two UNIX time
+       values is a real-time difference measured in seconds.</p>
+		
+		<p>What is the epoch?<br>
+       Originally it was defined as the beginning of 1970 GMT. (January 1, 1970 Julian day)
+			 GMT, Greenwich Mean Time, is a traditional term for the time zone in England.</p>
+
+    <p>The <b>TimeStruct</b> type is a structure type suitable for time and date storage. 
+    Type declaration is contained in <code>__Time.h</code> which can be found in the mikroC PRO for ARM Time Library Demo example folder.</p>
+
+
+    <!-- -->
+    
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#time_datetoepoch">Time_dateToEpoch</a></li>
+      <li><a href="#time_epochtodate">Time_epochToDate</a></li>      
+      <li><a href="#time_datediff">Time_dateDiff</a></li>
+    </ul>
+
+    <!-- -->
+
+    <h3 id="time_datetoepoch">Time_dateToEpoch</h3>
+
+
+    <!-- tabela: Time_dateToEpoch -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> Time_dateToEpoch(<b>TimeStruct</b> *ts);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function returns the UNIX time : number of seconds since January 1, 1970 0h00mn00s.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>ts:</code> time and date value for calculating UNIX time.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Number of seconds since January 1, 1970 0h00mn00s.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+#include        &#34;__Time.h&#34;
+...
+<b>TimeStruct</b>      ts1;
+<b>long</b>    epoch ;
+...
+<i>//what is the epoch of the date in ts ?</i>
+epoch = Time_dateToEpoch(&#38;ts1) ;
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="time_epochtodate">Time_epochToDate</h3>
+
+
+    <!-- tabela: Time_epochToDate -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Time_epochToDate(<b>long</b> e, <b>TimeStruct</b> *ts);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Converts the UNIX time to time and date.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>e:</code> UNIX time (seconds since UNIX epoch)</li>
+           		<li><code>ts:</code> time and date structure for storing conversion output</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+#include       &#34;__Time.h&#34;
+...
+<b>TimeStruct</b>      ts2;
+<b>long</b>    epoch ;
+...
+<i>//what date is epoch 1234567890 ?</i>
+epoch = 1234567890 ;
+Time_epochToDate(epoch, &#38;ts2) ;
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->  
+    
+
+    <!-- -->
+
+
+    <h3 id="time_datediff">Time_dateDiff</h3>
+
+
+    <!-- tabela: Time_dateDiff -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> Time_dateDiff(<b>TimeStruct</b> *t1, <b>TimeStruct</b> *t2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function compares two dates and returns time difference in seconds as a signed long. 
+            	Result is positive if <code>t1</code> is before <code>t2</code>, result is null if <code>t1</code> is the same as <code>t2</code> 
+							and result is negative if <code>t1</code> is after <code>t2</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>t1:</code> time and date structure (the first comparison parameter)</li>
+           		<li><code>t2:</code> time and date structure (the second comparison parameter)</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Time difference in seconds as a signed long.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+#include       &#34;__Time.h&#34;
+...
+<b>TimeStruct</b>      ts1, ts2;
+<b>long</b>    diff ;
+...
+<i>// how many seconds between these two dates contained in ts1 and ts2 buffers?</i>
+ diff = Time_dateDiff(&ts1, &ts2) ;
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+
+<h3>Library Example</h3>
+
+    <p>Demonstration of Time library routines usage for time calculations in UNIX time format.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+#include        &#34;__Time.h&#34;
+
+TimeStruct ts1, ts2;
+<b>long</b> epoch;
+<b>long</b> diff;
+
+
+<b>void</b> main() {
+
+  ts1.ss = 0;
+  ts1.mn = 7;
+  ts1.hh = 17;
+  ts1.md = 23;
+  ts1.mo = 5;
+  ts1.yy = 2006;
+
+  <i>/*
+   * What is the epoch of the date in ts ?
+   */</i>
+  epoch = Time_dateToEpoch(&#38;ts1);       <i>//  1148404020</i>
+
+
+  <i>/*
+   * What date is epoch 1234567890 ?
+   */</i>
+  epoch = 1234567890;
+  Time_epochToDate(epoch, &#38;ts2);       <i>//  {0x1E, 0x1F,0x17, 0x0D, 0x04, 0x02, 0x07D9}</i>
+
+  <i>/*
+   * How much seconds between this two dates ?
+   */</i>
+  diff = Time_dateDiff(&#38;ts1, &#38;ts2);    <i>//  86163870</i>
+}
+</pre>
+  	
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

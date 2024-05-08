@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_SPI_c567_d567.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA16C4$|^ATXMEGA16A4U$|^ATXMEGA32C4$|^ATXMEGA32A4$|^ATXMEGA64D3$|^ATXMEGA64C3$|^ATXMEGA16A4$|^ATXMEGA32A4U$|^ATXMEGA16D4$|^ATXMEGA32D4$|^ATXMEGA64A4U$|^ATXMEGA32C3$|^ATXMEGA32D3$|^ATXMEGA64D4$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

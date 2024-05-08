@@ -1,0 +1,26 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: TFT_Cube_Rotation
+
+uses: {
+    MikroC.System
+    MikroC.TFT
+    MikroC.TFT_Defs
+    MikroC.I2C
+    MikroC.FT5XX6
+    MikroC.FT5XX6_Gesture_Decoder
+}
+
+depends: {
+    MikroC.System
+    MikroC.TFT
+    MikroC.TFT_Defs
+    MikroC.I2C
+    MikroC.FT5XX6
+    MikroC.FT5XX6_Gesture_Decoder
+}
+
+sources: {
+    TFT_Cube_Rotation.c
+}

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "MICROAPTIV_FP",
+    "binaries": [
+        "__Lib_ADC_40ch_2_MZ.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MZ2048EFM100$|^PIC32MZ1024EFE100$|^PIC32MZ0512EFK100$|^PIC32MZ1024EFF100$|^PIC32MZ2048EFH100$|^PIC32MZ0512EFE100$|^PIC32MZ2048EFG100$|^PIC32MZ0512EFF100$|^PIC32MZ1024EFM100$|^PIC32MZ1024EFH100$|^PIC32MZ1024EFG100$|^PIC32MZ1024EFK100$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "TFT Cube Rotation",
+    "description": "Gesture demonstration",
+    "image" : "Cube.png",
+    "toolchain": ["mikrocarm"],
+    "hw" : ["Fusion for STM32","TFT Board 4 Capacitive"],
+    "category" : ["mikroC legacy ARM"]
+}

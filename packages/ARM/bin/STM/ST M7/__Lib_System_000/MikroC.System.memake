@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M7",
+    "binaries": [
+        "__Lib_GPIO_32F76x_77x_Vx_Defs.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_System_F7xx.emcl",
+        "__Lib_GPIO_32F7xx.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F765VI$|^STM32F777VI$|^STM32F767VI$|^STM32F767VG$|^STM32F765VG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,20 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M3",
+    "binaries": [
+        "__Lib_Math.emcl",
+        "__Lib_System_15X.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32l1xx.emcl",
+        "__Lib_GPIO_32l1xx_Defs.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L151R6$|^STM32L151VD$|^STM32L152V8$|^STM32L152ZC$|^STM32L162RD$|^STM32L151ZC$|^STM32L152R8$|^STM32L152VD$|^STM32L152RB$|^STM32L152R6$|^STM32L162ZD$|^STM32L152VB$|^STM32L152C8$|^STM32L151QC$|^STM32L151VC$|^STM32L100RB$|^STM32L151C8$|^STM32L152QD$|^STM32L151CB$|^STM32L152QC$|^STM32L151R8$|^STM32L151C6$|^STM32L152RD$|^STM32L151QD$|^STM32L152RC$|^STM32L151V8$|^STM32L162VD$|^STM32L100R8$|^STM32L151UC$|^STM32L152CC$|^STM32L151RC$|^STM32L152CB$|^STM32L152ZD$|^STM32L162QD$|^STM32L100C6$|^STM32L151VB$|^STM32L151RD$|^STM32L152VC$|^STM32L151CC$|^STM32L151ZD$|^STM32L152C6$|^STM32L151RB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}
+

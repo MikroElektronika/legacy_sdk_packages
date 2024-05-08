@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_UART_12_p30.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC30F6011$|^dsPIC30F3011E$|^dsPIC30F5011$|^dsPIC30F4011E$|^dsPIC30F4013E$|^dsPIC30F6014A$|^dsPIC30F3011$|^dsPIC30F3014E$|^dsPIC30F3013E$|^dsPIC30F6012$|^dsPIC30F6012A$|^dsPIC30F6010A$|^dsPIC30F5013E$|^dsPIC30F4011$|^dsPIC30F3013$|^dsPIC30F6013A$|^dsPIC30F4013$|^dsPIC30F5011E$|^dsPIC30F6011A$|^dsPIC30F5013$|^dsPIC30F6010$|^dsPIC30F6015$|^dsPIC30F3014$|^dsPIC30F6013$|^dsPIC30F6014$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

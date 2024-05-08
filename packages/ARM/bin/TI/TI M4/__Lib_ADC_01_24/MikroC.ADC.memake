@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_ADC_01_24.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^TM4C123GH6ZXR$|^TM4C123BH6PGE$|^TM4C123GH6PGE$|^TM4C1233H6PGE$|^TM4C1237H6PGE$|^TM4C123BH6ZRB$|^TM4C1231H6PGE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

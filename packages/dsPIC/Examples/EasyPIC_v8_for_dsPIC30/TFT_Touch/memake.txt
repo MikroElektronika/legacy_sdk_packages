@@ -1,0 +1,27 @@
+project: TFT_Touch
+
+depends: {
+    MikroC.System
+    MikroC.TFT_TouchPanel_TC
+    MikroC.ADC
+    MikroC.TFT
+    MikroC.TFT_Defs
+}
+
+type: executable
+
+sources: {
+    TFT_Touch_main.c
+    TFT_Touch_driver.c
+    TFT_Touch_resources.c
+    TFT_Touch_events_code.c
+}
+
+headers: {
+    TFT_Touch_resources.h
+    TFT_Touch_objects.h
+}
+
+others: {
+    ./ETFT.png
+}

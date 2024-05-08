@@ -1,0 +1,27 @@
+:: Base project template
+
+:: project: HTTP_Demo
+target: HTTP_Demo
+
+type: executable
+
+uses: {
+    MikroC.System
+    MikroC.Conversions
+    MikroC.ETHERNET
+    MikroC.C_Type
+    MikroC.C_String
+}
+
+depends: {
+    MikroC.System
+    MikroC.Conversions
+    MikroC.ETHERNET
+    MikroC.C_Type
+    MikroC.C_String
+}
+
+sources: {
+    HTTP_Demo.c
+}
+

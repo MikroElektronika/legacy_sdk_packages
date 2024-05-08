@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_UART_1234.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX350F128H$|^PIC32MX250F256H$|^PIC32MX120F064H$|^PIC32MX330F064H$|^PIC32MX470F512H$|^PIC32MX530F128H$|^PIC32MX230F128H$|^PIC32MX370F512H$|^PIC32MX450F128H$|^PIC32MX430F064H$|^PIC32MX550F256H$|^PIC32MX350F256H$|^PIC32MX270F512H$|^PIC32MX170F512H$|^PIC32MX570F512H$|^PIC32MX450F256HB$|^PIC32MX130F128H$|^PIC32MX450F256H$|^PIC32MX150F256H$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

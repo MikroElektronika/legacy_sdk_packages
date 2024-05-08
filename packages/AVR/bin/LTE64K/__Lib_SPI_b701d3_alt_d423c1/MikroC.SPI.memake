@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_SPI_b701d3_alt_d423c1.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATMEGA32C1$|^ATMEGA32M1$|^ATMEGA64C1$|^ATMEGA64M1$|^ATMEGA16M1$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

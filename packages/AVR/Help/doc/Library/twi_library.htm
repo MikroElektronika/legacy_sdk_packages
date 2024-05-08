@@ -1,0 +1,1374 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>TWI Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroelektronikao.yu">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">TWI Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="tft_touch_panel_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="uart_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Two Wire Interface">TWI</acronym> Library</h2></a>
+
+
+    <p><acronym title="Two Wire Interface">TWI</acronym> full master <acronym title="Master Synchronous Serial Port">MSSP</acronym> module is available with a number of AVR MCU models. mikroC PRO for AVR provides library which supports the master <acronym title="Two Wire Interface">TWI</acronym> mode.</p>
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#twi_init">TWI_Init</a></li>
+      <li><a href="#twi_busy">TWI_Busy</a></li>
+      <li><a href="#twi_start">TWI_Start</a></li>
+      <li><a href="#twi_stop">TWI_Stop</a></li>
+      <li><a href="#twi_read">TWI_Read</a></li>
+      <li><a href="#twi_write">TWI_Write</a></li>
+      <li><a href="#twi_status">TWI_Status</a></li>
+      <li><a href="#twi_close">TWI_Close</a></li>
+      <li><a href="#twi_settimeoutcallback">TWI_SetTimeoutCallback</a></li>      
+      <li><a href="#twi_set_active">TWI_Set_Active</a></li>
+    </ul>
+
+    <h4>Generic Routines</h4>
+
+    <ul>
+      <li><a href="#twi_busy_ptr">TWI_Busy</a></li>
+      <li><a href="#twi_start_ptr">TWI_Start</a></li>
+      <li><a href="#twi_stop_ptr">TWI_Stop</a></li>
+      <li><a href="#twi_read_ptr">TWI_Read</a></li>
+      <li><a href="#twi_write_ptr">TWI_Write</a></li>
+      <li><a href="#twi_status_ptr">TWI_Status</a></li>
+      <li><a href="#twi_close_ptr">TWI_Close</a></li>
+    </ul>
+
+    <!-- -->
+
+    <h3 id="twi_init">TWI_Init</h3>
+
+
+    <!-- tabela: TWI_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_Init(<b>unsigned long</b> clock);</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>void</b> TWIx_Init(<b>unsigned long</b> clock);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes <acronym title="Two Wire Interface">TWI</acronym> with desired <code>clock</code> (refer to device data sheet for correct values in respect with <em>Fosc</em>). Needs to be called before using other functions of <acronym title="Two Wire Interface">TWI</acronym> Library.</p>
+            <p>You don&#8217;t need to configure ports manually for using the module; library will take care of the initialization.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>C</b>, <b>D</b>, <b>E</b> or <b>F</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Library requires MCU with <acronym title="Two Wire Interface">TWI</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TWI_Init(100000);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="twi_busy">TWI_Busy</h3>
+
+
+    <!-- tabela: TWI_Busy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TWI_Busy();</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>char</b> TWIx_Busy();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+						  <li><code>0</code> - if TWI bus is not busy</li>
+					    <li><code>1</code> - if TWI bus is busy</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Signalizes the status of TWI bus.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>C</b>, <b>D</b>, <b>E</b> or <b>F</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (TWI_Busy == 1) { 
+...</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="twi_start">TWI_Start</h3>
+
+
+    <!-- tabela: TWI_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TWI_Start();</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>char</b> TWIx_Start();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+						  <li><code>0</code> - if TWI start sequence is finished</li>
+					    <li><code>1</code> - if TWI start sequence is not finished</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Determines if <acronym title="Two Wire Interface">TWI</acronym> bus is free and issues START signal.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>C</b>, <b>D</b>, <b>E</b> or <b>F</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (TWI_Start == 1) { 
+...</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="twi_read">TWI_Read</h3>
+
+
+    <!-- tabela: TWI_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TWI_Read(<b>char</b> ack);</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>char</b> TWIx_Read(<b>char</b> ack);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns one byte from the slave.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one byte from the slave, and sends <em>not acknowledge</em> signal if parameter <code>ack</code> is 0, otherwise it sends <em>acknowledge</em>.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>C</b>, <b>D</b>, <b>E</b> or <b>F</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#twi_start">TWI_Start</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read data and send <em>not acknowledge</em> signal:</p>
+
+<pre>
+tmp = TWI_Read(0);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="twi_write">TWI_Write</h3>
+
+
+    <!-- tabela: TWI_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_Write(<b>char</b> data_);</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>void</b> TWIx_Write(<b>char</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends data byte (parameter <code>data_</code>) via <acronym title="Two Wire Interface">TWI</acronym> bus.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>C</b>, <b>D</b>, <b>E</b> or <b>F</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#twi_start">TWI_Start</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TWI_Write(0xA3);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="twi_stop">TWI_Stop</h3>
+
+
+    <!-- tabela: TWI_Stop -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_Stop();</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>void</b> TWIx_Stop();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Issues STOP signal to TWI operation.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>C</b>, <b>D</b>, <b>E</b> or <b>F</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TWI_Stop();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+    <h3 id="twi_status">TWI_Status</h3>
+
+
+    <!-- tabela: TWI_Status -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TWI_Status();</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>char</b> TWIx_Status();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns value of status register (TWSR), the highest 5 bits.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Returns status of <acronym title="Two Wire Interface">TWI</acronym>.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>C</b>, <b>D</b>, <b>E</b> or <b>F</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = TWI_Status();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->    
+
+    <h3 id="twi_close">TWI_Close</h3>
+
+
+    <!-- tabela: TWI_Close -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_Close();</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>void</b> TWIx_Close();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Closes <acronym title="Two Wire Interface">TWI</acronym> connection.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>C</b>, <b>D</b>, <b>E</b> or <b>F</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TWI_Close();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="twi_settimeoutcallback">TWI_SetTimeoutCallback</h3>
+
+
+    <!-- tabela: TWI_SetTimeoutCallback -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_SetTimeoutCallback(<b>unsigned long</b> timeout, <b>void</b> (*twi_timeout)(<b>char</b>));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function checks for a TWI timeout condition in a user defined time period, after which it jumps to a callback function if this condition is met.
+            <br>Different TWI operations can cause a timeout (read, write, start and repeated start) so user may test which one caused it, as in the example below.</p>
+            
+            Parameters :
+            <ul>
+            	<li><code>timeout:</code> Represents a number of <code>while</code> loops in which the TWI timeout condition is checked. 
+            	<br>Depending on the MCU family, the generated code (i.e. the execution time) may vary for the same value of this parameter.
+           		</li>
+            	<br>
+            	<li><code>twi_timeout:</code> pointer to the callback function. Callback function must be written according to this function prototype :
+<pre class="program">
+<b>void</b> TWI_TimeoutCallback(<b>char</b> errorCode) {
+
+}	
+</pre>
+
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TWI must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// define callback function</i>
+<b>void</b> TWI_TimeoutCallback(<b>char</b> errorCode) {
+
+   <b>if</b> (errorCode == _TWI_TIMEOUT_RD) {
+     <i>// do something if timeout is caused during read</i>
+   }
+   
+   <b>if</b> (errorCode == _TWI_TIMEOUT_WR) {
+     <i>// do something if timeout is caused during write</i>
+   }
+   
+   <b>if</b> (errorCode == _TWI_TIMEOUT_START) {
+     <i>// do something if timeout is caused during start</i>
+   } 
+}	
+
+<i>// initialize TWI module</i>
+TWI_Init();
+
+<i>// set timeout period and callback function</i>
+TWI_SetTimeoutCallback(1000, I2C1_TimeoutCallback);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="twi_set_active">TWI_Set_Active</h3>
+
+
+    <!-- tabela: TWI_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_Set_Active(<b>char</b> (*start_ptr)(), <b>char</b> (*read_ptr)(<b>char</b> ack), <b>void</b> (*write_ptr)(<b>char</b> data_), <b>void</b> (*stop_ptr)(), <b>void</b> (*close_ptr)(), <b>char</b> (*busy_ptr)(), <b>char</b> (*status_ptr)());</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the active TWI module which will be used by the TWI library routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+            		<li><code>start_ptr:</code> <a href="#twi_start">TWI_Start</a> handler</li>
+            		<li><code>read_ptr:</code> <a href="#twi_read">TWI_Read</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#twi_write">TWI_Write</a> handler</li>
+            		<li><code>stop_ptr:</code> <a href="#twi_stop">TWI_Stop</a> handler</li>
+            		<li><code>close_ptr:</code> <a href="#twi_close">TWI_Close</a> handler</li>
+            		<li><code>busy_ptr:</code> <a href="#twi_busy">TWI_Busy</a> handler</li>
+            		<li><code>status_ptr:</code> <a href="#twi_status">TWI_Status</a> handler</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Used TWI module must be initialized before using this function. See the <a href="#twi_init">TWI_Init</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+TWI_Set_Active(&TWIC_Start, &TWIC_Read, &TWIC_Write, &TWIC_Stop, &TWI_Close, &TWIC_Busy, &TWIC_Status); <i>// Sets the TWIC module active</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <p>Number of TWI modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</p>    	      
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+    <h3 id="twi_busy_ptr">TWI_Busy</h3>
+
+
+    <!-- tabela: TWI_Busy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TWI_Busy();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+						  <li><code>0</code> - if TWI bus is not busy</li>
+					    <li><code>1</code> - if TWI bus is busy</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Signalizes the status of TWI bus.</p>
+            <p>This is a generic routine which uses the active TWI module previously activated by the <a href="#twi_set_active">TWI_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (TWI_Busy() == 1) { 
+...</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="twi_start_ptr">TWI_Start</h3>
+
+
+    <!-- tabela: TWI_Start_Ptr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TWI_Start();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+						  <li><code>0</code> - if TWI start sequence is finished</li>
+					    <li><code>1</code> - if TWI start sequence is not finished</li>
+					  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Determines if <acronym title="Two Wire Interface">TWI</acronym> bus is free and issues START signal.</p>
+            <p>This is a generic routine which uses the active TWI module previously activated by the <a href="#twi_set_active">TWI_Set_Active</a> routine.</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (TWI_Start() == 1) { 
+...</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="twi_read_ptr">TWI_Read</h3>
+
+
+    <!-- tabela: TWI_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TWI_Read(<b>char</b> ack);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns one byte from the slave.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one byte from the slave, and sends <em>not acknowledge</em> signal if parameter <code>ack</code> is 0, otherwise it sends <em>acknowledge</em>.</p>
+            <p>This is a generic routine which uses the active TWI module previously activated by the <a href="#twi_set_active">TWI_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#twi_start_ptr">TWI_Start</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read data and send <em>not acknowledge</em> signal:</p>
+
+<pre>
+tmp = TWI_Read(0);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="twi_write_ptr">TWI_Write</h3>
+
+
+    <!-- tabela: TWI_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_Write(<b>char</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends data byte (parameter <code>data_</code>) via <acronym title="Two Wire Interface">TWI</acronym> bus.</p>
+            <p>This is a generic routine which uses the active TWI module previously activated by the <a href="#twi_set_active">TWI_Set_Active</a> routine.</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#twi_start_ptr">TWI_Start</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TWI_Write(0xA3);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="twi_stop_ptr">TWI_Stop</h3>
+
+
+    <!-- tabela: TWI_Stop -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_Stop();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Issues STOP signal to TWI operation.</p>
+            <p>This is a generic routine which uses the active TWI module previously activated by the <a href="#twi_set_active">TWI_Set_Active</a> routine.</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TWI_Stop();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+    <h3 id="twi_status_ptr">TWI_Status</h3>
+
+
+    <!-- tabela: TWI_Status -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TWI_Status();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns value of status register (TWSR), the highest 5 bits.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Returns status of <acronym title="Two Wire Interface">TWI</acronym>.</p>
+            <p>This is a generic routine which uses the active TWI module previously activated by the <a href="#twi_set_active">TWI_Set_Active</a> routine.</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = TWI_Status();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->    
+
+    <h3 id="twi_close_ptr">TWI_Close</h3>
+
+
+    <!-- tabela: TWI_Close -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TWI_Close();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Closes <acronym title="Two Wire Interface">TWI</acronym> connection.</p>
+            <p>This is a generic routine which uses the active TWI module previously activated by the <a href="#twi_set_active">TWI_Set_Active</a> routine.</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Two Wire Interface">TWI</acronym> must be configured before using this function. See <a href="#twi_init">TWI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TWI_Close();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3>Library Example</h3>
+
+    <p>This code demonstrates use of <acronym title="Two Wire Interface">TWI</acronym> Library procedures and functions. AVR MCU is connected (SCL, SDA pins ) to 24c02 EEPROM. Program sends data to EEPROM (data is written at address 2). Then, we read data via TWI from EEPROM and send its value to PORTA, to check if the cycle was successful. Check the figure below.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>void</b> main(){
+  DDRA = 0xFF;              <i>// configure PORTA as output</i>
+
+  TWI_Init(100000);         <i>// initialize TWI communication</i>
+  TWI_Start();              <i>// issue TWI start signal</i>
+  TWI_Write(0xA2);          <i>// send byte via TWI (device address + W)</i>
+  TWI_Write(2);             <i>// send byte (address of EEPROM location)</i>
+  TWI_Write(0xAA);          <i>// send data (data to be written)</i>
+  TWI_Stop();               <i>// issue TWI stop signal</i>
+
+  Delay_100ms();
+
+  TWI_Start();              <i>// issue TWI start signal</i>
+  TWI_Write(0xA2);          <i>// send byte via TWI (device address + W)</i>
+  TWI_Write(2);             <i>// send byte (data address)</i>
+  TWI_Start();              <i>// issue TWI signal repeated start</i>
+  TWI_Write(0xA3);          <i>// send byte (device address + R)</i>
+  PORTA = TWI_Read(0u);     <i>// read data (NO acknowledge)</i>
+  TWI_Stop();               <i>// issue TWI stop signal</i>
+}
+</pre>
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Interfacing 24c02 to AVR via I&sup2;C" src="img/schemes/scheme_twi.gif"></p>
+    <p class="center small">Interfacing 24c02 to AVR via <acronym title="Two Wire Interface">TWI</acronym></p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>

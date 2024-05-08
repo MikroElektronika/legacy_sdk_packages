@@ -1,0 +1,8 @@
+{
+    "name": "Sound",
+    "description": "This is a simple project. It utilises legacy sound library for playing tones on a piezo speaker.",
+    "image" : "Sound.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7"],
+    "category" : ["mikroC legacy AVR"]
+}

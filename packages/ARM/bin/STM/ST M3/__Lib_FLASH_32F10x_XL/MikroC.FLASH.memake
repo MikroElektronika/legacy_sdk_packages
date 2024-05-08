@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "M3",
+    "binaries": [
+        "__Lib_FLASH_32F10x_XL.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F103VF$|^STM32F103VG$|^STM32F103RF$|^STM32F101RF$|^STM32F101ZF$|^STM32F103ZG$|^STM32F101RG$|^STM32F103ZF$|^STM32F101VF$|^STM32F101ZG$|^STM32F101VG$|^STM32F103RG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}
+

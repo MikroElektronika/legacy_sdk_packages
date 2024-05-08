@@ -1,0 +1,34 @@
+:: Base project template
+
+:: project: TFT_Cube_Rotation
+target: TFT_Cube_Rotation
+
+type: executable
+
+sources: {
+    main.c
+}
+
+depends: {
+    MikroC.Conversions
+    MikroC.FT5XX6_Gesture_Decoder
+    MikroC.TFT_16bit_Defs
+    MikroC.I2C
+    MikroC.FT5XX6
+    MikroC.TFT_16bit
+    MikroC.C_String
+    MikroC.System
+    MikroC.C_Math
+}
+
+uses: {
+    MikroC.Conversions
+    MikroC.FT5XX6_Gesture_Decoder
+    MikroC.TFT_16bit_Defs
+    MikroC.I2C
+    MikroC.FT5XX6
+    MikroC.TFT_16bit
+    MikroC.C_String
+    MikroC.System
+    MikroC.C_Math
+}

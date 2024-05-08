@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.EPSON_S1D13700",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "GT64K",
+    "binaries": [
+        "__Lib_S1D13700.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATMEGA2560$|^ATMEGA2561$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

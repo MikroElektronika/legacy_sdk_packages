@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Peripheral_Pin_Select",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_PPS_1764_5.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F1764$|^PIC16LF1764$|^PIC16F1765$|^PIC16LF1765$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

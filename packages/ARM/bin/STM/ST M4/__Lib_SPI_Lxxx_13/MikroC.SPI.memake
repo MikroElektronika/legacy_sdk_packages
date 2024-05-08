@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_SPI_L.+_13.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L432KC$|^STM32L442KC$|^STM32L431KB$|^STM32L432KB$|^STM32L431KC$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

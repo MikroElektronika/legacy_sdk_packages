@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.TWI",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_TWI_c01_e01.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA16C4$|^ATXMEGA16A4U$|^ATXMEGA32C4$|^ATXMEGA32A4$|^ATXMEGA64A3$|^ATXMEGA64C3$|^ATXMEGA64A3U$|^ATXMEGA16A4$|^ATXMEGA32A4U$|^ATXMEGA64A4U$|^ATXMEGA32C3$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

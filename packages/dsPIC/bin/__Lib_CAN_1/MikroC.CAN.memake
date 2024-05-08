@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.CAN",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_CAN_1.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC30F5015$|^dsPIC30F5016$|^dsPIC30F5015E$|^dsPIC30F4011E$|^dsPIC30F4012E$|^dsPIC30F6015$|^dsPIC30F4012$|^dsPIC30F4013E$|^dsPIC30F4013$|^dsPIC30F4011$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

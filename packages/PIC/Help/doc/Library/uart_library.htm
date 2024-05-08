@@ -1,0 +1,1260 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>UART Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_PIC.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_PIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">UART Library</div><div class="navigation">&nbsp;&nbsp;<A href="index.htm">mikroC PRO for PIC Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="tft_touch_panel_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="uart_remappable_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    <a name="top_of_page"><h2><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Library</h2></a>
+
+
+    <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> hardware module is available with a number of PIC compliant MCUs. The mikroC PRO for PIC <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Library provides comfortable work with the Asynchronous (full duplex) mode.</p>
+    <p>You can easily communicate with other devices via RS-232 protocol (for example with PC, see the figure at the end of the topic &#8211; RS-232 HW connection). You need a PIC MCU with hardware integrated UART, for example 16F887. Then, simply use the functions listed below.</p>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+      <ul>
+    	  <li><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	  <li>Switching between the UART modules in the UART library is done by the <a href="#uart_set_active">UART_Set_Active</a> function (UART modules have to be previously initialized).</li>
+    	  <li>Number of UART modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+<!--        <li>When using MCUs with remappable pins,, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>.</li>-->
+      </ul>
+    </div>
+ 
+    <!-- -->
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#uart1_init">UARTx_Init</a></li>
+      <li><a href="#uart1_data_ready">UARTx_Data_Ready</a></li>
+      <li><a href="#uart1_tx_idle">UARTx_Tx_Idle</a></li>
+      <li><a href="#uart1_read">UARTx_Read</a></li>
+      <li><a href="#uart1_read_text">UARTx_Read_Text</a></li>
+      <li><a href="#uart1_write">UARTx_Write</a></li>
+      <li><a href="#uart1_write_text">UARTx_Write_Text</a></li>
+      <li><a href="#uart_set_active">UART_Set_Active</a></li>
+    </ul>    
+    
+    <p></p>
+    <h4>Generic Routines</h4>
+
+    <ul>
+      <li><a href="#uartx_data_ready_gen">UART_Data_Ready</a></li>
+      <li><a href="#uartx_tx_idle_gen">UART_Tx_Idle</a></li>
+      <li><a href="#uartx_read_gen">UART_Read</a></li>
+      <li><a href="#uartx_read_text_gen">UART_Read_Text</a></li>
+      <li><a href="#uartx_write_gen">UART_Write</a></li>
+      <li><a href="#uartx_write_text_gen">UART_Write_Text</a></li>
+    </ul>
+
+    <!-- -->
+
+
+    <h3 id="uart1_init">UARTx_Init</h3>
+
+    <!-- tabela: UARTx_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UARTx_Init(<b>const</b> <b>unsigned long</b> baud_rate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configures and initializes the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p> 
+            <p>The internal <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module module is set to:
+              <ul>
+                <li> receiver enabled</li>
+              	<li> transmitter enabled</li>   
+              	<li> frame size 8 bits</li>
+              	<li> 1 STOP bit</li>
+              	<li> parity mode disabled</li>
+              	<li> asynchronous operation</li>
+              </ul>
+            </p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>baud_rate:</code> requested baud rate</li>
+            	</ul>
+            </p>
+            <p>Refer to the device data sheet for baud rates allowed for specific Fosc.</p>
+
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              <ul>
+              	<li>Calculation of the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> baud rate value is carried out by the compiler, as it would produce a relatively large code if performed on the library level.
+              	<br>Therefore, compiler needs to know the value of the parameter in the compile time. That is why this parameter needs to be a constant, and not a variable.</li>
+<!--                <p></p>
+                <li><b>MCUs with remappable pins specifics :</b>
+                <ul>
+                  <li><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>1 module is initialized on the RC4 and RC5 pin (TX and RX, respectively).</li>
+                </ul>
+                <li><b>PIC18FxxJ94 family specifics :</b></li>
+                <ul>
+                  <li><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>1 module is initialized on the RC6 and RC7 pin (TX and RX, respectively).</li>
+                  <li><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>2 module is initialized on the RG1 and RG2 pin (TX and RX, respectively).</li>
+                  <li><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>3 module is initialized on the RE1 and RE0 pin (TX and RX, respectively).</li>
+                  <li><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>4 module is initialized on the RC5 and RC4 pin (TX and RX, respectively).</li>
+                </ul>
+            </div>  -->
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You'll need PIC MCU with hardware <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>.</p>        
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Initialize hardware UART1 and establish communication at 9600 bps</i>
+UART1_Init(9600);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="uart1_data_ready">UARTx_Data_Ready</h3>
+
+
+    <!-- tabela: UARTx_Data_Ready -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+     <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UARTx_Data_Ready();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            	<ul>
+            		<li><code>1</code> if data is ready for reading</li>
+            		<li><code>0</code> if there is no data in the receive register</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Use the function to test if data in receive buffer is ready for reading.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See the <a href="#uart1_init">UARTx_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// If data is ready, read it:</i>
+<b>if</b> (UART1_Data_Ready() == 1) { 
+ receive = UART1_Read();
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="uart1_tx_idle">UARTx_Tx_Idle</h3>
+
+
+    <!-- tabela: UARTx_tx_idle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+     <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UARTx_Tx_Idle();</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+            	<ul>
+            		<li><code>1</code> if the data has been transmitted</li>
+            		<li><code>0</code> otherwise</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Use the function to test if the transmit shift register is empty or not.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart1_init">UARTx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// If the previous data has been shifted out, send next data:</i>
+<b>if</b> (UART1_Tx_Idle() == 1) { 
+  UART1_Write(_data);
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="uart1_read">UARTx_Read</h3>
+
+
+    <!-- tabela: UARTx_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UARTx_Read();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns the received byte.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function receives a byte via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. Use the function <a href="#uart1_data_ready">UARTx_Data_Ready</a> to test if data is ready first.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See <a href="#uart1_init">UARTx_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// If data is ready, read it:</i>
+<b>if</b> (UART1_Data_Ready() == 1) { 
+ receive = UART1_Read();
+ }</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="uart1_read_text">UARTx_Read_Text</h3>
+
+
+    <!-- tabela: UARTx_Read_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          <p><b>void</b> UARTx_Read_Text(<b>char</b> *Output, <b>char</b> *Delimiter, <b>char</b> Attempts);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads characters received via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> until the delimiter sequence is detected. The read sequence is stored in the parameter <code>output</code>; delimiter sequence is stored in the parameter <code>delimiter</code>.</p>
+            <p>This is a blocking call: the delimiter sequence is expected, otherwise the procedure exits (if the delimiter is not found).</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>Output:</code> received text</li>
+            	  <li><code>Delimiter:</code> sequence of characters that identifies the end of a received string</li>
+            	  <li><code>Attempts:</code> defines number of received characters in which <code>Delimiter</code> sequence is expected. If <code>Attempts</code> is set to 255, this routine will continuously try to detect the <code>Delimiter</code> sequence.
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart1_init">UARTx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read text until the sequence &#8220;OK&#8221; is received, and send back what&#8217;s been received:</p>
+
+<pre>
+UART1_Init(4800);                         // <i>initialize UART1 module</i>
+Delay_ms(100);
+
+<b>while</b> (1) {
+  <b>if</b> (UART1_Data_Ready() == 1) {          // <i>if data is received</i> 
+    UART1_Read_Text(output, "OK", 10);    // <i>reads text until 'OK' is found</i>
+    UART1_Write_Text(output);             // <i>sends back text</i> 
+ }
+}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uart1_write">UARTx_Write</h3>
+
+
+    <!-- tabela: UARTx_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UARTx_Write(<b>char</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function transmits a byte via the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>_data:</code> data to be sent</li>
+            	</ul>
+
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See <a href="#uart1_init">UARTx_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned char</b> _data = 0x1E;
+...
+UART1_Write(_data);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uart1_write_text">UARTx_Write_Text</h3>
+
+
+    <!-- tabela: UARTx_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UARTx_Write_Text(<b>char</b> * UART_text);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends text (parameter <code>uart_text</code>) via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. Text should be limited to 255 characters and zero terminated.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>UART_text:</code> text to be sent</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart1_init">UARTx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read text until the sequence &#8220;OK&#8221; is received, and send back what&#8217;s been received:</p>
+
+<pre>
+UART1_Init(4800);                         // <i>initialize UART1 module</i>
+Delay_ms(100);
+
+<b>while</b> (1) {
+  <b>if</b> (UART1_Data_Ready() == 1) {          // <i>if data is received</i> 
+    UART1_Read_Text(output, "OK", 10);    // <i>reads text until 'OK' is found</i>
+    UART1_Write_Text(output);             // <i>sends back text</i> 
+ }
+}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+ 
+     <!-- kraj tabele -->
+
+    <!-- -->   
+
+
+    <h3 id="uart_set_active">UART_Set_Active</h3>
+
+
+    <!-- tabela: UART_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Set_Active(<b>char</b> (*read_ptr)(), <b>void</b> (*write_ptr)(<b>unsigned char</b> data_), <b>char</b> (*ready_ptr)(), <b>char</b> (*tx_idle_ptr)())</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets active <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module which will be used by the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> library routines.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>read_ptr:</code> <a href="#uart1_read">UARTx_Read</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#uart1_write">UARTx_Write</a> handler</li>
+            		<li><code>ready_ptr:</code> <a href="#uart1_data_ready">UARTx_Data_Ready</a> handler</li>
+            		<li><code>tx_idle_ptr:</code> <a href="#uart1_tx_idle">UARTx_Tx_Idle</a> handler</li>            	
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>Routine is available only for MCUs with two <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> modules.</p>
+            <p> Used <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. 
+            See <a href="#uart1_init">UARTx_Init</a> routine</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+UART1_Init(9600);                    <i>// initialize UART1 module</i>
+UART2_Init(9600);                    <i>// initialize UART2 module</i>
+
+RS485Master_Init();                  <i>// initialize MCU as Master</i>
+
+UART_Set_Active(&#38;UART1_Read, &#38;UART1_Write, &#38;UART1_Data_Ready, &#38;UART1_Tx_Idle); <i>// set UART1 active</i>
+RS485Master_Send(dat,1,160);        <i>// send message through UART1</i>
+
+UART_Set_Active(&#38;UART2_Read, &#38;UART2_Write, &#38;UART2_Data_Ready, &#38;UART2_Tx_Idle); <i>// set UART2 active</i>
+RS485Master_Send(dat,1,160);        <i>// send through UART2</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->   
+
+    <h3 id="uartx_data_ready_gen">UART_Data_Ready</h3>
+
+
+    <!-- tabela: UART_Data_Ready -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+     <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UART_Data_Ready();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            	<ul>
+            		<li><code>1</code> if data is ready for reading</li>
+            		<li><code>0</code> if there is no data in the receive register</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Use the function to test if data in receive buffer is ready for reading.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See the <a href="#uart1_init">UARTx_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// If data is ready, read it:</i>
+<b>if</b> (UART_Data_Ready() == 1) { 
+ receive = UART_Read();
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="uartx_tx_idle_gen">UART_Tx_Idle</h3>
+
+
+    <!-- tabela: UART_tx_idle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+     <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UART_Tx_Idle();</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+            	<ul>
+            		<li><code>1</code> if the data has been transmitted</li>
+            		<li><code>0</code> otherwise</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Use the function to test if the transmit shift register is empty or not.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart1_init">UARTx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// If the previous data has been shifted out, send next data:</i>
+<b>if</b> (UART_Tx_Idle() == 1) { 
+  UART_Write(_data);
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="uartx_read_gen">UART_Read</h3>
+
+
+    <!-- tabela: UART_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UART_Read();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns the received byte.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function receives a byte via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. Use the function <a href="#uartx_data_ready_gen">UART_Data_Ready</a> to test if data is ready first.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See <a href="#uart1_init">UARTx_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// If data is ready, read it:</i>
+<b>if</b> (UART_Data_Ready() == 1) { 
+ receive = UART_Read();
+ }</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="uartx_read_text_gen">UART_Read_Text</h3>
+
+
+    <!-- tabela: UART_Read_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          <p><b>void</b> UART_Read_Text(<b>char</b> *Output, <b>char</b> *Delimiter, <b>char</b> Attempts);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads characters received via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> until the delimiter sequence is detected. The read sequence is stored in the parameter <code>output</code>; delimiter sequence is stored in the parameter <code>delimiter</code>.</p>
+            <p>This is a blocking call: the delimiter sequence is expected, otherwise the procedure exits (if the delimiter is not found).</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>Output:</code> received text</li>
+            	  <li><code>Delimiter:</code> sequence of characters that identifies the end of a received string</li>
+            	  <li><code>Attempts:</code> defines number of received characters in which <code>Delimiter</code> sequence is expected. If <code>Attempts</code> is set to 255, this routine will continuously try to detect the <code>Delimiter</code> sequence.
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart1_init">UARTx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read text until the sequence &#8220;OK&#8221; is received, and send back what&#8217;s been received:</p>
+
+<pre>
+UART1_Init(4800);                         // <i>initialize UART1 module</i>
+Delay_ms(100);
+
+<b>while</b> (1) {
+  <b>if</b> (UART_Data_Ready() == 1) {          // <i>if data is received</i> 
+    UART_Read_Text(output, "OK", 10);    // <i>reads text until 'OK' is found</i>
+    UART_Write_Text(output);             // <i>sends back text</i> 
+ }
+}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uartx_write_gen">UART_Write</h3>
+
+
+    <!-- tabela: UART_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Write(<b>char</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function transmits a byte via the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>_data:</code> data to be sent</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See <a href="#uart1_init">UARTx_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned char</b> _data = 0x1E;
+...
+UART_Write(_data);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uartx_write_text_gen">UART_Write_Text</h3>
+
+
+    <!-- tabela: UART_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Write_Text(<b>char</b> * UART_text);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends text via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. Text should be zero terminated.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>UART_text:</code> text to be sent</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart1_init">UARTx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read text until the sequence &#8220;OK&#8221; is received, and send back what&#8217;s been received:</p>
+
+<pre>
+UART1_Init(4800);                         // <i>initialize UART1 module</i>
+Delay_ms(100);
+
+<b>while</b> (1) {
+  <b>if</b> (UART_Data_Ready() == 1) {          // <i>if data is received</i> 
+    UART_Read_Text(output, "OK", 10);    // <i>reads text until 'OK' is found</i>
+    UART_Write_Text(output);             // <i>sends back text</i> 
+ }
+}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+ 
+     <!-- kraj tabele -->
+
+    <!-- -->   
+
+    <h3>Library Example</h3>
+
+    <p>The example demonstrates a simple data exchange via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. When PIC MCU receives data, it immediately sends it back. If PIC is connected to the PC (see the figure below), you can test the example from the mikroC PRO for PIC terminal for RS-232 communication, menu choice <b>Tools&#160;&#8250;&#160;Terminal</b>.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>char</b> uart_rd;
+
+<b>void</b> main() {
+  ANSEL  = 0;                     <i>// Configure AN pins as digital</i>
+  ANSELH = 0;
+  
+  UART1_Init(9600);               <i>// Initialize UART module at 9600 bps</i>
+  Delay_ms(100);                  <i>// Wait for UART module to stabilize</i>
+  
+  UART1_Write_Text(&#34;Start&#34;);
+  UART1_Write(10);
+  UART1_Write(13);
+  
+  <b>while</b> (1) {                     <i>// Endless loop</i>
+    <b>if</b> (UART1_Data_Ready()) {     <i>// If data is received,</i>
+      uart_rd = UART1_Read();     <i>// read the received data,</i>
+      UART1_Write(uart_rd);       <i>// and send data via UART</i>
+    }
+  }
+}
+</pre>
+
+    <!-- -->
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="RS-232 HW connection" src="img/schemes/scheme_rs232.gif"></p>
+    <p class="center small">RS-232 HW connection</p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>

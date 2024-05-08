@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Peripheral_Pin_Select",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_PPS_P32MX2xxFxxxD.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX210F016D$|^PIC32MX230F064D$|^PIC32MX250F128D$|^PIC32MX230F256D$|^PIC32MX220F032D$|^PIC32MX270F256D$|^PIC32MX270F256DB$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

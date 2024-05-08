@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_UART_b75.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F1829$|^PIC16F1829LIN$|^PIC16LF1829$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

@@ -1,0 +1,230 @@
+{
+    "board": {
+        "category": "Development board",
+        "icon": "images/fusion-for-tiva-v8.png",
+        "mikrobus_count": 5,
+        "name": "Fusion for TIVA v8",
+        "tft_display": 4,
+        "version": ""
+    },
+    "display": {
+        "icon": ":/block_icon",
+        "init_code": null,
+        "name": "No display"
+    },
+    "mcu": {
+        "architecture": "ARM Cortex-M4",
+        "device_id": "TM4C129XNCZAD",
+        "family": "Tiva",
+        "flash": "1024KB",
+        "icon": "images/ti.png",
+        "isMCUCard": false,
+        "max_speed": "120MHz",
+        "name": "TM4C129XNCZAD",
+        "pin_count": "212",
+        "ram": "262KB",
+        "settings": {
+            "clock": 120,
+            "config_registers": [
+                {
+                    "fields": [
+                        {
+                            "key": "ACG",
+                            "value": "20000000"
+                        },
+                        {
+                            "key": "USEPLL",
+                            "value": "10000000"
+                        },
+                        {
+                            "key": "PLLSRC",
+                            "value": "03000000"
+                        },
+                        {
+                            "key": "OSCSRC",
+                            "value": "00300000"
+                        },
+                        {
+                            "key": "OSYSDIV",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "PSYSDIV",
+                            "value": "00000004"
+                        }
+                    ],
+                    "key": "RSCLKCFG"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "SESRC",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "OSCRNG",
+                            "value": "00000010"
+                        },
+                        {
+                            "key": "PWRDN",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "NOXTAL",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "MOSCIM",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "CVAL",
+                            "value": "00000001"
+                        }
+                    ],
+                    "key": "MOSCCTL"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "PLLPWR",
+                            "value": "00800000"
+                        },
+                        {
+                            "key": "MFRAC",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "MINT",
+                            "value": "00000018"
+                        }
+                    ],
+                    "key": "PLLFREQ0"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "Q",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "N",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "PLLFREQ1"
+                }
+            ],
+            "mcu": "TM4C129XNCZAD",
+            "package": ""
+        },
+        "vendor": "Texas Instruments"
+    },
+    "name": "Fusion for TIVA v8 TM4C129XNCZAD",
+    "prog": {
+        "description": "CODEGRIP Suite is a powerful software tool. It is used to intelligently manage programming tasks, as well as various other options and settings of the CODEGRIP.",
+        "icon": "icon.png",
+        "name": "CODEGRIP",
+        "planet_debug_compatible": "Yes",
+        "settings": {
+            "auto_start_local_gdb": true,
+            "control_port": "1235",
+            "ip_address": "127.0.0.1",
+            "port": "1234",
+            "remote_addresses": [],
+            "remote_password": "",
+            "selected_device": null,
+            "selected_options": {
+                "Connection": {
+                    "group": "Target Connection",
+                    "value": "Normal"
+                },
+                "Erase Type": {
+                    "group": "Target Operation",
+                    "value": "Sector erase"
+                },
+                "Halt on Connect": {
+                    "group": "Target Connection",
+                    "value": "Disabled"
+                },
+                "Protocol": {
+                    "group": "Target Connection",
+                    "value": "SWD"
+                },
+                "Reset Type": {
+                    "group": "Target Connection",
+                    "value": "Hardware reset"
+                },
+                "Speed": {
+                    "group": "Target Connection",
+                    "value": "4 MHz"
+                },
+                "Verify Type": {
+                    "group": "Target Operation",
+                    "value": "CRC"
+                },
+                "Verify after Write": {
+                    "group": "Target Operation",
+                    "value": "Enabled"
+                }
+            }
+        },
+        "uid": "codegrip"
+    },
+    "sdk": {
+        "families": [
+            "STM32",
+            "MSP432",
+            "CEC",
+            "Stellaris",
+            "Tiva",
+            "Kinetis K Series",
+            "Kinetis V Series"
+        ],
+        "icon": "Resources/icon.png",
+        "legacy": true,
+        "name": "mikroC for ARM Legacy",
+        "sdk_development_kit": false,
+        "uuid": "sdk.mikroc.legacy.arm",
+        "version": "6.2.0"
+    },
+    "toolchain": {
+        "icon": "mikroC_arm.png",
+        "language": "MikroC",
+        "name": "mikroC AI for ARM",
+        "settings": {
+            "actions": {
+                "build": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--build all",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                },
+                "clean": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--clean",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "memake.settings": {
+                "BOARD_NAME": "BOARD_FUSION_FOR_TIVA_V8"
+            },
+            "output_path": ""
+        },
+        "uid": "mikrocarm",
+        "vendor": "MikroElektronika",
+        "version": "1.1.0"
+    },
+    "uid": "2d6eb23f-8dd4-4ad5-be1d-37951368af6b"
+}

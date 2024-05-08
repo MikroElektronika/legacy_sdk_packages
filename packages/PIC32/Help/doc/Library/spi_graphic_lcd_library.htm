@@ -1,0 +1,2750 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>SPI Graphic Lcd Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Marko Jovanovic & Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">SPI Graphic Lcd Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="spi_ethernet_24j600_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="spi_lcd_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Serial Peripheral Interface">SPI</acronym> Graphic <acronym title="Liquid Crystal Display">Lcd</acronym> Library</h2></a>
+
+    <p>mikroC PRO for PIC32 provides a library for operating Graphic Lcd 128x64 (with commonly used Samsung KS108/KS107 controller) via <acronym title="Serial Peripheral Interface">SPI</acronym> interface.</p>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>     
+      <ul>
+      	<li>When using this library with PIC32 family <acronym title="MicroController Unit">MCU</acronym>s be aware of their voltage incompatibility with certain number of Samsung KS0108 based Glcd modules. <br>So, additional external power supply for these modules may be required.</li>
+      	<li>Library uses the SPI module for communication. The user must initialize the appropriate SPI module before using the SPI Glcd Library.</li>
+      	<li>For MCUs with multiple SPI modules it is possible to initialize all of them and then switch by using the <code>SPI_Set_Active()</code> routine. See the <a href="spi_library.htm">SPI Library</a> functions.</li>
+      	<li>This Library is designed to work with the mikroElektronika's Serial Lcd/Glcd Adapter Board pinout, see schematic at the bottom of this page for details.</li>
+      </ul>
+    </div>       
+    
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="SPI Graphic Lcd Library Dependency Tree" src="img/dependencies/spiglcd_dependency.gif">  
+    <p></p>
+  
+    <p></p>
+    <h3>External dependencies of <acronym title="Serial Peripheral Interface">SPI</acronym> <acronym title="Liquid Crystal Display">Lcd</acronym> Library</h3>
+    <p>The implementation of <acronym title="Serial Peripheral Interface">SPI</acronym> <acronym title="Liquid Crystal Display">Lcd</acronym> Library routines is 
+    	 based on Port Expander Library routines.</p>
+    <p>External dependencies are the same as <a href="port_expander_library.htm">Port Expander Library external dependencies</a>.</p>
+
+    <h3>Library Routines</h3>
+
+    <p>Basic routines:</p>
+    <ul>
+      <li><a href="#spi_glcd_init">SPI_Glcd_Init</a></li>      
+      <li><a href="#spi_glcd_set_side">SPI_Glcd_Set_Side</a></li>
+      <li><a href="#spi_glcd_set_page">SPI_Glcd_Set_Page</a></li>
+      <li><a href="#spi_glcd_set_x">SPI_Glcd_Set_X</a></li>
+      <li><a href="#spi_glcd_read_data">SPI_Glcd_Read_Data</a></li>
+      <li><a href="#spi_glcd_write_data">SPI_Glcd_Write_Data</a></li>
+      <li><a href="#spi_glcd_set_ext_buffer">SPI_Glcd_Set_Ext_Buffer</a></li>
+    </ul>
+
+    <p>Advanced routines:</p>
+
+    <ul>
+      <li><a href="#spi_glcd_fill">SPI_Glcd_Fill</a></li>
+      <li><a href="#spi_glcd_dot">SPI_Glcd_Dot</a></li>
+      <li><a href="#spi_glcd_line">SPI_Glcd_Line</a></li>
+      <li><a href="#spi_glcd_v_line">SPI_Glcd_V_Line</a></li>
+      <li><a href="#spi_glcd_h_line">SPI_Glcd_H_Line</a></li>
+      <li><a href="#spi_glcd_rectangle">SPI_Glcd_Rectangle</a></li>
+      <li><a href="#spi_glcd_rectangle_round_edges">SPI_Glcd_Rectangle_Round_Edges</a></li>
+      <li><a href="#spi_glcd_rectangle_round_edges_fill">SPI_Glcd_Rectangle_Round_Edges_Fill</a></li>
+      <li><a href="#spi_glcd_box">SPI_Glcd_Box</a></li>
+      <li><a href="#spi_glcd_circle">SPI_Glcd_Circle</a></li>
+      <li><a href="#spi_glcd_circle_fill">SPI_Glcd_Circle_Fill</a></li>
+      <li><a href="#spi_glcd_set_font">SPI_Glcd_Set_Font</a></li>
+      <li><a href="#spi_glcd_set_font_adv">SPI_Glcd_Set_Font_Adv</a></li>
+      <li><a href="#spi_glcd_set_ext_font_adv">SPI_Glcd_Set_Ext_Font_Adv</a></li>
+      <li><a href="#spi_glcd_write_char">SPI_Glcd_Write_Char</a></li>
+      <li><a href="#spi_glcd_write_char_adv">SPI_Glcd_Write_Char_Adv</a></li>
+      <li><a href="#spi_glcd_write_text">SPI_Glcd_Write_Text</a></li>
+      <li><a href="#spi_glcd_write_text_adv">SPI_Glcd_Write_Text_Adv</a></li>
+      <li><a href="#spi_glcd_image">SPI_Glcd_Image</a></li>
+      <li><a href="#spi_glcd_ext_image">SPI_Glcd_Ext_Image</a></li>
+      <li><a href="#spi_glcd_partialimage">SPI_Glcd_PartialImage</a></li>
+			<li><a href="#spi_glcd_ext_partialimage">SPI_Glcd_Ext_PartialImage</a></li>
+    </ul>
+
+
+   
+    <!-- -->
+
+
+    <h3 id="spi_glcd_init">SPI_Glcd_Init</h3>
+
+
+    <!-- tabela: SPI_Glcd_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Init(<b>char</b> DeviceAddress);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Initializes the Glcd module via <acronym title="Serial Peripheral Interface">SPI</acronym> interface.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>DeviceAddress:</code> SPI expander hardware address, see schematic at the bottom of this page</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            Global variables :
+          	<ul>
+          	  <li><code>SPExpanderCS</code>: Chip Select line
+              <li><code>SPExpanderRST</code>: Reset line 
+              <li><code>SPExpanderCS_Direction</code>: Direction of the Chip Select pin
+              <li><code>SPExpanderRST_Direction</code>: Direction of the Reset pin	
+            </ul>
+            must be defined before using this function.
+            <p><br>The <acronym title="Serial Peripheral Interface">SPI</acronym> module needs to be initialized.
+          		 See <a href="spi_library.htm#spi_init">SPIx_Init</a> and <a href="spi_library.htm#spi_init_advanced">SPIx_Init_Advanced</a> routines.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST <b>at</b> LATF0_bit;
+<b>sbit</b>  SPExpanderCS  <b>at</b> LATF1_bit;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> TRISF0_bit;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> TRISF1_bit;
+<i>// End Port Expander module connections</i>
+
+...
+
+<i>// If Port Expander Library uses SPI module :</i>
+SPI1_Init();  <i>// Initialize SPI module used with PortExpander</i>
+SPI_Glcd_Init(0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_set_side">SPI_Glcd_Set_Side</h3>
+
+
+    <!-- tabela: SPI_Glcd_Set_Side -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Set_Side(<b>char</b> x_pos);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Selects Glcd side. Refer to the Glcd datasheet for detail explanation.
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_pos:</code> position on x-axis. Valid values: 0..127</li>
+           	</ul>
+            <p>The parameter <code>x_pos</code> specifies the Glcd side: values from 0 to 63 specify the left side, values from 64 to 127 specify the right side.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>The following two lines are equivalent, and both of them select the left side of Glcd:</p>
+
+<pre>
+SPI_Glcd_Set_Side(0);
+SPI_Glcd_Set_Side(10);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For side, x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_set_page">SPI_Glcd_Set_Page</h3>
+
+
+    <!-- tabela: SPI_Glcd_Set_Page -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Set_Page(<b>char</b> page);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Selects page of Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+           		<li><code>page:</code> page number. Valid values: 0..7</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see  <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_Glcd_Set_Page(5);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For side, x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_set_x">SPI_Glcd_Set_X</h3>
+
+
+    <!-- tabela: SPI_Glcd_Set_X -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Set_X(<b>char</b> x_pos);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets x-axis position to <code>x_pos</code> dots from the left border of Glcd within the selected side.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_pos:</code> position on x-axis. Valid values: 0..63</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_Glcd_Set_X(25);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For side, x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_read_data">SPI_Glcd_Read_Data</h3>
+
+
+    <!-- tabela: SPI_Glcd_Read_Data -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> SPI_Glcd_Read_Data();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads data from the current location of Glcd memory and moves to the next location.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>One byte from Glcd memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+            <p> Glcd side, x-axis position and page should be set first. See the functions <a href="#spi_glcd_set_side">SPI_Glcd_Set_Side</a>,
+            			 <a href="#spi_glcd_set_x">SPI_Glcd_Set_X</a>, and <a href="#spi_glcd_set_page">SPI_Glcd_Set_Page</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+
+<pre>
+<b>char</b> data_;
+<i>...</i>
+data_ = SPI_Glcd_Read_Data();
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_write_data">SPI_Glcd_Write_Data</h3>
+
+
+    <!-- tabela: SPI_Glcd_Write_Data -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Write_Data(<b>char</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes one byte to the current location in Glcd memory and moves to the next location.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>data_:</code> data to be written</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+            <p> Glcd side, x-axis position and page should be set first. See the functions <a href="#spi_glcd_set_side">SPI_Glcd_Set_Side</a>,
+            			 <a href="#spi_glcd_set_x">SPI_Glcd_Set_X</a>, and <a href="#spi_glcd_set_page">SPI_Glcd_Set_Page</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> data_;
+<i>...</i>
+SPI_Glcd_Write_Data(data_);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="spi_glcd_set_ext_buffer">SPI_Glcd_Set_Ext_Buffer</h3>
+
+
+    <!-- tabela: Glcd_Set_Ext_Buffer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Set_Ext_Buffer(char* (*getExtDataPtr)(<b>unsigned long</b> offset, <b>unsigned long</b> count, <b>unsigned</b> long* num));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets pointer to the user function which manipulates the external resource.</p>
+            <p>Parameters :
+              <ul>
+	              <li><code>offset</code> - offset from the beginning of the resource from where the data is requested.</li>
+	              <li><code>count</code> - requested number of bytes.</li>
+	              <li><code>num</code> - variable for holding the returned number ob byte (less or equal to the number of acqired bytes).</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+            <p> Glcd side, x-axis position and page should be set first. See the functions <a href="#spi_glcd_set_side">SPI_Glcd_Set_Side</a>,
+            			 <a href="#spi_glcd_set_x">SPI_Glcd_Set_X</a>, and <a href="#spi_glcd_set_page">SPI_Glcd_Set_Page</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b>* ReadExternalBuffer(<b>unsigned long</b> offset, <b>unsigned int</b> count, <b>unsigned int</b> *num){
+  <b>unsigned long</b> start_sector;
+  <b>unsigned int</b> pos;
+
+  start_sector = Mmc_Get_File_Write_Sector() + offset/512;
+  pos = (<b>unsigned long</b>)offset%512;
+
+  <b>if</b>(start_sector == currentSector+1){
+    Mmc_Multi_Read_Buffer(EXT_BUFFER);
+    currentSector = start_sector;
+  }<b>else</b>
+    <b>if</b>(start_sector != currentSector){
+      Mmc_Multi_Read_Stop();
+      Mmc_Multi_Read_Start(start_sector);
+      Mmc_Multi_Read_Buffer(EXT_BUFFER);
+      currentSector = start_sector;
+    }
+
+  <b>if</b>(count&#62;512-pos){
+    *num = 512-pos;
+  }
+  <b>else</b>
+    *num = count;
+
+  <b>return</b> EXT_BUFFER+pos;
+}
+
+SPI_Glcd_Set_Ext_Buffer(ReadExternalBuffer);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_fill">SPI_Glcd_Fill</h3>
+
+
+    <!-- tabela: SPI_Glcd_Fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Fill(<b>char</b> pattern);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills Glcd memory with byte <code>pattern</code>.</p>
+            <p> To clear the Glcd screen, use <code>SPI_Glcd_Fill(0)</code>.</p>
+            <p> To fill the screen completely, use <code>SPI_Glcd_Fill(0xFF)</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>pattern:</code> byte to fill Glcd memory with</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Clear screen</i>
+SPI_Glcd_Fill(0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_dot">SPI_Glcd_Dot</h3>
+
+
+    <!-- tabela: SPI_Glcd_Dot -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Dot(<b>char</b> x_pos, <b>char</b> y_pos, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a dot on Glcd at coordinates (<code>x_pos</code>, <code>y_pos</code>). </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_pos:</code> x position. Valid values: 0..127</li>
+           		<li><code>y_pos:</code> y position. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the dot state: 0 clears dot, 1 puts a dot, and 2 inverts dot state.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Invert the dot in the upper left corner</i>
+SPI_Glcd_Dot(0, 0, 2);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For x and y axis layout explanation see schematic at the bottom of this page..</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_line">SPI_Glcd_Line</h3>
+
+
+    <!-- tabela: SPI_Glcd_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Line(<b>int</b> x_start, <b>int</b> y_start, <b>int</b> x_end, <b>int</b> y_end, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a line on Glcd.</p>
+            <p>Parameters :
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_start:</code> x coordinate of the line start. Valid values: 0..127</li>
+           		<li><code>y_start:</code> y coordinate of the line start. Valid values: 0..63</li>
+           		<li><code>x_end:</code> x coordinate of the line end. Valid values: 0..127</li>
+           		<li><code>y_end:</code> y coordinate of the line end. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>Parameter <code>color</code> determines the line color: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a line between dots (0,0) and (20,30)</i>
+SPI_Glcd_Line(0, 0, 20, 30, 1);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_v_line">SPI_Glcd_V_Line</h3>
+
+
+    <!-- tabela: SPI_Glcd_V_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_V_Line(<b>char</b> y_start, <b>char</b> y_end, <b>char</b> x_pos, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a vertical line on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>y_start:</code> y coordinate of the line start. Valid values: 0..63</li>
+           		<li><code>y_end:</code> y coordinate of the line end. Valid values: 0..63</li>
+           		<li><code>x_pos:</code> x coordinate of vertical line. Valid values: 0..127</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>Parameter <code>color</code> determines the line color: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a vertical line between dots (10,5) and (10,25)</i>
+SPI_Glcd_V_Line(5, 25, 10, 1);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_h_line">SPI_Glcd_H_Line</h3>
+
+
+    <!-- tabela: SPI_Glcd_H_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_H_Line(<b>char</b> x_start, <b>char</b> x_end, <b>char</b> y_pos, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a horizontal line on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_start:</code> x coordinate of the line start. Valid values: 0..127</li>
+           		<li><code>x_end:</code> x coordinate of the line end. Valid values: 0..127</li>
+           		<li><code>y_pos:</code> y coordinate of horizontal line. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the line color: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a horizontal line between dots (10,20) and (50,20)</i>
+SPI_Glcd_H_Line(10, 50, 20, 1);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_rectangle">SPI_Glcd_Rectangle</h3>
+
+
+    <!-- tabela: SPI_Glcd_Rectangle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Rectangle(<b>char</b> x_upper_left, <b>char</b> y_upper_left, <b>char</b> x_bottom_right, <b>char</b> y_bottom_right, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rectangle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner. Valid values: 0..127</li>
+           		<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner. Valid values: 0..63</li>
+           		<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner. Valid values: 0..127</li>
+           		<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the rectangle border: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a rectangle between dots (5,5) and (40,40)</i>
+SPI_Glcd_Rectangle(5, 5, 40, 40, 1);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="spi_glcd_rectangle_round_edges">SPI_Glcd_Rectangle_Round_Edges</h3>
+
+
+    <!-- tabela: Glcd_Rectangle_Round_Edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Rectangle_Round_Edges(<b>unsigned short</b> x_upper_left, <b>unsigned short</b> y_upper_left, <b>unsigned short</b> x_bottom_right, <b>unsigned short</b> y_bottom_right, <b>unsigned short</b> round_radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rounded edge rectangle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner. Valid values: 0..127</li>
+            	<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner. Valid values: 0..63</li>
+            	<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner. Valid values: 0..127</li>
+            	<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner. Valid values: 0..63</li>
+            	<li><code>round_radius:</code> radius of the rounded edge.</li>
+            	<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the rectangle border: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a rounded edge rectangle between dots (5,5) and (40,40) with the radius of 12</i>
+SPI_Glcd_Rectangle_Round_Edges(5, 5, 40, 40, 12, 1);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_rectangle_round_edges_fill">SPI_Glcd_Rectangle_Round_Edges_Fill</h3>
+
+
+    <!-- tabela: SPI_Glcd_Rectangle_Round_Edges_Fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Rectangle_Round_Edges_Fill(<b>unsigned short</b> x_upper_left, <b>unsigned short</b> y_upper_left, <b>unsigned short</b> x_bottom_right, <b>unsigned short</b> y_bottom_right, <b>unsigned short</b> round_radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled rounded edge rectangle on Glcd with color.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner. Valid values: 0..127</li>
+           		<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner. Valid values: 0..63</li>
+           		<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner. Valid values: 0..127</li>
+           		<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner. Valid values: 0..63</li>
+           		<li><code>round_radius:</code> radius of the rounded edge</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+           	</ul>
+            <p>The parameter <code>color</code> determines the color of the rectangle : 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draws a filled rounded edge rectangle between dots (5,5) and (40,40) with the radius of 12</i>
+SPI_Glcd_Rectangle_Round_Edges_Fill(5, 5, 40, 40, 12, 1);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_box">SPI_Glcd_Box</h3>
+
+
+    <!-- tabela: SPI_Glcd_Box -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Box(<b>char</b> x_upper_left, <b>char</b> y_upper_left, <b>char</b> x_bottom_right, <b>char</b> y_bottom_right, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a box on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_upper_left:</code> x coordinate of the upper left box corner. Valid values: 0..127</li>
+           		<li><code>y_upper_left:</code> y coordinate of the upper left box corner. Valid values: 0..63</li>
+           		<li><code>x_bottom_right:</code> x coordinate of the lower right box corner. Valid values: 0..127</li>
+           		<li><code>y_bottom_right:</code> y coordinate of the lower right box corner. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the box fill: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a box between dots (5,15) and (20,40)</i>
+SPI_Glcd_Box(5, 15, 20, 40, 1);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_circle">SPI_Glcd_Circle</h3>
+
+
+    <!-- tabela: SPI_Glcd_Circle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Circle(<b>int</b> x_center, <b>int</b> y_center, <b>int</b> radius, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a circle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+           		<li><code>x_center:</code> x coordinate of the circle center. Valid values: 0..127</li>
+           		<li><code>y_center:</code> y coordinate of the circle center. Valid values: 0..63</li>
+           		<li><code>radius:</code> radius size</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the circle line: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a circle with center in (50,50) and radius=10</i>
+SPI_Glcd_Circle(50, 50, 10, 1);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+     <!-- -->
+
+
+    <h3 id="spi_glcd_circle_fill">SPI_Glcd_Circle_FIll</h3>
+
+
+    <!-- tabela: SPI_Glcd_Circle_Fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Circle_Fill(<b>int</b> x_center, <b>int</b> y_center, <b>int</b> radius, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled circle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_center:</code> x coordinate of the circle center. Valid values: 0..127</li>
+           		<li><code>y_center:</code> y coordinate of the circle center. Valid values: 0..63</li>
+           		<li><code>radius:</code> radius size</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the circle : 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a circle with center in (50,50) and radius=10</i>
+SPI_Glcd_Circle_Fill(50, 50, 10, 1);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_set_font">SPI_Glcd_Set_Font</h3>
+
+
+    <!-- tabela: SPI_Glcd_Set_Font -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Set_Font(<b>const code char</b> *activeFont, <b>char</b> aFontWidth, <b>char</b> aFontHeight, <b>unsigned int</b> aFontOffs);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#spi_glcd_write_char">SPI_Glcd_Write_Char</a> and <a href="#spi_glcd_write_text">SPI_Glcd_Write_Text</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. Needs to be formatted as an array of char</li>
+           		<li><code>aFontWidth:</code> width of the font characters in dots.</li>
+           		<li><code>aFontHeight:</code> height of the font characters in dots.</li>
+           		<li><code>aFontOffs:</code> number that represents difference between the mikroC PRO for PIC32 character set and regular ASCII set (eg. if 'A' is 65 in ASCII character, and 'A' is 45 in the mikroC PRO for PIC32 character set, aFontOffs is 20). Demo fonts supplied with the library have an offset of 32, which means that they start with space.</li>
+            </ul>
+            <p>The user can use fonts given in the file <code>__Lib_GLCDFonts</code> file located in the Uses folder or create his own fonts.</p>
+            List of supported fonts:
+            <ul>
+            	<li><code>Font_Glcd_System3x5</code></li>
+            	<li><code>Font_Glcd_System5x7</code></li>
+            	<li><code>Font_Glcd_5x7</code></li>
+            	<li><code>Font_Glcd_Character8x7</code></li>
+            </ul>
+            <p>For the sake of the backward compatibility, these fonts are supported also:</p>
+            <ul>
+            	<li><code>System3x5</code> (equivalent to <code>Font_Glcd_System3x5</code>)</li>
+            	<li><code>FontSystem5x7_v2</code> (equivalent to <code>Font_Glcd_System5x7</code>)</li>
+            	<li><code>font5x7</code> (equivalent to <code>Font_Glcd_5x7</code>)</li>
+            	<li><code>Character8x7</code> (equivalent to <code>Font_Glcd_Character8x7</code>)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Use the custom 5x7 font &#34;myfont&#34; which starts with space (32):</i>
+SPI_Glcd_Set_Font(myfont, 5, 7, 32);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_set_font_adv">SPI_Glcd_Set_Font_Adv</h3>
+
+
+    <!-- tabela: Glcd_Set_Font_Adv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Set_Font_Adv(<b>const char</b> *activeFont, <b>unsigned char</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#spi_glcd_write_char_adv">SPI_Glcd_Write_Char_Adv</a> and <a href="#spi_glcd_write_text_adv">SPI_Glcd_Write_Text_Adv</a> routines.  Font is located in an external resource.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. Needs to be formatted as an array of char.</li>
+           		<li><code>font_color:</code> sets font color.</li>
+           		<li><code>font_orientation:</code> sets font orientation.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Glcd_Set_Font_Adv(@myfont, 0, 0);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3 id="spi_glcd_set_ext_font_adv">SPI_Glcd_Set_Ext_Font_Adv</h3>
+
+
+    <!-- tabela: Glcd_Set_Font -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Set_Ext_Font_Adv(<b>unsigned long</b> activeFont, <b>unsigned short</b> aFontWidth, <b>unsigned short</b> aFontHeight, <b>unsigned int</b> aFontOffs);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#spi_glcd_write_char_adv">SPI_Glcd_Write_Char_Adv</a> and <a href="#spi_glcd_write_text_adv">SPI_Glcd_Write_Text_Adv</a> routines.  Font is located in an external resource.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. This parameter represents the address in the exteral resource from where the font data begins.</li>
+           		<li><code>font_color:</code> sets font color.</li>
+           		<li><code>font_orientation:</code> sets font orientation.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_Glcd_Set_Ext_Font_Adv(173296, 5, 7, 32);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="spi_glcd_write_char">SPI_Glcd_Write_Char</h3>
+
+
+    <!-- tabela: SPI_Glcd_Write_Char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Write_Char(<b>char</b> chr1, <b>char</b> x_pos, <b>char</b> page_num, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints character on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+           		<li><code>chr1:</code> character to be written</li>
+           		<li><code>x_pos:</code> character starting position on x-axis. Valid values: 0..(127-FontWidth)</li>
+           		<li><code>page_num:</code> the number of the page on which character will be written. Valid values: 0..7</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the character: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>SPI_Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+            	<p> Use the <a href="#spi_glcd_set_font">SPI_Glcd_Set_Font</a> 
+            	to specify the font for display; if no font is specified, then the default <code>Font_Glcd_System5x7</code> font supplied with the library will be used.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write character 'C' on the position 10 inside the page 2:</i>
+SPI_Glcd_Write_Char('C', 10, 2, 1);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="spi_glcd_write_char_adv">SPI_Glcd_Write_Char_Adv</h3>
+
+
+    <!-- tabela: TFT_Write_Char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Write_Char_Adv(<b>unsigned int</b> c, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a char on the glcd at coordinates (x, y).</p>
+            	<ul>
+            		<li><code>c:</code> char to be written.</li>
+            		<li><code>x:</code> char position on x-axis.</li>
+            		<li><code>y:</code> char position on y-axis.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_Glcd_Write_Char_Adv('A',22,23);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_write_text">SPI_Glcd_Write_Text</h3>
+
+
+    <!-- tabela: SPI_Glcd_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Write_Text(<b>char</b> text[], <b>char</b> x_pos, <b>char</b> page_num, <b>char</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints text on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>text:</code> text to be written</li>
+           		<li><code>x_pos:</code> text starting position on x-axis.</li>
+           		<li><code>page_num:</code> the number of the page on which text will be written. Valid values: 0..7</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the text: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>SPI_Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+            	<p> Use the <a href="#spi_glcd_set_font">SPI_Glcd_Set_Font</a> 
+            	to specify the font for display; if no font is specified, then the default <code>Font_Glcd_System5x7</code> font supplied with the library will be used.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Write text "Hello world!" on the position 10 inside the page 2:</i>
+SPI_Glcd_Write_Text(&#34;Hello world!&#34;, 10, 2, 1);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_write_text_adv">SPI_Glcd_Write_Text_Adv</h3>
+
+
+    <!-- tabela: Glcd_Write_Text_Adv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Write_Text_Adv(<b>unsigned char</b> *text, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text on the glcd at coordinates (x, y).</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>text:</code> text to be written.</li>
+            		<li><code>x:</code> text position on x-axis.</li>
+            		<li><code>y:</code> text position on y-axis.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+SPI_Glcd_Write_Text_Adv("GLCD LIBRARY DEMO, WELCOME !", 0, 0);	
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="spi_glcd_image">SPI_Glcd_Image</h3>
+
+
+    <!-- tabela: SPI_Glcd_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Image(<b>const code char</b> *image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays bitmap on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>image:</code> image to be displayed. Bitmap array can be located in both code and RAM memory (due to the mikroC PRO for PIC32 pointer to const and pointer to RAM equivalency).</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>SPI_Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw image my_image on Glcd</i>
+SPI_Glcd_Image(my_image);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use the mikroC PRO for PIC32 integrated Glcd Bitmap Editor, <b><a href="tools.htm">Tools</a> &gt; <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a></b>, to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>   
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="spi_glcd_ext_image">SPI_Glcd_Ext_Image</h3>
+
+
+    <!-- tabela: Glcd_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Ext_Image(<b>unsigned long</b> image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a bitmap from an external resource on a desired address.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+         	  <ul>
+         		  <li><code>image:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_Glcd_Ext_Image(153608);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use the mikroC PRO for PIC32 integrated Glcd Bitmap Editor, <b><a href="tools.htm">Tools</a> &gt; <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a></b>, to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+           
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="spi_glcd_partialimage">SPI_Glcd_PartialImage</h3>
+
+
+    <!-- tabela: Glcd_PartialImage -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>code const unsigned short</b> * image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image on a desired location.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+           		<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+           		<li><code>width:</code> desired image width.</li>
+           		<li><code>height:</code> desired image height.</li>
+           		<li><code>picture_width:</code> width of the original image.</li>
+           		<li><code>picture_height:</code> height of the original image.</li>
+           		<li><code>image:</code> image to be displayed. Bitmap array can be located in both code and RAM memory (due to the mikroC PRO for PIC32 pointer to const and pointer to RAM equivalency).</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>SPI_Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Draws a 10x15 part of the image starting from the upper left corner on the coordinate (10,12). Original image size is 16x32.</i> 
+SPI_Glcd_PartialImage(10, 12, 10, 15, 16, 32, image);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use the mikroC PRO for PIC32 integrated Glcd Bitmap Editor, <b><a href="tools.htm">Tools</a> &gt; <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a></b>, to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="spi_glcd_ext_partialimage">SPI_Glcd_Ext_PartialImage</h3>
+
+
+    <!-- tabela: Glcd_PartialImage -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Glcd_Ext_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>unsigned long</b> image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image, located on an external resource, on a desired location of the screen.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+           		<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+           		<li><code>width:</code> desired image width.</li>
+           		<li><code>height:</code> desired image height.</li>
+           		<li><code>picture_width:</code> width of the original image.</li>
+           		<li><code>picture_height:</code> height of the original image.</li>
+           		<li><code>image:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_glcd_init">SPI_Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_Glcd_Ext_PartialImage(10, 12, 10, 15, 16, 32, 0);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use the mikroC PRO for PIC32 integrated Glcd Bitmap Editor, <b><a href="tools.htm">Tools</a> &gt; <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a></b>, to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>      
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+    <h3>Library Example</h3>
+
+    <p>The example demonstrates how to communicate to KS0108 Glcd via the SPI module, using serial to parallel convertor MCP23S17.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">code</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">truck_bmp[</span><span class="cpp1-number">1024</span><span class="cpp1-symbol">];
+
+</span><span class="cpp1-comment">//&nbsp;Port&nbsp;Expander&nbsp;module&nbsp;connections
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPExpanderRST</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD8_bit;
+sbit</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPExpanderCS</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD9_bit;
+sbit</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPExpanderRST_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD8_bit;
+sbit</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPExpanderCS_Direction</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD9_bit;
+</span><span class="cpp1-comment">//&nbsp;End&nbsp;Port&nbsp;Expander&nbsp;module&nbsp;connections
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Delay2s(){</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;2&nbsp;seconds&nbsp;delay&nbsp;function
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">2000</span><span class="cpp1-symbol">);
+}
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">counter;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">*someText;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CHECON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x32</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">AD1PCFG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Configure&nbsp;AN&nbsp;pins&nbsp;as&nbsp;digital
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;If&nbsp;Port&nbsp;Expander&nbsp;Library&nbsp;uses&nbsp;SPI2&nbsp;module
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;SPI&nbsp;module&nbsp;used&nbsp;with&nbsp;PortExpander
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI2_Init_Advanced(_SPI_MASTER,_SPI_8_BIT,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_SPI_SS_DISABLE,_SPI_DATA_SAMPLE_MIDDLE,_SPI_CLK_IDLE_LOW,_SPI_ACTIVE_2_IDLE);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Init(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;Glcd&nbsp;via&nbsp;SPI
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Fill(</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Clear&nbsp;Glcd
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">while</span><span class="cpp1-symbol">(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Image(truck_bmp);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Draw&nbsp;image
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Delay2s();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_fill(</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Clear&nbsp;GLCD
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_PartialImage(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-number">68</span><span class="cpp1-symbol">,</span><span class="cpp1-number">30</span><span class="cpp1-symbol">,</span><span class="cpp1-number">128</span><span class="cpp1-symbol">,</span><span class="cpp1-number">64</span><span class="cpp1-symbol">,truck_bmp);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Partial&nbsp;image
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">500</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_PartialImage(</span><span class="cpp1-number">24</span><span class="cpp1-symbol">,</span><span class="cpp1-number">16</span><span class="cpp1-symbol">,</span><span class="cpp1-number">68</span><span class="cpp1-symbol">,</span><span class="cpp1-number">30</span><span class="cpp1-symbol">,</span><span class="cpp1-number">128</span><span class="cpp1-symbol">,</span><span class="cpp1-number">64</span><span class="cpp1-symbol">,truck_bmp);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">500</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_PartialImage(</span><span class="cpp1-number">56</span><span class="cpp1-symbol">,</span><span class="cpp1-number">34</span><span class="cpp1-symbol">,</span><span class="cpp1-number">68</span><span class="cpp1-symbol">,</span><span class="cpp1-number">30</span><span class="cpp1-symbol">,</span><span class="cpp1-number">128</span><span class="cpp1-symbol">,</span><span class="cpp1-number">64</span><span class="cpp1-symbol">,truck_bmp);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Delay2s();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Fill(</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Clear&nbsp;GLCD
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Box(</span><span class="cpp1-number">62</span><span class="cpp1-symbol">,</span><span class="cpp1-number">40</span><span class="cpp1-symbol">,</span><span class="cpp1-number">124</span><span class="cpp1-symbol">,</span><span class="cpp1-number">56</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Draw&nbsp;box
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Rectangle(</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-number">84</span><span class="cpp1-symbol">,</span><span class="cpp1-number">35</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Draw&nbsp;rectangle
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Rectangle_Round_Edges(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">87</span><span class="cpp1-symbol">,</span><span class="cpp1-number">38</span><span class="cpp1-symbol">,</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Rectangle_Round_Edges_Fill(</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-number">81</span><span class="cpp1-symbol">,</span><span class="cpp1-number">32</span><span class="cpp1-symbol">,</span><span class="cpp1-number">12</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Line(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">127</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">63</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Draw&nbsp;line
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(counter</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">counter</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&lt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">60</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">counter+=</span><span class="cpp1-number">5</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Draw&nbsp;horizontal&nbsp;and&nbsp;vertical&nbsp;lines
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">250</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_V_Line(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">54</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">counter,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_H_Line(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">120</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">counter,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Fill(</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Clear&nbsp;Glcd
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Set_Font(Font_Glcd_Character8x7,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">32</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Choose&nbsp;font,&nbsp;see&nbsp;__Lib_GLCDFonts.c&nbsp;in&nbsp;Uses&nbsp;folder
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Write_Text(</span><span class="cpp1-string">&quot;mikroE&quot;</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Write&nbsp;string
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(counter</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">counter</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&lt;=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">counter++)</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Draw&nbsp;circles
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Circle(</span><span class="cpp1-number">63</span><span class="cpp1-symbol">,</span><span class="cpp1-number">32</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-symbol">*counter,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Circle_Fill(</span><span class="cpp1-number">63</span><span class="cpp1-symbol">,</span><span class="cpp1-number">32</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">30</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Draw&nbsp;circles
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2S();
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Box(</span><span class="cpp1-number">12</span><span class="cpp1-symbol">,</span><span class="cpp1-number">20</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">70</span><span class="cpp1-symbol">,</span><span class="cpp1-number">63</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Draw&nbsp;box
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Fill(</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Fill&nbsp;Glcd
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Set_Font(Font_Glcd_Character8x7,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">32</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Change&nbsp;font
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">someText</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;8x7&nbsp;Font&quot;</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Write_Text(someText,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Write&nbsp;string
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Set_Font(Font_Glcd_System3x5,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">32</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Change&nbsp;font
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">someText</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;3X5&nbsp;CAPITALS&nbsp;ONLY&quot;</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Write_Text(someText,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">60</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Write&nbsp;string
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Set_Font(Font_Glcd_System5x7,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">32</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Change&nbsp;font
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">someText</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;5x7&nbsp;Font&quot;</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Write_Text(someText,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Write&nbsp;string
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Set_Font(Font_Glcd_5x7,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">32</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Change&nbsp;font
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">someText</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;5x7&nbsp;Font&nbsp;(v2)&quot;</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Glcd_Write_Text(someText,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Write&nbsp;string
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay2s();
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+</span></code>
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="SPI Glcd HW connection" src="img/Schemes/scheme_spi_glcd.gif"></p>
+    <p class="center small">SPI Glcd HW connection</p>
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>

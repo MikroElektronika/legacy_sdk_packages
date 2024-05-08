@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_PWM_1_5_9.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F410R8$|^STM32F410T8$|^STM32F410RB$|^STM32F410CB$|^STM32F410TB$|^STM32F410C8$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

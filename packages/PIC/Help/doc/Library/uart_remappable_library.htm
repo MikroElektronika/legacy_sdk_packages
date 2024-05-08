@@ -1,0 +1,1381 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>UART Remappable Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_PIC.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_PIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">UART Remappable Library</div><div class="navigation">&nbsp;&nbsp;<A href="index.htm">mikroC PRO for PIC Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="uart_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="usb_hid_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    <a name="top_of_page"><h2>UART Remappable Library</h2></a>
+
+    <br>
+    <p>mikroC PRO for PIC provides a library for the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Remappable Module and comfortable work with the Asynchronous (full duplex) mode.</p>
+    <p>You can easily communicate with other devices via RS-232 protocol (for example with PC, see the figure at the end of the topic &#8211; RS-232 HW connection). Then, simply use the functions listed below.</p>
+    
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+      <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+      Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> and <a href="uart_library.htm">Uart Library</a> are checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.
+    </div>
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="UART Remappable Library Dependency Tree" src="img/dependencies/uart_remap_dependency.gif">  
+    <p></p>
+
+    <!-- -->
+    
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#uart_remappable_init">UART_Remappable_Init</a></li>
+      <li><a href="#uartx_remappable_init_advanced">UARTx_Remappable_Init_Advanced</a></li>
+      <li><a href="#uart_remappable_data_ready">UART_Remappable_Data_Ready</a></li>
+      <li><a href="#uart_remappable_tx_idle">UART_Remappable_Tx_Idle</a></li>
+      <li><a href="#uart_remappable_read">UART_Remappable_Read</a></li>
+      <li><a href="#uart_remappable_read_text">UART_Remappable_Read_Text</a></li>
+      <li><a href="#uart_remappable_write">UART_Remappable_Write</a></li>
+      <li><a href="#uart_remappable_write_text">UART_Remappable_Write_Text</a></li>
+      <li><a href="#uart_set_active">UART_Set_Active</a></li>
+    </ul>
+
+    <p></p>
+    <h4>Generic Routines</h4>
+
+    <ul>
+      <li><a href="#uartx_data_ready_gen">UART_Data_Ready</a></li>
+      <li><a href="#uartx_tx_idle_gen">UART_Tx_Idle</a></li>
+      <li><a href="#uartx_read_gen">UART_Read</a></li>
+      <li><a href="#uartx_read_text_gen">UART_Read_Text</a></li>
+      <li><a href="#uartx_write_gen">UART_Write</a></li>
+      <li><a href="#uartx_write_text_gen">UART_Write_Text</a></li>
+    </ul>
+ 
+    <!-- -->
+
+    <h3 id="uart_remappable_init">UART_Remappable_Init</h3>
+
+
+    <!-- tabela: Uart_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Remappable_Init(<b>const</b> <b>unsigned long</b> baud_rate);</p>
+            <i>// for MCUs with multiple modules</i> 
+            <br><b>void</b> UARTx_Remappable_Init(<b>const</b> <b>unsigned long</b> baud_rate);
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes hardware <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Remappable module with the desired baud rate. Refer to the device data sheet for baud rates allowed for specific <code>Fosc</code>. If you specify the unsupported baud rate, compiler will report an error.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>baud_rate:</code> requested baud rate</li>
+            	</ul>
+            </p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+                	<li>Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.</li>
+                	<li>To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module for the, simply change the letter <code>x</code> in the prototype for the appropriate module number.</li>
+                </ul>
+            </div>
+            <p></p>
+            <p>Refer to the device data sheet for baud rates allowed for specific Fosc.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You'll need PIC MCU with hardware <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module and remappable feature.</p>
+            <p><code>UART_Remappable_Init</code> needs to be called before using other functions from <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Remappable Library.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              Calculation of the UART baud rate value is carried out by the compiler, as it would produce a relatively large code if performed on the library level. <br>Therefore, compiler needs to know the value of the parameter in the compile time. That is why this parameter needs to be a constant, and not a variable.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>This will initialize hardware <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module and establish the communication at 2400 <acronym title="bits per second">bps</acronym>:</p>
+
+<pre>
+UART_Remappable_Init(2400);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="uartx_remappable_init_advanced">UARTx_Remappable_Init_Advanced</h3>
+
+
+    <!-- tabela: UARTx_Remappable_Init_Advanced -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UARTx_Remappable_Init_Advanced(<b>const</b> <b>unsigned long</b> baud_rate, <b>unsigned char</b> mode, <b>unsigned char</b> stopBits);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes hardware <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Remappable module with the custom configuration. Refer to the device data sheet for baud rates allowed for specific <code>Fosc</code>. If you specify the unsupported baud rate, compiler will report an error.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>mode:</code> parity and data size selector :
+                <table>
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>									                
+                  
+                  <tr align="center">
+										<td><code>8-bit mode, even parity</code></td>
+										<td><code>UART_MODE_8BIT_EVENPARITY</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>8-bit mode, odd parity</code></td>
+										<td><code>UART_MODE_8BIT_ODDPARITY</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>7-bit mode, no parity</code></td>
+										<td><code>UART_MODE_7BIT_NOPARITY</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>8-bit mode, no parity</code></td>
+										<td><code>UART_MODE_8BIT_NOPARITY </code></td>
+                  </tr>                    
+                </table> 
+                </li>
+                <br>
+            		<li><code>stopBits:</code> stop bits mode selector :
+                <table>
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>									                
+                  
+                  <tr align="center">
+										<td><code>1 stop bit</code></td>
+										<td><code>UART_STOPBITS_1</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>1.5 stop bits, verify first</code></td>
+										<td><code>UART_STOPBITS_1_5_VERIFYFIRST</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>2 stop bits, verify second</code></td>
+										<td><code>UART_STOPBITS_2_VERIFYFIRSTSECOND</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>2 stop bits, verify first</code></td>
+										<td><code>UART_STOPBITS_2_VERIFYFIRST </code></td>
+                  </tr>                    
+                </table> 
+            		</li>
+            	</ul>
+            </p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+                	<li>Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.</li>
+                	<li>To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module for the, simply change the letter <code>x</code> in the prototype for the appropriate module number.</li>
+                </ul>
+            </div>
+            <p></p>
+            <p>Refer to the device data sheet for baud rates allowed for specific Fosc.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You'll need PIC MCU with hardware <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module and remappable feature.</p>
+            <p><code>UART_Remappable_Init</code> needs to be called before using other functions from <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Remappable Library.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              Calculation of the UART baud rate value is carried out by the compiler, as it would produce a relatively large code if performed on the library level. <br>Therefore, compiler needs to know the value of the parameter in the compile time. That is why this parameter needs to be a constant, and not a variable.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>This will initialize hardware <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module and establish the communication at 2400 <acronym title="bits per second">bps</acronym>:</p>
+
+<pre>
+UART1_Remappable_Init_Advanced(9600, UART_MODE_8BIT_EVENPARITY, UART_STOPBITS_1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="uart_remappable_data_ready">UART_Remappable_Data_Ready</h3>
+
+
+    <!-- tabela: UART_Remappable_data_ready -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+     <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> UART_Remappable_Data_Ready();</p>
+            <i>// for MCUs with multiple modules</i> 
+            <br><b>unsigned short</b> UARTx_Remappable_Data_Ready();
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Function returns 1 if data is ready or 0 if there is no data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function tests if data in receive buffer is ready for reading.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+                	<li>Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.</li>
+                	<li>To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module, simply change the letter <code>x</code> in the prototype for the appropriate module number.</li>
+                </ul>
+            </div>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module and remappable feature.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See the <a href="#uart_remappable_init">UART_Remappable_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// If data is ready, read it:</i>
+<b>if</b> (UART_Remappable_Data_Ready() == 1) { 
+ receive = UART_Remappable_Read();
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="uart_remappable_tx_idle">UART_Remappable_Tx_Idle</h3>
+
+
+    <!-- tabela: UART_Remappable_tx_idle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+     <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UART_Remappable_Tx_Idle();</p>
+            <i>// for MCUs with multiple modules</i> 
+            <br><b>char</b> UARTx_Remappable_Tx_Idle();
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+            	<ul>
+            		<li><code>1</code> if the data has been transmitted</li>
+            		<li><code>0</code> otherwise</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Use the function to test if the transmit shift register is empty or not.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+                	<li>Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.</li>
+                	<li>To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module, simply change the letter <code>x</code> in the prototype for the appropriate module number.</li>
+                </ul>
+            </div>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart_remappable_init">UART_Remappable_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// If the previous data has been shifted out, send next data:</i>
+<b>if</b> (UART_Remappable_Tx_Idle() == 1) { 
+  UART_Remappable_Write(_data);
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="uart_remappable_read">UART_Remappable_Read</h3>
+
+
+    <!-- tabela: Uart_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> UART_Remappable_Read();</p>
+            <i>// for MCUs with multiple modules</i> 
+            <br><b>unsigned short</b> UARTx_Remappable_Read();
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Received byte.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function receives a byte via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. Use the <a href="#uart_remappable_data_ready">UART_Remappable_Data_Ready</a> function to test if data is ready first.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+                	<li>Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.</li>
+                	<li>To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module , simply change the letter <code>x</code> in the prototype for the appropriate module number.</li>
+                </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module and remappable feature.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See <a href="#uart_remappable_init">UART_Remappable_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// If data is ready, read it:</i>
+<b>if</b> (UART_Remappable_Data_Ready() == 1) { 
+ receive = UART_Remappable_Read();
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uart_remappable_read_text">UART_Remappable_Read_Text</h3>
+
+
+    <!-- tabela: UART_Remappable_Read_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Remappable_Read_Text(<b>char</b> *Output, <b>char</b> *Delimiter, <b>char</b> Attempts);</p>
+            <i>// for MCUs with multiple modules</i> 
+            <br><b>void</b> UARTx_Remappable_Read_Text(<b>char</b> *Output, <b>char</b> *Delimiter, <b>char</b> Attempts);
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads characters received via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> until the delimiter sequence is detected. The read sequence is stored in the parameter <code>output</code>; delimiter sequence is stored in the parameter <code>delimiter</code>.</p>
+            <p>This is a blocking call: the delimiter sequence is expected, otherwise the procedure exits( if the delimiter is not found). Parameter <code>Attempts</code> defines number of received characters in which <code>Delimiter</code> sequence is expected. If <code>Attempts</code> is set to 255, this routine will continuously try to detect the <code>Delimiter</code> sequence.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+                	<li>Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.</li>
+                	<li>To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module, simply change the letter <code>x</code> in the prototype for the appropriate module number.</li>
+                </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart_remappable_init">UART_Remappable_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read text until the sequence &#8220;OK&#8221; is received, and send back what&#8217;s been received:</p>
+
+<pre>
+UART_Remappable_Init(4800);                         // <i>initialize UART module</i>
+Delay_ms(100);
+
+<b>while</b> (1) {
+  <b>if</b> (UART_Remappable_Data_Ready() == 1) {          // <i>if data is received</i> 
+    UART_Remappable_Read_Text(output, "OK", 10);    // <i>reads text until 'OK' is found</i>
+    UART_Remappable_Write(output);             // <i>sends back text</i> 
+ }
+}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uart_remappable_write">UART_Remappable_Write</h3>
+
+    <!-- tabela: Uart_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Remappable_Write(<b>unsigned short</b> data_);</p>
+            <i>// for MCUs with multiple modules</i> 
+            <br><b>void</b> UARTx_Remappable_Write(<b>unsigned short</b> data_);
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function transmits a byte via the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>TxData:</code> data to be sent</li>
+            	</ul>
+            </p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+                	<li>Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.</li>
+                	<li>To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module, simply change the letter <code>x</code> in the prototype for the appropriate module number.</li>
+                </ul>
+            </div>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module and remappable feature.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See <a href="#uart_remappable_init">UART_Remappable_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned char</b> _data = 0x1E;
+...
+UART_Remappable_Write(_data);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uart_remappable_write_text">UART_Remappable_Write_Text</h3>
+
+
+    <!-- tabela: UART_Remappable_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Remappable_Write_Text (<b>char</b> *uart_text);</p>
+            <i>// for MCUs with multiple modules</i> 
+            <br><b>void</b> UARTx_Remappable_Write_Text (<b>char</b> *uart_text);
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends text (parameter <code>uart_text</code>) via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. Text should be limited to 255 characters and zero terminated.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+                	<li>Before using this library, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>, and that appropriate pins were mapped.</li>
+                	<li>To select the desired <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module, simply change the letter <code>x</code> in the prototype for the appropriate module number.</li>
+                </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart_remappable_init">UART_Remappable_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read text until the sequence &#8220;OK&#8221; is received, and send back what&#8217;s been received:</p>
+
+<pre>
+UART_Remappable_Init(4800);                         // <i>initialize UART module</i>
+Delay_ms(100);
+
+<b>while</b> (1) {
+  <b>if</b> (UART_Remappable_Data_Ready() == 1) {          // <i>if data is received</i> 
+    UART_Remappable_Read_Text(output, "OK", 10);    // <i>reads text until 'OK' is found</i>
+    UART_Remappable_Write(output);             // <i>sends back text</i> 
+ }
+}</pre>
+
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+ 
+    <!-- kraj tabele -->
+
+   <!-- -->   
+
+
+    <h3 id="uart_set_active">UART_Set_Active</h3>
+
+
+    <!-- tabela: UART_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Set_Active(<b>char</b> (*read_ptr)(), <b>void</b> (*write_ptr)(<b>unsigned char</b> data_), <b>char</b> (*ready_ptr)(), <b>char</b> (*tx_idle_ptr)())</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets active <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module which will be used by the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> library routines.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>read_ptr:</code> <a href="#uart_remappable_read">UART_Remappable_Read</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#uart_remappable_write">UART_Remappable_Write</a> handler</li>
+            		<li><code>ready_ptr:</code> <a href="#uart_remappable_data_ready">UART_Remappable_Data_Ready</a> handler</li>
+            		<li><code>tx_idle_ptr:</code> <a href="#uart_remappable_tx_idle">UART_Remappable_Tx_Idle</a> handler</li>            	
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>Routine is available only for MCUs with two <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> modules.</p>
+            <p> Used <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. 
+            See <a href="#uart_remappable_init">UART_Remappable_Init</a> routine</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+UART1_Remappable_Init(9600);                    <i>// initialize UART1 module</i>
+UART2_Remappable_Init(9600);                    <i>// initialize UART2 module</i>
+
+RS485Master_Init();                  <i>// initialize MCU as Master</i>
+
+UART_Set_Active(&#38;UART1_Remappable_Read, &#38;UART1_Remappable_Write, &#38;UART1_Remappable_Data_Ready, &#38;UART1_Remappable_Tx_Idle); <i>// set UART1 active</i>
+RS485Master_Send(dat,1,160);        <i>// send message through UART1</i>
+
+UART_Set_Active(&#38;UART2_Remappable_Read, &#38;UART2_Remappable_Write, &#38;UART2_Remappable_Data_Ready, &#38;UART2_Remappable_Tx_Idle); <i>// set UART2 active</i>
+RS485Master_Send(dat,1,160);        <i>// send through UART2</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->   
+
+
+    <h3 id="uartx_data_ready_gen">UART_Data_Ready</h3>
+
+
+    <!-- tabela: UART_Data_Ready -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+     <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UART_Data_Ready();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            	<ul>
+            		<li><code>1</code> if data is ready for reading</li>
+            		<li><code>0</code> if there is no data in the receive register</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Use the function to test if data in receive buffer is ready for reading.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See the <a href="#uart_remappable_init">UART_Remappable_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// If data is ready, read it:</i>
+<b>if</b> (UART_Data_Ready() == 1) { 
+ receive = UART_Read();
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="uartx_tx_idle_gen">UART_Tx_Idle</h3>
+
+
+    <!-- tabela: UART_tx_idle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+     <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UART_Tx_Idle();</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+            	<ul>
+            		<li><code>1</code> if the data has been transmitted</li>
+            		<li><code>0</code> otherwise</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Use the function to test if the transmit shift register is empty or not.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart_remappable_init">UART_Remappable_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// If the previous data has been shifted out, send next data:</i>
+<b>if</b> (UART_Tx_Idle() == 1) { 
+  UART_Write(_data);
+ }</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="uartx_read_gen">UART_Read</h3>
+
+
+    <!-- tabela: UART_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> UART_Read();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns the received byte.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function receives a byte via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. Use the function <a href="#uartx_data_ready_gen">UART_Data_Ready</a> to test if data is ready first.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See <a href="#uart_remappable_init">UART_Remappable_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// If data is ready, read it:</i>
+<b>if</b> (UART_Data_Ready() == 1) { 
+ receive = UART_Read();
+ }</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="uartx_read_text_gen">UART_Read_Text</h3>
+
+
+    <!-- tabela: UART_Read_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          <p><b>void</b> UART_Read_Text(<b>char</b> *Output, <b>char</b> *Delimiter, <b>char</b> Attempts);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads characters received via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> until the delimiter sequence is detected. The read sequence is stored in the parameter <code>output</code>; delimiter sequence is stored in the parameter <code>delimiter</code>.</p>
+            <p>This is a blocking call: the delimiter sequence is expected, otherwise the procedure exits (if the delimiter is not found).</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>Output:</code> received text</li>
+            	  <li><code>Delimiter:</code> sequence of characters that identifies the end of a received string</li>
+            	  <li><code>Attempts:</code> defines number of received characters in which <code>Delimiter</code> sequence is expected. If <code>Attempts</code> is set to 255, this routine will continuously try to detect the <code>Delimiter</code> sequence.
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart_remappable_init">UART_Remappable_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read text until the sequence &#8220;OK&#8221; is received, and send back what&#8217;s been received:</p>
+
+<pre>
+UART1_Init(4800);                         // <i>initialize UART1 module</i>
+Delay_ms(100);
+
+<b>while</b> (1) {
+  <b>if</b> (UART_Data_Ready() == 1) {          // <i>if data is received</i> 
+    UART_Read_Text(output, "OK", 10);    // <i>reads text until 'OK' is found</i>
+    UART_Write_Text(output);             // <i>sends back text</i> 
+ }
+}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uartx_write_gen">UART_Write</h3>
+
+
+    <!-- tabela: UART_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Write(<b>char</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function transmits a byte via the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>_data:</code> data to be sent</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>The <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module must be initialized before using this routine. See <a href="#uart_remappable_init">UART_Remappable_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned char</b> _data = 0x1E;
+...
+UART_Write(_data);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+    <h3 id="uartx_write_text_gen">UART_Write_Text</h3>
+
+
+    <!-- tabela: UART_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> UART_Write_Text(<b>char</b> * UART_text);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends text via <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. Text should be zero terminated.</p>
+            <p>This is a generic routine which uses the active UART module previously activated by the <a href="#uart_set_active">UART_Set_Active</a> routine.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>UART_text:</code> text to be sent</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> HW module must be initialized and communication established before using this function. See <a href="#uart_remappable_init">UART_Remappable_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read text until the sequence &#8220;OK&#8221; is received, and send back what&#8217;s been received:</p>
+
+<pre>
+UART1_Init(4800);                         // <i>initialize UART1 module</i>
+Delay_ms(100);
+
+<b>while</b> (1) {
+  <b>if</b> (UART_Data_Ready() == 1) {          // <i>if data is received</i> 
+    UART_Read_Text(output, "OK", 10);    // <i>reads text until 'OK' is found</i>
+    UART_Write_Text(output);             // <i>sends back text</i> 
+ }
+}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <div class="feedback">
+      Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

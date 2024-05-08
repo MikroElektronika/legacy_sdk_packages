@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_GPIO_7.emcl",
+        "__Lib_GPIO_7_Defs.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_System_TIVA.emcl",
+        "__Lib_Math.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^TM4C1294KCPDT$|^TM4C1290NCPDT$|^TM4C129CNCPDT$|^TM4C1294NCPDT$|^TM4C1292NCPDT$|^TM4C129DNCPDT$|^TM4C129ENCPDT$|^TM4C129EKCPDT$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

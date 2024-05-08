@@ -1,0 +1,249 @@
+{
+    "board": {
+        "category": "Development board",
+        "icon": "images/easypic-v8-for-dspic30.png",
+        "mikrobus_count": 5,
+        "name": "EasyPIC v8 for dsPIC30",
+        "tft_display": null,
+        "version": ""
+    },
+    "display": {
+        "icon": ":/block_icon",
+        "init_code": null,
+        "name": "No display"
+    },
+    "mcu": {
+        "architecture": "dsPIC",
+        "device_id": "PIC30F4013|40|DIP40",
+        "family": "PIC30",
+        "flash": "48KB",
+        "icon": "images/micro_chip.png",
+        "isMCUCard": false,
+        "max_speed": "120MHz",
+        "name": "PIC30F4013",
+        "pin_count": "40",
+        "ram": "2KB",
+        "settings": {
+            "clock": 80,
+            "config_registers": [
+                {
+                    "fields": [
+                        {
+                            "key": "FOSFPR",
+                            "value": "00000706"
+                        },
+                        {
+                            "key": "FCKSMEN",
+                            "value": "00008000"
+                        }
+                    ],
+                    "key": "FOSC"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "FWPSB",
+                            "value": "0000000f"
+                        },
+                        {
+                            "key": "FWPSA",
+                            "value": "00000030"
+                        },
+                        {
+                            "key": "WDT",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "FWDT"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "FPWRT",
+                            "value": "00000003"
+                        },
+                        {
+                            "key": "BODENV",
+                            "value": "00000030"
+                        },
+                        {
+                            "key": "BOREN",
+                            "value": "00000080"
+                        },
+                        {
+                            "key": "RES0",
+                            "value": "00000700"
+                        },
+                        {
+                            "key": "MCLRE",
+                            "value": "00008000"
+                        }
+                    ],
+                    "key": "FBORPOR"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "RES3",
+                            "value": "0000000f"
+                        },
+                        {
+                            "key": "RES2",
+                            "value": "00000300"
+                        },
+                        {
+                            "key": "RES1",
+                            "value": "00003000"
+                        }
+                    ],
+                    "key": "RESERVED1"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "RES3",
+                            "value": "0000000f"
+                        },
+                        {
+                            "key": "RES2",
+                            "value": "00000300"
+                        },
+                        {
+                            "key": "RES1",
+                            "value": "00003000"
+                        }
+                    ],
+                    "key": "RESERVED2"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "GWRP",
+                            "value": "00000001"
+                        },
+                        {
+                            "key": "GCP",
+                            "value": "00000006"
+                        }
+                    ],
+                    "key": "FGS"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "ICS",
+                            "value": "00000003"
+                        },
+                        {
+                            "key": "COE",
+                            "value": "00004000"
+                        },
+                        {
+                            "key": "DEBUG",
+                            "value": "00008000"
+                        }
+                    ],
+                    "key": "FICD"
+                }
+            ],
+            "mcu": "PIC30F4013",
+            "package": ""
+        },
+        "vendor": "Microchip"
+    },
+    "name": "EasyPIC v8 for dsPIC30 PIC30F4013",
+    "prog": {
+        "description": "CODEGRIP Suite is a powerful software tool. It is used to intelligently manage programming tasks, as well as various other options and settings of the CODEGRIP.",
+        "icon": "icon.png",
+        "name": "CODEGRIP",
+        "planet_debug_compatible": "Yes",
+        "settings": {
+            "auto_start_local_gdb": true,
+            "control_port": "1235",
+            "ip_address": "127.0.0.1",
+            "port": "1234",
+            "remote_addresses": [],
+            "remote_password": "",
+            "selected_device": null,
+            "selected_options": {
+                "Erase Type": {
+                    "group": "Target Operation",
+                    "value": "Mass erase"
+                },
+                "Programming Type": {
+                    "group": "Target Connection",
+                    "value": "Vdd first entry mode"
+                },
+                "Protocol": {
+                    "group": "Target Connection",
+                    "value": "ICSP"
+                },
+                "Speed": {
+                    "group": "Target Connection",
+                    "value": "4 MHz"
+                },
+                "Verify Type": {
+                    "group": "Target Operation",
+                    "value": "Readback"
+                },
+                "Verify after Write": {
+                    "group": "Target Operation",
+                    "value": "Enabled"
+                }
+            }
+        },
+        "uid": "codegrip"
+    },
+    "sdk": {
+        "families": [
+            "PIC24",
+            "PIC30",
+            "PIC33"
+        ],
+        "icon": "Resources/icon.png",
+        "legacy": true,
+        "name": "mikroC for dsPIC Legacy",
+        "sdk_development_kit": false,
+        "uuid": "sdk.mikroc.legacy.dspic",
+        "version": "7.1.0"
+    },
+    "toolchain": {
+        "icon": "mikroC_dsPIC.png",
+        "language": "MikroC",
+        "name": "mikroC AI for dsPIC BETA",
+        "settings": {
+            "actions": {
+                "build": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--build all",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                },
+                "clean": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--clean",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "memake.settings": {
+                "BOARD_NAME": "BOARD_EASYPIC_V8_FOR_DSPIC30"
+            },
+            "output_path": ""
+        },
+        "uid": "mikrocdspic",
+        "vendor": "MikroElektronika",
+        "version": "1.0.1"
+    },
+    "uid": "df166ec5-5092-4057-a60d-44e630bdb82b"
+}

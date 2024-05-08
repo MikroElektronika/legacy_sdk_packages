@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_MathDouble.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_System.emcl",
+        "__Lib_GPIO_2_Defs.emcl",
+        "__Lib_GPIO_15.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^TM4C1230H6PM$|^TM4C123AH6PM$|^TM4C1232E6PM$|^TM4C1236H6PM$|^TM4C1230D5PM$|^TM4C123FE6PM$|^TM4C123FH6PM$|^TM4C1230E6PM$|^TM4C1232D5PM$|^TM4C1230C3PM$|^TM4C1232H6PM$|^TM4C1236E6PM$|^TM4C123AE6PM$|^TM4C1232C3PM$|^TM4C1236D5PM$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

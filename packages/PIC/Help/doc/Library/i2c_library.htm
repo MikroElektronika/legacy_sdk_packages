@@ -1,0 +1,1485 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>I2C Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_PIC.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_PIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">I2C Library</div><div class="navigation">&nbsp;&nbsp;<A href="index.htm">mikroC PRO for PIC Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="graphic_lcd_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="i2c_remappable_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    <a name="top_of_page"><h2><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Library</h2></a>
+
+
+    <p>The <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> full master <acronym title="Master Synchronous Serial Port">MSSP</acronym> module is available with a number of PIC MCU models. mikroC PRO for PIC provides library which supports the master <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> mode.</p>
+    <br> 
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+      <ul>
+    	  <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	  <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+      </ul>
+    </div>  
+
+    <!-- -->
+    
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#i2c1_init">I2Cx_Init</a></li>
+      <li><a href="#i2c1_start">I2Cx_Start</a></li>
+      <li><a href="#i2c1_repeated_start">I2Cx_Repeated_Start</a></li>
+      <li><a href="#i2c1_is_idle">I2Cx_Is_Idle</a></li>
+      <li><a href="#i2c1_rd">I2Cx_Rd</a></li>
+      <li><a href="#i2c1_wr">I2Cx_Wr</a></li>
+      <li><a href="#i2c1_stop">I2Cx_Stop</a></li>
+      <li><a href="#i2c1_settimeoutcallback">I2Cx_SetTimeoutCallback</a></li>
+      <li><a href="#i2c_set_active">I2C_Set_Active</a></li>
+    </ul>
+
+    <h4>Generic Routines</h4>
+
+    <ul>
+      <li><a href="#i2c_start">I2C_Start</a></li>  
+      <li><a href="#i2c_restart">I2C_Restart</a></li>  
+      <li><a href="#i2c_is_idle">I2C_Is_Idle</a></li>
+      <li><a href="#i2c_read">I2C_Read</a></li>  
+      <li><a href="#i2c_write">I2C_Write</a></li>    
+      <li><a href="#i2c_stop">I2C_Stop</a></li>  
+    </ul>
+        
+        
+    <!-- -->
+
+
+    <h3 id="i2c1_init">I2Cx_Init</h3>
+
+
+    <!-- tabela: I2Cx_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cx_Init(<b>const</b> <b>unsigned long</b> clock);</p>
+            <i>// for PIC18F K42 and K83 family</i>
+            <p><b>void</b> I2Cx_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> with desired <code>clock</code> (refer to device data sheet for correct values in respect with <em>Fosc</em>). Needs to be called before using other functions of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Library.</p>
+            <p>You don&#8217;t need to configure ports manually for using the module; library will take care of the initialization.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              <ul>
+              	<li>Calculation of the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> baud rate value is carried out by the compiler, as it would produce a relatively large code if performed on the library level.
+              	<br>Therefore, compiler needs to know the value of the parameter in the compile time. That is why this parameter needs to be a constant, and not a variable.</li>
+                	<li>For PIC18F K42 and K83 family the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> speed is fixed to 100 kHz and pins used for the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> should be set as open-drain in ODCONx register, please consult the appropriate datasheet.</li>
+    	            <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	            <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+                </ul>
+            </div>              
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Library requires <acronym title="Master Synchronous Serial Port">MSSP</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C1_Init(100000);</pre>
+
+<i>// for PIC18F K42 and K83 family</i>
+I2C1_Init();
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c1_start">I2Cx_Start</h3>
+
+
+    <!-- tabela: I2C1_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> I2Cx_Start(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>If there is no error, function returns 0.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Determines if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free and issues START signal.</p>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+                <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+    	            <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	            <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+                </ul>
+              </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C1_Start();
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c1_repeated_start">I2Cx_Repeated_Start</h3>
+
+
+    <!-- tabela: I2Cx_Repeated_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cx_Repeated_Start(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Issues repeated START signal.</p>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+                <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+    	            <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	            <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+                </ul>
+              </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C1_Repeated_Start();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c1_is_idle">I2Cx_Is_Idle</h3>
+
+
+    <!-- tabela: I2Cx_Is_Idle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> I2Cx_Is_Idle(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns 1 if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free, otherwise returns 0.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Tests if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free.</p>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+                <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+    	            <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	            <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+                </ul>
+              </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (I2C1_Is_Idle()) {...}
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c1_rd">I2Cx_Rd</h3>
+
+
+    <!-- tabela: I2Cx_Rd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> I2Cx_Rd(<b>unsigned short</b> ack);</p>
+            <i>// for PIC18F K42 and K83 family</i>            
+            <p><b>unsigned short</b> I2Cx_Rd(<b>char</b> slave_address, <b>char</b> *ptrdata, <b>unsigned short</b> count, <b>unsigned short</b> END_mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns one byte from the slave.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>PIC12F/16F/18F</h2>
+      <ul>
+      	<li>Reads one byte from the slave, and sends <em>not acknowledge</em> signal if parameter <code>ack</code> is 0, otherwise it sends <em>acknowledge</em>.</li>
+      </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>PIC18F K42 and K83 family </h2>
+           	<ul>
+              <li><code>slave_address:</code> slave address.</li>
+              <li><code>ptrdata:</code> pointer to the received data.</li>
+              <li><code>count:</code> number of bytes to be received.</li>
+              <li><code>END_mode:</code> mode in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module will be set after the reading. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_END_MODE_RESTART</td>
+                        <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a restart.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_END_MODE_STOP</td>
+          						  <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a stop.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+    </div>
+    
+  </div>
+              <br>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+                <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+    	            <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	            <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+                </ul>
+              </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#i2c1_start">I2Cx_Start</a> (not valid for PIC18F K42 and K83 family).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read data and send <em>not acknowledge</em> signal:</p>
+
+<pre>
+<b>unsigned short</b> take;
+...
+take = I2C1_Rd(0);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c1_wr">I2Cx_Wr</h3>
+
+
+    <!-- tabela: I2C1_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> I2Cx_Wr(<b>unsigned short</b> data_);</p>
+            <i>// for PIC18F K42 and K83 family</i>            
+            <p><b>unsigned short</b> I2Cx_Wr(<b>char</b> slave_address, <b>char</b> *ptrdata, <b>unsigned short</b> count, <b>unsigned short</b> END_mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns 0 if there were no errors.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>PIC12F/16F/18F</h2>
+      <ul>
+      	<li>Sends data byte (parameter <code>data_</code>) via <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</li>
+      </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>PIC18F K42 and K83 family </h2>
+           	<ul>
+              <li><code>slave_address:</code> slave address.</li>
+              <li><code>ptrdata:</code> pointer to the data to be transmitted.</li>
+              <li><code>count:</code> number of bytes to be transmitted.</li>
+              <li><code>END_mode:</code> mode in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module will be set after the writing. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_END_MODE_RESTART</td>
+                        <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a restart.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_END_MODE_STOP</td>
+          						  <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a stop.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+    </div>
+    
+  </div>
+  <br>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+                <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+    	            <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	            <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+                </ul>
+              </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#i2c1_start">I2Cx_Start</a> (not valid for PIC18F K42 and K83 family).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C1_Write(0xA3);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="i2c1_stop">I2Cx_Stop</h3>
+
+
+    <!-- tabela: I2Cx_Stop -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cx_Stop(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Issues STOP signal.</p>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+                <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <ul>
+    	            <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	            <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+                </ul>
+              </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C1_Stop();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="i2c1_settimeoutcallback">I2Cx_SetTimeoutCallback</h3>
+
+
+    <!-- tabela: I2Cx_SetTimeoutCallback -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2Cx_SetTimeoutCallback(<b>unsigned long</b> timeout, <b>void</b> (*i2c1_timeout)(<b>char</b>));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function checks for a <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> timeout condition in a user defined time period, after which it jumps to a callback function if this condition is met.
+            <br>Different <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> operations can cause a timeout (read, write, start and repeated start) so user may test which one caused it, as in the example below.</p>
+            
+            Parameters :
+            <ul>
+            	<li><code>timeout:</code> Represents a number of <code>while</code> loops in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> timeout condition is checked. 
+            	<br>Depending on the architecture (PIC16, PIC16ENH or PIC18) the generated code (i.e. the execution time) may vary for the same value of this parameter.
+           		</li>
+            	<br>
+            	<li><code>i2c_timeout:</code> pointer to the callback function. Callback function must be written according to this function prototype :
+<pre class="program">
+<b>void</b> I2C1_TimeoutCallback(<b>char</b> errorCode) {
+
+}	
+</pre>
+
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+              <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</li>
+    	        <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>.</li>
+    	        <li>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// define callback function</i>
+<b>void</b> I2C1_TimeoutCallback(<b>char</b> errorCode) {
+
+   <b>if</b> (errorCode == _I2C_TIMEOUT_RD) {
+     <i>// do something if timeout is caused during read</i>
+   }
+   
+   <b>if</b> (errorCode == _I2C_TIMEOUT_WR) {
+     <i>// do something if timeout is caused during write</i>
+   }
+   
+   <b>if</b> (errorCode == _I2C_TIMEOUT_START) {
+     <i>// do something if timeout is caused during start</i>
+   } 
+   
+   <b>if</b> (errorCode == _I2C_TIMEOUT_REPEATED_START) {
+     <i>// do something if timeout is caused during repeated start</i>            
+   }
+}	
+
+<i>// initialize I2C module</i>
+I2C1_Init(100000);
+
+<i>// set timeout period and callback function</i>
+I2C1_SetTimeoutCallback(1000, I2C1_TimeoutCallback);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="i2c_set_active">I2C_Set_Active</h3>
+
+
+    <!-- tabela: I2C_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2C_Set_Active(<b>unsigned short</b> (*start_ptr)(), <b>void</b> (*restart_ptr)(), <b>unsigned short</b> (*read_ptr)(<b>unsigned short</b>), <b>unsigned short</b>(*write_ptr)(<b>unsigned short</b>), <b>void</b> (*stop_ptr)(), <b>unsigned short</b>(*is_idle_ptr)());</p>
+            <i>// for PIC18F K42 and K83 family</i>            
+            <p><b>void</b> I2C_Set_Active(<b>unsigned short</b> (*read_ptr)(<b>char</b>, <b>char</b> *, <b>unsigned short</b>, <b>unsigned short</b>), <b>unsigned short</b>(*write_ptr)(<b>char</b>, <b>char</b> *, <b>unsigned short</b>, unsigned short), <b>unsigned short</b>(*is_idle_ptr)());</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module which will be used by the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+            		<li><code>start_ptr:</code> <a href="#i2c1_start">I2Cx_Start</a> handler</li>
+            		<li><code>restart_ptr:</code> <a href="#i2c1_repeated_start">I2Cx_Repeated_Start</a> handler</li>
+            		<li><code>read_ptr:</code> <a href="#i2c1_rd">I2Cx_Rd</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#i2c1_wr">I2Cx_Wr</a> handler</li>
+            		<li><code>stop_ptr:</code> <a href="#i2c1_stop">I2Cx_Stop</a> handler</li>
+            		<li><code>is_idle_ptr:</code> <a href="#i2c1_is_idle">I2Cx_Is_Idle</a> handler</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+              <li><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</li>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+I2C_Set_Active(&I2C1_Start, &I2C1_Repeated_Start, &I2C1_Wr, &I2C1_Wr, &I2C1_Stop, &I2C1_Is_Idle); <i>// Sets the I2C1 module active</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <p>Number of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</p>    	      
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- -->
+
+
+    <h3 id="i2c_start">I2C_Start</h3>
+
+
+    <!-- tabela: I2C_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> I2C_Start(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>If there is no error, function returns 0.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Determines if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free and issues START signal.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>                   
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C_Start();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_restart">I2C_Restart</h3>
+
+
+    <!-- tabela: I2C_Repeated_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2C_Restart(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Issues repeated START signal.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>                   
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C_Restart();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_is_idle">I2C_Is_Idle</h3>
+
+
+    <!-- tabela: I2C_Is_Idle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> I2C_Is_Idle(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns 1 if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free, otherwise returns 0.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Tests if <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>   
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (I2C_Is_Idle()) {...}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_rd">I2C_Rd</h3>
+
+
+    <!-- tabela: I2C_Rd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> I2C_Rd(<b>unsigned short</b> ack);</p>
+            <i>// for PIC18F K42 and K83 family</i>            
+            <p><b>unsigned short</b> I2C_Rd(<b>char</b> slave_address, <b>char</b> *ptrdata, <b>unsigned short</b> count, <b>unsigned short</b> END_mode);</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns one byte from the slave.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>PIC12F/16F/18F</h2>
+      <ul>
+      	<li>Reads one byte from the slave, and sends <em>not acknowledge</em> signal if parameter <code>ack</code> is 0, otherwise it sends <em>acknowledge</em>.</li>
+      </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>PIC18F K42 and K83 family </h2>
+           	<ul>
+              <li><code>slave_address:</code> slave address.</li>
+              <li><code>ptrdata:</code> pointer to the received data.</li>
+              <li><code>count:</code> number of bytes to be received.</li>
+              <li><code>END_mode:</code> mode in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module will be set after the reading. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_END_MODE_RESTART</td>
+                        <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a restart.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_END_MODE_STOP</td>
+          						  <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a stop.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+    </div>
+            <br>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>       
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#i2c_start">I2C_Start</a> (not valid for PIC18F K42 and K83 family).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Read data and send <em>not acknowledge</em> signal:</p>
+
+<pre>
+<b>unsigned char</b> take;
+...
+I2C_Set_Active(&I2C1_Start, &I2C1_Restart, &I2C1_Read, &I2C1_Write, &I2C1_Stop, &I2C1_Is_Idle); <i>// Sets the I2C1 module active</i>
+
+<i>// Read data and send the not_acknowledge signal</i>
+take = I2C_Read(_I2C_NACK);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_wr">I2C_Wr</h3>
+
+
+    <!-- tabela: I2C_Wr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> I2C_Wr(<b>unsigned short</b> data_);</p>
+            <i>// for PIC18F K42 and K83 family</i>            
+            <p><b>unsigned short</b> I2C_Wr(<b>char</b> slave_address, <b>char</b> *ptrdata, <b>unsigned short</b> count, <b>unsigned short</b> END_mode);</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns 0 if there were no errors.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>PIC12F/16F/18F</h2>
+      <ul>
+      	<li>Sends data byte (parameter <code>data_</code>) via <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</li>
+      </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>PIC18F K42 and K83 family </h2>
+           	<ul>
+              <li><code>slave_address:</code> slave address.</li>
+              <li><code>ptrdata:</code> pointer to the data to be transmitted.</li>
+              <li><code>count:</code> number of bytes to be transmitted.</li>
+              <li><code>END_mode:</code> mode in which the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module will be set after the writing. Available modes :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_I2C_END_MODE_RESTART</td>
+                        <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a restart.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_I2C_END_MODE_STOP</td>
+          						  <td valign="top"><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus will issue a stop.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+    </div>
+            <br>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>       
+  
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#i2c_start">I2C_Start</a> (not valid for PIC18F K42 and K83 family).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned char</b> data_;
+<b>unsigned</b> error
+<i>...</i>
+
+I2C_Set_Active(&I2C1_Start, &I2C1_Restart, &I2C1_Read, &I2C1_Write, &I2C1_Stop, &I2C1_Is_Idle); <i>// Sets the I2C1 module active</i>
+
+error = I2C_Write(data_);
+error = I2C_Write(0xA3);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="i2c_stop">I2C_Stop</h3>
+
+
+    <!-- tabela: I2C_Stop -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> I2C_Stop(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Issues STOP signal.</p>
+            <p>This is a generic routine which uses the active <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously activated by the <a href="#i2c_set_active">I2C_Set_Active</a> routine.</p>       
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#i2c1_init">I2Cx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+I2C_Set_Active(&I2C1_Start, &I2C1_Restart, &I2C1_Read, &I2C1_Write, &I2C1_Stop, &I2C1_Is_Idle); <i>// Sets the I2C1 module active</i>
+<i>// Issue STOP signal</i>
+I2C_Stop();</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>This code demonstrates use of <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library. PIC MCU is connected (SCL, SDA pins) to 24c02 <acronym title="Electrically-Erasable Programmable Read-Only Memory">EEPROM</acronym>. Program sends data to <acronym title="Electrically-Erasable Programmable Read-Only Memory">EEPROM</acronym> (data is written at address 2). Then, we read data via I&sup2;C from EEPROM and send its value to PORTB, to check if the cycle was successful (see the figure below how to interface 24c02 to PIC).</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>void</b> main(){
+  ANSEL  = 0;                <i>// Configure AN pins as digital I/O</i>
+  ANSELH = 0;
+  PORTB = 0;
+  TRISB = 0;                 <i>// Configure PORTB as output</i>
+
+  I2C1_Init(100000);         <i>// initialize I2C communication</i>
+  I2C1_Start();              <i>// issue I2C start signal</i>
+  I2C1_Wr(0xA2);             <i>// send byte via I2C  (device address + W)</i>
+  I2C1_Wr(2);                <i>// send byte (address of EEPROM location)</i>
+  I2C1_Wr(0xAA);             <i>// send data (data to be written)</i>
+  I2C1_Stop();               <i>// issue I2C stop signal</i>
+
+  Delay_100ms();
+
+  I2C1_Start();              <i>// issue I2C start signal</i>
+  I2C1_Wr(0xA2);             <i>// send byte via I2C  (device address + W)</i>
+  I2C1_Wr(2);                <i>// send byte (data address)</i>
+  I2C1_Repeated_Start();     <i>// issue I2C signal repeated start</i>
+  I2C1_Wr(0xA3);             <i>// send byte (device address + R)</i>
+  PORTB = I2C1_Rd(0u);       <i>// Read the data (NO acknowledge)</i>
+  I2C1_Stop();               <i>// issue I2C stop signal</i>
+}</pre>
+
+
+    
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Interfacing 24c02 to PIC via I&sup2;C" src="img/schemes/scheme_i2c.gif"></p>
+    <p class="center small">Interfacing 24c02 to PIC via <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym></p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

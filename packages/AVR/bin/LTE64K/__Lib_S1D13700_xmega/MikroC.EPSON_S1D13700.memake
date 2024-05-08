@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.EPSON_S1D13700",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_S1D13700_xmega.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA32A4$|^ATXMEGA16C4$|^ATXMEGA64D4$|^ATXMEGA16A4$|^ATXMEGA16D4$|^ATXMEGA32C3$|^ATXMEGA32E5$|^ATXMEGA64B3$|^ATXMEGA32A4U$|^ATXMEGA64B1$|^ATXMEGA64C3$|^ATXMEGA16E5$|^ATXMEGA64A1$|^ATXMEGA32D3$|^ATXMEGA64D3$|^ATXMEGA64A3$|^ATXMEGA32C4$|^ATXMEGA64A4U$|^ATXMEGA32D4$|^ATXMEGA8E5$|^ATXMEGA64A3U$|^ATXMEGA16A4U$|^ATXMEGA64A1U$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

@@ -1,0 +1,1607 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Elliptic Curve Digital Signature Algorithm library</title>
+
+<meta http-equiv="Content-Type" content="text/html; uint8_tset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Elliptic Curve Digital Signature Algorithm library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="crypto_library.htm">Crypto Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="aes_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="pke_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Elliptic Curve Digital Signature Algorithm Library</h2></a>
+
+
+    <p>This Library provides a set of routines for easier handling of the Elliptic Curve Digital Signature Algorithm module available on CEC1702.</p>
+    <p>These routines are embedded into the program Flash memory.</p>
+
+
+    <!-- -->
+
+    <h3>Library Routines</h3>
+
+		<ul>
+			<li><a href="#ec_point_double">ec_point_double</a></li>
+			<li><a href="#ec_point_add">ec_point_add</a></li>
+			<li><a href="#ec_point_scalar_mult2">ec_point_scalar_mult2</a></li>
+			<li><a href="#ec_point_scalar_mult3">ec_point_scalar_mult3</a></li>
+			<li><a href="#ec_check_poc2">ec_check_poc2</a></li>
+			<li><a href="#ec_check_poc3">ec_check_poc3</a></li>
+			<li><a href="#ec_check_point_less_prime">ec_check_point_less_prime</a></li>
+			<li><a href="#ec_check_ab">ec_check_ab</a></li>
+			<li><a href="#ec_check_n">ec_check_n</a></li>
+			<li><a href="#ec_prog_curve">ec_prog_curve</a></li>
+			<li><a href="#ecdsa_verify">ecdsa_verify</a></li>
+			<li><a href="#ec_kcdsa_keygen">ec_kcdsa_keygen</a></li>						
+			<li><a href="#ec_kcdsa_sign">ec_kcdsa_sign</a></li>	
+			<li><a href="#ec_kcdsa_verify">ec_kcdsa_verify</a></li>	
+			<li><a href="#ec25519_point_mult">ec25519_point_mult</a></li>
+			<li><a href="#ec25519_xrecover">ec25519_xrecover</a></li>	
+			<li><a href="#ed25519_scalar_mult">ed25519_scalar_mult</a></li>	
+			<li><a href="#ed25519_valid_sig">ed25519_valid_sig</a></li>																	
+		</ul>
+
+    <!-- -->
+
+    <h3 id="ec_point_double">ec_point_double</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b><b>uint8_t</b></b> ec_point_double(<b>const</b> <b>uint8_t</b> * pxy, <b>const</b> <b>uint16_t</b> coord_len, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine performs a point doubling operation.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>pxy:</code> pointer to the point on EC curve.</li>
+							<li><code>coord_len:</code> length filled for the coordinates passed in bytes (<code>px+py</code>).</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - this error value is returned if input parameters are invalid.</li>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_point_add">ec_point_add</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_point_add(<b>const</b> <b>uint8_t</b> * p1xy, <b>const</b> <b>uint8_t</b> * p2xy, <b>const</b> <b>uint16_t</b> coord_len, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine performs addition of two points on EC curve.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>p1xy:</code> Pointer to the point1 coordinates on EC curve.</li>
+           		<li><code>p2xy:</code> Pointer to the point2 coordinates on EC curve.</li>
+							<li><code>coord_len:</code> length filled for the coordinates passed in bytes <code>(px+py)</code>.</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - this error value is returned if input parameters are invalid.</li>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_point_scalar_mult2">ec_point_scalar_mult2</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_point_scalar_mult2(<b>const</b> <b>uint8_t</b>* px, <b>const</b> <b>uint8_t</b>* py, <b>const</b> <b>uint8_t</b>* pscalar, <b>const</b> <b>uint16_t</b> byte_len, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine performs multiplication of EC curve (P (px,py)) to a scalar data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>px:</code> Pointer to point EC curve for the px coordinates (128 bits on the EC curve Px).</li>
+           		<li><code>py:</code> Pointer to point EC curve for the py coordinates (128 bits on the EC curve Py).</li>
+           		<li><code>pscalar:</code> Pointer to scalar data to be multiplied with.</li>
+							<li><code>byte_len:</code> Length field for the scalar data transferred in byte.</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - this error value is returned if input parameters are invalid.</li>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_point_scalar_mult3">ec_point_scalar_mult3</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_point_scalar_mult3(<b>const</b> <b>uint8_t</b>* pxy, <b>const</b> <b>uint8_t</b>* pscalar, <b>const</b> <b>uint16_t</b> byte_len, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine performs multiplication of EC curve (P (px,py)) to a scalar data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>px:</code> Pointer to point coordinates px followed by py.</li>
+           		<li><code>pscalar:</code> Pointer to scalar data to be multiplied with.</li>
+							<li><code>byte_len:</code> Length field for the scalar data transferred in byte.</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - this error value is returned if input parameters are invalid.</li>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_point_scalar_mult3">ec_point_scalar_mult3</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_point_scalar_mult3(<b>const</b> <b>uint8_t</b>* pxy, <b>const</b> <b>uint8_t</b>* pscalar, <b>const</b> <b>uint16_t</b> byte_len, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine performs multiplication of EC curve (P (px,py)) to a scalar data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>px:</code> Pointer to point coordinates px followed by py.</li>
+           		<li><code>pscalar:</code> Pointer to scalar data to be multiplied with .</li>
+							<li><code>byte_len:</code> Length field for the scalar data transferred in byte .</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - this error value is returned if input parameters are invalid.</li>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_check_poc2">ec_check_poc2</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_check_poc2(<b>const</b> <b>uint8_t</b>* px, <b>const</b> <b>uint8_t</b>* py, <b>const</b> <b>uint16_t</b> plen, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine check if the point lies on the EC curve.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>px:</code> Pointer to parameter px.</li>
+           		<li><code>px:</code> Pointer to parameter py.</li>
+							<li><code>plen:</code> Byte length of coordinates passed px, py.</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - this error value is returned if input parameters are invalid.</li>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_check_poc3">ec_check_poc3</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_check_poc3(<b>const</b> <b>uint8_t</b>* p, <b>const</b> <b>uint16_t</b> plen, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine check if the point lies on the EC curve.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>p:</code> Pointer to point to check.</li>
+							<li><code>plen:</code> length for the EC curve passed for the coordinates (Px+py).</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - this error value is returned if input parameters are invalid.</li>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_check_point_less_prime">ec_check_point_less_prime</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_check_point_less_prime(<b>const</b> <b>uint8_t</b>* pxy, <b>const</b> <b>uint16_t</b> plen, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine check Points coordinates are less than prime.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>pxy:</code> Pointer to point coordinates.</li>
+							<li><code>plen:</code> length for the EC curve passed for the coordinates (Px+py).</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - this error value is returned if input parameters are invalid.</li>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Caller must have previously programmed elliptic curve into <acronym title="Public Key Encryption">PKE</acronym> block via <a href="#ec_prog_curve">ec_prog_curve</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_check_ab">ec_check_ab</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_check_ab(<b>const</b> <b>uint8_t</b>* pxy, <b>const</b> <b>uint16_t</b> plen, <b>const</b> <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine checks EC Curve parameters a & b.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Caller must have previously programmed elliptic curve into <acronym title="Public Key Encryption">PKE</acronym> block via <a href="#ec_prog_curve">ec_prog_curve</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_check_n">ec_check_n</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_check_n();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine checks EC Curve order (parameter n).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BUSY</code> - this error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Caller must have previously programmed elliptic curve into <acronym title="Public Key Encryption">PKE</acronym> block via <a href="#ec_prog_curve">ec_prog_curve</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_prog_curve">ec_prog_curve</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_prog_curve(<b>const</b> ELLIPTIC_CURVE* curve_p);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine programs the elliptic curve parameters into the <acronym title="Public Key Encryption">PKE</acronym> block shared crypto memory. It programs the EC parameters prime to slot 0, order to slot 1, generator point x-coordinate to slot 2, generator point y-coordinate to slot 3, curve parameter a to slot 4 and curve parameter b to slot 5. 
+            <br>All parameters are zero extended to end of the slot. The <acronym title="Public Key Encryption">PKE</acronym> block slots size is 512 bytes. This routine also programs the following register fields in command register..</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>Curve_p:</code> pointer to <code>ELLIPTIC_CURVE</code> structure. The structure definition is presented below :
+<pre class="program">
+<b>typedef</b> <b>struct</b> elliptic_curve
+{
+    <b>uint32_t</b> *param[_ELLIPTIC_CURVE_NPARAMS];
+    <b>uint16_t</b> byte_len;
+    <b>uint8_t</b> flags;
+    <b>uint8_t</b> rsvd1;
+} ELLIPTIC_CURVE;
+</pre>
+           		</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - This error value is returned if <code>curve_p</code> points to NULL or if any of the pointers in the curve parameters point to NULL.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ecdsa_verify">ecdsa_verify</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ecdsa_verify(<b>const</b> <b>uint8_t</b> * Q, <b>const</b> <b>uint8_t</b> * S, <b>const</b> <b>uint8_t</b> * digest, <b>uint16_t</b> elen, <b>uint16_t</b> dlen, <b>uint8_t</b> msbf);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine verifies a signature using standard EC Digital Signature Algorithm.</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>Q:</code> pointer to <b>const</b>ant data containing Public Key Q.</li>
+           		<li><code>S:</code> pointer to <b>const</b>ant data consisting of signature point S.</li>
+           		<li><code>digest:</code> pointer to <b>const</b>ant data consisting of hash digest of message.</li>
+           		<li><code>Elen:</code> length of Qx and Qy. 
+							<br>Qx in 0 &lt;= index &lt; elen, Qy in elen &lt;= index &lt; 2*elen.
+              <br>Sx in 0 &lt;= index &lt; elen, Sy in elen &lt;= index &lt; 2*elen.</li>
+           		<li><code>dlen:</code> length of digest.</li>
+							<li><code>msbf:</code> byte order. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">Most significant byte first (reverse byte order).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+                        <td valign="top">Least significant byte first (reverse byte order).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM</code> - This error value is returned if Q, S or digest is a NULL pointer, if <code>elen</code> or <code>dlen</code> is zero.</li>
+							<li><code>ECC_ERR_BUSY</code> - This error value is returned if <acronym title="Public Key Encryption">PKE</acronym> block is busy.</li>
+							<li><code>ECC_ERR_ZERO_LEN_PARAM</code> - This error value is returned if not equal to curve parameter length.</li>
+							<li><code>PKE_RET_OK</code> - this value indicates a successful execution of requested operation.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_kcdsa_keygen">ec_kcdsa_keygen</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_kcdsa_keygen(<b>const</b> <b>uint8_t</b>* d, <b>const uint16_t</b> plen, <b>uint16_t</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine generates a public key for use with Korean Elliptic curve digital signature algorithm.</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>d:</code> Pointer to array containing EC private key.</li>
+           		<li><code>plen:</code> Byte length of d.</li>
+           		<li><code>flags:</code> Byte order :
+								<ul>
+									<li>bit[0] = 0 (d is LSBF), 1 (d is MSBF)</li>
+								</ul>
+           		</li>         		           		           		
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM:</code>this error value is returned if <code>d</code> is a null pointer, if <code>plen</code> is zero or greater than curve parameter length../li>
+							<li><code>PKE_RET_OK:</code> if operation requested is successful (<acronym title="Public Key Encryption">PKE</acronym> block started).</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Caller must have previously programmed elliptic curve into <acronym title="Public Key Encryption">PKE</acronym> block via <a href="#ec_prog_curve">ec_prog_curve</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_kcdsa_sign">ec_kcdsa_sign</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_kcdsa_sign(<b>const</b> <b>uint8_t</b>* prv_key, <b>uint16_t</b> plen, <b>const</b> <b>uint8_t</b>* r, <b>uint16_t</b> rlen, <b>const</b> <b>uint8_t</b>* hash, <b>uint16_t</b> hlen, <b>uint16_t</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine signs the hash message using Korean EC signature algorithm.</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>prv_key:</code> Pointer to array containing EC private key.</li>
+           		<li><code>plen:</code> Byte length of prv_key.</li>
+           		<li><code>r:</code> Pointer to array containing r component of signature.</li>
+           		<li><code>rlen:</code> Byte length of r.</li>
+           		<li><code>hash:</code> Pointer to hash digest of message.</li>
+           		<li><code>hlen:</code> Byte length of hash digest.</li>
+           		<li><code>flags:</code> Byte order :
+								<ul>
+									<li>bit[0] = 0 (prv_key is LSBF), 1 (prv_key is MSBF)</li>
+									<li>bit[1] = 0 (r is LSBF), 1 (r is MSBF)</li>
+									<li>bit[2] = 0 (hash digest is LSBF), 1 (hash digest is MSBF)</li>
+								</ul>
+           		</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM:</code> this error value is returned if <code>prv_key</code>, <code>r</code>, <code>hash</code> are a null pointer, if <code>plen</code>, <code>rlen</code>, <code>hlen</code> is zero or greater than curve parameter length.</li>
+							<li><code>PKE_RET_OK:</code> if operation requested is successful (<acronym title="Public Key Encryption">PKE</acronym> block started).</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Caller must have previously programmed elliptic curve into <acronym title="Public Key Encryption">PKE</acronym> block e.g. <a href="#ec_prog_curve">ec_prog_curve</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec_kcdsa_verify">ec_kcdsa_verify</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec_kcdsa_verify(<b>const</b> uint8_t* q, unsigned int qlen, <b>const</b> uint8_t* sig, unsigned int slen, <b>const</b> uint8_t* hash, unsigned int hlen, unsigned int flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine performs signature verification operation.</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>Q:</code> Pointer to array containing Qx and Qy.</li>
+           		<li><code>qlen:</code> Byte length of Q.</li>
+           		<li><code>Sig:</code> Pointer to array containing r & s.</li>
+           		<li><code>slen:</code> Byte length of sig.</li>
+           		<li><code>hash:</code> Pointer to hash digest of message.</li>
+           		<li><code>hlen:</code> Byte length of hash digest.</li>
+           		<li><code>flags:</code> Byte order :
+								<ul>
+									<li>bit[0] = 0 (Qx,y is LSBF), 1 (Qx,y is MSBF)</li>
+									<li>bit[1] = 0 (r,s is LSBF), 1 (r,s is MSBF)</li>
+									<li>bit[2] = 0 (digest is LSBF), 1 (digest is MSBF)</li>
+								</ul>
+           		</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>ECC_ERR_BAD_PARAM:</code> this error value is returned if <code>Q</code>, <code>sig</code> or <code>hash</code> is a Null pointer, if <code>qlen</code>, <code>slen</code> or <code>heln</code> is zero or greater than curve parameter length.</li>
+							<li><code>PKE_RET_OK:</code> if operation requested is successful (<acronym title="Public Key Encryption">PKE</acronym> block started).</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Caller must have previously programmed elliptic curve into <acronym title="Public Key Encryption">PKE</acronym> block e.g. <a href="#ec_prog_curve">ec_prog_curve</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          	
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec25519_point_mult">ec25519_point_mult</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec25519_point_mult(<b>const</b> <b>uint8_t</b>* p1x, <b>uint16_t</b> p1x_len, <b>const</b> <b>uint8_t</b>* k, <b>uint16_t</b> k_len, <b>uint16_t</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine performs an elliptic curve scalar point multiple using the Elliptic Curve 25519.</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>P1x:</code> Pointer to array containing Qx and Qy.</li>
+           		<li><code>P1x_len:</code> Byte length of Q.</li>
+           		<li><code>K:</code> Pointer to array containing r & s.</li>
+           		<li><code>K_len:</code> Byte length of sig.</li>
+           		<li><code>flags:</code> Byte order :
+								<ul>
+									<li>bit[0] = 0 (px byte array is LSBF), 1 (point is MSBF)</li>
+									<li>bit[1] = 0 (k byte array is LSBF), 1 (MSBF)</li>
+								</ul>
+           		</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>PKE_RET_OK:</code> operation was successful.</li>
+							<li><code>ECC_ERR_BAD_PARAM:</code> this error value is returned if either <code>p1x</code> or <code>K</code> is a null pointer.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ec25519_xrecover">ec25519_xrecover</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ec25519_xrecover(<b>const</b> <b>uint8_t</b>* y, <b>uint16_t</b> ylen, <b>uint16_t</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine derives the X-coordinate on an elliptic curve 25519, given the Y-Coordinate. The result is stored in Slot[0x06]..</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>y:</code> Pointer to array containing Qx and Qy.</li>
+           		<li><code>ylen:</code> Byte length of y.</li>
+           		<li><code>flags:</code> Byte order, 0 (point byte array is LSBF), 1 (point byte array is MSBF)
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>PKE_RET_OK:</code> operation was successful.</li>
+							<li><code>ECC_ERR_BAD_PARAM:</code> this error value indicates that <code>Y</code> is a NULL pointer..</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ed25519_scalar_mult">ed25519_scalar_mult</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ed25519_scalar_mult(<b>const</b> <b>uint8_t</b>* py, <b>uint16_t</b> pylen, <b>const</b> <b>uint8_t</b>* e, <b>uint16_t</b> elen, <b>uint16_t</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine multiplies point by a scalar for Elliptic Curve 25519. When done, result is located in SCM at Slot[0xA] = x-coordinate, Slot[0xB] = y-coordinate.</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>Px:</code> Pointer to parameter px</li>
+           		<li><code>Pxlen:</code> Byte length of px.</li>
+           		<li><code>Py:</code> Pointer to parameter py.</li>
+           		<li><code>Pylen:</code> Byte length of py.</li>
+           		<li><code>E:</code> Pointer to parameter e.</li>
+           		<li><code>Elen:</code> Byte length of e.</li>
+           		<li><code>flags:</code> Byte order, 
+								<ul>
+									<li>bit[0] = 0 (px byte array is LSBF), 1 (point is MSBF)</li>
+									<li>bit[1] = 0 (py byte array is LSBF), 1 (MSBF)</li>
+									<li>bit[2] = 0 (e byte array is LSBF), 1 (MSBF)</li>
+								</ul>
+           		</li>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>PKE_RET_OK:</code> operation was successful.</li>
+							<li><code>ECC_ERR_BAD_PARAM:</code> this error value indicates that either <code>px</code>, <code>py</code>, or <code>e</code> points to null or <code>elen</code> is zero.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ed25519_valid_sig">ed25519_valid_sig</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>uint8_t</b> ed25519_valid_sig(<b>const</b> Ed25519_SIG_VERIFY* psv);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine Checks signature (point) against message string (hash).</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>psv:</code> pointer to structure Ed25519_SIG_VERIFY.
+<pre class="program">
+<b>typedef struct</b>
+{
+    <b>uint8_t</b>* params[_ED_PARAM_MAX];
+    <b>uint16_t</b> paramlen[_ED_PARAM_MAX];
+    <b>uint16_t</b> flags;
+    <b>uint16_t</b> rsvd;
+} Ed25519_SIG_VERIFY;
+</pre>
+           		</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+					  <ul>
+							<li><code>PKE_RET_OK:</code> operation was successful.</li>
+							<li><code>ECC_ERR_BAD_PARAM:</code> this error value is returned if <code>psv</code> or any of its members points to NULL.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

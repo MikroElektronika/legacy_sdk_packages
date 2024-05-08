@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_System_M0Plus.emcl",
+        "__Lib_GPIO_32L0xx.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32L05x_06x_Defs.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L051T6$|^STM32L051C8$|^STM32L051K8$|^STM32L051T8$|^STM32L051K6$|^STM32L051R8$|^STM32L051R6$|^STM32L051C6$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

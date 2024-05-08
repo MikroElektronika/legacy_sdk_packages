@@ -1,0 +1,1608 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>FT5XX6 Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_arm.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">FT5XX6 Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="flash_memory_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="gpio_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>FT5XX6 Library</h2></a>
+
+    <p>This library covers the usage of the FT5x06, FT5x16, FT5x26 and FT5x46 series single-chip capacitive touch panel controllers. They adopt the mutual capacitance approach, which supports true multi-touch capability.
+    <br>In conjunction with a mutual capacitive touchpanel, the FT5xx6 have user-friendly input functions, which can be applied on many portable devices, such as cellular phones, MIDs, netbook and notebook personal computers.</p>
+    <br> 
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+      <ul>
+    	  <li>This library uses <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> communication so it is necessary to initialize the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module previously.</li>
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#ft5xx6_seti2caddress">FT5XX6_SetI2CAddress</a></li>
+      <li><a href="#ft5xx6_writeregister">FT5XX6_WriteRegister</a></li>
+      <li><a href="#ft5xx6_readregister">FT5XX6_ReadRegister</a></li>
+      <li><a href="#ft5xx6_getrunningstate">FT5XX6_GetRunningState</a></li>
+      <li><a href="#ft5xx6_isoperational">FT5XX6_IsOperational</a></li>
+      <li><a href="#ft5xx6_settouchpanelorientation">FT5XX6_SetTouchPanelOrientation</a></li>
+      <li><a href="#ft5xx6_gettouchpanelorientation">FT5XX6_GetTouchPanelOrientation</a></li>
+      <li><a href="#ft5xx6_setsize">FT5XX6_SetSize</a></li>
+      <li><a href="#ft5xx6_setsizeandrotation">FT5XX6_SetSizeAndRotation</a></li>
+      <li><a href="#ft5xx6_getrawcoordinates">FT5XX6_GetRawCoordinates</a></li>
+      <li><a href="#ft5xx6_getcoordinates">FT5XX6_GetCoordinates</a></li>
+      <li><a href="#ft5xx6_pressdetect">FT5XX6_PressDetect</a></li>
+      <li><a href="#ft5xx6_rotate180">FT5XX6_Rotate180</a></li>
+      <li><a href="#ft5xx6_setcontroller">FT5XX6_SetController</a></li>
+      <li><a href="#ft5xx6_getcontroller">FT5XX6_GetController</a></li>
+      <li><a href="#ft5xx6_setdefaultmode">FT5XX6_SetDefaultMode</a></li>
+      <li><a href="#ft5xx6_getgesture">FT5XX6_GetGesture</a></li>
+    </ul>
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_seti2caddress">FT5XX6_SetI2CAddress</h3>
+
+    <!-- tabela: FT5XX6_SetI2CAddress -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FT5XX6_SetI2CAddress(<b>unsigned short</b> DeviceAddr) ;</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine sets the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> address of the FT5xx6 touch panel.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>DeviceAddr:</code> <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> address of the FT5xx6 touch panel.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set FT5XX6 device address</i>
+FT5XX6_SetI2CAddress(0x38);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_writeregister">FT5XX6_WriteRegister</h3>
+
+    <!-- tabela: FT5XX6_WriteRegister -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_WriteRegister(<b>unsigned short</b> RegisterAddr, <b>unsigned short</b> RegisterValue) ;</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine writes a value into touch panel register.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>RegisterAddr:</code> The target register address.</li>
+             	<li><code>RegisterValue:</code> The target register value to be written.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>FT5XX6_OK:</code> if all operations are OK.</li>
+             	<li><code>other value:</code> if an error occured.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// write 0xAA into the touch detect threshold register</i>
+FT5XX6_WriteRegister(FT5XX6_TOUCH_DET_TH_REG, 0xAA);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_readregister">FT5XX6_ReadRegister</h3>
+
+    <!-- tabela: FT5XX6_ReadRegister -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_ReadRegister(<b>unsigned short</b> RegisterAddr) ;</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine reads a value from the touch panel register.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>RegisterAddr:</code> The target register address.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<p>The value of the read register.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// read touch detect threshold register</i>
+read_value = FT5XX6_ReadRegister(FT5XX6_TOUCH_DET_TH_REG);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="FT5XX6_GetRunningState">FT5XX6_GetRunningState</h3>
+
+    <!-- tabela: FT5XX6_GetRunningState -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_GetRunningState();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine reads the running state mode register.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>0:</code> configure state.</li>
+             	<li><code>1:</code> work state.</li>
+             	<li><code>2:</code> calibration state.</li>
+             	<li><code>3:</code> factory state.</li>
+              <li><code>4:</code> auto-calibration state.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// get running state</i>
+running_state = FT5XX6_GetRunningState();
+
+<b>if</b> (running_state == 0) {
+  <i>// configure state</i>
+}
+
+<b>if</b> (running_state == 1) {
+  <i>// work state</i>
+}
+
+<b>if</b> (running_state == 2) {
+  <i>// calibration state</i>
+}
+
+<b>if</b> (running_state == 3) {
+  <i>// factory state</i>
+}
+
+<b>if</b> (running_state == 4) {
+  <i>// auto-calibration state</i>
+}
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_isoperational">FT5XX6_IsOperational</h3>
+
+    <!-- tabela: FT5XX6_IsOperational -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_IsOperational();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine checks if the controller is running.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>FT5XX6_OK:</code> if all operations are OK.</li>
+             	<li><code>FT5XX6_FAILURE:</code> if an error occured.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// if the controller is running </i>
+<b>if</b> (FT5XX6_IsOperational() == FT5XX6_OK) {
+  ...
+}	
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_settouchpanelorientation">FT5XX6_SetTouchPanelOrientation</h3>
+
+    <!-- tabela: FT5XX6_SetTouchPanelOrientation -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FT5XX6_SetTouchPanelOrientation(<b>unsigned short</b> rotation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine sets touch panel orientation.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>rotation:</code> Rotation angle. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">0 degree rotation (CCW).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+                        <td valign="top">90 degrees rotation (CCW).</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">2</td>
+                        <td valign="top">180 degrees rotation (CCW).</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">3</td>
+                        <td valign="top">270 degrees rotation (CCW).</td>
+                      </tr>
+                    </tbody>
+                  </table>
+             	</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// rotate touch panel by 90 degrees (CCW)</i>
+FT5XX6_SetTouchPanelOrientation(1);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_gettouchpanelorientation">FT5XX6_GetTouchPanelOrientation</h3>
+
+    <!-- tabela: FT5XX6_GetTouchPanelOrientation -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_GetTouchPanelOrientation();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine returns the current touch panel orientation.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>0:</code> 0 degree rotation (CCW).</li>
+             	<li><code>1:</code> 90 degrees rotation (CCW).</li>
+             	<li><code>2:</code> 180 degrees rotation (CCW).</li>
+             	<li><code>3:</code> 270 degrees rotation (CCW).</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// get touch panel orientation</i>
+tp_orientation = FT5XX6_GetTouchPanelOrientation();
+
+<b>if</b> (orientation == 0) {
+  <i>// 0 degree rotation (CCW)</i>
+}
+
+<b>if</b> (orientation == 1) {
+  <i>// 90 degree rotation (CCW)</i>
+}
+
+<b>if</b> (orientation == 2) {
+  <i>// 180 degree rotation (CCW)</i>
+}
+
+<b>if</b> (orientation == 3) {
+  <i>// 270 degree rotation (CCW)</i>
+}
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_setsize">FT5XX6_SetSize</h3>
+
+    <!-- tabela: FT5XX6_SetSize -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FT5XX6_SetSize(<b>unsigned int</b> display_width, <b>unsigned int</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine sets the touch panel dimensions (should be same as display dimensions).</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>display_width:</code> touch panel width (in pixels).</li>
+             	<li><code>display_height:</code> touch panel height (in pixels).</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set touch panel area size to 320x240</i>
+FT5XX6_SetSize(320,240);	
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_setsizeandrotation">FT5XX6_SetSizeAndRotation</h3>
+
+    <!-- tabela: FT5XX6_SetSizeAndRotation -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FT5XX6_SetSizeAndRotation(<b>unsigned int</b> display_width, <b>unsigned int</b> display_height, <b>unsigned short</b> rotation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine sets the touch panel dimensions (should be same as display dimensions) and rotation.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>display_width:</code> touch panel width (in pixels).</li>
+             	<li><code>display_height:</code> touch panel height (in pixels).</li>
+             	<li><code>rotation:</code> Rotation angle. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">0 degree rotation (CCW).</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+                        <td valign="top">90 degrees rotation (CCW).</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">2</td>
+                        <td valign="top">180 degrees rotation (CCW).</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">3</td>
+                        <td valign="top">270 degrees rotation (CCW).</td>
+                      </tr>
+                    </tbody>
+                  </table>	
+             	</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set touch panel area size to 320x240 with 180 degrees rotation (CCW)</i>
+FT5XX6_SetSizeAndRotation(320,240,2);	
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_getrawcoordinates">FT5XX6_GetRawCoordinates</h3>
+
+    <!-- tabela: FT5XX6_GetRawCoordinates -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_GetRawCoordinates(<b>unsigned int</b> *x_coordinate, <b>unsigned int</b> *y_coordinate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine gets the raw touch coordinates disregarding the touch panel orientation. By default, the landscape orientation is assumed.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>x_coordinate:</code> pointer to the raw X coordinate of the touch.</li>
+             	<li><code>y_coordinate:</code> pointer to the raw y coordinate of the touch.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>FT5XX6_OK:</code> if coordinates are OK.</li>
+            	<li><code>FT5XX6_FAILURE:</code> if an error occured.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// get raw coordinates </i>
+FT5XX6_GetRawCoordinates(&Xcoord, &Ycoord);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_getcoordinates">FT5XX6_GetCoordinates</h3>
+
+    <!-- tabela: FT5XX6_GetCoordinates -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_GetCoordinates(<b>unsigned int</b> *x_coordinate, <b>unsigned int</b> *y_coordinate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine gets the touch coordinates taking into the account touch panel orientation.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>x_coordinate:</code> pointer to the X coordinate of the touch.</li>
+             	<li><code>y_coordinate:</code> pointer to the y coordinate of the touch.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+            	<li><code>FT5XX6_OK:</code> if coordinates are OK.</li>
+            	<li><code>FT5XX6_FAILURE:</code> if an error occured.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// get touch panel coordinates</i>
+<b>if</b> (FT5XX6_GetCoordinates(&Xcoord, &Ycoord) == FT5XX6_OK) {
+  <b>...</b>
+}
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_pressdetect">FT5XX6_PressDetect</h3>
+
+    <!-- tabela: FT5XX6_PressDetect -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_PressDetect();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine detects if touch panel has been pressed.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>0:</code> if the touch panel hasn't been pressed.</li>
+             	<li><code>1:</code> if the touch panel has been pressed.</li>             	
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// if touch panel has been pressed</i>
+<b>if</b> (FT5XX6_PressDetect()) {
+  ...
+}	
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_rotate180">FT5XX6_Rotate180</h3>
+
+    <!-- tabela: FT5XX6_Rotate180 -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FT5XX6_Rotate180(<b>unsigned short</b> rotate);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine rotates touch panel orientation by 0 or 180 degrees.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>rotate:</code> rotating parameter. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">FT5XX6_ROTATE_0</td>
+                        <td valign="top">Rotate by 0 degrees.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">FT5XX6_ROTATE_180</td>
+          						  <td valign="top">Rotate by 180 degrees (CCW).</td>
+                      </tr>
+                    </tbody>
+                  </table>	
+             	</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// rotate touch panel by 180 degrees</i>
+FT5XX6_Rotate180(FT5XX6_ROTATE_0);
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_setcontroller">FT5XX6_SetController</h3>
+
+    <!-- tabela: FT5XX6_SetController -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FT5XX6_SetController(<b>unsigned short</b> FT_type);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine sets the specific controller from FT5xx6 family.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>FT_type:</code> desired FT5xx6 controller to be set. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_TC_NONE</td>
+                        <td valign="top">No controller is set.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_TC_FT5X06</td>
+          						  <td valign="top">FT5x06 controller.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_TC_FT5X16</td>
+          						  <td valign="top">FT5x16 controller.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_TC_FT5X26</td>
+          						  <td valign="top">FT5x26 controller.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_TC_FT5x46</td>
+          						  <td valign="top">FT5x46 controller.</td>
+                      </tr>
+                    </tbody>
+                  </table>	
+             	</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set FT5x46 controller</i>
+FT5XX6_SetController(_TC_FT5x46);	
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_getcontroller">FT5XX6_GetController</h3>
+
+    <!-- tabela: FT5XX6_GetController -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_GetController();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine gets the specific controller from FT5xx6 family.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Value of controller that is set. Valid values :</p>
+						<ul>
+							<li><code>_TC_NONE:</code> No controller was set.</li>
+							<li><code>_TC_FT5X06:</code>_TC_FT5x06 controller was set.</li>
+							<li><code>_TC_FT5X16:</code>_TC_FT5x16 controller was set</li>
+							<li><code>_TC_FT5X26:</code>_TC_FT5x26 controller was set</li>
+							<li><code>_TC_FT5x46:</code>_TC_FT5x46 controller was set</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// if the FT5x46 controller was set</i>
+<b>if</b> (FT5XX6_GetController() == _TC_FT5x46) {
+  ...
+}		
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_setdefaultmode">FT5XX6_SetDefaultMode</h3>
+
+    <!-- tabela: FT5XX6_SetDefaultMode -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FT5XX6_SetDefaultMode();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine sets default values needed by the library - touch panel rotation set to 0 degrees and no touch panel controller selected.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>     
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FT5XX6_SetDefaultMode();
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>Always call this routine at the beggining of the application code.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="ft5xx6_getgesture">FT5XX6_GetGesture</h3>
+
+    <!-- tabela: FT5XX6_GetGesture -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> FT5XX6_GetGesture();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+					  <p>This routine detects the gesture performed on the touch panel.</p>
+          </td>
+        </tr>
+     
+		    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<ul>
+							<li><code>0:</code> No gesture detected.</li>
+							<li><code>ft5xx6_gest_move_up:</code> Swipe up gesture detected.</li>
+							<li><code>ft5xx6_gest_move_left:</code> Swipe left gesture detected.</li>
+							<li><code>ft5xx6_gest_move_down:</code> Swipe down gesture detected.</li>
+							<li><code>ft5xx6_gest_move_right:</code> Swipe right gesture detected.</li>
+							<li><code>FT5XX6_GEST_ZOOM_IN:</code> Zoom in gesture detected.</li>
+							<li><code>FT5XX6_GEST_ZOOM_OUT:</code> Zoom out gesture detected.</li>							
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// get gesture ID</i>
+gestureid = FT5XX6_GetGesture();
+
+<b>if</b> (gestureid == ft5xx6_gest_move_up) {
+  <i>// if Swipe up gesture detected</i>
+}
+
+<b>if</b> (gestureid == ft5xx6_gest_move_left) {
+  <i>// if Swipe left gesture detected</i>
+}
+                        
+<b>if</b> (gestureid == ft5xx6_gest_move_down) {
+  <i>// if Swipe down gesture detected</i>
+}
+
+<b>if</b> (gestureid == ft5xx6_gest_move_right) {
+  <i>// if Swipe right gesture detected</i>
+}
+
+<b>if</b> (gestureid == FT5XX6_GEST_ZOOM_IN) {
+  <i>// if Zoom in gesture detected</i>
+}
+
+<b>if</b> (gestureid == FT5XX6_GEST_ZOOM_OUT) {
+  <i>// if Zoom out gesture detected</i>
+}
+</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li>None.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+</body>
+
+</html>

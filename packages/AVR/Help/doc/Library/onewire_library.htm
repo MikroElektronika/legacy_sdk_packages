@@ -1,0 +1,503 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>OneWire Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">OneWire Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="mmc_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="port_expander_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>OneWire Library</h2></a>
+
+
+    <p>The OneWire library provides routines for communication via the Dallas OneWire protocol, e.g. with DS18x20 digital thermometer. 
+    	OneWire is a Master/Slave protocol, and all communication cabling required is a single wire. 
+      OneWire enabled devices should have open collector drivers (with single pull-up resistor) on the shared data line.</p>
+    	
+    	
+    <p>Slave devices on the OneWire bus can even get their power supply from data line. For detailed schematic see device datasheet.</p>
+
+    <p>Some basic characteristics of this protocol are:</p>
+    <ul>
+      <li>single master system,</li>
+      <li>low cost,</li>
+      <li>low transfer rates (up to 16 kbps),</li>
+      <li>fairly long distances (up to 300 meters),</li>
+      <li>small data transfer packages.</li>
+    </ul>
+
+    <p>Each OneWire device also has a unique 64-bit registration number (8-bit device type, 48-bit serial number and 8-bit CRC), so multiple slaves can co-exist on the same bus.</p>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>       
+    <ul>
+    	  <li>Oscillator frequency <em>Fosc</em> needs to be at least 8MHz in order to use the routines with Dallas digital thermometers.</li>
+    	<li>This library implements time-based activities, so interrupts need to be disabled when using OneWire library.</li>
+    </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#ow_reset">Ow_Reset</a></li>
+      <li><a href="#ow_read">Ow_Read</a></li>
+      <li><a href="#ow_write">Ow_Write</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="ow_reset">Ow_Reset</h3>
+
+
+    <!-- tabela: Ow_reset -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> Ow_Reset(<b>unsigned short</b> *port, <b>unsigned short</b> pin);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+            	<ul>
+            		<li><code>0</code> if the device is present</li>
+            		<li><code>1</code> if the device is not present</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Issues OneWire reset signal for DS18x20.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>port:</code> OneWire bus port</li>
+              	<li><code>pin:</code> OneWire bus pin</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Devices compliant with the Dallas OneWire protocol.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+          <p>To reset the DS1820 that is connected to the RB2 pin:</p>
+
+<pre><i>// Issue Reset signal on One-Wire Bus</i>
+Ow_Reset(&#38;PORTB, 2);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- -->
+
+
+    <h3 id="ow_read">Ow_Read</h3>
+
+
+    <!-- tabela: ow_read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> Ow_Read(<b>unsigned short</b> *port, <b>unsigned short</b> pin);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Data read from an external device over the OneWire bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one byte of data via the OneWire bus.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>port:</code> OneWire bus port</li>
+              	<li><code>pin:</code> OneWire bus pin</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Devices compliant with the Dallas OneWire protocol.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Read a byte from the One-Wire Bus</i>
+<b>unsigned short</b> tmp;
+...
+tmp = Ow_Read(&#38;PORTB, 2);</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- -->
+
+
+    <h3 id="ow_write">Ow_Write</h3>
+
+
+    <!-- tabela: ow_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Ow_Write(<b>unsigned short</b> *port, <b>unsigned short</b> pin, <b>unsigned short</b> par);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes one byte of data via the OneWire bus.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>port:</code> OneWire bus port</li>
+              	<li><code>pin:</code> OneWire bus pin</li>
+              	<li><code>par:</code> data to be written</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Devices compliant with the Dallas OneWire protocol.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Send a byte to the One-Wire Bus</i>
+Ow_Write(&#38;PORTB, 2, 0xCC);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>This example reads the temperature using DS18x20 connected to pin PORTB.2. After reset, MCU obtains temperature from the sensor and prints it on the Lcd. 
+    	 Make sure to pull-up PORTB.2 line and to turn off the PORTB leds.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>// LCD module connections</i>
+<b>sbit</b> LCD_RS <b>at</b> PORTD2_bit;
+<b>sbit</b> LCD_EN <b>at</b> PORTD3_bit;
+<b>sbit</b> LCD_D4 <b>at</b> PORTD4_bit;
+<b>sbit</b> LCD_D5 <b>at</b> PORTD5_bit;
+<b>sbit</b> LCD_D6 <b>at</b> PORTD6_bit;
+<b>sbit</b> LCD_D7 <b>at</b> PORTD7_bit;
+
+<b>sbit</b> LCD_RS_Direction <b>at</b> DDD2_bit;
+<b>sbit</b> LCD_EN_Direction <b>at</b> DDD3_bit;
+<b>sbit</b> LCD_D4_Direction <b>at</b> DDD4_bit;
+<b>sbit</b> LCD_D5_Direction <b>at</b> DDD5_bit;
+<b>sbit</b> LCD_D6_Direction <b>at</b> DDD6_bit;
+<b>sbit</b> LCD_D7_Direction <b>at</b> DDD7_bit;
+<i>// End LCD module connections</i>
+
+<i>//  Set TEMP_RESOLUTION to the corresponding resolution of used DS18x20 sensor:
+//  18S20: 9  (default setting; can be 9,10,11,or 12)
+//  18B20: 12</i>
+
+<b>const unsigned short</b> TEMP_RESOLUTION = 9;
+
+<b>char</b> *text = &#34;000.0000&#34;;
+<b>unsigned</b> temp;
+
+<b>void</b> Display_Temperature(<b>unsigned int</b> temp2write) {
+  <b>const unsigned short</b> RES_SHIFT = TEMP_RESOLUTION - 8;
+  <b>char</b> temp_whole;
+  <b>unsigned int</b> temp_fraction;
+
+  <i>// check if temperature is negative</i>
+  <b>if</b> (temp2write &#38; 0x8000) {
+    text[0] = '-';
+    temp2write = ~temp2write + 1;
+  }
+
+  <i>// extract temp_whole</i>
+  temp_whole = temp2write &#62;&#62; RES_SHIFT ;
+
+  <i>// convert temp_whole to characters</i>
+  <b>if</b> (temp_whole/100)
+    text[0] = temp_whole/100  + 48;
+  <b>else</b>
+    text[0] = '0';
+
+  text[1] = (temp_whole/10)%10 + 48;            <i>// Extract tens digit</i>
+  text[2] =  temp_whole%10     + 48;            <i>// Extract ones digit</i>
+
+  <i>// extract temp_fraction and convert it to unsigned int</i>
+  temp_fraction  = temp2write &#60;&#60; (4-RES_SHIFT);
+  temp_fraction &#38;= 0x000F;
+  temp_fraction *= 625;
+
+  <i>// convert temp_fraction to characters</i>
+  text[4] =  temp_fraction/1000    + 48;        <i>// Extract thousands digit</i>
+  text[5] = (temp_fraction/100)%10 + 48;        <i>// Extract hundreds digit</i>
+  text[6] = (temp_fraction/10)%10  + 48;        <i>// Extract tens digit</i>
+  text[7] =  temp_fraction%10      + 48;        <i>// Extract ones digit</i>
+
+  <i>// print temperature on LCD</i>
+  Lcd_Out(2, 5, text);
+}
+
+<b>void</b> main() {
+
+  Lcd_Init();                                   <i>// Initialize LCD</i>
+  Lcd_Cmd(_LCD_CLEAR);                          <i>// Clear LCD</i>
+  Lcd_Cmd(_LCD_CURSOR_OFF);                     <i>// Turn cursor off</i>
+  Lcd_Out(1, 1, &#34; Temperature:   &#34;);
+  <i>// Print degree character, 'C' for Centigrades</i>
+  Lcd_Chr(2,13,223);                            <i>// Different LCD displays have different char code for degree</i>
+                                                <i>// If you see greek alpha letter try typing 178 instead of 223</i>
+
+  Lcd_Chr(2,14,'C');
+
+  <i>//--- main loop</i>
+  <b>do</b> {
+    <i>//--- perform temperature reading</i>
+    Ow_Reset(&#38;PORTB, 2);                        <i>// Onewire reset signal</i>
+    Ow_Write(&#38;PORTB, 2, 0xCC);                  <i>// Issue command SKIP_ROM</i>
+    Ow_Write(&#38;PORTB, 2, 0x44);                  <i>// Issue command CONVERT_T</i>
+    Delay_us(120);
+
+    Ow_Reset(&#38;PORTB, 2);
+    Ow_Write(&#38;PORTB, 2, 0xCC);                  <i>// Issue command SKIP_ROM</i>
+    Ow_Write(&#38;PORTB, 2, 0xBE);                  <i>// Issue command READ_SCRATCHPAD</i>
+    Delay_ms(400);
+
+    temp =  Ow_Read(&#38;PORTB, 2);
+    temp = (Ow_Read(&#38;PORTB, 2) &#60;&#60; 8) + temp;
+
+    <i>//--- Format and display result on Lcd</i>
+    Display_Temperature(temp);
+
+    Delay_ms(500);
+  } <b>while</b> (1);
+}</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Example of DS1820 connection" src="img/schemes/scheme_ow.gif"></p>
+    <p class="center small">Example of DS1820 connection</p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_System_nocall.mcl",
+        "__Lib_Math.mcl",
+        "__Lib_MathDouble.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATMEGA48$|^ATMEGA168PA$|^ATMEGA88PA$|^ATMEGA8A$|^ATMEGA8515$|^ATMEGA48A$|^AT90PWM161$|^ATMEGA88P$|^ATMEGA8HVA$|^ATMEGA328$|^ATMEGA48PA$|^ATMEGA88A$|^ATMEGA64M1$|^ATMEGA48P$|^ATMEGA16M1$|^ATMEGA64C1$|^ATMEGA32M1$|^ATMEGA88$|^ATMEGA8535$|^ATMEGA328P$|^ATMEGA168A$|^ATMEGA8$|^AT90PWM1$|^ATMEGA32C1$|^AT90PWM81$|^ATMEGA16HVA$|^ATMEGA168PB$|^ATMEGA168P$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

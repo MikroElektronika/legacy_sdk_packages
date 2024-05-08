@@ -1,0 +1,1109 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>DAC Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_arm.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">DAC Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroC_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="compact_flash_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="eeprom_memory_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>DAC Library</h2></a>
+
+
+    <p>DAC (Digital to Analog Converter) module is available with a number of ARM MCU modules. <acronym title="Digital to Analog Converter">DAC</acronym> is an electronic circuit that converts discrete digital numbers to continuous signals. <acronym title="Digital to Analog Converter">DAC</acronym> Library provides you a comfortable work with the module.</p>
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#dacx_init">DACx_Init</a></li>
+      <li><a href="#dacx_init_advanced">DACx_Init_Advanced</a></li>
+      <li><a href="#dacx_advanced_chy_output">DACx_Advanced_Chy_Output</a></li>
+      <li><a href="#dacx_chy_output">DACx_Chy_Output</a></li>
+      <li><a href="#dac1_dual_output">DAC1_Dual_Output</a></li>
+      <li><a href="#dacx_output">DACx_Output</a></li>
+      <li><a href="#dacx_deinit">DACx_Deinit</a></li>
+    </ul>
+
+    <!-- -->
+    
+    <h3 id="dacx_init">DACx_Init</h3>
+
+
+    <!-- tabela: DACx_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> DACx_Init(<b>unsigned int</b> channel);</p>
+            <i>// for Kinetis devices</i>
+            <p><b>void</b> DACx_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routine initializes <acronym title="Digital to Analog Digital Conversion">DAC</acronym> module and sets used channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              <li><code>channel:</code> used <acronym title="Digital To Analog Conversion">DAC</acronym> channel :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_CH1_ENABLE</td>
+          					  <td valign="top">Channel 1.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_CH2_ENABLE</td>
+          					  <td valign="top">Channel 2.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_DUAL_MODE_ENABLE</td>
+          					  <td valign="top">Channels 1 and 2.</td>
+                    </tr>
+
+                  </tbody>
+                </table> 
+              </li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>MCU with built-in <acronym title="Digital To Analog Conversion">DAC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+DAC1_Init(_DAC_CH1_ENABLE);  <i>// Initialize DAC1 module for STM32 device, channel 1</i>
+DAC1_Init();  <i>// Initialize DAC1 module for Kinetis device</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	        <li><acronym title="Digital To Analog Converter">DAC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Digital To Analog Converter">DAC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	        <li>Number of <acronym title="Digital To Analog Converter">DAC</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="dacx_init_advanced">DACx_Init_Advanced</h3>
+
+
+    <!-- tabela: DACx_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> DACx_Init_Advanced(<b>unsigned long</b> config);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routine initializes <acronym title="Digital to Analog Digital Conversion">DAC</acronym> module according to custom configuration.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              <li><code>config:</code> used <acronym title="Digital To Analog Conversion">DAC</acronym> configuration :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_CFG_REFVOLT_SRC_VREF1</td>
+          					  <td valign="top">Select <code>DACREF_1</code> as the reference voltage.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_CFG_REFVOLT_SRC_VREF2</td>
+          					  <td valign="top">Select <code>DACREF_2</code> as the reference voltage.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_CFG_LOWPOWER_ENABLED</td>
+          					  <td valign="top">Enable the low power mode.</td>
+                    </tr>
+
+                  </tbody>
+                </table> 
+              </li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>MCU with built-in <acronym title="Digital To Analog Conversion">DAC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+DAC0_Init_Advanced(_DAC_CFG_REFVOLT_SRC_VREF1 || _DAC_CFG_LOWPOWER_ENABLED);
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	        <li><acronym title="Digital To Analog Converter">DAC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Digital To Analog Converter">DAC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	        <li>Number of <acronym title="Digital To Analog Converter">DAC</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	        <li>This routine is available only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="dacx_advanced_chy_output">DACx_Advanced_Chy_Output</h3>
+
+
+    <!-- tabela: DACx_Advanced_Chy_Output -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> DACx_Advanced_Chy_Output(<b>unsigned long</b> value, <b>unsigned long</b> config);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routine outputs analog value from the <acronym title="Digital To Analog Converter">DAC</acronym> module with user defined settings.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              <li><code>value:</code> output voltage value. Depending on the used mode (8-bit or 12-bit) this value is in range of 0-255 or 0-4095.
+               <p>The output analog voltage is calculated according to the equation: <b><code>DACoutput = VREF * value/mode</code></b>, 
+               <br>where <code>VREF</code> is the voltage reference value from the VREF pin and <code>mode</code> is 255 (8-bit mode) or 4095 (12-bit mode).</p>
+              </li>
+              <li><code>config:</code> configuration of the <acronym title="Digital To Analog Converter">DAC</acronym> module. Following constants can be or-ed to form the desired configuration :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_8_BIT</td>
+          					  <td valign="top">Set <acronym title="Digital To Analog Converter">DAC</acronym> module in 8-bit mode.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_12_BIT</td>
+          					  <td valign="top">Set <acronym title="Digital To Analog Converter">DAC</acronym> module in 12-bit mode.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_RIGHT_ALIGN</td>
+          					  <td valign="top">Right aligned data (available only in 12-bit mode).</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_LEFT_ALIGN</td>
+          					  <td valign="top">Left aligned data (available only in 12-bit mode).</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_NOISE_WAVE</td>
+          					  <td valign="top">Enable Noise-wave generation.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIANGLE_WAVE</td>
+          					  <td valign="top">Enable Triangle-wave generation.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_WAVE_DISABLED</td>
+          					  <td valign="top">Wave generation disabled.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_1</td>
+          					  <td valign="top">Unmask bit 0 of LFSR/ triangle amplitude equal to 1.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_MMAP_3</td>
+          					  <td valign="top">Unmask bits[1:0] of LFSR/ triangle amplitude equal to 3.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_7</td>
+          					  <td valign="top">Unmask bits[2:0] of LFSR/ triangle amplitude equal to 7.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_MMAP_15</td>
+          					  <td valign="top">Unmask bits[3:0] of LFSR/ triangle amplitude equal to 15.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_31</td>
+          					  <td valign="top">Unmask bits[4:0] of LFSR/ triangle amplitude equal to 31.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_MMAP_63</td>
+          					  <td valign="top">Unmask bits[5:0] of LFSR/ triangle amplitude equal to 63.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_127</td>
+          					  <td valign="top">Unmask bits[6:0] of LFSR/ triangle amplitude equal to 127.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_255</td>
+          					  <td valign="top">Unmask bits[7:0] of LFSR/ triangle amplitude equal to 255.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_511</td>
+          					  <td valign="top">Unmask bits[8:0] of LFSR/ triangle amplitude equal to 511.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_1023</td>
+          					  <td valign="top">Unmask bits[9:0] of LFSR/ triangle amplitude equal to 1023.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_2047</td>
+          					  <td valign="top">Unmask bits[10:0] of LFSR/ triangle amplitude equal to 2047.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_4095</td>
+          					  <td valign="top">Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_TRIGGER_TIM6</td>
+          					  <td valign="top">Timer 6 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_TIM3</td>
+          					  <td valign="top">Timer 3 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_TRIGGER_TIM7</td>
+          					  <td valign="top">Timer 7 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_TRIGGER_TIM5</td>
+          					  <td valign="top">Timer 5 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_TIM18</td>
+          					  <td valign="top">Timer 18 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_TIM2</td>
+          					  <td valign="top">Timer 2 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_TIM4</td>
+          					  <td valign="top">Timer 4 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_EXTI</td>
+          					  <td valign="top">External interrupt used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_SW</td>
+          					  <td valign="top"><acronym title="Digital To Analog Converter">DAC</acronym> triggered from the software.</td>
+                    </tr>
+
+                  </tbody>
+                </table> 
+              </li>
+
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Digital To Analog Converter">DAC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+DAC1_Advanced_Ch1_Output(2047, _DAC_12_BIT | DAC_RIGHT_ALIGN | _DAC_WAVE_DISABLED | _DAC_TRIGGER_SW);  <i>// get output from the channel 1 of DAC1 module</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	        <li><acronym title="Digital To Analog Converter">DAC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Digital To Analog Converter">DAC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	        <li>Also, simply change the letter <b>y</b> in the routine prototype for a number from <b>1</b> to <b>2</b> for a desired channel.</li>
+    	        <li>Number of <acronym title="Digital To Analog Converter">DAC</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	        <li>This routine is available only for STM32 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="dacx_chy_output">DACx_Chy_Output</h3>
+
+
+    <!-- tabela: DACx_Chy_Output -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> DACx_Chy_Output(<b>unsigned long</b> value);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routine outputs value from the <acronym title="Digital To Analog Converter">DAC</acronym> module and channel with the default settings :
+                <ul>
+                  <li>12-bit mode,</li>
+              	  <li>data right aligned,</li>
+              	  <li>voltage reference taken from the Vref pin.</li>
+                </ul>     
+          	</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+              <li><code>value:</code> output voltage value. This value is in range of 0-4095. The output analog voltage is calculated according to the equation: <b><code>DACoutput = VREF * value/4095</code></b>, 
+               <br>where <code>VREF</code> is the voltage reference value from the VREF pin.</p>
+              </li>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Digital To Analog Converter">DAC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+DAC1_Ch2_Output(127);  <i>// get output from the channel 2 of DAC1 module</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	        <li><acronym title="Digital To Analog Converter">DAC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Digital To Analog Converter">DAC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	        <li>Also, simply change the letter <b>y</b> in the routine prototype for a number from <b>1</b> to <b>2</b> for a desired channel.</li>
+    	        <li>Number of <acronym title="Digital To Analog Converter">DAC</acronym> modules/channelrs per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	        <li>This routine is available only for STM32 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="dac1_dual_output">DAC1_Dual_Output</h3>
+
+
+    <!-- tabela: DAC1_Dual_Output -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> DAC1_Dual_Output(<b>unsigned long</b> value1, <b>unsigned long</b> value2, <b>unsigned long</b> config1, <b>unsigned long</b> config2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine outputs value from both channels of the <acronym title="Digital To Analog Converter">DAC</acronym>1 module with user defined settings.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              <li><code>value1, value2:</code> output voltage value. Depending on the used mode (8-bit or 12-bit) this value is in range of 0-255 or 0-4095.
+               <p>The output analog voltage is calculated according to the equation: <b><code>DACoutput = VREF * value/mode</code></b>, 
+               <br>where <code>VREF</code> is the voltage reference value from the VREF pin and <code>mode</code> is 255 (8-bit mode) or 4095 (12-bit mode).</p>
+              </li>
+              <li><code>config1, config2 :</code> configuration of the <acronym title="Digital To Analog Converter">DAC</acronym> module. Following constants can be or-ed to form the desired configuration :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_8_BIT</td>
+          					  <td valign="top">Set <acronym title="Digital To Analog Converter">DAC</acronym> module in 8-bit mode.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_12_BIT</td>
+          					  <td valign="top">Set <acronym title="Digital To Analog Converter">DAC</acronym> module in 12-bit mode.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_RIGHT_ALIGN</td>
+          					  <td valign="top">Right aligned data (available only in 12-bit mode).</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_LEFT_ALIGN</td>
+          					  <td valign="top">Left aligned data (available only in 12-bit mode).</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_NOISE_WAVE</td>
+          					  <td valign="top">Enable Noise-wave generation.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIANGLE_WAVE</td>
+          					  <td valign="top">Enable Triangle-wave generation.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_WAVE_DISABLED</td>
+          					  <td valign="top">Wave generation disabled.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_1</td>
+          					  <td valign="top">Unmask bit 0 of LFSR/ triangle amplitude equal to 1.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_MMAP_3</td>
+          					  <td valign="top">Unmask bits[1:0] of LFSR/ triangle amplitude equal to 3.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_7</td>
+          					  <td valign="top">Unmask bits[2:0] of LFSR/ triangle amplitude equal to 7.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_MMAP_15</td>
+          					  <td valign="top">Unmask bits[3:0] of LFSR/ triangle amplitude equal to 15.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_31</td>
+          					  <td valign="top">Unmask bits[4:0] of LFSR/ triangle amplitude equal to 31.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_MMAP_63</td>
+          					  <td valign="top">Unmask bits[5:0] of LFSR/ triangle amplitude equal to 63.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_127</td>
+          					  <td valign="top">Unmask bits[6:0] of LFSR/ triangle amplitude equal to 127.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_255</td>
+          					  <td valign="top">Unmask bits[7:0] of LFSR/ triangle amplitude equal to 255.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_511</td>
+          					  <td valign="top">Unmask bits[8:0] of LFSR/ triangle amplitude equal to 511.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_1023</td>
+          					  <td valign="top">Unmask bits[9:0] of LFSR/ triangle amplitude equal to 1023.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_2047</td>
+          					  <td valign="top">Unmask bits[10:0] of LFSR/ triangle amplitude equal to 2047.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_MMAP_4095</td>
+          					  <td valign="top">Unmask bits[11:0] of LFSR/ triangle amplitude equal to 4095.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_TRIGGER_TIM6</td>
+          					  <td valign="top">Timer 6 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_TIM3</td>
+          					  <td valign="top">Timer 3 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_TRIGGER_TIM7</td>
+          					  <td valign="top">Timer 7 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_DAC_TRIGGER_TIM5</td>
+          					  <td valign="top">Timer 5 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_TIM18</td>
+          					  <td valign="top">Timer 18 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_TIM2</td>
+          					  <td valign="top">Timer 2 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_TIM4</td>
+          					  <td valign="top">Timer 4 used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_EXTI</td>
+          					  <td valign="top">External interrupt used as <acronym title="Digital To Analog Converter">DAC</acronym> trigger selection.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_DAC_TRIGGER_SW</td>
+          					  <td valign="top"><acronym title="Digital To Analog Converter">DAC</acronym> triggered from the software.</td>
+                    </tr>
+
+                  </tbody>
+                </table> 
+              </li>
+
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Digital To Analog Converter">DAC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+DAC1_Dual_Output(2047, _DAC_12_BIT, 511, _DAC_8_BIT);  // get output from both channels of DAC1 module
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	        <li>This routine is available only for STM32 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele --> 
+
+    <!-- -->
+    
+    <h3 id="dacx_output">DACx_Output</h3>
+
+
+    <!-- tabela: DAC1_Dual_Output -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> DACx_Output(<b>unsigned int</b> value);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine drives the <acronym title="Digital To Analog Converter">DAC</acronym> module to output DAC value.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              <li><code>value</code> output voltage value. This value is in range of 0-4095.
+               <p>The output analog voltage is calculated according to the equation: <b><code>DACoutput = VREF * value/4095</code></b>, 
+               <br>where <code>VREF</code> is the voltage reference value..</p>
+              </li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Digital To Analog Converter">DAC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+DAC1_Output(2047);  // get output from DAC1 module
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	        <li>This routine is available only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele --> 
+
+    <!-- -->
+
+
+    <h3 id="dacx_deinit">DACx_Deinit</h3>
+
+
+    <!-- tabela: DAC2_Deinit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> DACx_Deinit();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function deinitializes previously used <acronym title="Digital To Analog Converter">DAC</acronym> module</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Digital To Analog Converter">DAC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+DAC1_Deinit(); // deinitialize DAC1 module
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	        <li><acronym title="Digital To Analog Converter">DAC</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Digital To Analog Converter">DAC</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	        <li>Number of <acronym title="Digital To Analog Converter">DAC</acronym> modules/channelrs per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	        <li>This routine is available only for STM32 devices.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+<!--
+    <h3>Library Example</h3>
+
+    <p>This code snippet reads analog value from the channel 1 and sends readings as a text over UART1.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+
+</pre>	
+-->
+
+    <!-- -->
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+</body>
+
+</html>

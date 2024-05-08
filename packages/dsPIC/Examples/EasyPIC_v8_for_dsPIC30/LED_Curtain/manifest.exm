@@ -1,0 +1,8 @@
+{
+    "name": "Led Curtain",
+    "description": "This is a simple 'Hello World' project. It turns LEDs on/off.",
+    "image" : "io_group.png",
+    "toolchain": ["mikrocdspic"],
+    "hw" : ["EasyPIC v8 for dsPIC30"],
+    "category" : ["mikroC legacy dsPIC"]
+}

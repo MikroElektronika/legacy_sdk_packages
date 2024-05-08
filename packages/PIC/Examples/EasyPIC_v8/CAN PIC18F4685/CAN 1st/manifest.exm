@@ -1,0 +1,8 @@
+{
+    "name": "CAN 1st",
+    "description": "This project is a simple demonstration of CAN on PIC18F4685. This code demonstrates how to use CAN library functions and procedures",
+    "image" : "../CAN.png",
+    "toolchain": ["mikrocpic"],
+    "hw" : ["EasyPIC v8","PIC18F4685"],
+    "category" : ["mikroC legacy PIC"]
+}

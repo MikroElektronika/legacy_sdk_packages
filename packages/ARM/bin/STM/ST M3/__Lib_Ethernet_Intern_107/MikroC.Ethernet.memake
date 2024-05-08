@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.Ethernet",
+    "global_visibility": true,
+    "arch": "M3",
+    "binaries": [
+        "__Lib_Ethernet_Intern_107.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F107VC$|^STM32F107VB$|^STM32F107RC$|^STM32F107RB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}
+

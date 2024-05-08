@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_I2C_12_MSSP.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC24FV08KM202$|^PIC24F08KL402$|^PIC24F16KM202$|^PIC24F08KL302$|^PIC24F16KL402$|^PIC24F08KL301$|^PIC24FV16KM202$|^PIC24F08KM204$|^PIC24FV16KM204$|^PIC24F08KL401$|^PIC24F08KM202$|^PIC24F16KL401$|^PIC24F16KM204$|^PIC24FV08KM204$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

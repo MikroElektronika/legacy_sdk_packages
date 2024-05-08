@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "P18",
+    "binaries": [
+        "__Lib_ADC_1x30.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC18LF1230$|^PIC18F1330$|^PIC18F1230$|^PIC18LF1330$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

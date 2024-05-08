@@ -1,0 +1,463 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>PrintOut Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_arm.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">PrintOut Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_miscellaneous_libraries.htm">Miscellaneous Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="conversions_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="sprint_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>PrintOut Library</h2></a>
+
+    <p>The mikroC PRO for ARM provides the PrintOut routine for easy data formatting and printing.</p>
+
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="PrintOut Library Dependency Tree" src="img/dependencies/printout_dependency.gif">  
+    <p></p>
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#printout">PrintOut</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="printout">PrintOut</h3>
+
+
+    <!-- tabela: PrintOut -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> PrintOut(<b>void</b> (*prntoutfunc)(<b>char</b> ch), <b>const char</b> *f,...);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p><code>PrintOut</code> is used to format data and print them in a way defined by the user through a print handler function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+            		<li><code>prntoutfunc:</code> print handler function</li>
+            		<li><code>f:</code> format string</li>
+            	</ul>
+
+			<p>The <code>f</code> argument is a format string and may be composed of characters, escape sequences, and format specifications. Ordinary characters and escape sequences are copied to the print handler in order in which they are interpreted. Format specifications always begin with a percent sign (<code>%</code>) and require additional arguments to be included in the function call.</p>
+			<p>The format string is read from left to right. The first format specification encountered refers to the first argument after the <code>f</code> parameter and then converts and outputs it using the format specification. The second format specification accesses the second argument after <code>f</code>, and so on. If there are more arguments than format specifications, the extra arguments are ignored. Results are unpredictable if there are not enough arguments for the format specifications. The format specifications have the following format:</p>
+
+      <pre>% [<i>flags</i>] [<i>width</i>] [.<i>precision</i>]  [{ l | L }]  <i>conversion_type</i></pre>
+
+			<p>Each field in the format specification can be a single character or a number which specifies a particular format option. The <code><i>conversion_type</i></code> field is where a single character specifies that an argument is interpreted as a character, string, number, or pointer, as shown in the following table:</p>
+
+
+		    <!-- tabela: pregled conversion_type polja -->
+
+		    <table class="small">
+
+		      <!--
+		      <caption></caption>
+		      -->
+
+		      <thead>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <th class="center" width="15%"><code><i>conversion_type</i></code></th>
+		          <th class="center" width="15%">Argument&#160;Type</th>
+		          <th class="center" width="70%">Output&#160;Format</th>
+		        </tr>
+
+		      </thead>
+
+		      <tbody>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>d</code></td>
+		          <td><code>int</code></td>
+		          <td>Signed decimal number</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>u</code></td>
+		          <td><code>unsigned&#160;int</code></td>
+		          <td>Unsigned decimal number</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>o</code></td>
+		          <td><code>unsigned&#160;int</code></td>
+		          <td>Unsigned octal number</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>x</code></td>
+		          <td><code>unsigned&#160;int</code></td>
+		          <td>Unsigned hexadecimal number using 0123456789abcdef</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>X</code></td>
+		          <td><code>unsigned&#160;int</code></td>
+		          <td>Unsigned hexadecimal number using 0123456789ABCEDF</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>f</code></td>
+		          <td><code>double</code></td>
+		          <td>Floating-point number using the format [-]dddd.dddd</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>e</code></td>
+		          <td><code>double</code></td>
+		          <td>Floating-point number using the format [-]d.dddde[-]dd</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>E</code></td>
+		          <td><code>double</code></td>
+		          <td>Floating-point number using the format [-]d.ddddE[-]dd</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>g</code></td>
+		          <td><code>double</code></td>
+		          <td>Floating-point number using either e or f format, whichever is more compact for the specified value and precision</td>
+		        </tr>
+<!--
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>G</code></td>
+		          <td><code>double</code></td>
+		          <td>Identical to the g format except that (where applicable) E precedes the exponent instead of e</td>
+		        </tr>
+-->
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>c</code></td>
+		          <td><code>int</code></td>
+		          <td><code>int</code> is converted to an <code>unsigned char</code>, and the resulting character is written</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>s</code></td>
+		          <td><code>char&#160;*</code></td>
+		          <td>String with a terminating null character</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>p</code></td>
+		          <td><code>void *</code></td>
+		          <td>Pointer value, the X format is used</td>
+		        </tr>
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>%</code></td>
+		          <td><code>&lt;none&gt;</code></td>
+		          <td>A % is written. No argument is converted. The complete conversion specification shall be <code>%%</code>.</td>
+		        </tr>
+
+		      </tbody>
+
+		    </table>
+
+		    <!-- kraj tabele -->
+
+
+			<p>The <code><i>flags</i></code> field is where a single character is used to justify the output and to print +/- signs and blanks, decimal points, and octal and hexadecimal prefixes, as shown in the following table.</p>
+
+
+		    <!-- tabela: pregled flags polja -->
+
+		    <table class="small">
+
+		      <!--
+		      <caption></caption>
+		      -->
+
+		      <thead>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <th class="center" width="5%"><code><i>flags</i></code></th>
+		          <th class="center" width="95%">Meaning</th>
+		        </tr>
+
+		      </thead>
+
+		      <tbody>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>-</code></td>
+		          <td>Left justify the output in the specified field width.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>+</code></td>
+		          <td>Prefix the output value with + or - sign if the output is a signed type.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>space ('&#160;')</code></td>
+		          <td>Prefix the output value with a blank if it is a signed positive value. Otherwise, no blank is prefixed.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>#</code></td>
+		          <td>Prefix a non-zero output value with <code>0</code>, <code>0x</code>, or <code>0X</code> when used with <code>o</code>, <code>x</code>, and <code>X</code> field types, respectively. When used with the <code>e</code>, <code>E</code>, <code>f</code>, <code>g</code>, and <code>G</code> field types, the <code>#</code> flag forces the output value to include a decimal point. In any other case the <code>#</code> flag is ignored.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>*</code></td>
+		          <td>Ignore format specifier.</td>
+		        </tr>
+
+		      </tbody>
+
+		    </table>
+
+		    <!-- kraj tabele -->
+
+
+			<p>The <code><i>width</i></code> field is a non-negative number that specifies a minimum number of printed characters. If a number of characters in the output value is less than width, blanks are added on the left or right (when the - flag is specified) in order to pad to the minimum width. If the width is prefixed with 0, then zeros are padded instead of blanks. The <code><i>width</i></code> field never truncates a field. If the length of the output value exceeds the specified width, all characters are output.</p>
+			<p>The <code><i>precision</i></code> field is a non-negative number that specifies the number of characters to print, number of significant digits, or number of decimal places. The precision field can cause truncation or rounding of the output value in the case of a floating-point number as specified in the following table.</p>
+
+
+		    <!-- tabela: pregled precision polja -->
+
+		    <table class="small">
+
+		      <!--
+		      <caption></caption>
+		      -->
+
+		      <thead>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <th class="center" width="25%"><code><i>flags</i></code></th>
+		          <th class="center" width="75%">Meaning of the <code><i>precision</i></code> field</th>
+		        </tr>
+
+		      </thead>
+
+		      <tbody>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>d, u, o, x, X</code></td>
+		          <td>The precision field is where you specify the minimum number of digits that will be included in the output value. Digits are not truncated if the number of digits in an argument exceeds that defined in the precision field. If the number of digits in the argument is less than the precision field, the output value is padded on the left with zeros.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>f</code></td>
+		          <td>The precision field is where you specify the number of digits to the right of the decimal point. The last digit is rounded.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>e, E</code></td>
+		          <td>The precision field is where you specify the number of digits to the right of the decimal point. The last digit is rounded.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>g<!--, G--></code></td>
+		          <td>The precision field is where you specify the maximum number of significant digits in the output value.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>c, C</code></td>
+		          <td>The precision field has no effect on these field types.</td>
+		        </tr>
+
+		        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+		          <td><code>s</code></td>
+		          <td>The precision field is where you specify the maximum number of characters in the output value. Excess characters are not output.</td>
+		        </tr>
+
+		      </tbody>
+
+		    </table>
+
+		    <!-- kraj tabele -->
+
+
+			<p>The optional characters <code>l</code> or <code>L</code> may immediately precede <code><i>conversion_type</i></code> to respectively specify long versions of the integer types <code>d</code>, <code>i</code>, <code>u</code>, <code>o</code>, <code>x</code>, and <code>X</code>.
+			<p>You must ensure that the argument type matches that of the format specification. You can use type casts to ensure that the proper type is passed to <code>printout</code>.
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Print mikroElektronika example's header file to UART.</p>
+<pre>
+
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <p></p>
+
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_FLASH_32F401x_1024.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F412ZG$|^STM32F412RG$|^STM32F412VG$|^STM32F413ZG$|^STM32F413MG$|^STM32F413RG$|^STM32F412CG$|^STM32F413VG$|^STM32F413CG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

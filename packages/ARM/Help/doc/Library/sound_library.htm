@@ -1,0 +1,510 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Sound Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Marko Jovanovic & Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Sound Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="software_uart_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="spi_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Sound Library</h2></a>
+
+
+    <p>The mikroC PRO for ARM provides a Sound Library to supply users with routines necessary for sound signalization in their applications. 
+    	Sound generation needs additional hardware, such as piezo-speaker (example of piezo-speaker interface is given on the schematic at the bottom of this page).</p>
+    	
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#sound_init">Sound_Init</a></li>
+      <li><a href="#sound_play">Sound_Play</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="sound_init">Sound_Init</h3>
+
+
+    <!-- tabela: sound_init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Sound_Init(<b>unsigned long</b> *snd_port, <b>unsigned long</b> snd_pin);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Configures the appropriate MCU pin for sound generation.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>snd_port:</code> sound output port address</li>
+             	<li><code>snd_pin:</code> sound output pin</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+<i>// Initialize the pin GPIO_PORTA.6 for playing sound</i>
+Sound_Init(&#38;GPIO_PORTA_DATA, 6);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+<i>// Initialize the pin DIO_P6OUT.6 for playing sound</i>
+Sound_Init(&#38;DIO_P6OUT, 6);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<pre>
+<i>// Initialize the pin GPIOE_ODR.14 for playing sound</i>
+Sound_Init(&#38;GPIOE_ODR, 14);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+<pre>
+<i>// Initialize the pin for playing sound</i>
+Sound_Init(&#38;GPIO_OUTPUT_010_017, 1);</pre>
+    </div>
+
+  </div>
+
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="sound_play">Sound_Play</h3>
+
+
+    <!-- tabela: sound_play -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Sound_Play(<b>unsigned int</b> freq_in_hz, <b>unsigned int</b> duration_ms);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Generates the square wave signal on the appropriate pin.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>freq_in_hz:</code> signal frequency in Hertz (Hz)</li>
+             	<li><code>duration_ms:</code> signal duration in miliseconds (ms)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>In order to hear the sound, you need a piezo speaker (or other hardware) on designated port. Also, you must call <a href="#sound_init">Sound_Init</a> to prepare hardware for output before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Play sound of 1KHz in duration of 100ms</i>
+Sound_Play(1000, 100);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- 
+
+
+    <h3>Library Example</h3>
+
+    <p>The example is a simple demonstration of how to use the Sound Library for playing tones on a piezo speaker.</p>
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<b>void</b> Tone1() {
+  Sound_Play(659, 250);   <i>// Frequency = 659Hz, duration = 250ms</i>
+}
+
+<b>void</b> Tone2() {
+  Sound_Play(698, 250);   <i>// Frequency = 698Hz, duration = 250ms</i>
+}
+
+<b>void</b> Tone3() {
+  Sound_Play(784, 250);   <i>// Frequency = 784Hz, duration = 250ms</i>
+}
+
+<b>void</b> Melody() {           <i>// Plays the melody &#34;Yellow house&#34;</i>
+  Tone1(); Tone2(); Tone3(); Tone3();
+  Tone1(); Tone2(); Tone3(); Tone3();
+  Tone1(); Tone2(); Tone3();
+  Tone1(); Tone2(); Tone3(); Tone3();
+  Tone1(); Tone2(); Tone3();
+  Tone3(); Tone3(); Tone2(); Tone2(); Tone1();
+}
+
+<b>void</b> ToneA() {
+  Sound_Play( 880, 50);
+}
+<b>void</b> ToneC() {
+  Sound_Play(1046, 50);
+}
+<b>void</b> ToneE() {
+  Sound_Play(1318, 50);
+}
+
+<b>void</b> Melody2() {
+  <b>unsigned short</b> i;
+  <b>for</b> (i = 9; i &#62; 0; i--) {
+    ToneA(); ToneC(); ToneE();
+  }
+}
+
+<b>void</b> main() {
+
+  GPIO_Config(&#38;GPIO_PORTJ_DATA, 0b11111000, _GPIO_DIR_INPUT, _GPIO_CFG_DIGITAL_ENABLE, 0);
+  Sound_Init(&#38;GPIO_PORTA_DATA, 6);
+  Sound_Play(880, 1000);            <i>// Play sound at 880Hz for 1 second</i>
+
+  <b>while</b> (1) {
+    <b>if</b> (Button(&#38;GPIO_PORTJ_DATA,7,1,1))       <i>// GPIO_PORTJ.B7 plays Tone1</i>
+      Tone1();
+    <b>while</b> (GPIO_PORTJ_DATA7_bit);                <i>// Wait for button to be released</i>
+
+    <b>if</b> (Button(&#38;GPIO_PORTJ_DATA,6,1,1))       <i>// GPIO_PORTJ.B6 plays Tone2</i>
+      Tone2();
+    <b>while</b> (GPIO_PORTJ_DATA6_bit);                <i>// Wait for button to be released</i>
+
+    <b>if</b> (Button(&#38;GPIO_PORTJ_DATA,5,1,1))       <i>// GPIO_PORTJ.B5 plays Tone3</i>
+      Tone3();
+    <b>while</b> (GPIO_PORTJ_DATA5_bit);                <i>// Wait for button to be released</i>
+
+    <b>if</b> (Button(&#38;GPIO_PORTJ_DATA,4,1,1))       <i>// GPIO_PORTJ.B4 plays Melody2</i>
+      Melody2();
+    <b>while</b> (GPIO_PORTJ_DATA4_bit);                <i>// Wait for button to be released</i>
+
+    <b>if</b> (Button(&#38;GPIO_PORTJ_DATA,3,1,1))       <i>// GPIO_PORTJ.B3 plays Melody</i>
+      Melody();
+    <b>while</b> (GPIO_PORTJ_DATA3_bit);                <i>// Wait for button to be released</i>
+  }
+}
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<b>void</b> Tone1() {
+  Sound_Play(659, 250);   <i>// Frequency = 659Hz, duration = 250ms</i>
+}
+
+<b>void</b> Tone2() {
+  Sound_Play(698, 250);   <i>// Frequency = 698Hz, duration = 250ms</i>
+}
+
+<b>void</b> Tone3() {
+  Sound_Play(784, 250);   <i>// Frequency = 784Hz, duration = 250ms</i>
+}
+
+<b>void</b> Melody() {           <i>// Plays the melody &#34;Yellow house&#34;</i>
+  Tone1(); Tone2(); Tone3(); Tone3();
+  Tone1(); Tone2(); Tone3(); Tone3();
+  Tone1(); Tone2(); Tone3();
+  Tone1(); Tone2(); Tone3(); Tone3();
+  Tone1(); Tone2(); Tone3();
+  Tone3(); Tone3(); Tone2(); Tone2(); Tone1();
+}
+
+<b>void</b> ToneA() {
+  Sound_Play( 880, 50);
+}
+<b>void</b> ToneC() {
+  Sound_Play(1046, 50);
+}
+<b>void</b> ToneE() {
+  Sound_Play(1318, 50);
+}
+
+<b>void</b> Melody2() {
+  <b>unsigned short</b> i;
+  <b>for</b> (i = 9; i &#62; 0; i--) {
+    ToneA(); ToneC(); ToneE();
+  }
+}
+
+<b>void</b> main() {
+  GPIO_Digital_Input(&#38;GPIOD_IDR, _GPIO_PINMASK_LOW);
+  Sound_Init(&#38;GPIOE_ODR, 14);
+  Sound_Play(880, 1000);            <i>// Play sound at 880Hz for 1 second</i>
+
+  <b>while</b> (1) {
+    <b>if</b> (Button(&#38;GPIOD_IDR,7,1,1))       <i>// RB7 plays Tone1</i>
+      Tone1();
+    <b>while</b> (GPIOD_IDR.B7);                <i>// Wait for button to be released</i>
+
+    <b>if</b> (Button(&#38;GPIOD_IDR,6,1,1))       <i>// RB6 plays Tone2</i>
+      Tone2();
+    <b>while</b> (GPIOD_IDR.B6);                <i>// Wait for button to be released</i>
+
+    <b>if</b> (Button(&#38;GPIOD_IDR,5,1,1))       <i>// RB5 plays Tone3</i>
+      Tone3();
+    <b>while</b> (GPIOD_IDR.B5);                <i>// Wait for button to be released</i>
+
+    <b>if</b> (Button(&#38;GPIOD_IDR,4,1,1))       <i>// RB4 plays Melody2</i>
+      Melody2();
+    <b>while</b> (GPIOD_IDR.B4);                <i>// Wait for button to be released</i>
+
+    <b>if</b> (Button(&#38;GPIOD_IDR,3,1,1))       <i>// RB3 plays Melody</i>
+      Melody();
+    <b>while</b> (GPIOD_IDR.B3);                <i>// Wait for button to be released</i>
+  }
+}
+</pre>
+    </div>
+  </div>
+
+-->
+
+    <!-- 
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Example of Sound Library" src="img/Schemes/scheme_sound.gif"></p>
+    <p class="center small">Example of Sound Library</p>
+    
+    -->
+    
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

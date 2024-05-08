@@ -1,0 +1,26 @@
+:: Base project template
+
+:: project: TFT
+target: TFT
+
+type: executable
+
+sources: {
+    TFT.c
+    TFT_resources.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.TFT_Defs
+    MikroC.TFT
+    MikroC.TFT_TouchPanel
+}
+
+headers: {
+    TFT_resources.h
+}
+
+others: {
+    ./ETFT.png
+}

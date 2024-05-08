@@ -1,0 +1,252 @@
+{
+    "board": {
+        "category": "Development board",
+        "icon": "images/fusion-for-pic32-v8.png",
+        "mikrobus_count": 5,
+        "name": "Fusion for PIC32 v8",
+        "tft_display": null,
+        "version": ""
+    },
+    "display": {
+        "icon": ":/block_icon",
+        "init_code": null,
+        "name": "No display"
+    },
+    "mcu": {
+        "architecture": "PIC32",
+        "device_id": "PIC32MX795F512L|100|TQFP",
+        "family": "PIC32MX",
+        "flash": "512KB",
+        "icon": "images/micro_chip.png",
+        "isMCUCard": false,
+        "max_speed": "80MHz",
+        "name": "PIC32MX795F512L",
+        "pin_count": "100",
+        "ram": "128KB",
+        "settings": {
+            "clock": 80,
+            "config_registers": [
+                {
+                    "fields": [
+                        {
+                            "key": "FSRSSEL",
+                            "value": "00070000"
+                        },
+                        {
+                            "key": "FMIIEN",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "FETHIO",
+                            "value": "02000000"
+                        },
+                        {
+                            "key": "FCANIO",
+                            "value": "04000000"
+                        },
+                        {
+                            "key": "FUSBIDIO",
+                            "value": "40000000"
+                        },
+                        {
+                            "key": "FVBUSONIO",
+                            "value": "80000000"
+                        }
+                    ],
+                    "key": "DEVCFG3"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "FPLLIDIV",
+                            "value": "00000003"
+                        },
+                        {
+                            "key": "FPLLMUL",
+                            "value": "00000050"
+                        },
+                        {
+                            "key": "UPLLIDIV",
+                            "value": "00000300"
+                        },
+                        {
+                            "key": "UPLLEN",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "FPLLODIV",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "DEVCFG2"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "FNOSC",
+                            "value": "00000003"
+                        },
+                        {
+                            "key": "FSOSCEN",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "IESO",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "POSCMOD",
+                            "value": "00000200"
+                        },
+                        {
+                            "key": "OSCIOFNC",
+                            "value": "00000400"
+                        },
+                        {
+                            "key": "FPBDIV",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "FCKSM",
+                            "value": "0000c000"
+                        },
+                        {
+                            "key": "WDTPS",
+                            "value": "00140000"
+                        },
+                        {
+                            "key": "FWDTEN",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "DEVCFG1"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "DEBUG",
+                            "value": "00000003"
+                        },
+                        {
+                            "key": "RESERVED1",
+                            "value": "00000004"
+                        },
+                        {
+                            "key": "ICESEL",
+                            "value": "00000008"
+                        },
+                        {
+                            "key": "PWP",
+                            "value": "000ff000"
+                        },
+                        {
+                            "key": "BWP",
+                            "value": "01000000"
+                        },
+                        {
+                            "key": "CP",
+                            "value": "10000000"
+                        }
+                    ],
+                    "key": "DEVCFG0"
+                }
+            ],
+            "mcu": "PIC32MX795F512L",
+            "package": ""
+        },
+        "vendor": "Microchip"
+    },
+    "name": "Fusion for PIC32 v8 PIC32MX795F512L",
+    "prog": {
+        "description": "CODEGRIP Suite is a powerful software tool. It is used to intelligently manage programming tasks, as well as various other options and settings of the CODEGRIP.",
+        "icon": "icon.png",
+        "name": "CODEGRIP",
+        "planet_debug_compatible": "Yes",
+        "settings": {
+            "auto_start_local_gdb": true,
+            "control_port": "1235",
+            "ip_address": "127.0.0.1",
+            "port": "1234",
+            "remote_addresses": [],
+            "remote_password": "",
+            "selected_device": null,
+            "selected_options": {
+                "Erase Type": {
+                    "group": "Target Operation",
+                    "value": "Sector erase"
+                },
+                "Programming Type": {
+                    "group": "Target Connection",
+                    "value": "With Executive"
+                },
+                "Protocol": {
+                    "group": "Target Connection",
+                    "value": "2-wire EJTAG"
+                },
+                "Speed": {
+                    "group": "Target Connection",
+                    "value": "4 MHz"
+                },
+                "Verify Type": {
+                    "group": "Target Operation",
+                    "value": "Readback"
+                },
+                "Verify after Write": {
+                    "group": "Target Operation",
+                    "value": "Enabled"
+                }
+            }
+        },
+        "uid": "codegrip"
+    },
+    "sdk": {
+        "families": [
+            "PIC32"
+        ],
+        "icon": "Resources/icon.png",
+        "legacy": true,
+        "name": "mikroC for PIC32 Legacy",
+        "sdk_development_kit": false,
+        "uuid": "sdk.mikroc.legacy.pic32",
+        "version": "4.0.0"
+    },
+    "toolchain": {
+        "icon": "mikroC_PIC32.png",
+        "language": "MikroC",
+        "name": "mikroC AI for PIC32",
+        "settings": {
+            "actions": {
+                "build": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--build all",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                },
+                "clean": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--clean",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "memake.settings": {
+                "BOARD_NAME": "BOARD_FUSION_FOR_PIC32_V8"
+            },
+            "output_path": ""
+        },
+        "uid": "mikrocpic32",
+        "vendor": "MikroElektronika",
+        "version": "1.2.0"
+    },
+    "uid": "2c33d8ac-24f4-4661-a523-4ffe95316171"
+}

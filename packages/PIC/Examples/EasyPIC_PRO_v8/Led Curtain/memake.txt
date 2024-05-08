@@ -1,0 +1,18 @@
+:: Base project template
+
+:: project: Led_Curtain
+target: Led_Curtain
+
+type: executable
+
+sources: {
+    Led_Curtain.c
+}
+
+depends: {
+    MikroC.System
+}
+
+uses: {
+    MikroC.System
+}

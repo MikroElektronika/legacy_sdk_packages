@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_PWM_33MC_EP_3.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33EP32GS202$|^dsPIC33EP16GS202$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

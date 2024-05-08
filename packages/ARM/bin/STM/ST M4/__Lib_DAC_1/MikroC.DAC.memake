@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.DAC",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_DAC_1.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F302C6$|^STM32F301C8$|^STM32F301K8$|^STM32F302K8$|^STM32F302RB$|^STM32F302R6$|^STM32F302RC$|^STM32F301C6$|^STM32F301K6$|^STM32F410CB$|^STM32F301R8$|^STM32F318C8$|^STM32F410C8$|^STM32F301R6$|^STM32F302R8$|^STM32F302ZE$|^STM32F302CB$|^STM32F302VD$|^STM32F302RE$|^STM32F302ZD$|^STM32F302VB$|^STM32F302VE$|^STM32F318K8$|^STM32F302C8$|^STM32F410R8$|^STM32F302RD$|^STM32F410RB$|^STM32F410TB$|^STM32F302CC$|^STM32F302K6$|^STM32F302VC$|^STM32F410T8$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

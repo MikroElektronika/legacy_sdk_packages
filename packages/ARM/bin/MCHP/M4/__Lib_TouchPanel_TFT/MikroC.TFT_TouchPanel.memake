@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.TFT_TouchPanel",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_TouchPanel_TFT.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^CEC1302$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

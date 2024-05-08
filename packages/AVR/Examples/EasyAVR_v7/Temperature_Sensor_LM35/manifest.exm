@@ -1,0 +1,8 @@
+{
+    "name": "LM35",
+    "description": "This simple project will display current temperature via LM32 sensor and LCD device.",
+    "image" : "LM35.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7"],
+    "category" : ["mikroC legacy AVR"]
+}

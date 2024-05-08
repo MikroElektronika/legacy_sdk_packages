@@ -1,0 +1,8 @@
+{
+    "name": "Ethernet Demo",
+    "description": "This code shows how to use the Ethernet library",
+    "image" : "ethernet.png",
+    "toolchain": ["mikrocpic32"],
+    "hw" : ["Fusion for PIC32 v8"],
+    "category" : ["mikroC legacy PIC32"]
+}

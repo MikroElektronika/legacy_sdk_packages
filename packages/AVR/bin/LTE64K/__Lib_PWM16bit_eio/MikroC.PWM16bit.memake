@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.PWM16bit",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_PWM16bit_eio.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^AT90USB646$|^AT90CAN64$|^ATMEGA32U6$|^AT90USB1286$|^AT90USB1287$|^ATMEGA16U4$|^AT90CAN128$|^ATMEGA32U4$|^AT90CAN32$|^AT90USB647$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

@@ -1,0 +1,21 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: GLCD
+
+type: executable
+
+sources: {
+    GLCD.c
+    Bitmap.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.Glcd_Fonts
+    MikroC.Glcd
+}
+
+others: {
+    ./GLCD.png
+}

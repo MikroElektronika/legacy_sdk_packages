@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.USB",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_USBH_J01.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^TM4C1237D5PZ$|^TM4C1237H6PZ$|^TM4C123GH6PZ$|^TM4C123GE6PZ$|^TM4C1237E6PZ$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

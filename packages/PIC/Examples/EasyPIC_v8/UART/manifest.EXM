@@ -1,0 +1,8 @@
+{
+    "name": "UART",
+    "description": "This code demonstrates how to use UART library routines.",
+    "image" : "UART.png",
+    "toolchain": ["mikrocpic"],
+    "hw" : ["EasyPIC v8"],
+    "category" : ["mikroC legacy PIC"]
+}

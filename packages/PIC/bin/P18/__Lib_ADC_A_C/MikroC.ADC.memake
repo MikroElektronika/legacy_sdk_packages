@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "P18",
+    "binaries": [
+        "__Lib_ADC_A_C.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC18F458$|^PIC18F242$|^PIC18F4539$|^PIC18C252$|^PIC18C442$|^PIC18C452$|^PIC18F2439$|^PIC18F442$|^PIC18F258$|^PIC18F248$|^PIC18F252$|^PIC18C242$|^PIC18F2539$|^PIC18F448$|^PIC18F4439$|^PIC18F452$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

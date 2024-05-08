@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C_Remappable",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_I2C_Remappable_c01.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F15325$|^PIC16F15344$|^PIC16F18324$|^PIC16LF15345$|^PIC16LF18323$|^PIC16F15324$|^PIC16LF18324$|^PIC16LF15324$|^PIC16F18323$|^PIC16LF18344$|^PIC16LF15325$|^PIC16LF15344$|^PIC16F18344$|^PIC16F15345$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

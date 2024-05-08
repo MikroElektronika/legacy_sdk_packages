@@ -1,0 +1,30 @@
+:: Base project template
+
+:: project: TFT
+target: TFT
+
+type: executable
+
+uses: {
+    MikroC.System
+    MikroC.TFT
+    MikroC.TFT_Defs
+}
+
+depends: {
+    MikroC.System
+    MikroC.TFT
+    MikroC.TFT_Defs
+}
+
+sources: {
+    TFT_main.c
+    TFT_events_code.c
+    TFT_driver.c
+    TFT_resources.c
+}
+
+headers: {
+    TFT_resources.h
+    TFT_objects.h
+}

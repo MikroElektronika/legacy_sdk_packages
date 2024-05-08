@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "P18",
+    "binaries": [
+        "__Lib_SPI_c345b123.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC18F25K22$|^PIC18LF26K22$|^PIC18LF24K22$|^PIC18F26K22$|^PIC18F24K22$|^PIC18F23K22$|^PIC18LF23K22$|^PIC18LF25K22$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

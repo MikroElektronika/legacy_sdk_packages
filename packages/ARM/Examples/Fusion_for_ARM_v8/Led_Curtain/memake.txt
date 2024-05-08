@@ -1,0 +1,16 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: Led_Curtain
+
+uses: {
+    MikroC.System
+}
+
+depends: {
+    MikroC.System
+}
+
+sources: {
+    Led_Curtain.c
+}

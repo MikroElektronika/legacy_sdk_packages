@@ -1,0 +1,559 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>FFT Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_ARM.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">FFT Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="dsp_library.htm">DSP Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="iir_filter_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="vectors_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    
+    <a name="top_of_page"><h2>FFT Library</h2></a>
+
+    
+    <p>Complex Fast Fourier Transform (CFFT) and Complex Inverse Fast Fourier Transform (CIFFT) is an efficient algorithm to compute Discrete Fourier Transform (DFT) and Inverse Discrete Fourier Transform (IDFT). 
+    <br>Computational complexity of CFFT reduces drastically when compared to DFT.</p>
+
+    <p>This library implements CFFT/CIFFT for Q15 data type. The functions operates on in-place buffer which uses same buffer for input and output. Complex input is stored in input buffer in an interleaved fashion.</p>
+
+    <p>The functions operate on blocks of input and output data and each call to the function processes <code>2*fftLen</code> samples through the transform. <code>pSrc</code> points to In-place arrays containing <code>2*fftLen</code> values.
+    <br>The <code>pSrc</code> points to the array of in-place buffer of size <code>2*fftLen</code> and inputs and outputs are stored in an interleaved fashion as shown below :</p>
+
+<pre class="program">
+ {real[0], imag[0], real[1], imag[1],..}
+</pre>
+
+    <p>Internally, the function utilize a radix-4 decimation in frequency algorithm and the size of the FFT supported are of the lengths [16, 64, 256, 1024, 4096]. </p>
+
+
+    <h3>Complex Fast Fourier Transform</h3>
+
+    <h4>Input real and imaginary data</h4>
+   
+<pre class="program">
+x(n) = xa + j * ya
+x(n+N/4 ) = xb + j * yb
+x(n+N/2 ) = xc + j * yc
+x(n+3N 4) = xd + j * yd
+</pre>
+
+    <p>where N is length of FFT.</p>
+    
+    <h4>Output real and imaginary data</h4>
+
+<pre class="program">
+X(4r) = xa'+ j * ya'
+X(4r+1) = xb'+ j * yb'
+X(4r+2) = xc'+ j * yc'
+X(4r+3) = xd'+ j * yd'
+</pre>
+ 
+    <h4>Twiddle factors for radix-4 FFT</h4>
+<pre class="program">
+Wn =  co1 + j * (- si1)   
+W2n = co2 + j * (- si2)   
+W3n = co3 + j * (- si3)
+</pre>
+
+    <p>Output from Radix-4 CFFT results in digit reversal order. Interchange middle two branches of every butterfly results in bit reversed output./p>
+
+    <h3>Butterfly CFFT equations</h4>
+    
+<pre class="program">
+xa' = xa + xb + xc + xd   
+ya' = ya + yb + yc + yd   
+xc' = (xa+yb-xc-yd)* co1 + (ya-xb-yc+xd)* (si1)   
+yc' = (ya-xb-yc+xd)* co1 - (xa+yb-xc-yd)* (si1)   
+xb' = (xa-xb+xc-xd)* co2 + (ya-yb+yc-yd)* (si2)   
+yb' = (ya-yb+yc-yd)* co2 - (xa-xb+xc-xd)* (si2)   
+xd' = (xa-yb-xc+yd)* co3 + (ya+xb-yc-xd)* (si3)   
+yd' = (ya+xb-yc-xd)* co3 - (xa-yb-xc+yd)* (si3)
+</pre> 
+ 
+    <p>CIFFT uses same twiddle factor table as CFFT with modifications in the design equation as shown below.</p>
+
+
+    <h3>Modified Butterfly CIFFT equations</h3>
+
+<pre class="program">
+xa' = xa + xb + xc + xd   
+ya' = ya + yb + yc + yd   
+xc' = (xa-yb-xc+yd)* co1 - (ya+xb-yc-xd)* (si1)   
+yc' = (ya+xb-yc-xd)* co1 + (xa-yb-xc+yd)* (si1)   
+xb' = (xa-xb+xc-xd)* co2 - (ya-yb+yc-yd)* (si2)   
+yb' = (ya-yb+yc-yd)* co2 + (xa-xb+xc-xd)* (si2)   
+xd' = (xa+yb-xc-yd)* co3 - (ya-xb-yc+xd)* (si3)   
+yd' = (ya-xb-yc+xd)* co3 + (xa+yb-xc-yd)* (si3)   
+</pre>
+ 
+
+    <p>Separate instance structure must be defined for each instance, but the twiddle factors and bit reversal tables can be reused.</p>
+
+
+    <h3>Initialization Function</h3>
+
+    <p>The initialization function performs the following operations :</p>
+
+    <ul>
+	    <li>Sets the values of the internal structure fields.</li>
+	    <li>Initializes twiddle factor table and bit reversal table pointers.</li>
+    </ul>
+
+    <p>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. 
+    <br>To place an instance structure into a const data section, the instance structure must be manually initialized as follows :</p>
+
+<pre class="program">
+TFFT_Radix4_Instance fftInstance = {fftLen, ifftFlag, bitReverseFlag, pTwiddle, pBitRevTable, twidCoefModifier, bitRevFactor}; </pre>
+</pre> 
+ 
+    <p>where : 
+    <ul>
+    	<li><code>fftLen</code>: length of CFFT/CIFFT;</li>
+    	<li><code>ifftFlag</code>: flag for selection of CFFT or CIFFT (set ifftFlag to calculate CIFFT, otherwise calculates CFFT);</li>
+    	<li><code>bitReverseFlag</code>: flag for selection of output order (set bitReverseFlag to output in normal order, otherwise output in bit reversed order);</li>
+    	<li><code>pTwiddle</code>: points to array of twiddle coefficients;</li>
+    	<li><code>pBitRevTable</code>: points to the array of bit reversal table.</li>
+    	<li><code>twidCoefModifier</code>: modifier for twiddle factor table which supports all FFT lengths with same table;</li>
+    	<li><code>bitRevFactor</code>: modifier for bit reversal table which supports all FFT lengths with same table.</li>
+    </ul>
+
+    <p>Pseudo code for generation of bit reversal table is :</p>
+<pre class="program">
+<b>for</b>(l = 1; l &lt;= N/4; l++) {
+  <b>for</b>(i = 0; i &lt; logN2; i++) {
+    a[i] = l & (1 &lt;&lt; i);   
+  }   
+  <b>for</b>(j = 0; j &lt; logN2; j++){   
+    <b>if</b> (a[j] != 0)   
+      y[l] += (1 &lt;&lt; ((logN2 - 1) - j));   
+  }   
+  y[l] = y[l] &gt;&gt; 1;   
+}
+</pre>
+
+    <p>where <code>N = 1024</code>, <code>log2N = 10</code> and <code>N</code> is the maximum FFT size supported.</p>
+
+    <p>Pseudo code for generation of Q15 twiddle factors :</p>
+<pre class="program">
+<b>for</b>(i = 0; i < N; i++) {   
+  twiddleCoefQ15[2*i] = <b>cos</b>(i * 2*PI/(float)N);   
+  twiddleCoefQ15[2*i+1] = <b>sin</b>(i * 2*PI/(float)N);   
+}    
+</pre>
+    <p>where <codeN = 1024</code and <codePI = 3.14159265358979</code. Values of <code>cos</code> and <code>sin</code> are in interleaved fashion.<p>
+
+    <h3>Library Routines</h3>
+
+    <ul>
+    	<li><a href="#fft_radix4_init">FFT_Radix4_Init</a></li>
+    	<li><a href="#fft_radix4">FFT_Radix4</a></li>
+    </ul>
+
+    <!-- -->
+
+    <h3 id="fft_radix4_init">FFT_Radix4_Init</h3>
+
+    <!-- tabela: FFT -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>char</b> FFT_Radix4_Init(TFFT_Radix4_Instance *fftInstance, uint16_t fftLen, uint8_t ifftFlag, uint8_t bitReverseFlag);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+      			<p>Function initializes FFT transformation.</p>
+          </td>
+        </tr>
+    
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>fftInstance:</code> points to an instance of the Q15 CFFT/CIFFT structure.</li>
+            	<li><code>fftLen:</code> length of the FFT.</li>
+            	<li><code>ifftFlag:</code> flag that selects forward (<code>ifftFlag = 0</code>) or inverse (<code>ifftFlag = 1</code>) transform.</li>
+            	<li><code>bitReverseflag:</code> flag that enables or disables bit reversal of output.</li>
+            </ul>
+          </td>
+        </tr>    
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>0</code> - if initialization is successful.</li>
+             	<li><code>1</code> - if <code>fftLen</code> is not a supported value.</li> 
+            </ul>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> status;
+TFFT_Radix4_Instance cfft_instance;
+
+<i>// Initialize the CFFT function to compute 64 point FFT</i>
+status = FFT_Radix4_Init(&#38;cfft_instance, 64, 0, 1);
+</pre>
+          </td>
+        </tr>        
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          
+          </td>
+        </tr>         
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3 id="fft_radix4">FFT_Radix4</h3>
+
+    <!-- tabela: FFT -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> FFT_Radix4(<b>const</b> TFFT_Radix4_Instance *fftInstance, q15_t *pSrc);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+      			<p>Function applies FFT transformation.</p>
+          </td>
+        </tr>
+    
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>fftInstance:</code> points to an instance of the Q15 CFFT/CIFFT structure.</li>
+            	<li><code>pSrc:</code> points to the complex data buffer. Processing occurs in-place.</li>
+            </ul>
+          </td>
+        </tr>    
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+#define FFT_BLOCKSIZE 128
+
+q15_t Ak[FFT_BLOCKSIZE];             <i>// q15 input A</i>
+TFFT_Radix4_Instance cfft_instance;
+TFFT_Radix4_Instance *cfft_instance_ptr = (TFFT_Radix4_Instance*) &#38;cfft_instance;
+
+<i>// Transform input a[n] from time domain to frequency domain A[k]</i>
+FFT_Radix4(cfft_instance_ptr, Ak);
+</pre>
+          </td>
+        </tr>        
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>          
+          </td>
+        </tr>         
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3>Input and output formats</h3>
+
+    <p>Internally input is downscaled by 2 for every stage to avoid saturations inside CFFT/CIFFT process. Hence the output format is different for different FFT sizes. 
+    <br>The input and output formats for different FFT sizes and number of bits to upscale are mentioned in the tables below for CFFT and CIFFT :</p>
+
+    <h4>Input and Output Formats for Q15 CFFT</h4>
+
+    <table class="small">
+
+      <!--
+      <caption></caption>
+      -->
+
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">CFFT Size</th>
+          <th valign="top">Input format</th>
+          <th valign="top">Output format</th>
+          <th valign="top">Number of bits to upscale</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">16</td>
+          <td valign="top">1.15</td>
+          <td valign="top">5.11</td>
+          <td valign="top">4</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">64</td>
+          <td valign="top">1.15</td>
+          <td valign="top">7.9</td>
+          <td valign="top">6</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">256</td>
+          <td valign="top">1.15</td>
+          <td valign="top">9.7</td>
+          <td valign="top">8</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">1024</td>
+          <td valign="top">1.15</td>
+          <td valign="top">11.5</td>
+          <td valign="top">10</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">4096</td>
+          <td valign="top">1.15</td>
+          <td valign="top">13.3</td>
+          <td valign="top">12</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <h4>Input and Output Formats for Q15 CIFFT</h4>
+
+    <table class="small">
+
+      <!--
+      <caption></caption>
+      -->
+
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">CIFFT Size</th>
+          <th valign="top">Input format</th>
+          <th valign="top">Output format</th>
+          <th valign="top">Number of bits to upscale</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">16</td>
+          <td valign="top">1.15</td>
+          <td valign="top">5.11</td>
+          <td valign="top">0</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">64</td>
+          <td valign="top">1.15</td>
+          <td valign="top">7.9</td>
+          <td valign="top">0</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">256</td>
+          <td valign="top">1.15</td>
+          <td valign="top">9.7</td>
+          <td valign="top">0</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">1024</td>
+          <td valign="top">1.15</td>
+          <td valign="top">11.5</td>
+          <td valign="top">0</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td valign="top">4096</td>
+          <td valign="top">1.15</td>
+          <td valign="top">13.3</td>
+          <td valign="top">0</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

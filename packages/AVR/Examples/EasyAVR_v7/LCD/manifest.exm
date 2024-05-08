@@ -1,0 +1,8 @@
+{
+    "name": "LCD",
+    "description": "This is a simple demonstration of LCD library functions.",
+    "image" : "LCD.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7","LCD"],
+    "category" : ["mikroC legacy AVR"]
+}

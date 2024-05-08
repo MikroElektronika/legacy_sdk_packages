@@ -1,0 +1,8 @@
+{
+    "name": "ADC on LEDs",
+    "description": "This is a simple project which reads analog input, and displays the results on LEDs.",
+    "image" : "ADC.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7"],
+    "category" : ["mikroC legacy AVR"]
+}

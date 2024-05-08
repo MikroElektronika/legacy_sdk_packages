@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "P16",
+    "binaries": [
+        "__Lib_UART_c45.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F688$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

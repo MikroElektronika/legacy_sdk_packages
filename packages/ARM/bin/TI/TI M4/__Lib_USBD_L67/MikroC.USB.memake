@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.USB",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_USBD_L67.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^TM4C1233H6PGE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

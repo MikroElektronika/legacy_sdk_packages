@@ -1,0 +1,4298 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>TFT Display Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_PIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">TFT Display Library</div><div class="navigation">&nbsp;&nbsp;<A href="index.htm">mikroC PRO for PIC Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="stmpe610_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="tft_16bit_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>TFT Library</h2></a>
+
+    <p>Thin film transistor liquid crystal display (TFT-LCD) is a variant of liquid crystal display (LCD) which uses thin-film transistor (TFT) technology to improve image quality (e.g., addressability, contrast). 
+    <br>TFT LCD is one type of active matrix LCD, though all LCD-screens are based on TFT active matrix addressing. 
+    <br>TFT LCDs are used in television sets, computer monitors, mobile phones, handheld video game systems, personal digital assistants, navigation systems, projectors, etc.</p>
+
+    <p>The mikroC PRO for PIC provides a library for working with the following display controllers :</p>
+		<ul>
+			<li>Himax HX8347G and HX8347-D,</li>
+			<li>Solomon Systech SSD1963,</li>
+			<li>Renesas SP R61526,</li>
+			<li>Sitronix SST7715R and ST7789V,</li>
+			<li>Ilitek ILI9340, ILI9341 and ILI9481.</li>		
+		</ul>
+
+    <br>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+      <ul>
+      	<li>When connecting the TFT display to the MCU use voltage translators from 5V to 3.3V (if MCU is a 5V device). In any other case you can damage the TFT!</li>
+      	<li>Library works with PIC18 family only.</li>
+        <li>All display controllers are initialized with 65,536 colors (R(5),G(6),B(5)).</li>
+      </ul>
+    </div>
+
+<!--
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="TFT Library Dependency Tree" src="img/dependencies/tft_dependency.gif">  
+    <p></p>
+-->
+   <h3>External dependencies of TFT Library</h3>
+
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using TFT library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr char</b> TFT_DataPort;</code></td>
+          <td align="left">TFT Data Port.</td>
+          <td align="left"><code><b>char</b> TFT_DataPort <b>at</b> LATD;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr char</b> TFT_DataPort_Direction;</code></td>
+          <td align="left">Direction of the TFT Data Port.</td>
+          <td align="left"><code><b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_WR;</code></td>
+          <td align="left">Write signal.</td>
+          <td align="left"><code><b>sbit</b> TFT_WR <b>at</b> LATE1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_RD;</code></td>
+          <td align="left">Read signal.</td>
+          <td align="left"><code><b>sbit</b> TFT_RD <b>at</b> LATE0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_CS;</code></td>
+          <td align="left">Chip Select signal.</td>
+          <td align="left"><code><b>sbit</b> TFT_CS <b>at</b> LATG3_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_RS;</code></td>
+          <td align="left">Command/Register Select signal.</td>
+          <td align="left"><code><b>sbit</b> TFT_RS <b>at</b> LATH6_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_RST;</code></td>
+          <td align="left">Reset signal.</td>
+          <td align="left"><code><b>sbit</b> TFT_RST <b>at</b> LATH4_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_WR_Direction;</code></td>
+          <td align="left">Direction of the Write pin.</td>
+          <td align="left"><code><b>sbit</b> TFT_WR_Direction <b>at</b> TRISE1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_RD_Direction;</code></td>
+          <td align="left">Direction of the Read pin.</td>
+          <td align="left"><code><b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_CS_Direction;</code></td>
+          <td align="left">Direction of the Chip Select pin.</td>
+          <td align="left"><code><b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_RS_Direction;</code></td>
+          <td align="left">Direction of the Register Select pin.</td>
+          <td align="left"><code><b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> TFT_RST_Direction;</code></td>
+          <td align="left">Direction of the Reset pin.</td>
+          <td align="left"><code><b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;</code></td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <h3 id="display_init">Library Routines</h3>
+    <ul>
+      <li><a href="#tft_init">TFT_Init</a></li>
+      <li><a href="#tft_init_hx8347g">TFT_Init_HX8347G</a></li>
+      <li><a href="#tft_init_ssd1963_8bit">TFT_Init_SSD1963_8bit</a></li>
+      <li><a href="#tft_init_r61526">TFT_Init_R61526</a></li>
+      <li><a href="#tft_init_sst7715r">TFT_Init_SST7715R</a><br><br></li>
+      <li><a href="#tft_init_ili9340_8bit">TFT_Init_ILI9340_8bit</a></li>
+      <li><a href="#tft_init_ili9341_8bit">TFT_Init_ILI9341_8bit</a></li>
+      <li><a href="#tft_init_st7789v_8bit">TFT_Init_ST7789V_8bit</a></li>      
+      <li><a href="#tft_init_ili9481_8bit">TFT_Init_ILI9481_8bit</a><br><br></li>
+      
+      <li><a href="#tft_set_index">TFT_Set_Index</a></li>
+      <li><a href="#tft_write_command">TFT_Write_Command</a></li>
+      <li><a href="#tft_write_data">TFT_Write_Data</a></li>
+      <li><a href="#tft_set_reg">TFT_Set_Reg</a></li>
+      <li><a href="#tft_set_ext_buffer">TFT_Set_Ext_Buffer</a></li>
+      <li><a href="#tft_set_active">TFT_Set_Active</a></li>
+      <li><a href="#tft_set_default_mode">TFT_Set_Default_Mode</a></li>
+      <li><a href="#tft_set_font">TFT_Set_Font</a></li>
+      <li><a href="#tft_set_ext_font">TFT_Set_Ext_Font</a></li>
+      <li><a href="#tft_write_char">TFT_Write_Char</a></li>
+			<li><a href="#tft_write_text">TFT_Write_Text</a></li>
+			<li><a href="#tft_write_const_text">TFT_Write_Const_Text</a></li>
+      <li><a href="#tft_fill_screen">TFT_Fill_Screen</a></li>
+      <li><a href="#tft_set_pen">TFT_Set_Pen</a></li>
+      <li><a href="#tft_set_brush">TFT_Set_Brush</a></li>
+      <li><a href="#tft_dot">TFT_Dot</a></li>
+			<li><a href="#tft_line">TFT_Line</a></li>
+      <li><a href="#tft_h_line">TFT_H_Line</a></li>
+      <li><a href="#tft_v_line">TFT_V_Line</a></li>
+			<li><a href="#tft_rectangle">TFT_Rectangle</a></li>
+			<li><a href="#tft_rectangle_round_edges">TFT_Rectangle_Round_Edges</a></li>
+			<li><a href="#tft_circle">TFT_Circle</a></li>
+			<li><a href="#tft_image">TFT_Image</a></li>
+			<li><a href="#tft_ext_image">TFT_Ext_Image</a></li>
+			<li><a href="#tft_partial_image">TFT_Partial_Image</a></li>
+			<li><a href="#tft_ext_partial_image">TFT_Ext_Partial_Image</a></li>
+			<li><a href="#tft_image_jpeg">TFT_Image_Jpeg</a></li>
+			<li><a href="#tft_rgbtocolor16bit">TFT_RGBToColor16bit</a></li>
+			<li><a href="#tft_color16bittorgb">TFT_Color16bitToRGB</a></li>
+			<li><a href="#tft_rotate_180">TFT_Rotate_180</a></li>
+		</ul>
+		
+    
+    <!-- -->
+
+
+    <h3 id="tft_init">TFT_Init</h3>
+
+
+    <!-- tabela: TFT_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes HX8347-D display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_init_hx8347g">TFT_Init_HX8347G</h3>
+
+
+    <!-- tabela: TFT_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init_HX8347G(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes HX8347-G display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init_HX8347G(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_init_ssd1963_8bit">TFT_Init_SSD1963_8bit</h3>
+
+
+    <!-- tabela: TFT_Init_SSD1963_8bit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init_SSD1963_8bit(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes SSD1963 display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init_SSD1963_8bit(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_init_r61526">TFT_Init_R61526</h3>
+
+
+    <!-- tabela: TFT_Init_R61526 -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init_R61526(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes R61526 display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init_R61526(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_init_sst7715r">TFT_Init_SST7715R</h3>
+
+
+    <!-- tabela: TFT_Init_SST7715R -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init_SST7715R(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes SST7715R display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init_SST7715R(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_init_ili9340_8bit">TFT_Init_ILI9340_8bit</h3>
+
+
+    <!-- tabela: TFT_Init_ILI9340_8bit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init_ILI9340_8bit(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes ILI9340 display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init_ILI9340_8bit(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_init_ili9341_8bit">TFT_Init_ILI9341_8bit</h3>
+
+
+    <!-- tabela: TFT_Init_ILI9341_8bit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init_ILI9341_8bit(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes ILI9341 display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init_ILI9341_8bit(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_init_st7789v_8bit">TFT_Init_ST7789V_8bit</h3>
+
+
+    <!-- tabela: TFT_Init_ST7789V_8bit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init_ST7789V_8bit(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes ST7789V display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init_ST7789V_8bit(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_init_ili9481_8bit">TFT_Init_ILI9481_8bit</h3>
+
+
+    <!-- tabela: TFT_Init_ILI9481_8bit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Init_ILI9481_8bit(<b>unsigned int</b> display_width, <b>unsigned char</b> display_height);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes ILI9481 display controller display in the 8-bit working mode.</p> 
+						<p>Parameters :</p>
+            	<ul>
+            		<li><code>width:</code> width of the TFT panel</li>
+                <li><code>height:</code> height of the TFT panel</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :
+            	<ul>
+                <li><code>TFT_DataPort:</code> Data Port</li>
+                <li><code>TFT_WR:</code> Write signal pin</li>
+                <li><code>TFT_RD:</code> Read signal pin</li>
+                <li><code>TFT_CS:</code> Chip Select signal pin</li>
+                <li><code>TFT_RS:</code> Register Select signal pin</li>
+                <li><code>TFT_RST:</code> Reset signal pin</li>
+                <br>
+                <li><code>TFT_DataPort_Direction:</code> Direction of Data Port</li>
+                <li><code>TFT_WR_Direction:</code> Direction of Write signal pin</li>
+                <li><code>TFT_RD_Direction:</code> Direction of Read signal pin</li>
+                <li><code>TFT_CS_Direction:</code> Direction of Chip Select signal pin</li>
+                <li><code>TFT_RS_Direction:</code> Direction of Register Select signal pin</li>
+                <li><code>TFT_RST_Direction:</code> Direction of Reset signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// TFT display connections</i>
+<b>char</b> TFT_DataPort <b>at</b> LATD;
+<b>sbit</b> TFT_WR <b>at</b> LATE1_bit;
+<b>sbit</b> TFT_RD <b>at</b> LATE0_bit;
+<b>sbit</b> TFT_CS <b>at</b> LATG3_bit;
+<b>sbit</b> TFT_RS <b>at</b> LATH6_bit;
+<b>sbit</b> TFT_RST <b>at</b> LATH4_bit;
+
+<b>char</b> TFT_DataPort_Direction <b>at</b> TRISD;
+<b>sbit</b> TFT_WR_Direction : <b>at</b> TRISE1_bit;
+<b>sbit</b> TFT_RD_Direction <b>at</b> TRISE0_bit;
+<b>sbit</b> TFT_CS_Direction <b>at</b> TRISG3_bit;
+<b>sbit</b> TFT_RS_Direction <b>at</b> TRISH6_bit;
+<b>sbit</b> TFT_RST_Direction <b>at</b> TRISH4_bit;
+<i>// End of TFT display connections</i>
+
+<i>// Initialize 240x320 TFT display</i>
+TFT_Init_ILI9481_8bit(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_set_index">TFT_Set_Index</h3>
+
+
+    <!-- tabela: TFT_Set_Index -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Index(<b>unsigned short</b> index);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Accesses register space of the controller and sets the desired register.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>index:</code> desired register number.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Access register at the location 0x02</i>
+TFT_Set_Index(0x02);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_write_command">TFT_Write_Command</h3>
+
+
+    <!-- tabela: TFT_Write_Command  -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Write_Command(<b>unsigned short</b> cmd);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Accesses data space and writes a command.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>cmd:</code> command to be written.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Write a command</i>
+TFT_Write_Command(0x02);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+
+    <h3 id="tft_write_data">TFT_Write_Data</h3>
+
+
+    <!-- tabela: TFT_Write_Data -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Write_Data(<b>unsigned int</b> _data);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes date into display memory.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>_data:</code>data to be written.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Send data</i>
+TFT_Write_Data(0x02);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+
+    <!-- -->
+
+
+    <h3 id="tft_set_reg">TFT_Set_Reg</h3>
+
+
+    <!-- tabela: TFT_Set_Reg -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Reg(<b>unsigned short</b> index, <b>unsigned short</b> value);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Accesses register space of the controller and writes a value in the desired register.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>index:</code> desired register.</li>
+            		<li><code>value:</code> value to be written.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// 65K Color Selection</i>
+TFT_Set_Reg(0x17, 0x05);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_set_ext_buffer">TFT_Set_Ext_Buffer</h3>
+
+
+    <!-- tabela: TFT_Set_Ext_Buffer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Ext_Buffer(char* (*getExtDataPtr)(<b>unsigned long</b> offset, <b>unsigned int</b> count, <b>unsigned int</b>  *num));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets pointer to the user function which manipulates the external resource.</p>
+            <p>Parameters :</p>
+              <ul>
+	              <li><code>offset</code> - offset from the beginning of the resource from where the data is requested.</li>
+	              <li><code>count</code> - requested number of bytes.</li>
+	              <li><code>num</code> - variable for holding the returned number of bytes (less or equal to the number of acquired bytes).</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b>* ReadExternalBuffer(<b>unsigned long</b> offset, <b>unsigned int</b> count, <b>unsigned int</b> *num){
+  <b>unsigned long</b> start_sector;
+  <b>unsigned int</b> pos;
+
+  start_sector = Mmc_Get_File_Write_Sector() + offset/512;
+  pos = (<b>unsigned long</b>)offset%512;
+
+  <b>if</b>(start_sector == currentSector+1){
+    Mmc_Multi_Read_Buffer(EXT_BUFFER);
+    currentSector = start_sector;
+  }<b>else</b>
+    <b>if</b>(start_sector != currentSector){
+      Mmc_Multi_Read_Stop();
+      Mmc_Multi_Read_Start(start_sector);
+      Mmc_Multi_Read_Buffer(EXT_BUFFER);
+      currentSector = start_sector;
+    }
+
+  <b>if</b>(count&#62;512-pos){
+    *num = 512-pos;
+  }
+  <b>else</b>
+    *num = count;
+
+  <b>return</b> EXT_BUFFER+pos;
+}
+
+TFT_Set_Ext_Buffer(ReadExternalBuffer);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_set_active">TFT_Set_Active</h3>
+
+
+    <!-- tabela: TFT_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Active(<b>void</b> (*Set_Index_Ptr)(<b>unsigned short</b>), <b>void</b> (*Write_Command_Ptr)(<b>unsigned short</b>), <b>void</b> (*Write_Data_Ptr)(<b>unsigned int</b>));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function sets appropriate pointers to a user-defined basic routines in order to enable multiple working modes.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>Set_Index_Ptr:</code> Set_Index handler.</li>
+            		<li><code>Write_Command_Ptr:</code> _Write_Command handler.</li>
+            		<li><code>Write_Data_Ptr:</code> Write_Data handler.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Example of establishing 16-bit communication between TFT display and PORTD, PORTE of MCU :</i>
+
+<b>void</b> Set_Index(<b>unsigned short</b> index) {
+  TFT_RS = 0;
+  Lo(LATD) = index;
+  TFT_WR = 0;
+  TFT_WR = 1;
+}
+
+<b>void</b> Write_Command(<b>unsigned short</b> cmd) {
+  TFT_RS = 1;
+  Lo(LATD) = cmd;
+  TFT_WR = 0;
+  TFT_WR = 1;
+}
+
+<b>void</b> Write_Data(<b>unsigned int</b> _data) {
+  TFT_RS = 1;
+  Lo(LATE) = Hi(_data);
+  Lo(LATD) = Lo(_data);
+  TFT_WR = 0;
+  TFT_WR = 1;
+}
+
+<b>void</b> main(){
+  TRISE = 0;
+  TRISD = 0;
+
+  TFT_Set_Active(Set_Index,Write_Command,Write_Data);
+  TFT_Init(320, 240);
+
+  .....
+}
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_set_default_mode">TFT_Set_Default_Mode</h3>
+
+
+    <!-- tabela: TFT_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Default_Mode();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function sets TFT in default working mode.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li>None.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Set_Default_Mode();
+TFT_Init(320, 240);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3 id="tft_set_font">TFT_Set_Font</h3>
+
+
+    <!-- tabela: TFT_Set_Font -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Font(<b>const char far</b> *activeFont, <b>unsigned int</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font, its color and font orientation.</p>
+		 				<p>Parameters :</p>
+            	<ul>
+            		<li><code>activeFont:</code> desired font. Currently, only <code>TFT_defaultFont</code> (Tahoma14x16) is supported.</li>
+            		<li><code>font_color:</code> sets font color :
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_AQUA</td>
+          						  <td valign="top">Aqua color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_BLACK</td>
+          						  <td valign="top">Black color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_BLUE</td>
+          						  <td valign="top">Blue color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_FUCHSIA</td>
+          						  <td valign="top">Fuchsia color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_GRAY</td>
+          						  <td valign="top">Gray color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_GREEN</td>
+          						  <td valign="top">Green color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_LIME</td>
+          						  <td valign="top">Lime color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_MAROON</td>
+          						  <td valign="top">Maroon color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_NAVY</td>
+          						  <td valign="top">Navy color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_OLIVE</td>
+          						  <td valign="top">Olive color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_PURPLE</td>
+          						  <td valign="top">Purple color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_RED</td>
+          						  <td valign="top">Red color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_SILVER</td>
+          						  <td valign="top">Silver color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_TEAL</td>
+          						  <td valign="top">Teal color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_WHITE</td>
+          						  <td valign="top">White color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_YELLOW</td>
+          						  <td valign="top">Yellow color</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+            		<li><code>font_orientation:</code> sets font orientation :
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">FO_HORIZONTAL</td>
+                        <td valign="top">Horizontal orientation</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">FO_VERTICAL</td>
+          						  <td valign="top">Vertical orientation</td>
+                      </tr>
+
+					            <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">FO_VERTICAL_COLUMN</td>
+          						  <td valign="top">Vertical column orientation</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Set_Font(TFT_defaultFont, CL_BLACK, FO_HORIZONTAL);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_set_ext_font">TFT_Set_Ext_Font</h3>
+
+
+    <!-- tabela: TFT_Set_Font -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Ext_Font(<b>unsigned long</b> *activeFont, <b>unsigned int</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font, its color and font orientation. Font is located in an external resource</p>
+		 				<p>Parameters :</p>
+            	<ul>
+            		<li><code>activeFont:</code> desired font. This parameter represents the address in the exteral resource from where the font data begins. </li>
+            		<li><code>font_color:</code> sets font color :
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_AQUA</td>
+          						  <td valign="top">Aqua color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_BLACK</td>
+          						  <td valign="top">Black color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_BLUE</td>
+          						  <td valign="top">Blue color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_FUCHSIA</td>
+          						  <td valign="top">Fuchsia color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_GRAY</td>
+          						  <td valign="top">Gray color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_GREEN</td>
+          						  <td valign="top">Green color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_LIME</td>
+          						  <td valign="top">Lime color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_MAROON</td>
+          						  <td valign="top">Maroon color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_NAVY</td>
+          						  <td valign="top">Navy color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_OLIVE</td>
+          						  <td valign="top">Olive color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_PURPLE</td>
+          						  <td valign="top">Purple color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_RED</td>
+          						  <td valign="top">Red color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_SILVER</td>
+          						  <td valign="top">Silver color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_TEAL</td>
+          						  <td valign="top">Teal color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_WHITE</td>
+          						  <td valign="top">White color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_YELLOW</td>
+          						  <td valign="top">Yellow color</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+            		<li><code>font_orientation:</code> sets font orientation :
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">FO_HORIZONTAL</td>
+                        <td valign="top">Horizontal orientation</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">FO_VERTICAL</td>
+          						  <td valign="top">Vertical orientation</td>
+                      </tr>
+
+					            <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">FO_VERTICAL_COLUMN</td>
+          						  <td valign="top">Vertical column orientation</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Set_Ext_Font(173296,CL_BLACK,FO_HORIZONTAL);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_write_char">TFT_Write_Char</h3>
+
+
+    <!-- tabela: TFT_Write_Char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Write_Char(<b>unsigned int</b> c, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a char on the TFT at coordinates (x, y).</p>
+            	<ul>
+            		<li><code>c:</code> char to be written.</li>
+            		<li><code>x:</code> char position on x-axis.</li>
+            		<li><code>y:</code> char position on y-axis.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Write_Char('A',22,23);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_write_text">TFT_Write_Text</h3>
+
+
+    <!-- tabela: TFT_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Write_Text(<b>unsigned char</b> *text, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text on the TFT at coordinates (x, y).</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>text:</code> text to be written.</li>
+            		<li><code>x:</code> text position on x-axis.</li>
+            		<li><code>y:</code> text position on y-axis.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+TFT_Write_Text("TFT LIBRARY DEMO, WELCOME !", 0, 0);	
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_write_const_text">TFT_Write_Const_Text</h3>
+
+
+    <!-- tabela: TFT_Write_Const_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Write_Const_Text(<b>const char</b> *text, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text located in the program memory on the TFT at coordinates (x, y).</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>text:</code> text to be written.</li>
+            		<li><code>x:</code> text position on x-axis.</li>
+            		<li><code>y:</code> text position on y-axis.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+<b>const char</b> ctext[] = "mikroElektronika";
+...
+TFT_Write_Const_Text(ctext, 0, 0);
+</pre>
+
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="tft_fill_screen">TFT_Fill_Screen</h3>
+
+
+    <!-- tabela: TFT_Fill_Screen -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Fill_Screen(<b>unsigned int</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills screen memory block with given color.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>color:</code> color to be filled :
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_AQUA</td>
+          						  <td valign="top">Aqua color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_BLACK</td>
+          						  <td valign="top">Black color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_BLUE</td>
+          						  <td valign="top">Blue color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_FUCHSIA</td>
+          						  <td valign="top">Fuchsia color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_GRAY</td>
+          						  <td valign="top">Gray color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_GREEN</td>
+          						  <td valign="top">Green color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_LIME</td>
+          						  <td valign="top">Lime color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_MAROON</td>
+          						  <td valign="top">Maroon color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_NAVY</td>
+          						  <td valign="top">Navy color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_OLIVE</td>
+          						  <td valign="top">Olive color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_PURPLE</td>
+          						  <td valign="top">Purple color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_RED</td>
+          						  <td valign="top">Red color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_SILVER</td>
+          						  <td valign="top">Silver color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_TEAL</td>
+          						  <td valign="top">Teal color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_WHITE</td>
+          						  <td valign="top">White color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_YELLOW</td>
+          						  <td valign="top">Yellow color</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>           		
+            		</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Fill_Screen(CL_BLACK);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_dot">TFT_Dot</h3>
+
+    <!-- tabela: TFT_Dot -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Dot(<b>int</b> x, <b>int</b> y, <b>unsigned int</b> color);</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a dot on the TFT at coordinates (x, y). </p>
+		        <p>Parameters :
+            	<ul>
+            		<li><code>x:</code> dot position on x-axis.</li>
+            		<li><code>y:</code> dot position on y-axis.</li>
+            		<li><code>color:</code> color parameter. Valid values : 
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_AQUA</td>
+          						  <td valign="top">Aqua color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_BLACK</td>
+          						  <td valign="top">Black color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_BLUE</td>
+          						  <td valign="top">Blue color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_FUCHSIA</td>
+          						  <td valign="top">Fuchsia color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_GRAY</td>
+          						  <td valign="top">Gray color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_GREEN</td>
+          						  <td valign="top">Green color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_LIME</td>
+          						  <td valign="top">Lime color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_MAROON</td>
+          						  <td valign="top">Maroon color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_NAVY</td>
+          						  <td valign="top">Navy color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_OLIVE</td>
+          						  <td valign="top">Olive color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_PURPLE</td>
+          						  <td valign="top">Purple color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_RED</td>
+          						  <td valign="top">Red color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_SILVER</td>
+          						  <td valign="top">Silver color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_TEAL</td>
+          						  <td valign="top">Teal color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_WHITE</td>
+          						  <td valign="top">White color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_YELLOW</td>
+          						  <td valign="top">Yellow color</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Dot(50, 50, CL_BLACK);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_set_pen">TFT_Set_Pen</h3>
+
+    <!-- tabela: TFT_Dot -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Pen(<b>unsigned int</b> pen_color, <b>char</b> pen_width);</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets color and thickness parameter for drawing line, circle and rectangle elements.</p>
+		        <p>Parameters :
+            	<ul>
+            		<li><code>pen_color:</code> Sets color.
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_AQUA</td>
+          						  <td valign="top">Aqua color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_BLACK</td>
+          						  <td valign="top">Black color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_BLUE</td>
+          						  <td valign="top">Blue color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_FUCHSIA</td>
+          						  <td valign="top">Fuchsia color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_GRAY</td>
+          						  <td valign="top">Gray color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_GREEN</td>
+          						  <td valign="top">Green color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_LIME</td>
+          						  <td valign="top">Lime color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_MAROON</td>
+          						  <td valign="top">Maroon color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_NAVY</td>
+          						  <td valign="top">Navy color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_OLIVE</td>
+          						  <td valign="top">Olive color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_PURPLE</td>
+          						  <td valign="top">Purple color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_RED</td>
+          						  <td valign="top">Red color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_SILVER</td>
+          						  <td valign="top">Silver color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_TEAL</td>
+          						  <td valign="top">Teal color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_WHITE</td>
+          						  <td valign="top">White color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_YELLOW</td>
+          						  <td valign="top">Yellow color</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+            		<li><code>pen_width:</code> sets thickness.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Set_Pen(CL_BLACK, 10);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_set_brush">TFT_Set_Brush</h3>
+
+    <!-- tabela: TFT_Set_Brush -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Set_Brush(<b>char</b> brush_enabled, <b>unsigned int</b> brush_color, <b>char</b> gradient_enabled, <b>char</b> gradient_orientation, <b>unsigned int</b> gradient_color_from, <b>unsigned int</b> gradient_color_to);</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets color and gradient which will be used to fill circles or rectangles. </p>
+		        <p>Parameters :</p>
+            	<ul>
+            		<li><code>brush_enabled:</code> enable brush fill.
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+          						  <td valign="top">Enable brush fill.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+          						  <td valign="top">Disable brush fill.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+            		<li><code>brush_color:</code> set brush fill color.
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_AQUA</td>
+          						  <td valign="top">Aqua color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_BLACK</td>
+          						  <td valign="top">Black color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_BLUE</td>
+          						  <td valign="top">Blue color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_FUCHSIA</td>
+          						  <td valign="top">Fuchsia color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_GRAY</td>
+          						  <td valign="top">Gray color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_GREEN</td>
+          						  <td valign="top">Green color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_LIME</td>
+          						  <td valign="top">Lime color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_MAROON</td>
+          						  <td valign="top">Maroon color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_NAVY</td>
+          						  <td valign="top">Navy color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_OLIVE</td>
+          						  <td valign="top">Olive color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_PURPLE</td>
+          						  <td valign="top">Purple color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_RED</td>
+          						  <td valign="top">Red color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_SILVER</td>
+          						  <td valign="top">Silver color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_TEAL</td>
+          						  <td valign="top">Teal color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_WHITE</td>
+          						  <td valign="top">White color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_YELLOW</td>
+          						  <td valign="top">Yellow color</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+            		<li><code>gradient_enabled:</code> enable gradient</code>
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+          						  <td valign="top">Enable gradient.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">0</td>
+          						  <td valign="top">Disable gradient.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+            		<li><code>gradient_orientation:</code> sets gradient orientation :
+                  <p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">LEFT_TO_RIGHT</td>
+                        <td valign="top">Left to right gradient orientation</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">TOP_TO_BOTTOM</td>
+          						  <td valign="top">Top to bottom gradient orientation</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+            		<li><code>gradient_color_from:</code> sets the starting gradient color.
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_AQUA</td>
+          						  <td valign="top">Aqua color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_BLACK</td>
+          						  <td valign="top">Black color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_BLUE</td>
+          						  <td valign="top">Blue color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_FUCHSIA</td>
+          						  <td valign="top">Fuchsia color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_GRAY</td>
+          						  <td valign="top">Gray color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_GREEN</td>
+          						  <td valign="top">Green color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_LIME</td>
+          						  <td valign="top">Lime color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_MAROON</td>
+          						  <td valign="top">Maroon color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_NAVY</td>
+          						  <td valign="top">Navy color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_OLIVE</td>
+          						  <td valign="top">Olive color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_PURPLE</td>
+          						  <td valign="top">Purple color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_RED</td>
+          						  <td valign="top">Red color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_SILVER</td>
+          						  <td valign="top">Silver color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_TEAL</td>
+          						  <td valign="top">Teal color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_WHITE</td>
+          						  <td valign="top">White color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_YELLOW</td>
+          						  <td valign="top">Yellow color</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+            		<li><code>gradient_color_to:</code> sets the ending gradient color.
+            		<p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_AQUA</td>
+          						  <td valign="top">Aqua color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_BLACK</td>
+          						  <td valign="top">Black color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_BLUE</td>
+          						  <td valign="top">Blue color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_FUCHSIA</td>
+          						  <td valign="top">Fuchsia color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_GRAY</td>
+          						  <td valign="top">Gray color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_GREEN</td>
+          						  <td valign="top">Green color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_LIME</td>
+          						  <td valign="top">Lime color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_MAROON</td>
+          						  <td valign="top">Maroon color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_NAVY</td>
+          						  <td valign="top">Navy color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_OLIVE</td>
+          						  <td valign="top">Olive color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_PURPLE</td>
+          						  <td valign="top">Purple color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_RED</td>
+          						  <td valign="top">Red color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_SILVER</td>
+          						  <td valign="top">Silver color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_TEAL</td>
+          						  <td valign="top">Teal color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">CL_WHITE</td>
+          						  <td valign="top">White color</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">CL_YELLOW</td>
+          						  <td valign="top">Yellow color</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            		  </p>
+            		</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Enable gradient from black to white color, left-right orientation</i>
+TFT_Set_Brush(0, 0, 1, LEFT_TO_RIGHT, CL_BLACK, CL_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+   
+
+    <h3 id="tft_line">TFT_Line</h3>
+
+
+    <!-- tabela: TFT_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Line(<b>int</b> x1, <b>int</b> y1, <b>int</b> x2, <b>int</b> y2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a line from (x1, y1) to (x2, y2).</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>x1:</code> x coordinate of the line start.</li>
+            		<li><code>y1:</code> y coordinate of the line end.</li>
+            		<li><code>x2:</code> x coordinate of the line start.</li>
+            		<li><code>y2:</code> y coordinate of the line end.</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Line(0, 0, 239, 127);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_h_line">TFT_H_Line</h3>
+
+
+    <!-- tabela: TFT_H_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_H_Line(<b>int</b> x_start, <b>int</b> x_end, <b>int</b> y_pos);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a horizontal line on TFT.</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>x_start:</code> x coordinate of the line start.</li>
+            		<li><code>x_end:</code> x coordinate of the line end.</li>
+            		<li><code>y_pos:</code> y coordinate of horizontal line.</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a horizontal line between dots (10,20) and (50,20)</i>
+TFT_H_Line(10, 50, 20);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_v_line">TFT_V_Line</h3>
+
+
+    <!-- tabela: TFT_V_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_V_Line(<b>int</b> y_start, <b>int</b> y_end, <b>int</b> x_pos);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a vertical line on TFT.</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>y_start:</code> y coordinate of the line start.</li>
+            		<li><code>y_end:</code> y coordinate of the line end.</li>
+            		<li><code>x_pos:</code> x coordinate of vertical line.</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a vertical line between dots (10,5) and (10,25)</i>
+TFT_V_Line(5, 25, 10);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_rectangle">TFT_Rectangle</h3>
+
+
+    <!-- tabela: TFT_Rectangle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Rectangle(<b>int</b> x_upper_left, <b>int</b> y_upper_left, <b>int</b> x_bottom_right, <b>int</b> y_bottom_right);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rectangle on TFT.</p>
+		    		<p>Parameters :
+            	<ul>
+            		<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner.</li>
+            		<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner.</li>
+            		<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner.</li>
+            		<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Rectangle(20, 20, 219, 107);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_rectangle_round_edges">TFT_Rectangle_Round_Edges</h3>
+
+
+    <!-- tabela: TFT_Rectangle_Round_Edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Rectangle_Round_Edges(<b>unsigned int</b> x_upper_left, <b>unsigned int</b> y_upper_left, <b>unsigned int</b> x_bottom_right, <b>unsigned int</b> y_bottom_right, <b>unsigned int</b> round_radius);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rounded edge rectangle on TFT.</p>
+		    		<p>Parameters :
+            	<ul>
+            		<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner.</li>
+            		<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner.</li>
+            		<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner.</li>
+            		<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner.</li>
+            		<li><code>round_radius:</code> radius of the rounded edge.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Rectangle_Round_Edges(20, 20, 219, 107, 12);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_circle">TFT_Circle</h3>
+
+
+    <!-- tabela: TFT_circle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Circle(<b>int</b> x_center, <b>int</b> y_center, <b>int</b> radius);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a circle on TFT.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>x:</code> x coordinate of the circle center.</li>
+            		<li><code>y:</code> y coordinate of the circle center.</li>
+            		<li><code>r:</code> radius size.</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Circle(120, 64, 110);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_image">TFT_Image</h3>
+
+
+    <!-- tabela: TFT_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Image(<b>unsigned int</b> left, <b>unsigned int</b> top, <b>code const far unsigned short</b> * image, <b>unsigned short</b> stretch);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays an image on a desired location.</p>
+            <p>Parameters :</p>
+            	<ul>
+            	  <li><code>left:</code> position of the image's left edge.</li>
+            	  <li><code>top:</code >position of the image's top edge.</li>
+            		<li><code>image:</code> image to be displayed. Bitmap array is located in code memory.</li>
+                <li><code>stretch:</code> stretches image by a given factor (if 2, it will double the image.).</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Image(0, 0, image, 1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="tft_ext_image">TFT_Ext_Image</h3>
+
+
+    <!-- tabela: TFT_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Ext_Image(<b>unsigned int</b> left, <b>unsigned int</b> top, <b>unsigned long</b> image, <b>unsigned short</b> stretch);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays an image from an external resource on a desired address.</p>
+            <p>Parameters :</p>
+            	<ul>
+            	  <li><code>left:</code> position of the image's left edge.</li>
+            	  <li><code>top:</code >position of the image's top edge.</li>
+            		<li><code>image:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+                <li><code>stretch:</code> stretches image by a given factor (if 2, it will double the image.).</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Image(0, 0, 153608, 1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="tft_partial_image">TFT_Partial_Image</h3>
+
+
+    <!-- tabela: TFT_image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Partial_Image(<b>unsigned int</b> left, <b>unsigned int</b> top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>code const far unsigned short</b> * image, <b>unsigned short</b> stretch);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image on a desired location.</p>
+            <p>Parameters :
+            	<ul>
+            	  <li><code>left:</code> left coordinate of the image.</li>
+            	  <li><code>top:</code> top coordinate of the image.</li>
+            		<li><code>width:</code> desired image width.</li>
+            		<li><code>height:</code> desired image height.</li>
+            		<li><code>image:</code> image to be displayed. Bitmap array is located in code memory.</li>
+                <li><code>stretch:</code> stretches image by a given factor (if 2, it will double the image.).</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Draws a 10x15 part of the image starting from the upper left corner on the coordinate (10,12) </i> 
+TFT_Partial_Image(10, 12, 10, 15, image, 1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_ext_partial_image">TFT_Ext_Partial_Image</h3>
+
+
+    <!-- tabela: TFT_image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Ext_Partial_Image(<b>unsigned int</b> left, <b>unsigned int</b> top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned long</b> image, <b>unsigned short</b> stretch);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image, located on an external resource, on a desired location of the screen.</p>
+            <p>Parameters :
+            	<ul>
+            	  <li><code>left:</code> left coordinate of the image.</li>
+            	  <li><code>top:</code> top coordinate of the image.</li>
+            		<li><code>width:</code> desired image width.</li>
+            		<li><code>height:</code> desired image height.</li>
+            		<li><code>image:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+                <li><code>stretch:</code> stretches image by a given factor (if 2, it will double the image.).</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Ext_Partial_Image(159,0,160,120,0,1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="tft_image_jpeg">TFT_Image_Jpeg</h3>
+
+
+    <!-- tabela: TFT_Image_Jpeg -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> TFT_Image_Jpeg(<b>unsigned int</b> left, <b>unsigned int</b> top, <b>code const far unsigned short</b> *image);</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+	            <li><code>0</code> - if image is loaded and displayed successfully.</li> 
+	            <li><code>1</code> - if error occured.</li>
+	          </ul>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a JPEG image on a desired location.</p>
+            <p>Parameters :</p>
+            	<ul>
+            	  <li><code>left:</code> left coordinate of the image.</li>
+            	  <li><code>top:</code> top coordinate of the image.</li>
+            		<li><code>image:</code> image to be displayed. Bitmap array is located in code memory.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Image_Jpeg(0, 0, image);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="tft_rgbtocolor16bit">TFT_RGBToColor16bit</h3>
+
+
+    <!-- tabela: TFT_RGBToColor16bit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> TFT_RGBToColor16bit(<b>char</b> rgb_red, <b>char</b> rgb_green, <b>char</b> rgb_blue);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns a color value in the following bit-order : 5 bits red, 6 bits green and 5 bits blue color.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Converts 5:6:5 RGB format into true color format.</p>
+            <p>Parameters : </p>	
+            	<ul>
+            	  <li><code>rgb_red:</code> red component of the image.</li>
+            	  <li><code>rgb_green:</code> green component of the image.</li>
+            		<li><code>rgb_blue:</code> blue component of the image.</li></li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+color16 = TFT_RGBToColor16bit(150, 193, 65);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="tft_color16bittorgb">TFT_Color16bitToRGB</h3>
+
+
+    <!-- tabela: TFT_Color16bitToRGB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Color16bitToRGB(<b>unsigned int</b> color, <b>char</b> *rgb_red, <b>char</b> *rgb_green, <b>char</b> *rgb_blue);</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Converts true color into 5:6:5 RGB format.</p>
+            <p>Parameters :</p>
+            	<ul>
+            	  <li><code>color:</code> true color to be converted.</li>
+            	  <li><code>rgb_red:</code> red component of the input color.</li>
+            	  <li><code>rgb_green:</code> green component of the input color.</li>
+            	  <li><code>rgb_blue:</code> blue component of the input color.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+TFT_Color16bitToRGB(start_color, &red_start, &green_start, &blue_start);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="tft_rotate_180">TFT_Rotate_180</h3>
+
+
+    <!-- tabela: TFT_Rotate_180 -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> TFT_Rotate_180(<b>char</b> rotate);</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Rotates the TFT display.</p>
+            <p>Parameters :</p>
+            	<ul>
+            	  <li><code>rotate:</code> parameter for rotating display. Valid values :
+                  <ul>
+                 	  <li>0 - display will not be rotated. </li>
+                 	  <li>1 - display will be rotated for 180 degrees.</li>
+                  </ul>
+            	  </li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>TFT module needs to be initialized. Please, see appropriate <a href="#display_init">TFT initialization routine</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Rotate TFT display for 180 degrees</i>
+TFT_Rotate_180(1);
+
+<i>// Initialize TFT display</i>
+TFT_Init(240, 320);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+<!--
+    <h3>Library Example</h3>
+
+    <p>The following drawing demo tests advanced routines of the TFT Library.
+		   Hardware configurations in this example are made for the TFT 240x128 display, EasyAVR6 board and ATMEGA16.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+</pre>
+
+-->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="TFT HW connection" src="img/schemes/scheme_tft.gif"></p>
+    <p class="center small">TFT HW connection</p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

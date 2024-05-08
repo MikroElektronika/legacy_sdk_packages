@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "GT64K",
+    "binaries": [
+        "__Lib_UART_c23_c67_d23_d67_e23_e67_f23_f67.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA128A1$|^ATXMEGA128A1U$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

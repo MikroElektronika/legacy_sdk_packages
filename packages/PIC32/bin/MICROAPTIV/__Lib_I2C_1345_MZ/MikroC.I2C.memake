@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "MICROAPTIV",
+    "binaries": [
+        "__Lib_I2C_1345_MZ.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MZ1024ECH064$|^PIC32MZ1024ECM064$|^PIC32MZ2048ECH064$|^PIC32MZ1024ECG064$|^PIC32MZ2048ECM064$|^PIC32MZ2048ECG064$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

@@ -1,0 +1,20 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: HID_Read_Write_Interrupt
+
+
+uses: {
+    MikroC.System
+    MikroC.USB
+}
+
+depends: {
+    MikroC.System
+    MikroC.USB
+}
+
+sources: {
+    HID_Read_Write.c
+    USBdsc.c
+}

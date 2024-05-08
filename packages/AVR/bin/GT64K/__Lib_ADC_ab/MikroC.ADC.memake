@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "GT64K",
+    "binaries": [
+        "__Lib_ADC_ab.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA192A3U$|^ATXMEGA128A1$|^ATXMEGA256A3BU$|^ATXMEGA256A3U$|^ATXMEGA256A3B$|^ATXMEGA128A3U$|^ATXMEGA128A1U$|^ATXMEGA128A3$|^ATXMEGA128B1$|^ATXMEGA192A3$|^ATXMEGA256A3$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32L43x.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_GPIO_32L45x_Defs.emcl",
+        "__Lib_System_L4xx_HSI48.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L451CE$|^STM32L452CC$|^STM32L452VE$|^STM32L452CE$|^STM32L462CE$|^STM32L451VC$|^STM32L462VE$|^STM32L451CC$|^STM32L451RC$|^STM32L451VE$|^STM32L451RE$|^STM32L462RE$|^STM32L452VC$|^STM32L452RC$|^STM32L452RE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

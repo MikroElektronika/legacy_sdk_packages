@@ -1,0 +1,8 @@
+{
+    "name": "Seven Segment Display",
+    "description": "This code demonstrates how to use 7 Segment Display.",
+    "image" : "7SEG.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7"],
+    "category" : ["mikroC legacy AVR"]
+}

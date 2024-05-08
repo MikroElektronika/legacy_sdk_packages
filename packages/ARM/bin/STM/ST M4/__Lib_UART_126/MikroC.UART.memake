@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_UART_126.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F411CE$|^STM32F401CD$|^STM32F401RC$|^STM32F401RD$|^STM32F401VB$|^STM32F410CB$|^STM32F410C8$|^STM32F401CC$|^STM32F411CC$|^STM32F411VC$|^STM32F411RC$|^STM32F401RB$|^STM32F401RE$|^STM32F411RE$|^STM32F410R8$|^STM32F401VC$|^STM32F401CB$|^STM32F410RB$|^STM32F401CE$|^STM32F401VD$|^STM32F401VE$|^STM32F411VE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,22 @@
+:: Base project template
+
+:: project: UART
+target: UART
+
+type: executable
+
+sources: {
+    UART.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.UART_Remappable
+    MikroC.Peripheral_Pin_Select
+}
+
+uses: {
+    MikroC.System
+    MikroC.UART_Remappable
+    MikroC.Peripheral_Pin_Select
+}

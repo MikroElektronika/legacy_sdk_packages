@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "M7",
+    "binaries": [
+        "__Lib_I2C_123.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F732RE$|^STM32F722IC$|^STM32F722VC$|^STM32F722VE$|^STM32F722RC$|^STM32F723VE$|^STM32F722RE$|^STM32F732ZE$|^STM32F723IC$|^STM32F722IE$|^STM32F722ZE$|^STM32F723IE$|^STM32F723ZC$|^STM32F733VE$|^STM32F733ZE$|^STM32F723ZE$|^STM32F733IE$|^STM32F722ZC$|^STM32F732IE$|^STM32F732VE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

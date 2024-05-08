@@ -1,0 +1,1803 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Quad SPI Master Controller Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Quad SPI Master Controller Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="pwm_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="rs-485_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Quad SPI Master Controller Library</h2></a>
+
+
+    <p>The Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller may be used to communicate with various peripheral devices that use a Serial Peripheral Interface, such as EEPROMS, DACs and ADCs. 
+    <br>The controller can be configured to support advanced <acronym title="Serial Peripheral Interface">SPI</acronym> Flash devices with multi-phase access protocols. Data can be transfered in Half Duplex, Single Data Rate, Dual Data Rate and Quad Data Rate modes.</p>
+    
+    <p>In all modes and all <acronym title="Serial Peripheral Interface">SPI</acronym> clock speeds, the controller supports back-to-back reads and writes without clock stretching if internal bandwidth permits. The module is available only for CEC1702 MCU.</p>
+          
+    <!-- -->
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#spi_port_sel">spi_port_sel</a></li>
+      <li><a href="#spi_port_drv_slew">spi_port_drv_slew</a></li>
+      <li><a href="#rom_dis_lock_shd_spi">rom_dis_lock_shd_spi</a></li>
+      <li><a href="#qmspi_init">qmspi_init</a></li>    
+      <li><a href="#qmspi_freq_get">qmspi_freq_get</a></li>
+      <li><a href="#qmspi_freq_set">qmspi_freq_set</a></li>
+      <li><a href="#qmspi_xfr_done_status">qmspi_xfr_done_status</a></li>
+      <li><a href="#qmspi_start">qmspi_start</a></li>  
+      <li><a href="#qmspi_start_dma">qmspi_start_dma</a></li>          
+      <li><a href="#qmspi_cfg_spi_cmd">qmspi_cfg_spi_cmd</a></li>
+      <li><a href="#qmspi_read_dma">qmspi_read_dma</a></li>
+      <li><a href="#qmspi_write_dma">qmspi_write_dma</a></li>
+      <li><a href="#qmspi_xmit_cmd">qmspi_xmit_cmd</a></li>  
+      <li><a href="#qmspi_read_fifo">qmspi_read_fifo</a></li>    
+    </ul>
+
+    <!-- -->
+
+    <h3 id="spi_port_sel">spi_port_sel</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> spi_port_sel(<b>char</b> port, <b>char</b> pin_mask, <b>char</b> en);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function controls <acronym title="Serial Peripheral Interface">SPI</acronym> port control. It facilitates the selection of ports and offers enable/disable control. 
+            <br>By selection of ports, the <acronym title="General Purpose Input/Output">GPIO</acronym>s and chip selects are configured as necessary.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>port:</code> port number. The permitted port numbers are :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">Port 0, External shared.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+          						  <td valign="top">Port 1, external private (Recovery).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">2</td>
+                        <td valign="top">Port 2, Internal.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<br>
+            	<li><code>ifctrl:</code> Specifies the pin(s) of the selected Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master port that needs to be modified. Value is formed according to this bit scheme :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 5
+         							  </td>
+          						  <td valign="top">IO3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 4
+         							  </td>
+          						  <td valign="top">IO2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 3
+         							  </td>
+          						  <td valign="top">IO1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 2
+         							  </td>
+          						  <td valign="top">IO0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 1
+         							  </td>
+          						  <td valign="top">Clock.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 0
+         							  </td>
+          						  <td valign="top">Chip Select.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<br>
+            	<li><code>en:</code> enable or disable controller. The permitted values are :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">Disable.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+          						  <td valign="top">Enable.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>If any port numbers other that the one’s mentioned above are used, the function will not perform any operation.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="spi_port_drv_slew">spi_port_drv_slew</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> spi_port_drv_slew(<b>char</b> port, <b>char</b> pin_mask, <b>char</b> drv_slew);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function configures the drive strength and slew rate for <acronym title="General Purpose Input/Output">GPIO</acronym>s based on selected port.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>port:</code> port number. The permitted port numbers are :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">Port 0, External shared.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+          						  <td valign="top">Port 1, external private (Recovery).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">2</td>
+                        <td valign="top">Port 2, Internal.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<br>
+            	<li><code>ifctrl:</code> Specifies the pin(s) of the selected Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master port that needs to be modified. Value is formed according to this bit scheme :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 5
+         							  </td>
+          						  <td valign="top">IO3.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 4
+         							  </td>
+          						  <td valign="top">IO2.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 3
+         							  </td>
+          						  <td valign="top">IO1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 2
+         							  </td>
+          						  <td valign="top">IO0.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 1
+         							  </td>
+          						  <td valign="top">Clock.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 0
+         							  </td>
+          						  <td valign="top">Chip Select.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<br>
+            	<li><code>en:</code> set drive strength and slew rate. The permitted values are :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">
+                          <pre>bits 5-4 :</pre>
+                          <ul>
+                          	<li>0b11 = 12mA</li>
+                          	<li>0b10 = 8mA</li>
+                          	<li>0b01 = 4mA</li>
+                          	<li>0b00 = 2mA</li>
+                          </ul>
+                        </td>
+                        <td valign="top">Drive strength on the pin.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">
+                          <pre>bit 0 :</pre>
+                          <ul>
+                          	<li>0b0 = fast</li>
+                          	<li>0b1 = slow (half frequency)</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Slew rate on the pin.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>If any port numbers other that the one’s mentioned above are used, the function will not perform any operation.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="rom_dis_lock_shd_spi">rom_dis_lock_shd_spi</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> rom_dis_lock_shd_spi(<b>char</b> ock_shd_spi);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function applies GPIO Locks as specified in customer section of EFUSE.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>lock_shd_spi:</code> lock to be applied. Permitted values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">Do not modify lock values.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+          						  <td valign="top">Insure Shared SPI GPIO's are disabled (tri-state input) and these pins are locked.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_init">qmspi_init</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> qmspi_init(<b>unsigned long</b> freqHz, <b>unsigned char</b> spi_signalling, <b>unsigned char</b> ifctrl);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function configures the frequency of <acronym title="Serial Peripheral Interface">SPI</acronym>, the mode of operation and interface control.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>freqHz:</code> <acronym title="Serial Peripheral Interface">SPI</acronym> frequency. The permitted frequency values are :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">48</td>
+                        <td valign="top">48 MHz <acronym title="Serial Peripheral Interface">SPI</acronym> frequency.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">24</td>
+                        <td valign="top">24 MHz <acronym title="Serial Peripheral Interface">SPI</acronym> frequency.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">16</td>
+                        <td valign="top">16 MHz <acronym title="Serial Peripheral Interface">SPI</acronym> frequency.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">12</td>
+                        <td valign="top">12 MHz <acronym title="Serial Peripheral Interface">SPI</acronym> frequency.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<br>
+            	<li><code>spi_signalling:</code> mode of operation. The following modes of operation are permitted :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">SPI_MODE_0</td>
+                        <td valign="top">Data is sampled at the leading rising edge of the clock.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">SPI_MODE_1</td>
+                        <td valign="top">Data is sampled at the trailing falling edge of the clock.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">SPI_MODE_2</td>
+                        <td valign="top">Data is sampled at the leading falling edge of the clock.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">SPI_MODE_3</td>
+                        <td valign="top">Data is sampled at the trailing rising edge of the clock.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<br>
+            	<li><code>ifctrl:</code> set <acronym title="Serial Peripheral Interface">SPI</acronym> interface control. The permitted values are :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 7 :
+                          <ul>
+                          	<li><code>1:</code> Enable pull-up resistors on Transmit pins while the pins are not driven.</li>
+                          	<li><code>0:</code> No pull-up resistors enabled on Transmit pins.</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Enable/disable pull-up resistors on Transmit pins.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 6 :
+                          <ul>
+                          	<li><code>1:</code> Enable pull-down resistors on Transmit pins while the pins are not driven.</li>
+                          	<li><code>0:</code> No pull-down resistors enabled on Transmit pins.</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Enable/disable pull-down resistors on Transmit pins.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 5 :
+                          <ul>
+                          	<li><code>1:</code> Enable pull-up resistors on Receive pins while the the <acronym title="Serial Peripheral Interface">SPI</acronym> Chip Select signal is not asserted.</li>
+                          	<li><code>0:</code> No pull-up resistors enabled on Receive pins.</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Enable/disable pull-up resistors on Receive pins.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 4 :
+                          <ul>
+                          	<li><code>1:</code> Enable pull-down resistors on Receive pins while the the <acronym title="Serial Peripheral Interface">SPI</acronym> Chip Select signal is not asserted.</li>
+                          	<li><code>0:</code> No pull-down resistors enabled on Receive pins.</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Enable/disable pull-down resistors on Receive pins.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 3 :
+                          <ul>
+                          	<li><code>1:</code> HOLD <acronym title="Serial Peripheral Interface">SPI</acronym> Output Port is driven.</li>
+                          	<li><code>0:</code> HOLD <acronym title="Serial Peripheral Interface">SPI</acronym> Output Port is not driven.</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Drive HOLD <acronym title="Serial Peripheral Interface">SPI</acronym> Output port.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 2 :
+                          <ul>
+                          	<li><code>1:</code> HOLD is driven to 1.</li>
+                          	<li><code>0:</code> HOLD is driven to 0.</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Set the value on the HOLD <acronym title="Serial Peripheral Interface">SPI</acronym> Output Port if it is driven.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 1 :
+                          <ul>
+                          	<li><code>1:</code> WRITE PROTECT <acronym title="Serial Peripheral Interface">SPI</acronym> Output Port is driven.</li>
+                          	<li><code>0:</code> WRITE PROTECT <acronym title="Serial Peripheral Interface">SPI</acronym> Output Port is not driven.</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Drive WRITE PROTECT <acronym title="Serial Peripheral Interface">SPI</acronym> Output Port.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td valign="top">
+                          Bit 0 :
+                          <ul>
+                          	<li><code>1:</code> WRITE PROTECT is driven to 1.</li>
+                          	<li><code>0:</code> WRITE PROTECT is driven to 0.</li>
+                          </ul>
+         							  </td>
+          						  <td valign="top">Sets the value on the WRITE PROTECT <acronym title="Serial Peripheral Interface">SPI</acronym> Output Port if it is driven.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_freq_get">qmspi_freq_get</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> qmspi_freq_get();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function call is used to get the frequency of <acronym title="Serial Peripheral Interface">SPI</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns the <acronym title="Serial Peripheral Interface">SPI</acronym> operating frequency.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_freq_set">qmspi_freq_set</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> qmspi_freq_set(<b>unsigned long</b> freq_hz);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function call is used to set the frequency of <acronym title="Serial Peripheral Interface">SPI</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>freqHz:</code> <acronym title="Serial Peripheral Interface">SPI</acronym> frequency. The permitted frequency values are :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">48</td>
+                        <td valign="top">48 MHz <acronym title="Serial Peripheral Interface">SPI</acronym> frequency.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">24</td>
+                        <td valign="top">24 MHz <acronym title="Serial Peripheral Interface">SPI</acronym> frequency.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">16</td>
+                        <td valign="top">16 MHz <acronym title="Serial Peripheral Interface">SPI</acronym> frequency.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">12</td>
+                        <td valign="top">12 MHz <acronym title="Serial Peripheral Interface">SPI</acronym> frequency.</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_xfr_done_status">qmspi_xfr_done_status</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> qmspi_xfr_done_status(<b>unsigned long</b>* qmspi_status);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function gets the status of <acronym title="Serial Peripheral Interface">SPI</acronym>, updates the status into the pointer passed as argument, and returns the done status by evaluating the status register value.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>qmspi_status:</code> pointer to a variable where the status of <acronym title="Quad Master Serial Peripheral Interface">QMSPI</acronym> is stored. Bit definition for the status variable is explained below :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Bit number</th>
+                        <th valign="top">Definition</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">XFR_COMPLETE</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">1</td>
+                        <td valign="top">DMA_COMPLETE.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">2</td>
+                        <td valign="top">TX_BUFF_ERR</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">3</td>
+                        <td valign="top">RX_BUFF_ERR</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">4</td>
+                        <td valign="top">PROG_ERR</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">8</td>
+                        <td valign="top">TX_BUFF_FULL.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">9</td>
+                        <td valign="top">TX_BUFF_EMPTY</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">10</td>
+                        <td valign="top">TX_BUFF_REQ</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">11</td>
+                        <td valign="top">TX_BUFF_STALL</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">12</td>
+                        <td valign="top">RX_BUFF_FULL.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">13</td>
+                        <td valign="top">RX_BUFF_EMPTY</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">15</td>
+                        <td valign="top">RX_BUFF_STALL</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">16</td>
+                        <td valign="top">XFR_ACTIVE</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if done status is set.</li>
+            	<li><code>0</code> - otherwise.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_start">qmspi_start</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> qmspi_start(<b>unsigned int</b> Ien_mask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function starts the <acronym title="Serial Peripheral Interface">SPI</acronym> operation with the specified interrupt mask.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Ien_mask:</code> specifies the interrupt mask. The bit definition of interrupt enable mask corresponds to Status register bit definitions mentioned in <a href="#qmspi_xfr_done_status">qmspi_xfr_done_status</a>. Refer data sheet for available interrupts.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_start_dma">qmspi_start_dma</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> qmspi_start_dma(<b>unsigned char</b> dma_chan, <b>unsigned int</b> ien_mask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function starts <acronym title="Serial Peripheral Interface">SPI</acronym> operations along with a DMA channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>dma_chan:</code> DMA Channel selection. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Channel Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td valign="top">DMA_CH00_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">1</td>
+                        <td valign="top">DMA_CH01_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">2</td>
+                        <td valign="top">DMA_CH02_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">3</td>
+                        <td valign="top">DMA_CH03_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">4</td>
+                        <td valign="top">DMA_CH04_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">5</td>
+                        <td valign="top">DMA_CH05_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">6</td>
+                        <td valign="top">DMA_CH06_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">7</td>
+                        <td valign="top">DMA_CH07_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">8</td>
+                        <td valign="top">DMA_CH08_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">9</td>
+                        <td valign="top">DMA_CH09_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">10</td>
+                        <td valign="top">DMA_CH10_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">11</td>
+                        <td valign="top">DMA_CH12_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">12</td>
+                        <td valign="top">DMA_CH12_ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">13</td>
+                        <td valign="top">DMA_CH13_ID</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<li><code>Ien_mask:</code> specifies the interrupt mask. The bit definition of interrupt enable mask corresponds to Status register bit definitions mentioned in <a href="#qmspi_xfr_done_status">qmspi_xfr_done_status</a>. Refer data sheet for available interrupts.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_cfg_spi_cmd">qmspi_cfg_spi_cmd</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> qmspi_cfg_spi_cmd(<b>unsigned long</b> spi_cmd, <b>unsigned long</b> spi_address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine configures the <acronym title="Quad Master Serial Peripheral Interface">QMSPI</acronym> controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Spi_cmd:</code> <acronym title="Serial Peripheral Interface">SPI</acronym> configuration. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Bit Range</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">7:0</td>
+                        <td valign="top"><acronym title="Serial Peripheral Interface">SPI</acronym> op-code</td>
+                      </tr>
+<!--
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">15:8</td>
+                        <td valign="top">flags</td>
+                      </tr>
+-->
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">9:8</td>
+                        <td valign="top">cmd bus width. Valid values : 
+                        	<ul>
+                        		<li><code>0b00</code> = 1X -> 8 clocks/byte,</li>
+                        		<li><code>0b01</code> = 2X -> 4 clocks/byte,</li>
+                        		<li><code>0b10</code> = 4X -> 2 clocks/byte.</li>
+                        	</ul>
+                        </td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">11:10</td>
+                        <td valign="top">address bus width</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">13:12</td>
+                        <td valign="top">data bus width</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">14</td>
+                        <td valign="top">0 (24-bit address), 1(32-bit address)</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">15</td>
+                        <td valign="top">1 use mode byte</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">23:16</td>
+                        <td valign="top">mode byte</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">31:24</td>
+                        <td valign="top">
+                          <p>Number of dummy clocks expressed as number of bytes where : <code>Clocks = bytes * clocks/byte</code>. Clocks per byte depend upon data bus width.</p>
+													<p>Example: 4X 24bit read 0x6B requires 8 dummy clocks. At 2 clocks/byte, 4 bytes.
+													<br>The <acronym title="Serial Peripheral Interface">SPI</acronym> address can be either 24 bit address or 32 bit address.</p>
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+            	</li>
+            	<li><code>spi_address:</code> specifies the <acronym title="Serial Peripheral Interface">SPI</acronym> address.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>The function returns the ID of the Last Descriptor used (Descriptor is a Hardware register, refer data sheet for more details).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_read_dma">qmspi_read_dma</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> qmspi_read_dma(<b>unsigned long</b> spi_cmd, <b>unsigned long</b> spi_address, <b>unsigned long</b> mem_addr, <b>unsigned long</b> nbytes, <b>unsigned char</b> dma_chan);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine configures the <acronym title="Quad Master Serial Peripheral Interface">QMSPI</acronym> controller to read a specified number of bytes from a specified address.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Spi_cmd:</code> specifies the <acronym title="Serial Peripheral Interface">SPI</acronym> Command. For <code>spi_cmd</code> bit definitions, please refer to the <a href="#qmspi_cfg_spi_cmd">qmspi_cfg_spi_cmd</a> function.</li>
+            	<li><code>Spi_address:</code> specifies the <acronym title="Serial Peripheral Interface">SPI</acronym> address.</li>
+            	<li><code>Mem_addr:</code> address from where the data is to be read.</li>
+            	<li><code>Nbytes:</code> number of bytes to be read.</li>
+            	<li><code>dma_chan:</code> specifies the DMA Channel to be used. Refer to the <a href="#qmspi_start_dma">qmspi_start_dma</a> function for <code>dmach_id</code> description.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>The function returns the number of read bytes.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>If <code>nbytes</code> is 0, the value returned will be zero.</li>
+            	<li>If <code>mem_addr</code> is specified as zero, the function will return a zero.</li>
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="qmspi_write_dma">qmspi_write_dma</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> qmspi_write_dma(<b>unsigned long</b> spi_cmd, <b>unsigned long</b> spi_address, <b>unsigned long</b> mem_addr, <b>unsigned long</b> nbytes, <b>unsigned char</b> dma_chan);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine configures the <acronym title="Quad Master Serial Peripheral Interface">QMSPI</acronym> controller to read a specified number of bytes from a specified address.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Spi_cmd:</code> specifies the <acronym title="Serial Peripheral Interface">SPI</acronym> Command. For <code>spi_cmd</code> bit definitions, please refer to the <a href="#qmspi_cfg_spi_cmd">qmspi_cfg_spi_cmd</a> function.</li>
+            	<li><code>Spi_address:</code> specifies the <acronym title="Serial Peripheral Interface">SPI</acronym> address.</li>
+            	<li><code>Mem_addr:</code> address at which the data ought to be written.</li>
+            	<li><code>Nbytes:</code> number of bytes to be written.</li>
+            	<li><code>dma_chan:</code> specifies the DMA Channel to be used. Refer to the <a href="#qmspi_start_dma">qmspi_start_dma</a> function for <code>dmach_id</code> description.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>The function returns the number of written bytes.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>If <code>nbytes</code> is 0, the value returned will be zero.</li>
+            	<li>If <code>mem_addr</code> is specified as zero, the function will return a zero.</li>
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+     <!-- -->
+
+    <h3 id="qmspi_xmit_cmd">qmspi_xmit_cmd</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> qmspi_xmit_cmd(<b>unsigned char</b>* cmd_params, <b>unsigned char</b> ntx, <b>unsigned char</b> nresponse);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to send small commands to the flash.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>cmd_params</code> pointer to a set of Flash commands. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Command</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x06</td>
+                        <td valign="top">Write Enable</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x50</td>
+                        <td valign="top">Volatile SR Write Enable</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x04</td>
+                        <td valign="top">Write Disable</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x05</td>
+                        <td valign="top">Read Status-1</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x01</td>
+                        <td valign="top">Write Status-1</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x35</td>
+                        <td valign="top">Read Status -2</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x31</td>
+                        <td valign="top">Write Status-2</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x9F</td>
+                        <td valign="top">Read JEDEC-ID</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x03</td>
+                        <td valign="top">Read Data</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x0B</td>
+                        <td valign="top">Fast Read Data</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x3B</td>
+                        <td valign="top">Fast Read Dual Data</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x6B</td>
+                        <td valign="top">Fast Read Quad Data</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x13</td>
+                        <td valign="top">Read Data 4-byte address</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x0C</td>
+                        <td valign="top">Fast Read Data 4-byte</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x3C</td>
+                        <td valign="top">Fast Read Dual Data 4-byte</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x6C</td>
+                        <td valign="top">Fast Read Quad Data 4-byte</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0xBC</td>
+                        <td valign="top">Fast Read Dual IO Addr4</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0xEC</td>
+                        <td valign="top">Fast Read Quad IO Addr4</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x02</td>
+                        <td valign="top">Page Program</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x32</td>
+                        <td valign="top">Quad Page Program</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x20</td>
+                        <td valign="top">Sector Erase (4KB)</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x52</td>
+                        <td valign="top">Block Erase (32KB)</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0xD8</td>
+                        <td valign="top">Block Erase (64KB)</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0x5A</td>
+                        <td valign="top">Read SFDP</td>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+           		</li>
+            	<li><code>ntx</code> number of commands to be sent.</li>
+            	<li><code>nresponse</code> number of responses to be read after transmitting commands.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if a previous transfer is not active and <code>cmd_params</code> is not a null pointer and <code>ntx</code> is not zero.</li>
+            	<li><code>0</code> - If any of the aforementioned conditions are false.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+					  <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+     <!-- -->
+
+    <h3 id="qmspi_read_fifo">qmspi_read_fifo</h3>
+
+    <table class="routine" width="100%">
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> qmspi_read_fifo(<b>unsigned char</b> *pdata, <b>unsigned long</b> byte_len);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function is used to read data from the <acronym title="Quad Master Serial Peripheral Interface">QMSPI</acronym> FIFO.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>pdata:</code> pointer to a buffer.</li>
+            	<li><code>byte_len:</code> buffer length.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Balue indicating the number of bytes read.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the Quad <acronym title="Serial Peripheral Interface">SPI</acronym> Master Controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+					  <p>The number of bytes read will always be equal to or less than the buffer length specified.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

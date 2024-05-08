@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ECAN",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_ECAN_1_EV.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33EV64GM106$|^dsPIC33EV256GM102$|^dsPIC33EV32GM104$|^dsPIC33EV32GM106$|^dsPIC33EV128GM102$|^dsPIC33EV128GM106$|^dsPIC33EV32GM102$|^dsPIC33EV64GM102$|^dsPIC33EV64GM104$|^dsPIC33EV256GM104$|^dsPIC33EV128GM104$|^dsPIC33EV256GM106$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

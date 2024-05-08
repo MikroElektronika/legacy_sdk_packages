@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_ADC_P24FJxxGA70x_10ch.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC24FJ256GA702$|^PIC24FJ64GA702$|^PIC24FJ128GA702$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

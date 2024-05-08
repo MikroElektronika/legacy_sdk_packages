@@ -1,0 +1,8 @@
+{
+    "name": "Button",
+    "description": "Simple demonstration on usage of the Button() function",
+    "image" : "io_group.png",
+    "toolchain": ["mikrocarm"],
+    "hw" : ["Fusion for TIVA"],
+    "category" : ["mikroC legacy ARM"]
+}

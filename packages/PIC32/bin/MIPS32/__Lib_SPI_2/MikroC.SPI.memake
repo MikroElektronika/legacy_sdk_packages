@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_SPI_2.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX440F512H$|^PIC32MX440F256H$|^PIC32MX440F128H$|^PIC32MX420F032H$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

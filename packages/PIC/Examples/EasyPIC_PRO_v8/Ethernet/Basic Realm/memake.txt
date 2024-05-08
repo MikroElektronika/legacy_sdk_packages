@@ -1,0 +1,26 @@
+:: Base project template
+
+:: project: Basic_Realm
+target: Basic_Realm
+
+type: executable
+
+uses: {
+    MikroC.System
+    MikroC.ETHERNET
+    MikroC.C_String
+    MikroC.Conversions
+}
+
+depends: {
+    MikroC.System
+    MikroC.ETHERNET
+    MikroC.C_String
+    MikroC.Conversions
+}
+
+sources: {
+    Basic_Realm.c
+    httpUtils.c
+}
+

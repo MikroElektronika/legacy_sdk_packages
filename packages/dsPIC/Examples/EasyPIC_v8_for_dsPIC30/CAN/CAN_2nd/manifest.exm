@@ -1,0 +1,8 @@
+{
+    "name": "CAN 2nd",
+    "description": "This project is a simple demonstration of CAN. This code demonstrates how to use CAN library functions and procedures",
+    "image" : "../CAN.png",
+    "toolchain": ["mikrocdspic"],
+    "hw" : ["EasyPIC v8 for dsPIC30"],
+    "category" : ["mikroC legacy dsPIC"]
+}

@@ -1,0 +1,20 @@
+:: Base project template
+
+:: project: LCD
+target: LCD
+
+type: executable
+
+sources: {
+    LCD.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.Lcd
+    MikroC.Lcd_Constants
+}
+
+others: {
+    ./LCD.png
+}

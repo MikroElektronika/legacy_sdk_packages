@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_SPI_32F4x3_12345.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F413MH$|^STM32F423CH$|^STM32F423ZH$|^STM32F423MH$|^STM32F413VH$|^STM32F413ZG$|^STM32F413MG$|^STM32F413RG$|^STM32F413ZH$|^STM32F423VH$|^STM32F413RH$|^STM32F413VG$|^STM32F413CH$|^STM32F423RH$|^STM32F413CG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

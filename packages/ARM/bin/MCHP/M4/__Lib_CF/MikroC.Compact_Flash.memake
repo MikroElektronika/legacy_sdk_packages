@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Compact_Flash",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_CF.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^CEC1302$|^CEC1702$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

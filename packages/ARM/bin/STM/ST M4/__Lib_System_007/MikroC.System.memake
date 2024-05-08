@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_MathDouble.emcl",
+        "__Lib_System_4XX.emcl",
+        "__Lib_GPIO_32F401x_Defs.emcl",
+        "__Lib_GPIO_32F4x1.emcl",
+        "__Lib_Math.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F401RB$|^STM32F401RE$|^STM32F401CD$|^STM32F401VC$|^STM32F401CB$|^STM32F401RC$|^STM32F401VD$|^STM32F401VE$|^STM32F401CC$|^STM32F401VB$|^STM32F401RD$|^STM32F401CE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

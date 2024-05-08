@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_I2C_c01.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16LF1824$|^PIC16F1459$|^PIC16F1823$|^PIC16LF1459$|^PIC16F1454$|^PIC16LF1455$|^PIC16F1455$|^PIC16F1824$|^PIC16F1503$|^PIC16LF1454$|^PIC16LF1503$|^PIC16F1825$|^PIC16LF1823$|^PIC16LF1825$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

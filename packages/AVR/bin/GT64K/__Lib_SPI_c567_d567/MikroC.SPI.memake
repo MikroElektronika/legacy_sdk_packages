@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "GT64K",
+    "binaries": [
+        "__Lib_SPI_c567_d567.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA192C3$|^ATXMEGA256D3$|^ATXMEGA256A3BU$|^ATXMEGA384D3$|^ATXMEGA128D4$|^ATXMEGA256A3B$|^ATXMEGA128A4U$|^ATXMEGA384C3$|^ATXMEGA128C3$|^ATXMEGA128D3$|^ATXMEGA192D3$|^ATXMEGA256C3$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

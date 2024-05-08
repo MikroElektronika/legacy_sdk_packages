@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_PWM_MK66_0123.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK66FN2M0.+18$|^MK80FN256.+15$|^MK66FX1M0.+18$|^MK65FN2M0.+18$|^MK82FN256.+15$|^MK65FX1M0.+18$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

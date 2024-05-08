@@ -1,0 +1,19 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: ADC_on_LEDs
+
+type: executable
+
+sources: {
+    ADC_on_LEDs.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.ADC
+}
+
+others: {
+    ./ADC.png
+}

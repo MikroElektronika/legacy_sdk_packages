@@ -1,0 +1,928 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Matrix Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_ARM.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Matrix Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="dsp_library.htm">DSP Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="vectors_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="q15_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    
+    <a name="top_of_page"><h2>Matrices Library</h2></a>
+
+
+    <p>mikroC PRO for ARM includes a library for operating and working with matrices. Routines with <b>16</b> as their suffix work with 16-bit data (fractional Q15 format) and routines with <b>32</b> as their suffix work with 32-bit data (fractional Q31 format).</p>
+
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+      <p>When using Cortex M4 MCUs, please have in mind that arrays of 16-bit (half-word) type that represent matrices must be allocated on the word-aligned addresses.</p>
+    </div>
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+    	<li><a href="#matrix_transpose16">Matrix_Transpose16</a></li>
+    	<li><a href="#matrix_transpose32">Matrix_Transpose32</a></li>
+    	<li><a href="#matrix_subtract16">Matrix_Subtract16</a></li>
+    	<li><a href="#matrix_subtract32">Matrix_Subtract32</a></li>
+    	<li><a href="#matrix_scale16">Matrix_Scale16</a></li>
+    	<li><a href="#matrix_scale32">Matrix_Scale32</a></li>
+    	<li><a href="#matrix_multiply16">Matrix_Multiply16</a></li>   
+    	<li><a href="#matrix_multiply32">Matrix_Multiply32</a></li>  
+    	<li><a href="#matrix_add16">Matrix_Add16</a></li>
+    	<li><a href="#matrix_add32">Matrix_Add32</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="matrix_transpose16">Matrix_Transpose16</h3>
+
+
+    <!-- tabela: Matrix_Transponse16 -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Transpose16(<b>int</b> *src, <b>int</b> *dest, <b>unsigned</b> numRows, <b>unsigned</b> numCols);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Function does matrix transposition.</p>
+            <p><b>dest[i][j] = src[j][i]</b></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>src:</code> pointer to original matrix</li>
+	        	<li><code>dest:</code> pointer to result matrix</li>
+	        	<li><code>numRows:</code> number of rows in the source matrix</li>
+	        	<li><code>numCols:</code> number of cols in the source matrix</li>
+	        </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+   
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+    
+	<!-- -->
+
+    <h3 id="matrix_transpose32">Matrix_Transpose32</h3>
+
+
+    <!-- tabela: Matrix_Transponse -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Transpose32(<b>long</b> *src, <b>long</b> *dest, <b>unsigned</b> numRows, <b>unsigned</b> numCols);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Function does matrix transposition.</p>
+            <p><b>dest[i][j] = src[j][i]</b></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>src:</code> pointer to original matrix</li>
+	        	<li><code>dest:</code> pointer to result matrix</li>
+	        	<li><code>numRows:</code> number of rows in the source matrix</li>
+	        	<li><code>numCols:</code> number of cols in the source matrix</li>
+	        </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+ 
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+    
+	<!-- -->
+
+    <h3 id="matrix_subtract16">Matrix_Subtract16</h3>
+
+
+    <!-- tabela: Matrix_Subtract16 -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Subtract16(<b>int</b> *src1, <b>int</b> *src2, <b>int</b> *dest, <b>unsigned</b> numRows, <b>unsigned</b> numCols);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Function does matrix subtraction.</p>
+            <p><b>dest[i][j] = src1[i][j] - src2[i][j]</b></p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>src1:</code> pointer to the first matrix</li>
+	        	<li><code>src2:</code> pointer to the second matrix</li>
+	        	<li><code>dest:</code> pointer to the result matrix</li>
+	        	<li><code>numRows:</code> number of rows in the source matrix</li>
+	        	<li><code>numCols:</code> number of cols in the source matrix</li>
+	        </ul>  
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+      
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->       
+	<!-- -->
+
+    <h3 id="matrix_subtract32">Matrix_Subtract32</h3>
+
+
+    <!-- tabela: Matrix_Subtract -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Subtract32(<b>long</b> *src1, <b>long</b> *src2, <b>long</b> *dest, <b>unsigned</b> numRows, <b>unsigned</b> numCols);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Function does matrix subtraction.</p>
+            <p><b>dest[i][j] = src1[i][j] - src2[i][j]</b></p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>src1:</code> pointer to the first matrix</li>
+	        	<li><code>src2:</code> pointer to the second matrix</li>
+	        	<li><code>dest:</code> pointer to the result matrix</li>
+	        	<li><code>numRows:</code> number of rows in the source matrix</li>
+	        	<li><code>numCols:</code> number of cols in the source matrix</li>
+	        </ul>  
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->       
+	<!-- -->
+
+    <h3 id="matrix_scale16">Matrix_Scale16</h3>
+
+
+    <!-- tabela: Matrix_Scale -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Scale16(<b>int</b> ScaleValue, <b>int</b> *src, <b>int</b> *dest, <b>unsigned</b> numRows, <b>unsigned</b> numCols);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Function does matrix scale.</p>
+            <p><b>dest[i][j] = ScaleValue * src[i][j]</b></p>
+          </td>
+        </tr>
+    
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>ScaleValue:</code> scale value</li>
+	        	<li><code>src:</code> pointer to the original matrix</li>
+	        	<li><code>dest:</code> pointer to the result matrix</li>
+	        	<li><code>numRows:</code> number of rows in the source matrix</li>
+	        	<li><code>numCols:</code> number of cols in the source matrix</li>
+	        </ul>    
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->      
+  
+  	<!-- -->
+
+    <h3 id="matrix_scale32">Matrix_Scale32</h3>
+
+
+    <!-- tabela: Matrix_Scale32 -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Scale32(<b>long</b> ScaleValue, <b>long</b> *src, <b>long</b> *dest, <b>unsigned</b> numRows, <b>unsigned</b> numCols);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Function does matrix scale.</p>
+            <p><b>dest[i][j] = ScaleValue * src[i][j]</b></p>
+          </td>
+        </tr>
+    
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>ScaleValue:</code> scale value</li>
+	        	<li><code>src:</code> pointer to the original matrix</li>
+	        	<li><code>dest:</code> pointer to the result matrix</li>
+	        	<li><code>numRows:</code> number of rows in the source matrix</li>
+	        	<li><code>numCols:</code> number of cols in the source matrix</li>
+	        </ul>    
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+     
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->      
+  
+  	<!-- -->
+
+    <h3 id="matrix_multiply16">Matrix_Multiply16</h3>
+
+
+    <!-- tabela: Matrix_Multiply -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Multiply16(<b>int</b> *src1, <b>int</b> *src2, <b>int</b> *dest, <b>unsigned</b> numRows1, <b>unsigned</b> numCols2, <b>unsigned</b> numCols1Rows2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+		    	  <p>Function does matrix multiplication.</p>
+            <p><img src="img/math/math10.gif" align="absmiddle"><br> 
+              with :<br>
+	            i <font face="symbol">&#206;</font> [0, numRows1-1]<br>
+              j <font face="symbol">&#206;</font> [0, numCols2-1]<br>
+              k <font face="symbol">&#206;</font> [0, numCols1Rows2-1]<br></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>src1:</code> pointer to the first matrix</li>
+	        	<li><code>src2:</code> pointer to the second matrix</li>
+	        	<li><code>dest:</code> pointer to result matrix</li>
+	        	<li><code>numRows1:</code> number of rows in the first matrix</li>
+	        	<li><code>numCols2:</code> number of columns in the second matrix</li>
+	        	<li><code>numCols1Rows2:</code> number of columns in the first matrix and rows in the second matrix</li>
+	        </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->  
+	  <!-- -->
+
+    <h3 id="matrix_multiply32">Matrix_Multiply32</h3>
+
+
+    <!-- tabela: Matrix_Multiply -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Multiply32(<b>long</b> *src1, <b>long</b> *src2, <b>long</b> *dest, <b>unsigned</b> numRows1, <b>unsigned</b> numCols2, <b>unsigned</b> numCols1Rows2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+		    	  <p>Function does matrix multiplication.</p>
+            <p><img src="img/math/math10.gif" align="absmiddle"><br> 
+              with :<br>
+	            i <font face="symbol">&#206;</font> [0, numRows1-1]<br>
+              j <font face="symbol">&#206;</font> [0, numCols2-1]<br>
+              k <font face="symbol">&#206;</font> [0, numCols1Rows2-1]<br></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>src1:</code> pointer to the first matrix</li>
+	        	<li><code>src2:</code> pointer to the second matrix</li>
+	        	<li><code>dest:</code> pointer to result matrix</li>
+	        	<li><code>numRows1:</code> number of rows in the first matrix</li>
+	        	<li><code>numCols2:</code> number of columns in the second matrix</li>
+	        	<li><code>numCols1Rows2:</code> number of columns in the first matrix and rows in the second matrix</li>
+	        </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+        
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->  
+	  <!-- -->
+
+    <h3 id="matrix_add16">Matrix_Add16</h3>
+
+
+    <!-- tabela: Matrix_Add -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Add16(<b>int</b> *src1, <b>int</b> *src2, <b>int</b> *dest, <b>unsigned</b> numRows, <b>unsigned</b> numCols);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+		    	  <p>Function does matrix addition.</p>
+            <p><b>dest[i][j] = src1[i][j] + src2[i][j]</b></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>src1:</code> pointer to the first matrix</li>
+	        	<li><code>src2:</code> pointer to the second matrix</li>
+	        	<li><code>dest:</code> pointer to the result matrix</li>
+	        	<li><code>numRows1:</code> number of rows in the first matrix</li>
+	        	<li><code>numCols2:</code> number of columns in the second matrix</li>
+	        </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->      
+
+    <h3 id="matrix_add32">Matrix_Add32</h3>
+
+
+    <!-- tabela: Matrix_Add -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Matrix_Add32(<b>long</b> *src1, <b>long</b> *src2, <b>long</b> *dest, <b>long</b> numRows, <b>unsigned</b> numCols);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+		    	  <p>Function does matrix addition.</p>
+            <p><b>dest[i][j] = src1[i][j] + src2[i][j]</b></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>src1:</code> pointer to the first matrix</li>
+	        	<li><code>src2:</code> pointer to the second matrix</li>
+	        	<li><code>dest:</code> pointer to the result matrix</li>
+	        	<li><code>numRows1:</code> number of rows in the first matrix</li>
+	        	<li><code>numCols2:</code> number of columns in the second matrix</li>
+	        </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+    
+
+    </tbody>
+
+    </table>
+
+    <h3>Library Example</h3>
+
+<pre class="program">
+<b>int</b> Q15_1[3][3] = { {0x1000, 0x2000, 0x3000},
+                    {0x4000, 0x5000, 0x6000},
+                    {0x7000, 0x8000, 0x9000} };
+                  
+<b>int</b> Q15_2[3][3] = { {0x9000, 0x8000, 0x7000},
+                    {0x6000, 0x5000, 0x4000},
+                    {0x3000, 0x2000, 0x1000} };
+                    
+<b>int</b> Q15_Out[3][3];
+
+<b>void</b> main() {
+  Matrix_Transpose16(Q15_1, Q15_Out, 3, 3);  
+  <i>// Q15_Out = ( 0x1000, 0x4000, 0x7000,</i>
+  <i>//             0x2000, 0x5000, 0x8000,</i>
+  <i>//             0x3000, 0x6000, 0x9000 )</i>
+  
+  Matrix_Subtract16(Q15_1, Q15_2, Q15_Out, 3, 3);
+  <i>// Q15_Out = ( 0x8000, 0xA000, 0xC000,</i>
+  <i>//             0xE000, 0x0000, 0x2000,</i>
+  <i>//             0x4000, 0x6000, 0x8000 )</i>
+  <i>// Overflow : Q15_Out[0][0], Q15[0][1]...</i>
+  
+  Matrix_Add16(Q15_1, Q15_2, Q15_Out, 3, 3);
+  <i>// Q15_Out = ( 0xA000, 0xA000, 0xA000,</i>
+  <i>//             0xA000, 0xA000, 0xA000,</i>
+  <i>//             0xA000, 0xA000, 0xA000 )</i>
+  <i>// Overflow : Q15_Out[0][2], Q15[1][0]...</i>
+  
+  Matrix_Scale16(0x4000, Q15_1, Q15_Out, 3, 3);
+  <i>// Q15_Out = ( 0x0800, 0x1000, 0x1800,</i>
+  <i>//             0x2000, 0x2800, 0x3000,</i>
+  <i>//             0x3800, 0xC000, 0xC800 )</i>
+  
+  Matrix_Multiply16(Q15_1, Q15_2, Q15_Out, 3, 3, 3);
+  <i>// Q15_Out = ( 0x1C00, 0x1000, 0x2400,</i>
+  <i>//             0x2800, 0x0A00, 0x6C00,  `</i>
+  <i>//             0x1400, 0x2400, 0x1400 )</i>
+  <i>// Overflow : Q15_Out[2][0], Q15[2][1]</i>
+  
+}
+</pre>
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

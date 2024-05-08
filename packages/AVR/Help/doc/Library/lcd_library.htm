@@ -1,0 +1,875 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>Lcd Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Lcd Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="keypad_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="manchester_code_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Liquid Crystal Display">Lcd</acronym> Library</h2></a>
+
+
+    <p>The mikroC PRO for AVR provides a library for communication with Lcds (with HD44780 compliant controllers) through the 4-bit interface. An example of Lcd connections is given on the schematic at the bottom of this page.</p>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="Lcd Library Dependency Tree" src="img/dependencies/lcd_dependency.gif">  
+    <p></p>
+
+   <h3>External dependencies of Lcd Library</h3>
+
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%"><b>The following variables must be defined in all projects using Lcd Library :</b></th>
+          <th width="30%"><b>Description : </b></th> 
+          <th width="30%"><b>Example : </b></th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_RS:</code></td>
+          <td align="left">Register Select line.</td>
+          <td align="left"><code><b>sbit</b> LCD_RS <b>at</b> PORTD2_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_EN:</code></td>
+          <td align="left">Enable line.</td>
+          <td align="left"><code><b>sbit</b> LCD_EN <b>at</b> PORTD3_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_D7;</code></td>
+          <td align="left">Data 7 line.</td>
+          <td align="left"><code><b>sbit</b> LCD_D7 <b>at</b> PORTD4_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_D6;</code></td>
+          <td align="left">Data 6 line.</td>
+          <td align="left"><code><b>sbit</b> LCD_D6 <b>at</b> PORTD5_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_D5;</code></td>
+          <td align="left">Data 5 line.</td>
+          <td align="left"><code><b>sbit</b> LCD_D5 <b>at</b> PORTD6_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_D4;</code></td>
+          <td align="left">Data 4 line.</td>
+          <td align="left"><code><b>sbit</b> LCD_D4 <b>at</b> PORTD7_bit;</code></td>
+        </tr>     
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_RS_Direction;</code></td>
+          <td align="left">Register Select direction pin.</td>
+          <td align="left"><code><b>sbit</b> LCD_RS_Direction <b>at</b> DDD2_bit;</code></td>
+        </tr>
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_EN_Direction;</code></td>
+          <td align="left">Enable direction pin.</td>
+          <td align="left"><code><b>sbit</b> LCD_EN_Direction <b>at</b> DDD3_bit;</code></td>
+        </tr>
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_D7_Direction;</code></td>
+          <td align="left">Data 7 direction pin.</td>
+          <td align="left"><code><b>sbit</b> LCD_D7_Direction <b>at</b> DDD4_bit;</code></td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_D6_Direction;</code></td>
+          <td align="left">Data 6 direction pin.</td>
+          <td align="left"><code><b>sbit</b> LCD_D6_Direction <b>at</b> DDD5_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_D5_Direction;</code></td>
+          <td align="left">Data 5 direction pin.</td>
+          <td align="left"><code><b>sbit</b> LCD_D5_Direction <b>at</b> DDD6_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> LCD_D4_Direction;</code></td>
+          <td align="left">Data 4 direction pin.</td>
+          <td align="left"><code><b>sbit</b> LCD_D4_Direction <b>at</b> DDD7_bit;</code></td>
+        </tr>
+      </tbody>
+  
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#lcd_init">Lcd_Init</a></li>
+      <li><a href="#lcd_out">Lcd_Out</a></li>
+      <li><a href="#lcd_out_cp">Lcd_Out_Cp</a></li>
+      <li><a href="#lcd_chr">Lcd_Chr</a></li>
+      <li><a href="#lcd_chr_cp">Lcd_Chr_Cp</a></li>
+      <li><a href="#lcd_cmd">Lcd_Cmd</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="lcd_init">Lcd_Init</h3>
+
+
+    <!-- tabela: Lcd_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Lcd_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes Lcd module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables:</p>
+              <ul>
+              	<li><code>LCD_D7:</code> Data bit 7</li>
+              	<li><code>LCD_D6:</code> Data bit 6</li>
+              	<li><code>LCD_D5:</code> Data bit 5</li>
+              	<li><code>LCD_D4:</code> Data bit 4</li>
+              	<li><code>LCD_RS:</code> Register Select (data/instruction) signal pin </li>
+              	<li><code>LCD_EN:</code> Enable signal pin </li>              
+              	<br>
+              
+               	<li><code>LCD_D7_Direction:</code> Direction of the Data 7 pin</li>
+              	<li><code>LCD_D6_Direction:</code> Direction of the Data 6 pin</li>
+              	<li><code>LCD_D5_Direction:</code> Direction of the Data 5 pin</li>
+              	<li><code>LCD_D4_Direction:</code> Direction of the Data 4 pin</li>
+	              <li><code>LCD_RS_Direction:</code> Direction of the Register Select pin</li>
+              	<li><code>LCD_EN_Direction:</code> Direction of the Enable signal pin</li>
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Lcd pinout settings</i>
+<b>sbit</b> LCD_RS <b>at</b> PORTD2_bit;
+<b>sbit</b> LCD_EN <b>at</b> PORTD3_bit;
+<b>sbit</b> LCD_D7 <b>at</b> PORTD4_bit;
+<b>sbit</b> LCD_D6 <b>at</b> PORTD5_bit;
+<b>sbit</b> LCD_D5 <b>at</b> PORTD6_bit;
+<b>sbit</b> LCD_D4 <b>at</b> PORTD7_bit;
+
+<i>// Pin direction</i>
+<b>sbit</b> LCD_RS_Direction <b>at</b> DDD2_bit;
+<b>sbit</b> LCD_EN_Direction <b>at</b> DDD3_bit;
+<b>sbit</b> LCD_D7_Direction <b>at</b> DDD4_bit;
+<b>sbit</b> LCD_D6_Direction <b>at</b> DDD5_bit;
+<b>sbit</b> LCD_D5_Direction <b>at</b> DDD6_bit;
+<b>sbit</b> LCD_D4_Direction <b>at</b> DDD7_bit;
+...
+
+Lcd_Init();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+
+    <!-- -->
+
+
+    <h3 id="lcd_out">Lcd_Out</h3>
+
+
+    <!-- tabela: Lcd_Out -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Lcd_Out(<b>char</b> row, <b>char</b> column, <b>char</b> *text);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints text on Lcd starting from specified position. Both string variables and literals can be passed as a text.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>row:</code> starting position row number</li>
+              	<li><code>column:</code> starting position column number</li>
+              	<li><code>text:</code> text to be written</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The Lcd module needs to be initialized. See <a href="#lcd_Init">Lcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write text &#34;Hello!&#34; on Lcd starting from row 1, column 3:</i>
+Lcd_Out(1, 3, &#34;Hello!&#34;);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="lcd_out_cp">Lcd_Out_Cp</h3>
+
+
+    <!-- tabela: Lcd_Out_Cp -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Lcd_Out_Cp(<b>char</b> *text);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints text on Lcd at current cursor position. Both string variables and literals can be passed as a text.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>text:</code> text to be written</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The Lcd module needs to be initialized. See <a href="#lcd_Init">Lcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write text &#34;Here!&#34; at current cursor position:</i>
+Lcd_Out_Cp(&#34;Here!&#34;);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="lcd_chr">Lcd_Chr</h3>
+
+
+    <!-- tabela: Lcd_Chr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Lcd_Chr(<b>char</b> row, <b>char</b> column, <b>char</b> out_char);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints character on Lcd at specified position. Both variables and literals can be passed as a character.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>row:</code> writing position row number</li>
+              	<li><code>column:</code> writing position column number</li>
+              	<li><code>out_char:</code> character to be written</li>
+              </ul>
+            </p>
+            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The Lcd module needs to be initialized. See <a href="#lcd_init">Lcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write character "i" at row 2, column 3:</i>
+Lcd_Chr(2, 3, 'i');</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="lcd_chr_cp">Lcd_Chr_Cp</h3>
+
+
+    <!-- tabela: Lcd_Chr_Cp -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Lcd_Chr_Cp(<b>char</b> out_char);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints character on Lcd at current cursor position. Both variables and literals can be passed as a character.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>out_char:</code> character to be written</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The Lcd module needs to be initialized. See <a href="#lcd_Init">Lcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write character "e" at current cursor position:</i>
+Lcd_Chr_Cp('e');</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="lcd_cmd">Lcd_Cmd</h3>
+
+
+    <!-- tabela: Lcd_Cmd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Lcd_Cmd(<b>char</b> out_char);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends command to Lcd.</p>
+            <p>Parameters :</p>
+            	<ul>
+              	<li><code>out_char:</code> command to be sent</li>
+              </ul>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                Predefined constants can be passed to the function, see <a href="#lcd_commands">Available Lcd Commands</a>.
+              </div>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The Lcd module needs to be initialized. See <a href="#lcd_Init">Lcd_Init</a> table.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+          	
+<pre><i>// Clear Lcd display:</i>
+Lcd_Cmd(_LCD_CLEAR);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h4 id="lcd_commands">Available Lcd Commands</h4>
+
+    <!-- tabela: Lcd Commands -->
+
+    <table class="small">
+
+      <!--
+      <caption></caption>
+      -->
+
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Lcd Command</th>
+          <th valign="top">Purpose</th>
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_FIRST_ROW</td>
+          <td valign="top">Move cursor to the 1st row</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_SECOND_ROW</td>
+          <td valign="top">Move cursor to the 2nd row</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_THIRD_ROW</td>
+          <td valign="top">Move cursor to the 3rd row</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_FOURTH_ROW</td>
+          <td valign="top">Move cursor to the 4th row</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_CLEAR</td>
+          <td valign="top">Clear display</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_RETURN_HOME</td>
+          <td valign="top">Return cursor to home position, returns a shifted display to its original position. Display data RAM is unaffected.</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_CURSOR_OFF</td>
+          <td valign="top">Turn off cursor</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_UNDERLINE_ON</td>
+          <td valign="top">Underline cursor on</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_BLINK_CURSOR_ON</td>
+          <td valign="top">Blink cursor on</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_MOVE_CURSOR_LEFT</td>
+          <td valign="top">Move cursor left without changing display data RAM</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_MOVE_CURSOR_RIGHT</td>
+          <td valign="top">Move cursor right without changing display data RAM</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_TURN_ON</td>
+          <td valign="top">Turn Lcd display on</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_TURN_OFF</td>
+          <td valign="top">Turn Lcd display off</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_SHIFT_LEFT</td>
+          <td valign="top">Shift display left without changing display data RAM</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_SHIFT_RIGHT</td>
+          <td valign="top">Shift display right without changing display data RAM</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>The following code demonstrates usage of the Lcd Library routines:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>// LCD module connections</i>
+<b>sbit</b> LCD_RS <b>at</b> PORTD2_bit;
+<b>sbit</b> LCD_EN <b>at</b> PORTD3_bit;
+<b>sbit</b> LCD_D4 <b>at</b> PORTD4_bit;
+<b>sbit</b> LCD_D5 <b>at</b> PORTD5_bit;
+<b>sbit</b> LCD_D6 <b>at</b> PORTD6_bit;
+<b>sbit</b> LCD_D7 <b>at</b> PORTD7_bit;
+
+<b>sbit</b> LCD_RS_Direction <b>at</b> DDD2_bit;
+<b>sbit</b> LCD_EN_Direction <b>at</b> DDD3_bit;
+<b>sbit</b> LCD_D4_Direction <b>at</b> DDD4_bit;
+<b>sbit</b> LCD_D5_Direction <b>at</b> DDD5_bit;
+<b>sbit</b> LCD_D6_Direction <b>at</b> DDD6_bit;
+<b>sbit</b> LCD_D7_Direction <b>at</b> DDD7_bit;
+<i>// End LCD module connections</i>
+
+<b>char</b> txt1[] = &#34;mikroElektronika&#34;;    
+<b>char</b> txt2[] = &#34;EasyAVR6&#34;;
+<b>char</b> txt3[] = &#34;Lcd4bit&#34;;
+<b>char</b> txt4[] = &#34;example&#34;;
+
+<b>char</b> i;                              <i>// Loop variable</i>
+
+<b>void</b> Move_Delay() {                  <i>// Function used for text moving</i>
+  Delay_ms(500);                     <i>// You can change the moving speed here</i>
+}
+
+<b>void</b> main(){
+  Lcd_Init();                        <i>// Initialize LCD</i>
+  Lcd_Cmd(_LCD_CLEAR);               <i>// Clear display</i>
+  Lcd_Cmd(_LCD_CURSOR_OFF);          <i>// Cursor off</i>
+
+  Lcd_Out(1,6,txt3);                 <i>// Write text in first row</i>
+  Lcd_Out(2,6,txt4);                 <i>// Write text in second row</i>
+  Delay_ms(2000);
+  Lcd_Cmd(_LCD_CLEAR);               <i>// Clear display</i>
+
+  Lcd_Out(1,1,txt1);                 <i>// Write text in first row</i>
+  Lcd_Out(2,4,txt2);                 <i>// Write text in second row</i>
+  Delay_ms(2000);
+
+  <i>// Moving text</i>
+  <b>for</b>(i=0; i&#60;4; i++) {               <i>// Move text to the right 4 times</i>
+    Lcd_Cmd(_LCD_SHIFT_RIGHT);
+    Move_Delay();
+  }
+
+  <b>while</b>(1) {                         <i>// Endless loop</i>
+    <b>for</b>(i=0; i&#60;7; i++) {             <i>// Move text to the left 7 times</i>
+      Lcd_Cmd(_LCD_SHIFT_LEFT);
+      Move_Delay();
+    }
+
+    <b>for</b>(i=0; i&#60;7; i++) {             <i>// Move text to the right 7 times</i>
+      Lcd_Cmd(_LCD_SHIFT_RIGHT);
+      Move_Delay();
+    }
+
+  }
+}</pre>
+	
+    <p class="center"><img alt="Lcd HW connection" src="img/schemes/scheme_lcd.gif"></p>
+    <p class="center small">Lcd HW connection</p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

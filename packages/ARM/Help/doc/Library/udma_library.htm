@@ -1,0 +1,1885 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>uDMA Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">uDMA Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="uart_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="usb_hid_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>uDMA Library</h2></a>
+
+
+    <p>The mikroC PRO for ARM provides a library for working with uDMA module.</p>
+  
+    <p>The TM4C129xxxxx series microcontroller includes a Direct Memory Access (DMA) controller, known as micro-DMA (uDMA). The uDMA controller provides a way to offload data transfer tasks from the
+    <br>processor, allowing for more efficient use of the processor and the available bus bandwidth.</p>
+    
+    <p>The uDMA controller can perform transfers between memory and peripherals. It has dedicated channels for each supported on-chip module and can be programmed to automatically perform transfers between peripherals and memory as the peripheral is ready to transfer more data.</p>
+  
+    <!-- -->
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#udma_enable">uDMA_Enable</a></li>
+      <li><a href="#udma_disable">uDMA_Disable</a></li>
+      <li><a href="#udma_errorstatusget">uDMA_ErrorStatusGet</a></li>
+      <li><a href="#udma_errorstatusclear">uDMA_ErrorStatusClear</a></li>
+      <li><a href="#udma_channelenable">uDMA_ChannelEnable</a></li>
+      <li><a href="#udma_channeldisable">uDMA_ChannelDisable</a></li>
+      <li><a href="#udma_channelisenabled">uDMA_ChannelIsEnabled</a></li>
+      <li><a href="#udma_controlbaseset">uDMA_ControlBaseSet</a></li>
+      <li><a href="#udma_controlbaseget">uDMA_ControlBaseGet</a></li>
+      <li><a href="#udma_controlalternatebaseget">uDMA_ControlAlternateBaseGet</a></li>
+      <li><a href="#udma_channelrequest">uDMA_ChannelRequest</a></li>
+      <li><a href="#udma_channelattributeenable">uDMA_ChannelAttributeEnable</a></li>
+      <li><a href="#udma_channelattributedisable">uDMA_ChannelAttributeDisable</a></li>
+      <li><a href="#udma_channelattributeget">uDMA_ChannelAttributeGet</a></li>
+      <li><a href="#udma_channelcontrolset">uDMA_ChannelControlSet</a></li>
+      <li><a href="#udma_channeltransferset">uDMA_ChannelTransferSet</a></li>
+      <li><a href="#udma_channelsizeget">uDMA_ChannelSizeGet</a></li>
+      <li><a href="#udma_channelmodeget">uDMA_ChannelModeGet</a></li>
+      <li><a href="#udma_channelassign">uDMA_ChannelAssign</a></li>
+      <li><a href="#udma_init">uDMA_Init</a></li>
+    </ul>
+
+
+    <!-- -->
+
+    <h3 id="udma_enable">uDMA_Enable</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> uDMA_Enable();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function enables the uDMA controller. The uDMA controller must be enabled before it can be configured and used.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>none.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_disable">uDMA_Disable</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> uDMA_Disable();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function disables the uDMA controller. Once disabled, the uDMA controller cannot operate until re-enabled with <a href="#udma_enable">uDMA_Enable</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>none.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_errorstatusget">uDMA_ErrorStatusGet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> uDMA_ErrorStatusGet();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function returns the uDMA error status. It should be called from within the uDMA error interrupt handler to determine if a uDMA error occurred.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns non-zero if a uDMA error is pending.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_errorstatusclear">uDMA_ErrorStatusClear</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> uDMA_ErrorStatusClear();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function clears a pending uDMA error interrupt. This function should be called from within the uDMA error interrupt handler to clear the interrupt.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</b>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<p>Nothing.</b>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelenable">uDMA_ChannelEnable</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ChannelEnable(<b>unsigned long</b> channelNum);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function enables a specific uDMA channel for use. This function must be used to enable a channel before it can be used to perform a uDMA transfer.
+            <br>When a uDMA transfer is completed, the channel is automatically disabled by the uDMA controller. Therefore, this function should be called prior to starting up any new transfer.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelNum:</code> channel number to enable.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if parameter <code>channelNum</code> is greater or equal to 32.</li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channeldisable">uDMA_ChannelDisable</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ChannelDisable(<b>unsigned long</b> channelNum);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function disables a specific uDMA channel. Once disabled, a channel cannot respond to uDMA transfer requests until re-enabled via <a href="#udma_channelenable">uDMA_ChannelEnable</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelNum:</code> channel number to disable.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if parameter <code>channelNum</code> is greater or equal to 32.</li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelisenabled">uDMA_ChannelIsEnabled</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ChannelIsEnabled(<b>unsigned long</b> channelNum);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>his function checks to see if a specific uDMA channel is enabled. This function can be used to check the status of a transfer, as the channel is automatically disabled at the end of a transfer.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelNum:</code> channel number to check.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if parameter <code>channelNum</code> is greater or equal to 32.</li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_controlbaseset">uDMA_ControlBaseSet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ControlBaseSet(<b>unsigned long</b> psControlTable);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function configures the base address of the channel control table. This table resides in system memory and holds control information for each uDMA channel. 
+            <br>The table must be aligned on a 1024-byte boundary. The base address must be configured before any of the channel functions can be used.</p>
+            
+            <p>The size of the channel control table depends on the number of uDMA channels and the transfer modes that are used.
+            <br>Refer to the introductory text and the microcontroller datasheet for more information about the channel control table.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>psControlTable:</code> pointer to the 1024-byte-aligned base address of the uDMA channel control table.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if an error occurred.</li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_controlbaseget">uDMA_ControlBaseGet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> uDMA_ControlBaseGet();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function gets the base address of the channel control table. This table resides in system memory and holds control information for each uDMA channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns a pointer to the base address of the channel control table.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_controlalternatebaseget">uDMA_ControlAlternateBaseGet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> uDMA_ControlAlternateBaseGet();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function gets the base address of the second half of the channel control table that holds the alternate control structures for each channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns a pointer to the base address of the second half of the channel control table.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelrequest">uDMA_ChannelRequest</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ChannelRequest(<b>unsigned long</b> channelNum);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function allows software to request a uDMA channel to begin a transfer. This function could be used for performing a memory-to-memory transfer, 
+            <br>or if for some reason a transfer needs to be initiated by software instead of the peripheral associated with that channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelNum:</code> channel number on which to request a uDMA transfer.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if parameter <code>channelNum</code> is greater or equal to 32.</li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>If the channel is <code>UDMA_CHANNEL_SW</code> and interrupts are used, then the completion is signaled on the uDMA dedicated interrupt. 
+            <br>If a peripheral channel is used, then the completion is signaled on the peripheral's interrupt.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelattributeenable">uDMA_ChannelAttributeEnable</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ChannelAttributeEnable(<b>unsigned long</b> channelNum, <b>unsigned long</b> attr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to disable attributes of a uDMA channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelNum:</code> channel to configure.</li>
+           	  <li><code>attr:</code> combination of attributes for the channel. Valid values can be formed by OR-ing the following constants :
+              <table class="small">
+                <thead>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <th valign="top">Symbolic name</th>
+                    <th valign="top">Value</th>
+                    <th valign="top">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_ATTR_USEBURST</td>
+                    <td class="code" valign="top">0x00000001</td>
+                    <td valign="top">Restrict transfers to use only burst mode.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_ALTSELECT</td>
+                    <td class="code" valign="top">0x00000002</td>
+                    <td valign="top">Select the alternate control structure for the channel.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_ATTR_HIGH_PRIORITY</td>
+                    <td class="code" valign="top">0x00000004</td>
+                    <td valign="top">Set the channel to high priority.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_REQMASK</td>
+                    <td class="code" valign="top">0x00000008</td>
+                    <td valign="top">Mask the hardware request signal from the peripheral for the channel.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_ALL</td>
+                    <td class="code" valign="top">0x0000000F</td>
+                    <td valign="top">Combination of all values.</td>
+                  </tr>
+                </tbody>
+              </table>
+           	  </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if parameter <code>channelNum</code> is greater or equal to 32.</li>
+            	<li><code>2</code> - if parameter <code>attr</code> is greater or equal to OR-ed value of the attribute constants.</li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelattributedisable">uDMA_ChannelAttributeDisable</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ChannelAttributeDisable(<b>unsigned long</b> channelNum, <b>unsigned long</b> attr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to enable attributes of a uDMA channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelNum:</code> channel to configure.</li>
+           	  <li><code>attr:</code> combination of attributes for the channel. Valid values can be formed by OR-ing the following constants :
+              <table class="small">
+                <thead>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <th valign="top">Symbolic name</th>
+                    <th valign="top">Value</th>
+                    <th valign="top">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_ATTR_USEBURST</td>
+                    <td class="code" valign="top">0x00000001</td>
+                    <td valign="top">Restrict transfers to use only burst mode.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_ALTSELECT</td>
+                    <td class="code" valign="top">0x00000002</td>
+                    <td valign="top">Select the alternate control structure for the channel.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_ATTR_HIGH_PRIORITY</td>
+                    <td class="code" valign="top">0x00000004</td>
+                    <td valign="top">Set the channel to high priority.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_REQMASK</td>
+                    <td class="code" valign="top">0x00000008</td>
+                    <td valign="top">Mask the hardware request signal from the peripheral for the channel.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_ALL</td>
+                    <td class="code" valign="top">0x0000000F</td>
+                    <td valign="top">Combination of all values.</td>
+                  </tr>
+                </tbody>
+              </table>
+           	  </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if parameter <code>channelNum</code> is greater or equal to 32.</li>
+            	<li><code>2</code> - if parameter <code>attr</code> is greater or equal to OR-ed value of the attribute constants.</li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelattributeget">uDMA_ChannelAttributeGet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> uDMA_ChannelAttributeGet(<b>unsigned long</b> channelNum);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function returns a combination of flags representing the attributes of the uDMA channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelNum:</code> channel to configure.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          <ul>
+            <li>Resulting combination of flags that represent the attributes of the uDMA channel :</p>
+              <table class="small">
+                <thead>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <th valign="top">Symbolic name</th>
+                    <th valign="top">Value</th>
+                    <th valign="top">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_ATTR_USEBURST</td>
+                    <td class="code" valign="top">0x00000001</td>
+                    <td valign="top">Restrict transfers to use only burst mode.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_ALTSELECT</td>
+                    <td class="code" valign="top">0x00000002</td>
+                    <td valign="top">Select the alternate control structure for the channel.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_ATTR_HIGH_PRIORITY</td>
+                    <td class="code" valign="top">0x00000004</td>
+                    <td valign="top">Set the channel to high priority.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_REQMASK</td>
+                    <td class="code" valign="top">0x00000008</td>
+                    <td valign="top">Mask the hardware request signal from the peripheral for the channel.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ATTR_ALL</td>
+                    <td class="code" valign="top">0x0000000F</td>
+                    <td valign="top">Combination of all values.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+          	<li><code>1</code> - if parameter <code>channelNum</code> is greater or equal to 32.</li>        
+          </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelcontrolset">uDMA_ChannelControlSet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ChannelControlSet(<b>unsigned long</b> channelStructIndex, <b>unsigned long</b> control);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to set control parameters for a uDMA transfer. These parameters are typically not changed often.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelStructIndex:</code> this parameter should be the logical OR of the channel number with one of <code>_UDMA_PRI_SELECT</code> or <code>UDMA_ALT_SELECT</code> to choose whether the primary or alternate data structure is used.</li>
+           	  <li><code>control:</code> this parameter should be the logical OR of five values: 
+           	   <ol>
+           	   	<li>data size valid values :
+              <table class="small">
+                <thead>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <th valign="top">Symbolic name</th>
+                    <th valign="top">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_SIZE_8</td>
+                    <td valign="top">8 bits data size.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_SIZE_16</td>
+                    <td valign="top">16 bits data size.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_SIZE_32</td>
+                    <td valign="top">32 bits data size.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p></p>
+           	   	</li>
+           	   	
+           	   	<li>source address increment valid values :
+              <table class="small">
+                <thead>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <th valign="top">Symbolic name</th>
+                    <th valign="top">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_SRC_INC_8</td>
+                    <td valign="top">address increment of 8-bit (byte).</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_SRC_INC_16</td>
+                    <td valign="top">address increment of 16-bit (half-word).</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_SRC_INC_32</td>
+                    <td valign="top">address increment of 32-bit (word).</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_SRC_INC_NONE</td>
+                    <td valign="top">address non-incrementing.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p></p>
+           	   	</li>
+           	   	
+           	   	<li>destination address increment valid values :
+              <table class="small">
+                <thead>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <th valign="top">Symbolic name</th>
+                    <th valign="top">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_DST_INC_8</td>
+                    <td valign="top">address increment of 8-bit (byte).</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_DST_INC_16</td>
+                    <td valign="top">address increment of 16-bit (half-word).</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_DST_INC_32</td>
+                    <td valign="top">address increment of 32-bit (word).</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_DST_INC_NONE</td>
+                    <td valign="top">address non-incrementing.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p></p>
+           	   	</li>
+           	   	
+           	   	<li>arbitration size determines how many items (in powers of two) are transferred before the uDMA controller re-arbitrates for the bus. valid values :
+              <table class="small">
+                <thead>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <th valign="top">Symbolic name</th>
+                    <th valign="top">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_ARB_1</td>
+                    <td valign="top">1 item.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_2</td>
+                    <td valign="top">2 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_ARB_4</td>
+                    <td valign="top">4 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_8</td>
+                    <td valign="top">8 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_16</td>
+                    <td valign="top">16 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_32</td>
+                    <td valign="top">32 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_64</td>
+                    <td valign="top">64 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_128</td>
+                    <td valign="top">128 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_256</td>
+                    <td valign="top">256 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_512</td>
+                    <td valign="top">512 items.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_ARB_1024</td>
+                    <td valign="top">1024 items.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p></p>
+           	   	</li>
+           	   	<li>The value <code>_UDMA_NEXT_USEBURST</code> is used to force the channel to only respond to burst requests at the tail end of a scatter-gather transfer.</li>
+           	   </ol>
+           	  </li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>2</code> - if control base register is equal to zero.</li>
+            	<li><code>1</code> - if </li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The address increment cannot be smaller than the data size.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channeltransferset">uDMA_ChannelTransferSet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> uDMA_ChannelTransferSet(<b>unsigned long</b> channelStructIndex, <b>unsigned long</b> mode, <b>void</b> *pvSrcAddr, <b>void</b> *pvDstAddr, <b>unsigned long</b> transferSize);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to configure the parameters for a uDMA transfer. These parameters are typically changed often. 
+            <br>The function <a href="#udma_channelcontrolset">uDMA_ChannelControlSet</a> MUST be called at least once for this channel prior to calling this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelStructIndex:</code> this parameter should be the logical OR of the channel number with one of <code>_UDMA_PRI_SELECT</code> or <code>UDMA_ALT_SELECT</code> to choose whether the primary or alternate data structure is used.</li>
+           	  <li><code>mode:</code> this parameter should be one of the following values: 
+              <table class="small">
+                <thead>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <th valign="top">Symbolic name</th>
+                    <th valign="top">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_MODE_STOP</td>
+                    <td valign="top">Stops the uDMA transfer. The controller sets the mode this value at the end of a transfer.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_MODE_BASIC</td>
+                    <td valign="top">Perform a basic transfer based on request.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_MODE_AUTO</td>
+                    <td valign="top">Perform a transfer that always completes once started even if the request is removed.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_MODE_PINGPONG</td>
+                    <td valign="top">Set up a transfer that switches between the primary and alternate control structures for the channel.  
+                    <br>This mode allows use of ping-pong buffering for uDMA transfers.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					  <td class="code" valign="top">_UDMA_MODE_MEM_SCATTER_GATHER</td>
+                    <td valign="top">Set up a memory scatter-gather transfer.</td>
+                  </tr>
+
+                  <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                    <td class="code" valign="top">_UDMA_MODE_PER_SCATTER_GATHER</td>
+                    <td valign="top">Set up a peripheral scatter-gather transfer.</td>
+                  </tr>
+                </tbody>
+              </table>
+         	   	</li>
+           	  <li><code>pvSrcAddr:</code> pointer to the first location of the data to be transferred. This address should be aligned according to the item size.  
+           	  <br>The compiler takes care of this alignment if the pointer is pointing to storage of the appropriate data type.</li>
+           	  <li><code>pvDstAddr:</code> pointer to the first location of the data to be transferred. This address should be aligned according to the item size.  
+           	  <br>The compiler takes care of this alignment if the pointer is pointing to storage of the appropriate data type.</li>
+           	  <li><code>transferSize:</code> number of data items (not the number of bytes).</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code>, <code>2</code>, <code>3</code>, <code>5</code> - if an error occurred.</li>
+            	<li><code>0</code> - if successful.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Great care must be taken to not modify a channel control structure that is in use or else the results are unpredictable, including the possibility of undesired data transfers to or from memory or peripherals.
+            <br>For BASIC and AUTO modes, it is safe to make changes when the channel is disabled, or the <a href="#udma_channelmodeget">uDMA_ChannelModeGet</a> returns zero.</p>
+            
+            <p>For PINGPONG or one of the SCATTER_GATHER modes, it is safe to modify the primary or alternate control structure only when the other is being used.
+            <br>The <a href="#udma_channelmodeget">uDMA_ChannelModeGet</a> function returns zero when a channel control structure is inactive and safe to modify.</p>
+
+            <p>The two scatter-gather modes, memory and peripheral, are actually different depending on whether the primary or alternate control structure is selected.  
+            <br>This function looks for the <code>_UDMA_PRI_SELECT</code> and <code>UDMA_ALT_SELECT</code> flag along with the channel number and sets the scatter-gather mode as appropriate for the primary or alternate control structure.</p>
+
+            <p>The channel must also be enabled using <a href="#udma_channelenable">uDMA_ChannelEnable</a> after calling this function. The transfer does not begin until the channel has been configured and enabled. 
+            <br>Note that the channel is automatically disabled after the transfer is completed, meaning that <a href="#udma_channelenable">uDMA_ChannelEnable</a> must be called again after setting up the next transfer.</p>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelsizeget">uDMA_ChannelSizeGet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> uDMA_ChannelSizeGet(<b>unsigned long</b> channelStructIndex);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to get the uDMA transfer size for a channel. The transfer size is the number of items to transfer, where the size of an item might be 8, 16, or 32 bits.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelStructIndex:</code> this parameter should be the logical OR of the channel number with one of <code>_UDMA_PRI_SELECT</code> or <code>UDMA_ALT_SELECT</code> to choose whether the primary or alternate data structure is used.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code>, <code>2</code> - if an error occurred.</li>
+            	<li>If a partial transfer has already occurred, then the number of remaining items is returned. If the transfer is complete, then 0 is returned.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelmodeget">uDMA_ChannelModeGet</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> uDMA_ChannelModeGet(<b>unsigned long</b> channelStructIndex);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to get the transfer mode for the uDMA channel and to query the status of a transfer on a channel. When the transfer is complete the mode is <code>_UDMA_MODE_STOP</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>channelStructIndex:</code> this parameter should be the logical OR of the channel number with one of <code>_UDMA_PRI_SELECT</code> or <code>UDMA_ALT_SELECT</code> to choose whether the primary or alternate data structure is used.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code>, <code>2</code> - if an error occurred.</li>
+            	<li>If a partial transfer has already occurred, then the number of remaining items is returned. If the transfer is complete, then 0 is returned.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_channelassign">uDMA_ChannelAssign</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> uDMA_ChannelAssign(<b>unsigned long</b> mapping);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function assigns a peripheral mapping to a uDMA channel. It is used to select which peripheral is used for a uDMA channel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           	  <li><code>mapping:</code>macro specifying the peripheral assignment for a channel. Please consult the data sheet for a table showing all the possible peripheral assignments for the uDMA channels for a particular device.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="udma_init">uDMA_Init</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> uDMA_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function initializes uDMA controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <!--<tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+</pre>
+          </td>
+        </tr>-->
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This function is only available on devices that have the DMA Channel Map Select registers (DMACHMAP0-3).  Please consult the data sheet for your part.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <!--
+
+    <h3>Library Example</h3>
+
+    <p>The following drawing demo tests routines of the Touch Panel library :</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+
+</pre>
+ -->
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

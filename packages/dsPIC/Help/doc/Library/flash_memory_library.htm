@@ -1,0 +1,1472 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Flash Memory Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_dspic.css">
+
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_C_dsPIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Flash Memory Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for dsPIC30/33 and PIC24 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="eeprom_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="graphic_lcd_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Flash Memory Library</h2></a>
+
+
+    <p>This library provides routines for accessing microcontroller's (internal) Flash memory.</p>
+    <p>On the dsPIC30/33 and PIC24, Flash memory is mapped to address space 3:2, which means that every 3 consecutive bytes of Flash have 2 consecutive address locations available. That is why mikroE's library allows data to be written to flash in two ways: "common" and "compact". In the "common" mode, which is used for word(16-bit) variables, the 3rd (un-addressable) flash memory byte remains unused. In the "compact" mode, which can be used for 1 byte-sized variables/arrays, all flash bytes are being used.</p>
+    <p>All dsPIC30/33 and PIC24 MCUs use the <acronym title="Run Time Self Programming">RTSP</acronym> module to perform Read/Erase/Write operations on Flash memory. This, together with the internal structure of the Flash, imposes certain rules to be followed when working with Flash memory:</p>
+
+    <h4>dsPIC30: </h4>
+    
+        <ul>
+            <li>Erasing can be done only in 32-instructions (64 addresses, 96 bytes) memory blocks. This means that the block start address should be a multiply of 64 (i.e. have 6 lower bits set to zero).</li>
+            <li>Data is read and written in 4-instructions (8 addresses, 12 bytes) blocks.This means that the block start address should be a multiply of 8 (i.e. have 3 lower bits set to zero).</li>
+            <li>On the dsPIC30s, 2 address locations are assigned on every 3 bytes of (flash) program memory. Due to this specific and non-one-to-one address mapping, the mikroC PRO for dsPIC30/33 and PIC24 offers two sets of Flash handling sub functions: "common" and "compact". <br>Using the "common" set, the user can write one byte of data to a single address, which means that each byte of written data has its own address, but on every 2 written bytes one byte of Flash memory remains empty. <br> Using the "compact" set, every byte of Flash memory, including those non-addressable, is filled with data; this method can only be used for data organized in bytes. <br>The "compact" sub functions have <code>_Compact</code> as name suffix.</li>
+            <li>For run-time FLASH read/write, the dsPIC30's <acronym title="Run Time Self Programming">RTSP</acronym> module is being used. It organizes data into rows and panels. Each row contains write latches that can hold 4 instructions (12 bytes). The number of panels varies from one dsPIC30 MCU model to another. Because of that, the flash write sequence has been split into several operations (<code>_Write_Init(), _Write_LoadLatch4(), _Write_DoWrite()</code>), in order to be usable on all dsPICs.</li>
+        </ul>
+        
+    <h4>PIC24 and dsPIC33: </h4>   
+         
+        <ul>
+            <li>Erasing can be done only in 512/1024-instruction (1024/2048 addresses, 1536/3072 bytes) memory blocks or 32-instruction (64 addresses, 96 bytes) rows, which means that the block start address should be a multiple of 1024, 1536 or 64 (i.e. have 10 lower bits set to zero).</li>
+            <li>Data is read and written in 32/64/128 instruction (64/128/256 addresses, 96/192/384 bytes) memory blocks or 32 instruction (64 addresses, 96 bytes) rows. This means that the block start address should be a multiply of 128, 192  or 64 (i.e. have 7 lower bits set to zero).</li>
+            <li>On the dsPIC33 and PIC24s, 2 address locations are assigned on every 3 bytes of (flash) program memory. Due to this specific and non-one-to-one address mapping, the mikroC PRO for dsPIC30/33 and PIC24 offers two sets of Flash handling sub functions: "common" and "compact". <br>Using the "common" set, the user can write one byte of data to a single address, which means that each byte of written data has its own address, but on every 2 written bytes one byte of Flash memory remains empty. <br> Using the "compact" set, every byte of Flash memory, including those non-addressable, is filled with data; this method can only be used for data organized in bytes. <br>The "compact" sub functions have <code>_Compact</code> as name suffix.</li>            
+        </ul>        
+    <!--
+    <h4>24F04KA201 and 24F16KA102 Family Specifics :</h4>
+   
+        <ul>
+            <li>These MCU's have their Flash memory organized into memory blocks of 32 instructions (96 bytes), unlike other PIC24 devices.</li>
+            <li>Erasing can be done only in 32-instructions (64 addresses, 96 bytes) memory blocks, which means that the block start address should be a multiply of 64 (i.e. have 6 lower bits set to zero).</li>
+            <li>Data is read and written in 32-instructions (64 addresses, 96 bytes) blocks. This means that the block start address should be a multiply of 64 (i.e. have 6 lower bits set to zero).</li>
+            <li>Unlike other PIC24 devices, writing or erasing one block of data (32 instructions), is followed by erasing the memory block of the same size (32 instructions).
+        </ul>   
+-->
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#flash_erase2433">FLASH_Erase</a></li>
+      <li><a href="#flash_erase32">FLASH_Erase32</a></li>
+      <br>
+      <li><a href="#flash_write2433">FLASH_Write</a></li>      
+      <li><a href="#flash_write_block">FLASH_Write_Block</a></li>
+      <li><a href="#flash_write_compact">FLASH_Write_Compact</a></li>
+      <li><a href="#flash_writedoubleword">FLASH_WriteDoubleWord</a></li>   
+      <li><a href="#flash_write_init">FLASH_Write_Init</a></li>
+      <li><a href="#flash_write_loadlatch4">FLASH_Write_Loadlatch4</a></li>
+      <li><a href="#flash_write_loadlatch4_compact">FLASH_Write_Loadlatch4_Compact</a></li>
+      <li><a href="#flash_write_dowrite">FLASH_Write_DoWrite</a></li>
+      <br>
+      <li><a href="#flash_read2433">FLASH_Read</a></li>
+      <li><a href="#flash_read_compact2433">FLASH_Read_Compact</a></li>
+      <li><a href="#flash_readdoubleword">FLASH_ReadDoubleWord</a></li>
+      <li><a href="#flash_read4">FLASH_Read4</a></li>
+      <li><a href="#flash_read4_compact">FLASH_Read4_Compact</a></li>
+    </ul>
+  
+    <!-- -->
+
+
+    <h3 id="flash_erase2433">FLASH_Erase</h3>
+
+
+    <!-- tabela: FLASH_Erase -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Erase(<b>unsigned long</b> address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Erases one block (512/1024 instructions, 1024/2048 addresses, 1536/3072 bytes) or row (32 instructions, 64 addresses, 96 bytes) from the program FLASH memory.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> starting address of the FLASH memory block/row.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//--- erase the flash memory block, starting from address 0x006400</i>
+<b>unsigned long</b> flash_address = 0x006400;
+...
+FLASH_Erase(flash_address);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    <ul>
+            	<li>The user should take care about the address alignment (see the explanation at the beginning of this page).</li>
+            	<li>Depending on the chosen MCU, the block/row size may vary. Please refer to the appropriate datasheet.</li>
+    </ul>    
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="flash_erase32">FLASH_Erase32</h3>
+
+
+    <!-- tabela: FLASH_Erase32 -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Erase32(<b>unsigned long</b> address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Erases one block (32 instructions, 64 addresses, 96 bytes)from the program FLASH memory.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+             	<li><code>address:</code> starting address of the FLASH memory block</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//--- erase the 32-instruction block, starting from address 0x006000</i>
+FLASH_Erase32(0x006000);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The user should take care about the address alignment (see the explanation at the beginning of this page).</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="flash_write2433">FLASH_Write</h3>
+
+    <!-- tabela: FLASH_Write -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Write(<b>unsigned long</b> address, <b>unsigned int</b> * data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills one writeable block of Flash memory in the "common" mode. Addresses and data are being mapped 1-on-1. This means that 3rd byte of each program location remains unaffected.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> starting address of the FLASH memory block</li>
+             	<li><code>data_:</code> data to be written</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The block to be written to must be erased first, either from the user code (through the <acronym title="Run Time Self Programming">RTSP</acronym>), or during the programming of MCU. Please note that block size that is to be erased is different from the one that can be written with this function!</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned int</b> iArr[64] = {'m', 'i', 'k', 'r', 'o', 'E', 'l', 'e', 'k', 't', 'r', 'o', 'n', 'i', 'k', 'a'};
+<b>void</b> * pv1;
+...
+pv1 = iArr;
+FLASH_Write(0x006500, pv1);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>The user should take care about the address alignment (see the explanation at the beginning of this page).</li>
+            	<li>Depending on the chosen MCU, the block/row size may vary. Please refer to the appropriate datasheet.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    <h3 id="flash_write_block">FLASH_Write_Block</h3>
+
+    <!-- tabela: FLASH_Write_Block -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Write_Block(<b>unsigned long</b> flash_address, <b>unsigned int</b> *data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills one writeable block of Flash memory (4 instructions, 8 addresses, 12 bytes) in the "common" mode. Addresses and data are being mapped 1-on-1. This also means that 3rd byte of each program location remains unused.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+            	<li><code>flash_address:</code> starting address of the FLASH memory block</li>
+             	<li><code>data_:</code> data to be written</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The block to be written to must be erased first, either from the user code (through the <acronym title="Run Time Self Programming">RTSP</acronym>), or during the programming of MCU. Please note that block size that is to be erased is different from the one that can be written with this function!</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> flash_address = 0x006000;
+<b>unsigned int</b> Buffer[4] = {'A', 'B', 'C', 'D'};
+...
+FLASH_Write_Block(flash_address, Buffer);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The user should take care about the address alignment (see the explanation at the beginning of this page).</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="flash_write_compact">FLASH_Write_Compact</h3>
+
+    <!-- tabela: FLASH_Write_Compact -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// dsPIC30 :</i>
+            <p><b>void</b> FLASH_Write_Compact(<b>unsigned long</b> address, <b>void</b> * data_, <b>unsigned</b> bytes);</p>
+            <i>// dsPIC33 and PIC24 :</i> 
+            <p><b>void</b> FLASH_Write_Compact(<b>unsigned long</b> address, <b>char</b> * data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>dsPIC30</h2>
+      <p>&nbsp;&nbsp;Fills a portion of Flash memory using the dsPIC30 <acronym title="Run Time Self Programming">RTSP</acronym> module, in the "compact" manner. In this way, several blocks of <acronym title="Run Time Self Programming">RTSP</acronym>'s latch can be written in one pass. 
+      <br>&nbsp;&nbsp;One latch block contains 4 instructions (8 addresses, 12 bytes). Up to 8 latch blocks can be written in one round, resulting in a total of 8*12 = 96 bytes. 
+      <br>&nbsp;&nbsp;This method uses all available bytes of the program FLASH memory, including those that are not mapped to address space (every 3rd byte).</p>
+    </div>
+    <div class="tabbertab">
+    <h2>dsPIC33 and PIC24</h2>
+      <p>&nbsp;&nbsp;Fills one writeable block (32/64/128 instructions, 64/128/256 addresses, 96/192/384 bytes) or row (32 instructions, 64 addresses, 96 bytes) in "compact" mode.
+      <br>&nbsp;&nbsp;"Compact" means that all 3 bytes that exist on 2 consecutive addresses (1 even, 1 odd) are being used-up.</p>
+    </div>
+  </div>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>dsPIC30</h2>
+           	<ul>
+             	<li><code>flash_address:</code> starting address of the FLASH memory block</li>
+             	<li><code>data_address:</code> data to be written</li>
+             	<li><code>bytes:</code> number of bytes to be written. The amount of bytes to be written must be a multiply of 12, since this is the size of the <acronym title="Run Time Self Programming">RTSP</acronym>'s write latch(es).</li>
+            </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>dsPIC33 and PIC24</h2>
+						<ul>
+							<li><code>address:</code> starting address of the FLASH memory block</li>
+							<li><code>data_:</code> data to be written</li>
+						</ul>
+    </div>
+  </div>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The block to be written to must be erased first, either from the user code (through the <acronym title="Run Time Self Programming">RTSP</acronym>), or during the programming of MCU. Please note that block size that is to be erased is different from the one that can be written with this function!</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+ <div class="tabber">
+    <div class="tabbertab">
+    <h2>dsPIC30</h2>
+<pre>
+<b>char</b> cArr[] = "supercalifragillisticexpialidotiousABCDEFGHIJKLMNOPRSTUVWXYZ1234";
+<b>void</b> * pv1;
+...
+pv1 = cArr;
+FLASH_Write_Compact(0x006400, pv1);
+</pre>
+
+    </div>
+
+    <div class="tabbertab">
+    <h2>dsPIC33 and PIC24</h2>
+<pre>
+<b>unsigned long</b> flash_address = 0x006000;
+<b>char</b> Buffer[] = "supercalifragillisticexpialidotious";
+...
+FLASH_Write_Compact(flash_address, Buffer, 36);
+</pre>
+    </div>
+  </div>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>The user should take care about the address alignment (see the explanation at the beginning of this page).</li>
+            	<li>Depending on the chosen MCU, the block/row size may vary. Please refer to the appropriate datasheet.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_writedoubleword">FLASH_WriteDoubleWord</h3>
+
+    <!-- tabela: FLASH_WriteDoubleWord -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_WriteDoubleWord(<b>unsigned long</b> address, <b>unsigned long</b> * data_)</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes two instructions (6 bytes) of Flash memory in the "compact" mode. "Compact" means that all 3 bytes that exist on 2 consecutive addresses (1 even, 1 odd) are being used-up.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> starting address of the FLASH memory block</li>
+             	<li><code>data_:</code> data to be written</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The block to be written to must be erased first, either from the user code (through the <acronym title="Run Time Self Programming">RTSP</acronym>), or during the programming of MCU. 
+            <br>Please note that block size that is to be erased is different from the one that can be written with this function!.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>The user should take care about the address alignment (see the explanation at the beginning of this page).</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="flash_write_init">FLASH_Write_Init</h3>
+
+    <!-- tabela: FLASH_Write_Init -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Write_Init(<b>unsigned long</b> address, <b>void</b> *data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes <acronym title="Run Time Self Programming">RTSP</acronym> for write-to-FLASH operation.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+            	<li><code>address:</code> starting address of the FLASH memory block</li>
+             	<li><code>data_:</code> data to be written</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The block to be  written to must be erased first, either from the user code <a href="#flash_erase32">FLASH_Erase32</a>, or during the programming of MCU. Please note that block size that is to be erased is different from the one that can be written with this function!</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//--- Initializes the Flash to be written, starting from address 0x006100, the data is located at *pv1</i>
+<b>void</b> *pv1;
+...
+FLASH_Write_Init(0x006100, pv1);</pre>
+FLASH_Write_Loadlatch4();
+FLASH_Write_Loadlatch4();
+FLASH_Write_DoWrite();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The user should take care about the address alignment (see the explanation at the beginning of this page).</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="flash_write_loadlatch4">FLASH_Write_Loadlatch4</h3>
+
+    <!-- tabela: FLASH_Write_Loadlatch4 -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Write_Loadlatch4();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Loads the current <acronym title="Run Time Self Programming">RTSP</acronym> write latch with data (4 instructions, 8 addresses, 12 bytes). The data is filled in the "common" mode.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The block to be written to must be erased first, either from the user code <a href="#flash_erase32">FLASH_Erase32</a>, or during the programming of MCU. Please note that block size that is to be erased is different from the one that can be written with this function!</p>
+            <p>This function is used as a part of the Flash write sequence, therefore the <a href="#flash_write_init">FLASH_Write_Init</a> function must be called before this one. </p>
+            <p>This function can be called several times before commiting the actual write-to-Flash operation <a href="#flash_write_dowrite">FLASH_Write_DoWrite</a>. This depends on the organization of the <acronym title="Run Time Self Programming">RTSP</acronym> module for the certain dsPIC30. Please consult the Datasheet for particular dsPIC30 on this subject.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//--- writes data from an array, in "regular" manner</i>
+<b>unsigned int</b> iArr[16] = {'m', 'i', 'k', 'r', 'o', 'E', 'l', 'e', 'k'};
+<b>void</b> * pv1;
+...
+pv1 = iArr;
+FLASH_Write_Init(0x006100, pv1);
+FLASH_Write_Loadlatch4();
+FLASH_Write_Loadlatch4();
+FLASH_Write_DoWrite();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="flash_write_loadlatch4_compact">FLASH_Write_Loadlatch4_Compact</h3>
+
+    <!-- tabela: FLASH_Write_LoadLatch4_Compact -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Write_Loadlatch4_Compact();</p>
+          </td>
+        </tr>
+  
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Loads the current <acronym title="Run Time Self Programming">RTSP</acronym> write latch with data (4 instructions, 8 addresses, 12 bytes). The data is filled in the "compact" mode. "Compact" means that all 3 bytes that exist on 2 consecutive addresses (1 even, 1 odd) are being used-up.</p></p>
+          </td>
+        </tr>
+   
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The block to be written to must be erased first, either from the user code <a href="#flash_erase32">FLASH_Erase32</a>, or during the programming of MCU. Please note that block size that is to be erased is different from the one that can be written with this function!</p>
+            <p>This function is used as a part of the Flash write sequence, therefore the <a href="#flash_write_init">FLASH_Write_Init</a> function must be called before this one. </p>
+            <p>This function can be called several times before committing actual write-to-Flash operation <a href="#flash_write_dowrite">FLASH_Write_DoWrite</a>. This depends on the organization of the <acronym title="Run Time Self Programming">RTSP</acronym> module for the certain dsPIC30. Please consult the Datasheet for particular dsPIC30 on this subject.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//--- writes data from an array of char, in "compact" manner</i>
+<b>char</b> cArr[] = "supercalifragillisticexpialidotious"; <i>//35+1 bytes</i>
+<b>void</b> * pv1;
+...
+pv1 = cArr;
+FLASH_Write_Init(0x006000, pv1);                     <i>//init</i>
+FLASH_Write_Loadlatch4_Compact();                    <i>//12 bytes</i>
+FLASH_Write_Loadlatch4_Compact();                    <i>//12 bytes</i>
+FLASH_Write_Loadlatch4_Compact();                    <i>//12 bytes</i>
+FLASH_Write_DoWrite();                               <i>//commit write</i>
+	</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="flash_write_dowrite">FLASH_Write_DoWrite</h3>
+
+    <!-- tabela: FLASH_Write_DoWrite -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Write_DoWrite();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Commits the FLASH write operation.</p>
+          </td>
+        </tr>
+   
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The block to be written to must be erased first, either from the user code <a href="#flash_erase32">FLASH_Erase32</a>, or during the programming of MCU. Please note that block size that is to be erased is different from the one that can be written with this function!</p>
+            <p>This function is used as a part of the Flash write sequence, therefore <a href="#flash_write_init">FLASH_Write_Init</a> and certain number of 
+            	<a href="#flash_write_loadlatch4">FLASH_Write_Loadlatch4</a> or <a href="#flash_write_loadlatch4_compact">FLASH_Write_Loadlatch4_Compact</a> function calls must be made before this one. </p>
+            <p>This function is to be called once, at the and of the FLASH write sequence.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//--- writes data from an array, in "regular" manner</i>
+<b>unsigned int</b> iArr[16] = {'m', 'i', 'k', 'r', 'o', 'E', 'l', 'e', 'k'};
+<b>void</b> * pv1;
+...
+pv1 = iArr;
+FLASH_Write_Init(0x006100, pv1);
+FLASH_Write_Loadlatch4();
+FLASH_Write_Loadlatch4();
+FLASH_Write_DoWrite();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="flash_read2433">FLASH_Read</h3>
+
+    <!-- tabela: flash_read -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b>* FLASH_Read(<b>unsigned long</b> address, <b>unsigned int</b> *write_to, <b>unsigned</b> NoWords);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads required number of words from the Flash memory in the "common" mode.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> starting address of the FLASH memory block to be read</li>
+             	<li><code>write_to:</code> starting address of RAM buffer for storing read data</li>
+             	<li><code>NoWords:</code> number of words to be read</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Address of RAM buffer for storing read data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned</b> Buffer[64];
+<b>unsigned long</b> start_address = 0x6500;
+...
+FLASH_Read(start_address, Buffer, 10);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The user should take care of the address alignment (see the explanation at the beginning of this page).</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_read_compact2433">FLASH_Read_Compact</h3>
+
+    <!-- tabela: FLASH_Read_Compact -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> *FLASH_Read_Compact(<b>unsigned long</b> address, <b>void</b> *write_to, <b>unsigned</b> NoBytes);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads required number of bytes from the flash memory in the "compact" mode. "Compact" means that all 3 bytes that exist on 2 consecutive addresses (1 even, 1 odd) are being used-up.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> starting address of the FLASH memory block to be read</li>
+             	<li><code>write_to:</code> starting address of RAM buffer for storing read data</li>
+             	<li><code>NoBytes:</code> number of bytes to be read</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Address of RAM buffer for storing read data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> Buffer[64];
+<b>unsigned long</b> start_address = 0x6500;
+...
+FLASH_Read_Compact(start_address, Buffer, 10);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The user should take care of the address alignment (see the explanation at the beginning of this page).</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_readdoubleword">FLASH_ReadDoubleWord</h3>
+
+    <!-- tabela: flash_read -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> * FLASH_ReadDoubleWord(<b>unsigned long</b> address, <b>unsigned long</b> * write_to);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads two instructions (6 bytes) from Flash memory in the "compact" mode. "Compact" means that all 3 bytes that exist on 2 consecutive addresses (1 even, 1 odd) are being used-up.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> starting address of the FLASH memory block to be read</li>
+             	<li><code>write_to:</code> starting address of RAM buffer for storing read data</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Starting address of RAM buffer for storing read data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The user should take care of the address alignment (see the explanation at the beginning of this page).</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+
+    <!-- -->
+    <h3 id="flash_read4">FLASH_Read4</h3>
+
+    <!-- tabela: FLASH_Read4 -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b>* FLASH_Read4(<b>unsigned long</b> address, <b>unsigned int</b> *write_to);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one latch row (4 instructions, 8 addresses) in the "common" mode.</p>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> starting address of the FLASH memory block to be read</li>
+             	<li><code>write_to:</code> starting address of RAM buffer for storing read data</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Starting address of RAM buffer for storing read data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//--- reads 8 bytes (4 words) from location 0x006000 and stores it to *pv1;</i>
+<b>unsigned int</b> *pv1;
+...
+FLASH_Read4(0x006000, pv1);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The user should take care of the address alignment (see the explanation at the beginning of this page).</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="flash_read4_compact">FLASH_Read4_Compact</h3>
+
+    <!-- tabela: FLASH_Read4_Compact -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b>* FLASH_Read4_Compact(<b>unsigned long</b> address, <b>void</b> *write_to);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one latch row (4 instructions, 8 addresses) in the "compact" mode. "Compact" means that all 3 bytes that exist on 2 consecutive addresses (1 even, 1 odd) are being used-up.</p></p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+             	<li><code>address:</code> starting address of the FLASH memory block to be read</li>
+             	<li><code>write_to:</code> starting address of RAM buffer for storing read data</li>
+             </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Starting address of RAM buffer for storing read data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//--- reads 12 bytes (4 words) from location 0x006000 and stores it to *pv1;</i>
+<b>unsigned int</b> *pv1;
+...
+FLASH_Read4_Compact(0x006000, pv1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The user should take care of the address alignment (see the explanation at the beginning of this page).</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3>Library Example</h3>
+		
+		<p>In this example written for dsPIC30F4013, various read/write tecniques to/from the on-chip FLASH memory are shown. Flash memory is mapped to address space 3:2, meaning every 3 consecutive bytes of Flash have 2 consecutive address locations available.
+    <br>That is why mikroE's library allows data to be written to Flash in two ways: 'regular' and 'compact'. In 'regular' mode, which is used for variables that are size of 2 bytes and more, the 3rd (un-addressable) byte remains unused.
+    <br>In 'compact' mode, which can be used for 1 byte-sized variables/arrays, all bytes of flash are being used.<p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>unsigned int</b> iArr[8] = {'m', 'i', 'k', 'r', 'o', 'E', 'l', 'e'};
+<b>char</b> cArr[] = &#34;mikroElektronika Flash example&#34;;
+<b>char</b> cArr2[40];
+
+<b>void</b> * pv1;
+<b>unsigned</b> bb;
+
+<b>void</b> main() {
+  <b>unsigned</b> i;
+
+  pv1 = cArr;
+
+<i>/*
+  This is what FLASH_Write_Compact() does 'beneath the hood'
+ *
+  FLASH_Write_Init(0x006000, pv1);
+  FLASH_Write_Loadlatch4_Compact();
+  FLASH_Write_Loadlatch4_Compact();
+  FLASH_Write_Loadlatch4_Compact();
+  FLASH_Write_DoWrite();
+ */</i>
+
+  <i>//--- erase the block first</i>
+  FLASH_Erase32(0x006000);
+
+  <i>//--- write compact format to flash</i>
+  FLASH_Write_Compact(0x006000, pv1, 36);
+
+  <i>//--- read compact format</i>
+  pv1 = cArr2;
+  FLASH_Read4_Compact(0x006000, pv1);
+  pv1 += 12;
+  FLASH_Read4_Compact(0x006008, pv1);
+  pv1 += 12;
+  FLASH_Read4_Compact(0x006010, pv1);
+  pv1 += 12;
+  *pv1 = 0;  <i>//termination</i>
+  
+  <i>//--- show what has been written</i>
+  i = 0;
+  UART1_Init(9600);
+<i>//  UART1_Write_Text(&#34;Start&#34;);</i>
+  UART1_Write(10);
+  UART1_Write(13);
+  <b>while</b>(cArr2[i]) {
+    bb = cArr2[i++];
+    UART1_Write(bb);
+  }
+
+  <i>//--- now for some non-compact flash-write</i>
+  pv1 = iArr;
+  <i>//--- erase the block first</i>
+  FLASH_Erase32(0x006100);
+  FLASH_Write_Init(0x006100, pv1);
+  FLASH_Write_Loadlatch4();
+  FLASH_Write_Loadlatch4();
+  FLASH_Write_DoWrite();
+}</pre>
+
+    <div class="feedback">
+      Copyright (c) 2002-2018 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

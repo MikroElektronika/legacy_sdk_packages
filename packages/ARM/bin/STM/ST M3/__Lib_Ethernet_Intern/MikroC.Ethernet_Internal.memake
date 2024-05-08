@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.Ethernet_Internal",
+    "global_visibility": true,
+    "arch": "M3",
+    "binaries": [
+        "__Lib_Ethernet_Intern.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F217VE$|^STM32F207ZC$|^STM32F207VE$|^STM32F207IE$|^STM32F207VC$|^STM32F207VG$|^STM32F207VF$|^STM32F207IC$|^STM32F207IF$|^STM32F207ZE$|^STM32F207ZF$|^STM32F217IE$|^STM32F217ZG$|^STM32F207IG$|^STM32F217VG$|^STM32F217ZE$|^STM32F217IG$|^STM32F207ZG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}
+

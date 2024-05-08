@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_ADC_32F05x_10ch.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F050K6$|^STM32F051C6$|^STM32F050G6$|^STM32F050K4$|^STM32F050C4$|^STM32F050G4$|^STM32F051K4$|^STM32F051K6$|^STM32F051C8$|^STM32F051T8$|^STM32F051K8$|^STM32F051C4$|^STM32F050C6$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

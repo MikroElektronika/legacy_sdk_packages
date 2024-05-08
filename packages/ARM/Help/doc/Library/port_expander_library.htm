@@ -1,0 +1,3021 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Port Expander Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Port Expander Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="onewire_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="ps2_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Port Expander Library</h2></a>
+
+
+    <p>The mikroC PRO for ARM provides a library for communication with the Microchip’s Port Expander MCP23S17 
+    	via <acronym title="Serial Peripheral Interface">SPI</acronym> interface.</p>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>   
+      <ul>
+      	<li>The library uses the SPI module for communication. User must initialize the appropriate SPI module before using the Port Expander Library.</li>
+      	<li>For MCUs with multiple SPI modules it is possible to initialize all of them and then switch by using the <code>SPI_Set_Active()</code> function. See the <a href="spi_library.htm">SPI Library</a> functions.</li>
+        <li>Library does not use Port Expander interrupts.</li>
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="Port Expander Library Dependency Tree" src="img/dependencies/portexpander_dependency.gif">  
+    <p></p>
+  
+    <h3>External dependencies of Port Expander Library</h3>
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Port Expander Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderRST;</code></td>
+          <td align="left">Reset line.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderRST <b>at</b> GPIO_PORTA_DATA0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderCS;</code></td>
+          <td align="left">Chip Select line.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderCS <b>at</b> GPIO_PORTA_DATA1_bit;</code></td>
+        </tr>
+      
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderRST_Direction;</code></td>
+          <td align="left">Direction of the Reset pin.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderRST_Direction <b>at</b> GPIO_PORTA_DIR0_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderCS_Direction;</code></td>
+          <td align="left">Direction of the Chip Select pin.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderCS_Direction <b>at</b> GPIO_PORTA_DIR1_bit;</code></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Port Expander Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderRST;</code></td>
+          <td align="left">Reset line.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderRST <b>at</b> DIO_P6OUT.B0;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderCS;</code></td>
+          <td align="left">Chip Select line.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderCS <b>at</b> DIO_P6OUT.B1;</code></td>
+        </tr>
+      
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderRST_Direction;</code></td>
+          <td align="left">Direction of the Reset pin.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderRST_Direction <b>at</b> DIO_P6DIR.B0;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderCS_Direction;</code></td>
+          <td align="left">Direction of the Chip Select pin.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderCS_Direction <b>at</b> DIO_P6DIR.B1;</code></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Port Expander Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderRST;</code></td>
+          <td align="left">Reset line.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderRST <b>at</b> GPIOB_ODR.B0;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderCS;</code></td>
+          <td align="left">Chip Select line.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderCS <b>at</b> GPIOB_ODR.B1;</code></td>
+        </tr>
+      
+      </tbody>
+
+    </table>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Port Expander Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderRST;</code></td>
+          <td align="left">Reset line.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderRST <b>at</b> GPIO_OUTPUT_PIN_027_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> SPExpanderCS;</code></td>
+          <td align="left">Chip Select line.</td>
+          <td align="left"><code><b>sbit</b> SPExpanderCS <b>at</b> GPIO_OUTPUT_PIN_146_bit;</code></td>
+        </tr>
+      
+      </tbody>
+
+    </table>
+    </div>
+
+  </div>
+
+    
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+    <h3>Library Routines</h3>
+
+    <ul>
+			<li><a href="#expander_init">Expander_Init</a></li>
+			<li><a href="#expander_init_advanced">Expander_Init_Advanced</a></li>
+			<li><a href="#expander_read_byte">Expander_Read_Byte</a></li>
+			<li><a href="#expander_write_byte">Expander_Write_Byte</a></li>
+			<li><a href="#expander_read_porta">Expander_Read_PortA</a></li>
+			<li><a href="#expander_read_portb">Expander_Read_PortB</a></li>
+			<li><a href="#expander_read_portab">Expander_Read_PortAB</a></li>
+			<li><a href="#expander_write_porta">Expander_Write_PortA</a></li>
+			<li><a href="#expander_write_portb">Expander_Write_PortB</a></li>
+			<li><a href="#expander_write_portab">Expander_Write_PortAB</a></li>
+
+			<li><a href="#expander_setbit_porta">Expander_SetBit_PortA</a></li>
+			<li><a href="#expander_clrbit_porta">Expander_ClrBit_PortA</a></li>
+			<li><a href="#expander_togglebit_porta">Expander_ToggleBit_PortA</a></li>
+
+			<li><a href="#expander_setbit_portb">Expander_SetBit_PortB</a></li>
+			<li><a href="#expander_clrbit_portb">Expander_ClrBit_PortB</a></li>
+			<li><a href="#expander_togglebit_portb">Expander_ToggleBit_PortB</a></li>
+
+			<li><a href="#expander_set_directionporta">Expander_Set_DirectionPortA</a></li>
+			<li><a href="#expander_set_directionportb">Expander_Set_DirectionPortB</a></li>
+			<li><a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a></li>
+
+			<li><a href="#expander_set_inputdirporta">Expander_Set_InputDirPortA</a></li>
+			<li><a href="#expander_set_outputdirporta">Expander_Set_OutputDirPortA</a></li>
+
+			<li><a href="#expander_set_inputdirportb">Expander_Set_InputDirPortB</a></li>
+			<li><a href="#expander_set_outputdirportb">Expander_Set_OutputDirPortB</a></li>
+
+			<li><a href="#expander_set_pullupsporta">Expander_Set_PullUpsPortA</a></li>
+			<li><a href="#expander_set_pullupsportb">Expander_Set_PullUpsPortB</a></li>
+			<li><a href="#expander_set_pullupsportab">Expander_Set_PullUpsPortAB</a></li>
+
+			<li><a href="#expander_setbits">Expander_SetBits</a></li>
+			<li><a href="#expander_clrbits">Expander_ClrBits</a></li>
+			<li><a href="#expander_togglebits">Expander_ToggleBits</a></li>
+		</ul>
+    <!-- -->
+
+
+    <h3 id="expander_init">Expander_Init</h3>
+
+
+    <!-- tabela: Expander_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Init(<b>char</b> ModuleAddress);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">          	
+            <p>Initializes Port Expander using SPI communication.</p>    
+            <p>Port Expander module settings :
+              <ul>
+              	<li> hardware addressing enabled</li>
+              	<li> automatic address pointer incrementing disabled (byte mode)</li>
+              	<li> BANK_0 register adressing</li>
+              	<li> slew rate enabled </li>
+              </ul>
+            </p>        
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>External dependencies of the library from the top of the page must be defined before using this function.</p>
+          	<p><acronym title="Serial Peripheral Interface">SPI</acronym> module needs to be initialized. See <a href="spi_library.htm#spi_init">SPIx_Init</a> and <a href="spi_library.htm#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> GPIO_PORTA_DATA0_bit;
+<b>sbit</b>  SPExpanderCS            <b>at</b> GPIO_PORTA_DATA1_bit;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> GPIO_PORTA_DIR0_bit;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> GPIO_PORTA_DIR1_bit;
+<i>// End Port Expander module connections</i>
+
+...
+
+SPI0_Init();              <i>// Initialize SPI module used with PortExpander</i>
+Expander_Init(0);         <i>// Initialize Port Expander</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> DIO_P6OUT.B0;
+<b>sbit</b>  SPExpanderCS            <b>at</b> DIO_P6OUT.B1;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> DIO_P6DIR.B0;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> DIO_P6DIR.B1;
+<i>// End Port Expander module connections</i>
+
+...
+
+SPI1_Init();              <i>// Initialize SPI module used with PortExpander</i>
+Expander_Init(0);         <i>// Initialize Port Expander</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> GPIOB_ODR.B0;
+<b>sbit</b>  SPExpanderCS            <b>at</b> GPIOB_ODR.B1;
+<i>// End Port Expander module connections</i>
+
+...
+<i>// Initialize SPI module used with PortExpander</i>
+SPI1_Init_Advanced(_SPI_FPCLK_DIV4, _SPI_MASTER | _SPI_8_BIT |
+                   _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                   _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                   &_GPIO_MODULE_SPI1_PB345);
+
+Expander_Init(0);         <i>// Initialize Port Expander</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> GPIO_OUTPUT_PIN_027_bit;
+<b>sbit</b>  SPExpanderCS            <b>at</b> GPIO_OUTPUT_PIN_146_bit;
+<i>// End Port Expander module connections</i>
+
+...
+
+<i>// Initialize SPI module used with PortExpander</i>
+SPI0_Init_Advanced(1000000,0,0);
+
+Expander_Init(0);         <i>// Initialize Port Expander</i>
+</pre>
+    </div>
+
+  </div>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="expander_init_advanced">Expander_Init_Advanced</h3>
+
+
+    <!-- tabela: Expander_Init_Advanced -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Init_Advanced(<b>unsigned long</b> *rstPort, <b>char</b> rstPin, <b>char</b> haen);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes Port Expander using SPI communication.</p>    
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>rstPort:</code> Port Expander's reset port</li>
+              <li><code>rstPin:</code> Port Expander's reset pin</li>
+              <li><code>haen:</code> Port Expander's hardware address</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>External dependencies of the library from the top of the page must be defined before using this function.</p>
+          	<p><acronym title="Serial Peripheral Interface">SPI</acronym> module needs to be initialized. See <a href="spi_library.htm#spi_init">SPIx_Init</a> and <a href="spi_library.htm#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> GPIO_PORTA_DATA0_bit;
+<b>sbit</b>  SPExpanderCS            <b>at</b> GPIO_PORTA_DATA1_bit;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> GPIO_PORTA_DIR0_bit;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> GPIO_PORTA_DIR1_bit;
+<i>// End Port Expander module connections</i>
+...
+
+<i>// If Port Expander Library uses SPI module</i>
+SPI1_Init();              <i>// Initialize SPI1 module used with PortExpander</i>
+Expander_Init_Advanced(&GPIO_PORTB, 0, 0);         <i>// Initialize Port Expander</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> DIO_P6OUT.B0;
+<b>sbit</b>  SPExpanderCS            <b>at</b> DIO_P6OUT.B1;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> DIO_P6DIR.B0;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> DIO_P6DIR.B1;
+<i>// End Port Expander module connections</i>
+...
+
+<i>// If Port Expander Library uses SPI module</i>
+SPI1_Init();              <i>// Initialize SPI1 module used with PortExpander</i>
+Expander_Init_Advanced(&GPIO_PORTB, 0, 0);         <i>// Initialize Port Expander</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> GPIOB_ODR.B0;
+<b>sbit</b>  SPExpanderCS            <b>at</b> GPIOB_ODR.B1;
+<i>// End Port Expander module connections</i>
+
+...
+<i>// Initialize SPI module used with PortExpander</i>
+SPI1_Init_Advanced(_SPI_FPCLK_DIV4, _SPI_MASTER | _SPI_8_BIT |
+                   _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                   _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                   &_GPIO_MODULE_SPI1_PB345);
+
+Expander_Init_Advanced(&GPIOB_BASE, 0, 0);         <i>// Initialize Port Expander</i>
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> GPIO_OUTPUT_PIN_027_bit;
+<b>sbit</b>  SPExpanderCS            <b>at</b> GPIO_OUTPUT_PIN_146_bit;
+<i>// End Port Expander module connections</i>
+
+...
+
+<i>// Initialize SPI module used with PortExpander</i>
+SPI0_Init_Advanced(1000000,0,0);
+
+Expander_Init_Advanced(&_GPIO_PORT_020_027, 0, 0);         <i>// Initialize Port Expander</i>
+</pre>
+    </div>
+
+  </div>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="expander_read_byte">Expander_Read_Byte</h3>
+
+
+    <!-- tabela: expander_read_byte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Expander_Read_Byte(<b>char</b> ModuleAddress, <b>char</b> RegAddress);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function reads byte from Port Expander.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+              <li><code>RegAddress:</code> Port Expander's internal register address</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Byte read.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Read a byte from Port Expander's register</i>
+<b>char</b> read_data;
+...
+read_data = Expander_Read_Byte(0,1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="expander_write_byte">Expander_Write_Byte</h3>
+
+
+    <!-- tabela: Expander_Write_Byte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Write_Byte(<b>char</b> ModuleAddress, <b>char</b> RegAddress, <b>char</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Routine writes a byte to Port Expander.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+                <li><code>RegAddress:</code> Port Expander's internal register address</li>
+                <li><code>Data:</code> data to be written</li>
+              </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+
+<pre>
+<i>// Write a byte to the Port Expander's register</i>
+Expander_Write_Byte(0,1,0xFF);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="expander_read_porta">Expander_Read_PortA</h3>
+
+
+    <!-- tabela: Expander_Read_PortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Expander_Read_PortA(<b>char</b> ModuleAddress);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>The function reads byte from Port Expander's PortA.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Byte read.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortA should be configured as input. See <a href="#expander_set_directionporta">Expander_Set_DirectionPortA</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Read a byte from Port Expander's PORTA</i>
+<b>char</b> read_data;
+...
+Expander_Set_DirectionPortA(0,0xFF);        <i>// set expander's porta to be input</i>
+...
+read_data = Expander_Read_PortA(0);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+    <h3 id="expander_read_portb">Expander_Read_PortB</h3>
+
+
+    <!-- tabela: Expander_Read_PortB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Expander_Read_PortB(<b>char</b> ModuleAddress);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>The function reads byte from Port Expander's PortB.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Byte read.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortB should be configured as input. See <a href="#expander_set_directionportb">Expander_Set_DirectionPortB</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Read a byte from Port Expander's PORTB</i>
+<b>char</b> read_data;
+...
+Expander_Set_DirectionPortB(0,0xFF);        <i>// set expander's portb to be input</i>
+...
+read_data = Expander_Read_PortB(0);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->                   
+
+    <h3 id="expander_read_portab">Expander_Read_PortAB</h3>
+
+
+    <!-- tabela: Expander_Read_PortAB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Expander_Read_PortAB(<b>char</b> ModuleAddress);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>The function reads word from Port Expander's ports. PortA readings are in the higher byte of the result. PortB readings are in the lower byte of the result.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Word read.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortA and PortB should be configured as inputs. See <a href="#expander_set_directionporta">Expander_Set_DirectionPortA</a>,
+            	<a href="#expander_set_directionportb">Expander_Set_DirectionPortB</a> and 
+              <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Read a byte from Port Expander's PORTA and PORTB</i>
+<b>unsigned int</b> read_data;
+...
+Expander_Set_DirectionPortAB(0,0xFFFF);        <i>// set expander's porta and portb to be input</i>
+...
+read_data = Expander_Read_PortAB(0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->                   
+    
+    
+
+    <h3 id="expander_write_porta">Expander_Write_PortA</h3>
+
+
+    <!-- tabela: Expander_Write_PortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Write_PortA(<b>char</b> ModuleAddress, <b>char</b> Data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function writes byte to Port Expander's PortA.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>Data:</code> data to be written</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortA should be configured as output. See <a href="#expander_set_directionporta">Expander_Set_DirectionPortA</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Write a byte to Port Expander's PORTA</i>
+
+...
+Expander_Set_DirectionPortA(0,0x00);        <i>// set expander's porta to be output</i>
+...
+Expander_Write_PortA(0, 0xAA);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="expander_write_portb">Expander_Write_PortB</h3>
+
+
+    <!-- tabela: Expander_Write_PortB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Write_PortB(<b>char</b> ModuleAddress, <b>char</b> Data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function writes byte to Port Expander's PortB.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>Data:</code> data to be written</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortB should be configured as output. See <a href="#expander_set_directionportb">Expander_Set_DirectionPortB</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Write a byte to Port Expander's PORTB</i>
+
+...
+Expander_Set_DirectionPortB(0,0x00);        <i>// set expander's portb to be output</i>
+...
+Expander_Write_PortB(0, 0x55);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="expander_write_portab">Expander_Write_PortAB</h3>
+
+
+    <!-- tabela: Expander_Write_PortAB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Write_PortAB(<b>char</b> ModuleAddress, <b>unsigned int</b> Data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function writes word to Port Expander's ports.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+              	<li><code>Data:</code> data to be written. Data to be written to PortA are passed in <code>Data</code>'s higher byte. 
+              		                                         Data to be written to PortB are passed in <code>Data</code>'s lower byte</li>
+              </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortA and PortB should be configured as outputs. See <a href="#expander_set_directionporta">Expander_Set_DirectionPortA</a>,
+            	<a href="#expander_set_directionportb">Expander_Set_DirectionPortB</a> and 
+              <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Write a byte to Port Expander's PORTA and PORTB </i>
+
+...
+Expander_Set_DirectionPortAB(0,0x0000);        <i>// set expander's porta and portb to be output</i>
+...
+Expander_Write_PortAB(0, 0xAA55);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+    <h3 id="expander_setbit_porta">Expander_SetBit_PortA</h3>
+
+
+    <!-- tabela: Expander_SetBit_PortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_SetBit_PortA(<b>char</b> ModuleAddress, BitMask : word);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets bits designated by the <code>BitMask</code> parameter to Port Expander's PortA.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortA should be configured as output. See <a href="#expander_set_directionporta">Expander_Set_DirectionPortA</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Sets lower nibble of the PortA</i>
+...
+Expander_Set_DirectionPortA(0, $0000);    <i>// set expander's PortA to be output</i>
+...
+Expander_SetBit_PortA(0, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="expander_clrbit_porta">Expander_ClrBit_PortA</h3>
+
+
+    <!-- tabela: Expander_ClrBit_PortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_ClrBit_PortA(<b>char</b> ModuleAddress, BitMask : word);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function clears bits designated by the <code>BitMask</code> parameter in Port Expander's PortA.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+              </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortA should be configured as output. See <a href="#expander_set_directionporta">Expander_Set_DirectionPortA</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Clears lower nibble of the PortA</i>
+...
+Expander_Set_DirectionPortA(0, $0000);    <i>// set expander's PortA to be output</i>
+...
+Expander_ClrBit_PortA(0, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="expander_togglebit_porta">Expander_ToggleBit_PortA</h3>
+
+
+    <!-- tabela: Expander_ToggleBit_PortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_ToggleBit_PortA(<b>char</b> ModuleAddress, BitMask : word);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function toggles bits designated by the <code>BitMask</code> parameter in Port Expander's PortA.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+              </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortA should be configured as output. See <a href="#expander_set_directionporta">Expander_Set_DirectionPortA</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Toggles lower nibble of the PortA</i>
+...
+Expander_Set_DirectionPortA(0, $0000);    <i>// set expander's PortA to be output</i>
+...
+Expander_ToggleBit_PortA(0, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="expander_setbit_portb">Expander_SetBit_PortB</h3>
+
+
+    <!-- tabela: Expander_SetBit_Portb -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_SetBit_PortB(<b>char</b> ModuleAddress, BitMask : word);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets bits designated by the <code>BitMask</code> parameter to Port Expander's PortB.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortB should be configured as output. See <a href="#expander_set_directionportb">Expander_Set_DirectionPortB</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Sets lower nibble of the PortB</i>
+...
+Expander_Set_DirectionPortB(0, $0000);    <i>// set expander's PortB to be output</i>
+...
+Expander_SetBit_PortB(0, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+
+    <h3 id="expander_clrbit_portb">Expander_ClrBit_PortB</h3>
+
+
+    <!-- tabela: Expander_ClrBit_PortB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_ClrBit_PortB(<b>char</b> ModuleAddress, BitMask : word);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function clears bits designated by the <code>BitMask</code> parameter in Port Expander's PortB.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortB should be configured as output. See <a href="#expander_set_directionportb">Expander_Set_DirectionPortB</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Clears lower nibble of the PortB</i>
+...
+Expander_Set_DirectionPortB(0, $0000);    <i>// set expander's PortB to be output</i>
+...
+Expander_ClrBit_PortB(0, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="expander_togglebit_portb">Expander_ToggleBit_PortB</h3>
+
+
+    <!-- tabela: Expander_ToggleBit_PortB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_ToggleBit_PortB(<b>char</b> ModuleAddress, BitMask : word);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function toggles bits designated by the <code>BitMask</code> parameter in Port Expander's PortB.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+              </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+            <p>Port Expander's PortB should be configured as output. See <a href="#expander_set_directionportb">Expander_Set_DirectionPortB</a> and 
+            <a href="#expander_set_directionportab">Expander_Set_DirectionPortAB</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Toggles lower nibble of the PortB</i>
+...
+Expander_Set_DirectionPortB(0, $0000);    <i>// set expander's PortB to be output</i>
+...
+Expander_ToggleBit_PortB(0, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="expander_set_directionporta">Expander_Set_DirectionPortA</h3>
+
+
+    <!-- tabela: Expander_Set_DirectionPortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_DirectionPortA(<b>char</b> ModuleAddress, <b>char</b> Data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets Port Expander's PortA direction.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>Data:</code> data to be written to the PortA direction register. Each bit corresponds to the appropriate pin of the PortA register. 
+																		 Set bit designates corresponding pin as input. Cleared bit designates corresponding pin as output.</li>
+             </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTA to be output</i>
+Expander_Set_DirectionPortA(0,0x00);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+
+    <!-- -->
+
+
+    <h3 id="expander_set_directionportb">Expander_Set_DirectionPortB</h3>
+
+
+    <!-- tabela: Expander_Set_DirectionPortB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_DirectionPortB(<b>char</b> ModuleAddress, <b>char</b> Data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets Port Expander's PortB direction.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>Data:</code> data to be written to the PortB direction register. Each bit corresponds to the appropriate pin of the PortB register. 
+																		 Set bit designates corresponding pin as input. Cleared bit designates corresponding pin as output.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTB to be input</i>
+Expander_Set_DirectionPortB(0,0xFF);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->        
+
+    <!-- -->
+
+
+    <h3 id="expander_set_directionportab">Expander_Set_DirectionPortAB</h3>
+
+
+    <!-- tabela: Expander_Set_DirectionPortAB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_DirectionPortAB(<b>char</b> ModuleAddress, <b>unsigned int</b> Direction);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets Port Expander's PortA and PortB direction.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>Direction:</code> data to be written to direction registers.
+             		                     Data to be written to the PortA direction register are passed in <code>Direction</code>'s higher byte. 
+             		                     Data to be written to the PortB direction register are passed in <code>Direction</code>'s lower byte.
+																				Each bit corresponds to the appropriate pin of the PortA/PortB register. 
+																		 Set bit designates corresponding pin as input. Cleared bit designates corresponding pin as output.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+
+<pre>
+<i>// Set Port Expander's PORTA to be output and PORTB to be input</i>
+Expander_Set_DirectionPortAB(0,0x00FF);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="expander_set_inputdirporta">Expander_Set_InputDirPortA</h3>
+
+
+    <!-- tabela: Expander_Set_InputDirPortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_InputDirPortA(ModuleAddress, <b>char</b> BitMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets the desired Port Expander's PortA pins as input according to the <code>BitMask</code> parameter.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>BitMask:</code> appropriate bitmask.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTA lower four pins as input :</i>
+Expander_Set_InputDirPortA(0, 0x0F);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="expander_set_outputdirporta">Expander_Set_OutputDirPortA</h3>
+
+
+    <!-- tabela: Expander_Set_OutputDirPortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_OutputDirPortA(ModuleAddress, <b>char</b> BitMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets the desired Port Expander's PortB pins as input according to the <code>BitMask</code> parameter.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>BitMask:</code> appropriate bitmask.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTA lower four pins as output :</i>
+Expander_Set_OutputDirPortA(0, 0x0F);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->        
+
+    <!-- -->
+
+    <h3 id="expander_set_inputdirportb">Expander_Set_InputDirPortB</h3>
+
+
+    <!-- tabela: Expander_Set_InputDirPortB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_InputDirPortB(ModuleAddress, <b>char</b> BitMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets the desired Port Expander's PortB pins as input according to the <code>BitMask</code> parameter.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>BitMask:</code> appropriate bitmask.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTB lower four pins as input :</i>
+Expander_Set_InputDirPortB(0, 0x0F);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="expander_set_outputdirportb">Expander_Set_OutputDirPortB</h3>
+
+
+    <!-- tabela: Expander_Set_OutputDirPortB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_OutputDirPortB(ModuleAddress, <b>char</b> BitMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets the desired Port Expander's PortB pins as input according to the <code>BitMask</code> parameter.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>BitMask:</code> appropriate bitmask.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTB lower four pins as output :</i>
+Expander_Set_OutputDirPortB(0, 0x0F);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="expander_set_pullupsporta">Expander_Set_PullUpsPortA</h3>
+
+
+    <!-- tabela: Expander_Set_PullUpsPortA -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_PullUpsPortA(<b>char</b> ModuleAddress, <b>char</b> Data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets Port Expander's PortA pull up/down resistors.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>Data:</code> data for choosing pull up/down resistors configuration. Each bit corresponds to the appropriate pin of the PortA register. 
+																		 Set bit enables pull-up for corresponding pin.</li>
+             </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTA pull-up resistors</i>
+Expander_Set_PullUpsPortA(0, 0xFF);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <h3 id="expander_set_pullupsportb">Expander_Set_PullUpsPortB</h3>
+
+
+    <!-- tabela: Expander_Set_PullUpsPortB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_PullUpsPortB(<b>char</b> ModuleAddress, <b>char</b> Data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets Port Expander's PortB pull up/down resistors.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>Data:</code> data for choosing pull up/down resistors configuration. Each bit corresponds to the appropriate pin of the PortB register. 
+																		 Set bit enables pull-up for corresponding pin.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTB pull-up resistors</i>
+Expander_Set_PullUpsPortB(0, 0xFF);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->        
+
+
+    <h3 id="expander_set_pullupsportab">Expander_Set_PullUpsPortAB</h3>
+
+
+    <!-- tabela: Expander_Set_PullUpsPortAB -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_Set_PullUpsPortAB(<b>char</b> ModuleAddress, <b>unsigned int</b> PullUps);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets Port Expander's PortA and PortB pull up/down resistors.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+             	<li><code>PullUps:</code> data for choosing pull up/down resistors configuration.
+             		                        PortA pull up/down resistors configuration is passed in <code>PullUps</code>'s higher byte. 
+             		                        PortB pull up/down resistors configuration is passed in <code>PullUps</code>'s lower byte.
+																				Each bit corresponds to the appropriate pin of the PortA/PortB register. 
+																		 		Set bit enables pull-up for corresponding pin. </li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set Port Expander's PORTA and PORTB pull-up resistors</i>
+Expander_Set_PullUpsPortAB(0, 0xFFFF);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->        
+
+    <!-- -->
+
+    <h3 id="expander_setbits">Expander_SetBits</h3>
+
+
+    <!-- tabela: Expander_SetBits -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_SetBits(<b>char</b> ModuleAddress, <b>char</b> RegAddress, <b>char</b> BitMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets bits designated by the <code>BitMask</code> parameter to Port Expander's internal register (<code>RegAddress</code> parameter).</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+                <li><code>RegAddress:</code> Port Expander's internal register address</li>  
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+              </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Sets lower nibble at the register located on the address 1 of the Port Expander</i>
+Expander_SetBits(0, 1, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="expander_clrbits">Expander_ClrBits</h3>
+
+
+    <!-- tabela: Expander_ClrBits -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_ClrBits(<b>char</b> ModuleAddress, <b>char</b> RegAddress, <b>char</b> BitMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function clears bits designated by the <code>BitMask</code> parameter in the Port Expander's internal register (<code>RegAddress</code> parameter).</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+                <li><code>RegAddress:</code> Port Expander's internal register address</li>  
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+              </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Clears lower nibble in the register located on the address 1 of the Port Expander</i>
+Expander_ClrBits(0, 1, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="expander_togglebits">Expander_ToggleBits</h3>
+
+
+    <!-- tabela: Expander_ToggleBits -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Expander_ToggleBits(<b>char</b> ModuleAddress, <b>char</b> RegAddress, <b>char</b> BitMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function toggles bits designated by the <code>BitMask</code> parameter in the Port Expander's internal register (<code>RegAddress</code> parameter).</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>ModuleAddress:</code> Port Expander hardware address, see schematic at the bottom of this page</li>
+                <li><code>RegAddress:</code> Port Expander's internal register address</li>  
+              	<li><code>BitMask:</code> appropriate bitmask.</li>
+              </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Port Expander must be initialized. See <a href="#expander_init">Expander_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Toggles lower nibble in the register located on the address 1 of the Port Expander</i>
+Expander_ToggleBits(0, 1, 0x0F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+   <!-- 
+    <h3>Library Example</h3>
+
+    <p>The example demonstrates how to communicate with Port Expander MCP23S17. Note that Port Expander pins A2 A1 A0 are connected to GND so Port Expander Hardware Address is <code>0</code>.</p>
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> GPIO_PORTA_DATA0_bit;
+<b>sbit</b>  SPExpanderCS            <b>at</b> GPIO_PORTA_DATA1_bit;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> GPIO_PORTA_DIR0_bit;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> GPIO_PORTA_DIR1_bit;
+<i>// End Port Expander module connections</i>
+
+<b>unsigned int</b> i = 0;
+
+<b>void</b> main() {
+  <i>// GPIO_PORTD output for LEDs</i>
+  GPIO_Digital_Output(&#38;GPIO_PORTD, _GPIO_PINMASK_ALL); <i>// digital output</i>
+
+  <i>// Port Expander uses SPI0 module</i>
+  SPI0_Init();
+
+  Expander_Init(0);                      <i>// Initialize Port Expander</i>
+
+  Expander_Set_DirectionPortA(0, 0x00);  <i>// Set Expander's PORTA to be output</i>
+
+  Expander_Set_DirectionPortB(0,0xFF);   <i>// Set Expander's PORTB to be input</i>
+  Expander_Set_PullUpsPortB(0,0xFF);     <i>// Set pull-ups to all of the Expander's PORTB pins</i>
+
+  <b>while</b>(1) {                             <i>// Endless loop</i>
+    Expander_Write_PortA(0, i++);        <i>// Write i to expander's PORTA</i>
+    GPIO_PORTD_DATA = Expander_Read_PortB(0);  <i>// Read expander's PORTB and write it to LEDs</i>
+    Delay_ms(75);
+  }
+
+}
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST           <b>at</b> GPIOB_ODR.B0;
+<b>sbit</b>  SPExpanderCS            <b>at</b> GPIOB_ODR.B1;
+<i>// End Port Expander module connections</i>
+
+<b>unsigned int</b> i = 0;
+
+<b>void</b> main() {
+  <i>// PORTD output for LEDs</i>
+  GPIO_Digital_Output(&#38;GPIOD_BASE, _GPIO_PINMASK_ALL); <i>// digital output</i>
+
+  <i>// Port Expander uses SPI1 module at PORTB[3:5]</i>
+  SPI1_Init_Advanced(_SPI_FPCLK_DIV4, _SPI_MASTER | _SPI_8_BIT |
+                     _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                     _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                     &#38;_GPIO_MODULE_SPI1_PB345);
+
+  GPIO_Alternate_Function_Enable(&#38;_GPIO_MODULE_SWJ_JTAGDISABLE);
+
+  Expander_Init(0);                      <i>// Initialize Port Expander</i>
+
+  Expander_Set_DirectionPortA(0, 0x00);  <i>// Set Expander's PORTA to be output</i>
+
+  Expander_Set_DirectionPortB(0,0xFF);   <i>// Set Expander's PORTB to be input</i>
+  Expander_Set_PullUpsPortB(0,0xFF);     <i>// Set pull-ups to all of the Expander's PORTB pins</i>
+
+  <b>while</b>(1) {                             <i>// Endless loop</i>
+    Expander_Write_PortA(0, i++);        <i>// Write i to expander's PORTA</i>
+    GPIOD_ODR = Expander_Read_PortB(0);  <i>// Read expander's PORTB and write it to LEDs</i>
+    Delay_ms(75);
+  }
+
+}
+</pre>
+    </div>
+  </div>
+
+ 
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Port Expander HW connection" src="img/Schemes/scheme_expander.gif"></p>
+    <p class="center small">Port Expander HW connection</p>
+
+-->
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>

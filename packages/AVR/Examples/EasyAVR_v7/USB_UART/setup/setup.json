@@ -1,0 +1,99 @@
+{
+    "board": {
+        "category": "Development board",
+        "icon": "images/easyavr-v7.png",
+        "mikrobus_count": 2,
+        "name": "EasyAVR v7",
+        "tft_display": null,
+        "version": ""
+    },
+    "display": {
+        "icon": ":/block_icon",
+        "init_code": null,
+        "name": "No display"
+    },
+    "mcu": {
+        "architecture": "AVR",
+        "device_id": "ATMEGA32|40|DIP40",
+        "family": "ATmega",
+        "flash": "32KB",
+        "icon": "images/micro_chip.png",
+        "isMCUCard": false,
+        "max_speed": "16MHz",
+        "name": "ATMEGA32",
+        "pin_count": "40",
+        "ram": "2KB",
+        "settings": {
+            "clock": 8,
+            "config_registers": [],
+            "mcu": "ATMEGA32",
+            "package": ""
+        },
+        "vendor": "Microchip"
+    },
+    "name": "EasyAVR v7 ATMEGA32",
+    "prog": {
+        "description": "Gdb server is a control program, which allows you to connect your program with a remote GDB via target remote or target extended-remote, but without linking in the usual debugging stub.",
+        "icon": "icon.png",
+        "name": "GDB General",
+        "planet_debug_compatible": "No",
+        "settings": {
+            "auto_start_gdb": true,
+            "command_line": "",
+            "ip_address": "127.0.0.1",
+            "port": "1234",
+            "remote_commands": []
+        },
+        "uid": "gdb_general"
+    },
+    "sdk": {
+        "families": [
+            "AVR"
+        ],
+        "icon": "Resources/icon.png",
+        "legacy": true,
+        "name": "mikroC for AVR Legacy",
+        "sdk_development_kit": false,
+        "uuid": "sdk.mikroc.legacy.avr",
+        "version": "7.0.1"
+    },
+    "toolchain": {
+        "icon": "mikroC_AVR.png",
+        "language": "MikroC",
+        "name": "mikroC AI for AVR BETA",
+        "settings": {
+            "actions": {
+                "build": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--build all",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                },
+                "clean": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--clean",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "memake.settings": {
+                "BOARD_NAME": "BOARD_EASYAVR_V7"
+            },
+            "output_path": ""
+        },
+        "uid": "mikrocavr",
+        "vendor": "MikroElektronika",
+        "version": "1.0.0"
+    },
+    "uid": "ef307540-70db-4c59-b078-c2c5e1c2579b"
+}

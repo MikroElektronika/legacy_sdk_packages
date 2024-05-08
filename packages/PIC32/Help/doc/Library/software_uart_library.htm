@@ -1,0 +1,568 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Software UART Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Marko Jovanovic & Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Software UART Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="software_spi_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="sound_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Library</h2></a>
+
+
+    <p>The mikroC PRO for PIC32 provides routines for implementing Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> communication. These routines are hardware independent and can be used with any MCU. <br>The Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> Library provides easy communication with other devices via the RS232 protocol.</p>
+
+    <table>
+      <tr align="left">
+	      <td bgcolor=#f5f2ec><img src="img/note.gif" align="absmiddle">
+          <b>Important :</b> The Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> library implements time-based activities, so interrupts need to be disabled when using it.
+        </td>
+      </tr>
+    </table>  
+      
+      
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#soft_uart_init">Soft_UART_Init</a></li>
+      <li><a href="#soft_uart_read">Soft_UART_Read</a></li>
+      <li><a href="#soft_uart_write">Soft_UART_Write</a></li>
+      <li><a href="#soft_uart_break">Soft_UART_Break</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="soft_uart_init">Soft_UART_Init</h3>
+
+
+    <!-- tabela: Soft_UART_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Soft_UART_Init(<b>unsigned long</b> *port, <b>unsigned long</b> rx, <b>unsigned long</b> tx, <b>unsigned long</b> baud_rate, <b>unsigned int</b> inverted);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Configures and initializes the software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module.</p>
+            <p>Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> routines use <a href="built-in_routines.htm#delay_cyc">Delay_Cyc</a> routine. If requested baud rate is too low then calculated parameter for calling <code>Delay_Cyc</code> exceeds <code>Delay_Cyc</code> argument range.</p>
+            <p>If requested baud rate is too high then rounding error of <code>Delay_Cyc</code> argument corrupts Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> timings.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>port:</code> software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> port address</li>
+             	<li><code>rx:</code> receiver pin</li>
+             	<li><code>tx:</code> transmiter pin</li>
+             	<li><code>baud_rate:</code> requested baudrate. Maximum baud rate depends on the MCU’s clock and working conditions</li>
+             	<li><code>inverted:</code> if set to non-zero value, indicates inverted logic on output</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>2</code> - error, requested baud rate is too low</li>
+	            <li><code>1</code> - error, requested baud rate is too high</li>
+  	          <li><code>0</code> - successful initialization</li>
+	          </ul>		
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>This will initialize software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> and establish the communication at 9600 <acronym title="bits per second">bps</acronym>:</p>
+
+<pre>
+<b>char</b> error;
+...
+error = Soft_UART_Init(&#38;PORTF, 4, 5, 14400, 0);   // Initialize Soft UART at 14400 bps
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> library implements time-based activities, so interrupts need to be disabled when using it.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_uart_read">Soft_UART_Read</h3>
+
+
+    <!-- tabela: Soft_UART_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Soft_UART_Read(<b>char</b> *error);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function receives a byte via software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>.</p>
+            <p>This is a blocking function call (waits for start bit). Programmer can unblock it by calling <a href="#soft_uart_break">Soft_UART_Break</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>error: </code> Error flag. Error code is returned through this variable. Values :</li>
+		          <li><code>0</code> - no error</li>
+		          <li><code>1</code> - stop bit error</li>
+  	          <li><code>255</code> - user abort, <a href="#soft_uart_break">Soft_UART_Break</a> called</li>
+	          </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Byte received via UART.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> must be initialized before using this function. See the <a href="#soft_uart_init">Soft_UART_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> data_;
+<b>char</b> error;
+...
+<i>// wait until data is received</i>
+<b>do</b>
+  data = Soft_UART_Read(&error);
+<b>while</b> (error);
+
+<i>// Now we can work with data:</i>
+<b>if</b> (data_) {...}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> library implements time-based activities, so interrupts need to be disabled when using it.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_uart_write">Soft_UART_Write</h3>
+
+
+    <!-- tabela: Soft_UART_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Soft_UART_Write(<b>char</b> udata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routine sends one byte via the Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>udata:</code> data to be sent.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> must be initialized before using this function. See the <a href="#soft_uart_init">Soft_UART_Init</a> routine.</p>
+            <p>Be aware that during transmission, software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> is incapable of receiving data &#8211; data transfer protocol must be set in such a way to prevent loss of information.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> some_byte = 0x0A;
+...
+<i>// Write a byte via Soft UART</i>
+Soft_UART_Write(some_byte);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> library implements time-based activities, so interrupts need to be disabled when using it.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_uart_break">Soft_UART_Break</h3>
+
+
+    <!-- tabela: Soft_UART_Break -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Soft_UART_Break();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+       	    <p><a href="#soft_uart_read">Soft_UART_Read</a> is blocking routine and it can block the program flow. Calling <code>Soft_UART_Break</code> routine from the interrupt will unblock the program execution. This mechanism is similar to <acronym title="Watch Dog Timer">WDT</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            Nothing.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><b>char</b> data1, error, counter = 0;
+
+<b>void</b> Timer1Int() <b>org</b> IVT_ADDR_T1INTERRUPT {
+
+  <b>if</b> (counter &#62;= 20) {
+      Soft_UART_Break();
+      counter = 0;              <i>// reset counter</i>
+    }
+
+  <b>else</b>
+    counter++;                  <i>// increment counter</i>
+
+  T1IF_bit = 0;                 <i>// Clear Timer1 overflow interrupt flag</i>
+}
+
+<b>void</b> main() {
+
+  ...
+
+  <b>if</b> (Soft_UART_Init(&#38;PORTF, 4, 5, 14400, 0) = 0)
+    Soft_UART_Write(0x55);
+  ...
+
+  <i>// try Soft_UART_Read with blocking prevention mechanism</i>
+  IPC0   = IPC0 | 0x1000;       <i>// Interrupt priority level = 1</i>
+  T1IE_bit= 1;                  <i>// Enable Timer1 interrupts</i>
+  T1CON = 0x8030;               <i>// Timer1 ON, internal clock FCY, prescaler 1:256</i>
+
+  data1 = Soft_UART_Read(&#38;error);
+  T1IE_bit= 0;                  <i>// Disable Timer1 interrupts</i>
+}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>The Software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> library implements time-based activities, so interrupts need to be disabled when using it.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+   <p>This example demonstrates simple data exchange via software <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym>. If MCU is connected to the PC, you can test the example from the mikroC PRO for PIC32 <acronym title="Universal Synchronous Asynchronous Receiver Transmitter">USART</acronym> communication terminal, launch it from the drop-down menu <b>Tools&#160;&#8250;&#160;USART Terminal</b> or simply click the USART Terminal Icon <img alt="USART Terminal Icon" src="img/icons/usart_icon.gif" align="absmiddle">.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>char</b> i, error, byte_read;  <i>// Auxiliary variables</i>
+
+<b>void</b> main(){
+  AD1PCFG = 0xFFFF;
+
+  TRISB = 0;               <i>// Set PORTB as output (error signalization)</i>
+  LATB = 0;
+
+  error = Soft_UART_Init(&PORTF, 4, 5, 56000, 0); <i>// Initialize Soft UART at 56000 bps</i>
+  <b>if</b> (error > 0) {
+    LATB = error;                                 <i>// Signalize Init error</i>
+    <b>while</b>(1);                                     <i>// Stop program</i>
+  }
+  Delay_ms(100);
+
+  <b>for</b> (i = 'z'; i >= 'A'; i--) {                  <i>// Send bytes from 'z' downto 'A'</i>
+    Soft_UART_Write(i);
+    Delay_ms(100);
+  }
+
+  <b>while</b>(1) {                                      <i>// Endless loop</i>
+    byte_read = Soft_UART_Read(&error);           <i>// Read byte, then test error flag</i>
+    <b>if</b> (error)                                    <i>// If error was detected</i>
+      LATB = error;                               <i>//   signal it on PORTB</i>
+    <b>else</b>
+      Soft_UART_Write(byte_read);                 <i>// If error was not detected, return byte read</i>
+    }
+}
+</pre>
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

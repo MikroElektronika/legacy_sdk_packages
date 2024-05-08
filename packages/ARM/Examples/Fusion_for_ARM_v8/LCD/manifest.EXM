@@ -1,0 +1,8 @@
+{
+    "name": "LCD",
+    "description": "This is a simple demonstration of LCD library functions",
+    "image" : "Lcd.png",
+    "toolchain": ["mikrocarm"],
+    "hw" : ["Fusion for ARM","LCD"],
+    "category" : ["mikroC legacy ARM"]
+}

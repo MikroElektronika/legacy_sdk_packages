@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32F30x.emcl",
+        "__Lib_System_3XX.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_GPIO_32F37x_38x_Defs.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F373RB$|^STM32F373VB$|^STM32F383VC$|^STM32F373CB$|^STM32F373V8$|^STM32F373C8$|^STM32F373CC$|^STM32F373R8$|^STM32F383RC$|^STM32F373RC$|^STM32F383CC$|^STM32F373VC$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

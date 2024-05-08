@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_FLASH_32F0x_64.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F058T8$|^STM32F058R8$|^STM32F030C8$|^STM32F030R8$|^STM32F058C8$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

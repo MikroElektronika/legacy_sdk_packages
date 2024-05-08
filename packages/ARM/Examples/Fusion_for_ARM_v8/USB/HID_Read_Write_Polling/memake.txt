@@ -1,0 +1,19 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: HID_Read_Write_Polling
+
+uses: {
+    MikroC.System
+    MikroC.USB
+}
+
+depends: {
+    MikroC.System
+    MikroC.USB
+}
+
+sources: {
+    USBdsc.c
+    HID_Read_Write_Polling.c
+}

@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_ADC_eio_ref3.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^AT90PWM2B$|^AT90USB646$|^AT90CAN64$|^AT90USB1286$|^AT90PWM216$|^AT90USB1287$|^AT90PWM316$|^AT90PWM1$|^AT90PWM2$|^AT90PWM3$|^AT90CAN128$|^AT90CAN32$|^AT90PWM3B$|^AT90USB647$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

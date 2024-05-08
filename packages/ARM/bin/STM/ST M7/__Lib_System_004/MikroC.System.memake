@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M7",
+    "binaries": [
+        "__Lib_Math.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_System_F7xx.emcl",
+        "__Lib_GPIO_32F7xx_Defs.emcl",
+        "__Lib_GPIO_32F7xx.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F756BG$|^STM32F746NG$|^STM32F756NG$|^STM32F746ZE$|^STM32F756ZG$|^STM32F745IE$|^STM32F746NE$|^STM32F746IG$|^STM32F746IE$|^STM32F746ZG$|^STM32F756IG$|^STM32F745ZG$|^STM32F746BE$|^STM32F745ZE$|^STM32F746BG$|^STM32F745IG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

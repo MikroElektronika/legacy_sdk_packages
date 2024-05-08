@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "P16",
+    "binaries": [
+        "__Lib_PWM_c2.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16C74A$|^PIC16CR62$|^PIC16F870$|^PIC16C73A$|^PIC16C62A$|^PIC16C72$|^PIC16C67$|^PIC16CR65$|^PIC16C63$|^PIC16F872$|^PIC16C62B$|^PIC16C77$|^PIC16C773$|^PIC16C63A$|^PIC16C923$|^PIC16C924$|^PIC16F72$|^PIC16C72A$|^PIC16C925$|^PIC16C926$|^PIC16CR63$|^PIC16C73B$|^PIC16C765$|^PIC16CR926$|^PIC16C65A$|^PIC16C66$|^PIC16CR64$|^PIC16C745$|^PIC16C74B$|^PIC16C64A$|^PIC16C774$|^PIC16F871$|^PIC16CR72$|^PIC16C65B$|^PIC16C76$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

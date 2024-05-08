@@ -1,0 +1,8 @@
+{
+    "name": "TFT",
+    "description": "Simple EasyTFT example.",
+    "image" : "ETFT.png",
+    "toolchain": ["mikrocpic"],
+    "hw" : ["EasyPIC v8","EasyTFT"],
+    "category" : ["mikroC legacy PIC"]
+}

@@ -1,0 +1,4469 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Flash Memory Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Flash Memory Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="ethernet_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="ft5xx6_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Flash Memory Library</h2></a>
+
+
+    <p>This library provides routines for accessing microcontroller's (internal) Flash memory.</p>
+<!--    <p>The Flash is organized as a set of 1 kB blocks that can be individually erased. Erasing a block causes the entire contents of the block to be reset to all ones.</p>
+    <p>The Flash can be programmed on a word-by-word basis. Programming causes 1 bits to become 0 bits (where appropriate); 
+    <br>Because of this, a word can be repeatedly programmed so long as each programming operation only requires changing 1 bits to 0 bits.</p>
+
+    <p>Depending upon the MCU used, the amount of available flash varies from 8 to 256 KB.-->
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <h4>Stellaris Specific Routines</h4>
+    <ul>
+      <li><a href="#flash_write">Flash_Write</a></li>
+      <li><a href="#flash_write_buffer">Flash_Write_Buffer</a></li>
+      <li><a href="#flash_erase_block">Flash_Erase_Block</a></li>
+      <li><a href="#flash_set_usec">Flash_Set_uSec</a></li>
+    </ul>
+  
+    <h4>ST Specific Routines</h4>
+    <ul>
+      <li><a href="#flash_unlock">FLASH_Unlock</a></li>
+      <li><a href="#flash_unlock_banks">FLASH_Unlock_Banks</a></li>
+      <li><a href="#flash_unlock_bank1">FLASH_Unlock_Bank1</a></li>
+      <li><a href="#flash_unlock_bank2">FLASH_Unlock_Bank2</a></li>
+      <li><a href="#flash_lock">FLASH_Lock</a></li>
+      <li><a href="#flash_lock_banks">FLASH_Lock_Banks</a></li>
+      <li><a href="#flash_lock_bank1">FLASH_Lock_Bank1</a></li>
+      <li><a href="#flash_lock_bank2">FLASH_Lock_Bank2</a></li>
+      <li><a href="#flash_erasesector">FLASH_EraseSector</a></li>
+      <li><a href="#flash_eraseallsectors">FLASH_EraseAllSectors</a></li>
+      <li><a href="#flash_erasepage">FLASH_ErasePage</a></li>
+      <li><a href="#flash_eraseallpages">FLASH_EraseAllPages</a></li>
+      <li><a href="#flash_eraseallbank1pages">FLASH_EraseAllBank1Pages</a></li>
+      <li><a href="#flash_eraseallbank1pages">FLASH_EraseAllBank2Pages</a></li>
+      <li><a href="#flash_write_doubleword">FLASH_Write_DoubleWord</a></li>
+      <li><a href="#flash_write_word">FLASH_Write_Word</a></li>
+      <li><a href="#flash_write_halfword">FLASH_Write_HalfWord</a></li>
+      <li><a href="#flash_write_byte">FLASH_Write_Byte</a></li>
+      <li><a href="#flash_addresstosector">FLASH_AddressToSector</a></li>
+      <li><a href="#flash_sectorsize">FLASH_SectorSize</a></li>      
+    </ul> 
+
+    <h4>Kinetis Specific Routines</h4>
+<ul>
+	<li><a href="#flash_getsecuritystate">Flash_GetSecurityState</a></li>
+	<li><a href="#flash_init">Flash_Init</a></li>
+	<li><a href="#flash_programlongword">Flash_ProgramLongword</a></li>
+	<li><a href="#flash_programphrase">Flash_ProgramPhrase</a></li>
+	<li><a href="#flash_programsection">Flash_ProgramSection</a></li>
+	<li><a href="#flash_erasesector">Flash_EraseSector</a></li>
+	<li><a href="#flash_eraseblock">Flash_EraseBlock</a></li>
+	<li><a href="#flash_eraseallblocks">Flash_EraseAllBlocks</a></li>
+	<li><a href="#flash_read1sallblocks">Flash_Read1sAllBlocks</a></li>
+	<li><a href="#flash_read1sblock">Flash_Read1sBlock</a></li>
+	<li><a href="#flash_read1ssection">Flash_Read1sSection</a></li>
+	<li><a href="#flash_verifybackdooraccesskey">Flash_VerifyBackdoorAccessKey</a></li>
+	<li><a href="#flash_programcheck">Flash_ProgramCheck</a></li>
+	<li><a href="#flash_readresource">Flash_ReadResource</a></li>
+	<li><a href="#flash_readonce">Flash_ReadOnce</a></li>
+	<li><a href="#flash_programonce">Flash_ProgramOnce</a></li>
+</ul>
+
+    <h4>MSP432 Specific Routines</h4>
+
+<ul>
+	<li><a href="#flash_addresstosector">FLASH_AddressToSector</a></li>
+	<li><a href="#flash_memoryinfo">FLASH_MemoryInfo</a></li>
+	<li><a href="#flash_unprotectsectors">FLASH_UnprotectSectors</a></li>
+	<li><a href="#flash_protectsectors">FLASH_ProtectSectors</a></li>
+	<li><a href="#flash_erasesector">FLASH_EraseSector</a></li>
+	<li><a href="#flash_erasebank0">FLASH_EraseBank0</a></li>
+	<li><a href="#flash_erasebank1">FLASH_EraseBank1</a></li>
+	<li><a href="#flash_masserase">FLASH_MassErase</a></li>
+	<li><a href="#flash_programmemory">FLASH_ProgramMemory</a></li>
+</ul>
+
+    <!-- -->
+
+    <h3 id="flash_write">Flash_Write</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> Flash_Write(<b>unsigned long</b> address, <b>unsigned long</b> lData);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will program one words into the on-chip flash. Each word in a page of Flash can only be programmed one time between an erase of that page; 
+            <br>Programming a word multiple times will result in an unpredictable value in that word of Flash.</p>
+            
+            <p>Since the flash is programmed one word at a time, the starting address and byte count must both be multiples of four. 
+            <br>It is up to the caller to verify the programmed contents, if such verification is required.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> address of the Flash memory word.</li>
+             	<li><code>lData:</code> data to be written.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>0</code> - if writing was successful.</li>
+							<li><code>-1</code> - if an access violation occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> Address = 0xC00;
+
+Flash_Write(Address, 0xAAAAAAAA); <i>// write one word</i>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_write_buffer">Flash_Write_Buffer</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> Flash_Write_Buffer(<b>unsigned long</b> address, <b>void</b> *pData);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will program a sequence of words into the on-chip flash.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> address of the Flash memory word.</li>
+             	<li><code>pData:</code> pointer to an array of 32*4 = 128 bytes in length.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>0</code> - if writing was successful.</li>
+							<li><code>-1</code> - if an access violation occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> Address = 0xC00;
+<b>unsigned long</b> buff[32];
+
+Flash_Write_Buffer(Address, buff);     <i>// write buffer with 32 long words</i>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This function is available only for MCUs that support buffered writing operation.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_erase_block">Flash_Erase_Block</h3>
+
+    <!-- tabela: Flash_Erase_Block -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> Flash_Erase_Block(<b>unsigned long</b> address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will erase a 1 kB block of the on-chip Flash. After erasing, the block is filled with 0xFF bytes. Read-only and execute-only blocks cannot be erased.
+            <br>This function will not return until the block has been erased.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+             	<li><code>address:</code> starting address of the Flash memory block.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>-1</code> - if an access violation or erase error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> Address = 0xC00;
+
+Flash_Erase_Block(Address);            <i>// erase block (Address must be 1024 byte aligned)</i>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Address should be 1024 byte aligned or else unpredictable behavior can occur.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_set_usec">Flash_Set_uSec</h3>
+
+    <!-- tabela: Flash_Erase_Block -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Flash_Set_uSec(<b>unsigned long</b> clocks);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function is used to tell the Flash controller the number of processor clocks per micro-second.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+             	<li><code>clocks:</code> the number of processor clocks per micro-second..</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Flash_Set_uSec(80);  <i>// If 80 MHz is used as a processor clock</i>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This value must be programmed correctly or the Flash most likely will not program correctly; it has no affect on reading</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_unlock">FLASH_Unlock</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Unlock();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will unlock the FLASH control register access.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FLASH_Unlock();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_unlock_banks">FLASH_Unlock_Banks</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Unlock_Banks();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will unlock the FLASH Program Erase Controller.</p>
+            <p>This routine is valid only for STM32F10x devices :
+  					<ul>
+  						<li>For STM32F10X_XL devices this function unlocks Bank1 and Bank2.</li>
+  						<li>For all other devices it unlocks Bank1 and it is equivalent to <a href="#flash_unlock_bank1">FLASH_Unlock_Bank1</a> function.</li>
+  					</ul>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FLASH_Unlock_Banks();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_unlock_bank1">FLASH_Unlock_Bank1</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Unlock_Bank1();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will unlock the FLASH Bank1 Program Erase Controller.</p>
+            <p>This routine is valid only for STM32F10x devices :
+  					<ul>
+  						<li>For STM32F10X_XL devices this function unlocks Bank1.</li>
+  						<li>For all other devices it unlocks Bank1 and it is equivalent to <a href="#flash_unlock">FLASH_Unlock</a> function.</li>
+  					</ul>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FLASH_Unlock_Bank1();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_unlock_bank2">FLASH_Unlock_Bank2</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Unlock_Bank2();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will unlock the FLASH Bank2 Program Erase Controller.</p>
+            <p>This routine is valid only for STM32F10x devices :
+  					<ul>
+  						<li>For STM32F10X_XL devices this function unlocks Bank2.</li>
+  						<li>For all other devices it unlocks Bank2 and it is equivalent to <a href="#flash_unlock">FLASH_Unlock</a> function.</li>
+  					</ul>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p> 
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FLASH_Unlock_Bank2();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_lock">FLASH_lock</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_lock();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will lock the FLASH control register access.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FLASH_lock();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_lock_banks">FLASH_Lock_Banks</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Lock_Banks();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will Lock the FLASH Program Erase Controller.</p>
+            <p>This routine is valid only for STM32F10x devices :
+  					<ul>
+  						<li>For STM32F10X_XL devices this function lock Bank1 and Bank2.</li>
+  						<li>For all other devices it locks Bank1 and it is equivalent to <a href="#flash_lock_bank1">FLASH_Lock_Bank1</a> function.</li>
+  					</ul>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FLASH_Lock_Banks();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_lock_bank1">FLASH_Lock_Bank1</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Lock_Bank1();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will lock the FLASH Bank1 Program Erase Controller.</p>
+            <p>This routine is valid only for STM32F10x devices :
+            <ul>
+  						<li>For STM32F10X_XL devices this function locks Bank1.</li>
+  						<li>For all other devices it locks Bank1 and it is equivalent to <a href="#flash_lock">FLASH_Lock</a> function.</li>
+            </ul>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FLASH_Lock_Bank1();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_lock_bank2">FLASH_Lock_Bank2</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> FLASH_Lock_Bank2();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will lock the FLASH Bank2 Program Erase Controller.</p>
+            <p>This routine is valid only for STM32F10x devices :
+  					<ul>
+  						<li>For STM32F10X_XL devices this function locks Bank2.</li>
+  						<li>For all other devices it locks Bank2 and it is equivalent to <a href="#flash_lock">FLASH_Lock</a> function.</li>
+  					</ul>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+FLASH_Lock_Bank2();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3 id="flash_erasesector">FLASH_EraseSector</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_EraseSector(<b>unsigned long</b> FLASH_Sector);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will erases a specified FLASH Sector.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>FLASH_Sector:</code> Specifies the sector number to be erased. Valid values :
+	            <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_0</td>
+          					  <td valign="top">FLASH sector 0.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_1</td>
+          					  <td valign="top">FLASH sector 1.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_2</td>
+          					  <td valign="top">FLASH sector 2.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_FLASH_SECTOR_3</td>
+          					  <td valign="top">FLASH sector 3.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_4</td>
+          					  <td valign="top">FLASH sector 4.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_5</td>
+          					  <td valign="top">FLASH sector 5.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_6</td>
+          					  <td valign="top">FLASH sector 6.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_FLASH_SECTOR_7</td>
+          					  <td valign="top">FLASH sector 7.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_8</td>
+          					  <td valign="top">FLASH sector 8.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_9</td>
+          					  <td valign="top">FLASH sector 9.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_10</td>
+          					  <td valign="top">FLASH sector 10.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_FLASH_SECTOR_11</td>
+          					  <td valign="top">FLASH sector 11.</td>
+                    </tr>
+                    
+                  </tbody>
+                </table> 
+              </li>            
+            </ul>  
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	  <ul>
+            	 	  <li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	  <li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	  <li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	  <li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	  <li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Delete FLASH sector 1</i>
+status = FLASH_EraseSector(FLASH_Sector_1);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_erasepage">FLASH_ErasePage</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_ErasePage(<b>unsigned long</b> Address);</p>
+            <i>// for STM32 M4 devices</i>
+            <p><b>unsigned long</b> FLASH_Erase_Page(<b>unsigned long</b> Address, <b>unsigned long</b> bank);</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will erases a specified FLASH memory page.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>Address:</code> Specifies the page address to be erased.</li>
+	            <li><code>bank:</code> Specifies the bank where the bank is located. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_FLASH_BANK1</td>
+          						  <td valign="top">FLASH memory bank 1.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_FLASH_BANK2</td>
+          						  <td valign="top">FLASH memory bank 2.</td>
+                      </tr>
+                    </tbody>
+                  </table>	
+	            </li>	            
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	  <ul>
+            	 	  <li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	  <li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	  <li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	  <li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	  <li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_ErasePage(address);
+
+<i>// for STM32 M4 devices </i>
+status = FLASH_ErasePage(address, _FLASH_BANK1);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_eraseallpages">FLASH_EraseAllPages</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_EraseAllPages();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine erases all FLASH memory pages.</p>
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>  
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	 <ul>
+            	 	<li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	<li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	<li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	<li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	<li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	 </ul>
+               </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_EraseAllPages();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_eraseallbank1pages">FLASH_EraseAllBank1Pages</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_EraseAllBank1Pages();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine erases all Bank1 FLASH memory pagess.</p>
+            <p>This routine is valid only for STM32F10x devices. :
+            <ul>
+  	            <li>For STM32F10X_XL devices this function erases all Bank1 pages.</li>
+  							<li>For all other devices it erases all Bank1 pages and it is equivalent to <a href="#flash_eraseallpages">FLASH_EraseAllPages</a> function.</li>
+            </ul>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>  
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	  <ul>
+            	 	  <li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	  <li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	  <li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	  <li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	  <li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_EraseAllBank1Pages();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_eraseallbank2pages">FLASH_EraseAllBank2Pages</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_EraseAllBank2Pages();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine erases all Bank2 FLASH memory pagess.</p>
+            <p>This routine is valid only for STM32F10x devices. :
+              <ul>
+  	            <li>For STM32F10X_XL devices this function erases all Bank2 pages.</li>
+  							<li>For all other devices it erases all Bank2 pages and it is equivalent to <a href="#flash_eraseallpages">FLASH_EraseAllPages</a> function.</li>
+  						</ul>          
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>  
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	 <ul>
+            	 	<li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	<li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	<li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	<li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	<li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	 </ul>
+               </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_EraseAllBank2Pages();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F10x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    
+    <h3 id="flash_eraseallsectors">FLASH_EraseAllSectors</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_EraseAllSectors();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine will erase all FLASH Sectors.</p>
+            <p>This routine is valid only for ST devices.</p>            
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p> 
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	  <ul>
+            	 	  <li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	  <li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	  <li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	  <li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	  <li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Delete all FLASH sectors</i>
+status = FLASH_EraseAllSectors();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_write_doubleword">FLASH_Write_DoubleWord</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_Write_DoubleWord(<b>unsigned long</b> Address, <b>uint64</b> ldata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Programs a double word (64-bit) at a specified address.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Address:</code>: specifies the address to be programmed.</li>
+            	<li><code>lData:</code> specifies the data to be programmed.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	  <ul>
+            	 	  <li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	  <li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	  <li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	  <li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	  <li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_Write_DoubleWord(0x08008000, data_);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This function must be used when the device voltage range is from 2.7V to 3.6V and an External Vpp is present.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_write_word">FLASH_Write_Word</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_Write_Word(<b>unsigned long</b> Address, <b>unsigned long</b> lData);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Programs a word (32-bit) at a specified address.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Address:</code>: specifies the address to be programmed. This parameter can be any address in Program memory zone or in OTP zone</li>
+            	<li><code>lData:</code> specifies the data to be programmed.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	  <ul>
+            	 	  <li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	  <li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	  <li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	  <li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	  <li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_Write_Word(0x08008000, data_);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This function must be used when the device voltage range is from 2.7V to 3.6V and an External Vpp is present.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_write_halfword">FLASH_Write_HalfWord</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_Write_HalfWord(<b>unsigned long</b> Address, <b>unsigned long</b> lData);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Programs a half word (16-bit) at a specified address.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Address:</code>: specifies the address to be programmed. This parameter can be any address in Program memory zone or in OTP zone</li>
+            	<li><code>lData:</code> specifies the data to be programmed.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	  <ul>
+            	 	  <li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	  <li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	  <li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	  <li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	  <li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_Write_HalfWord(0x08008000, data_);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This function must be used when the device voltage range is from 2.1V to 3.6V.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_write_byte">FLASH_Write_Byte</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> FLASH_Write_Byte(<b>unsigned long</b> Address, <b>unsigned char</b> lData);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Programs a byte (8-bit) at a specified address.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Address:</code>: specifies the address to be programmed. This parameter can be any address in Program memory zone or in OTP zone</li>
+            	<li><code>lData:</code> specifies the data to be programmed.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory status. The returned value can be: 
+            	  <ul>
+            	 	  <li>0 : <code>FLASH_COMPLETE</code>,</li>
+            	 	  <li>1 : <code>FLASH_BUSY</code>,</li>
+            	 	  <li>2 : <code>FLASH_ERROR_PROGRAM</code>,</li>
+            	 	  <li>3 : <code>FLASH_ERROR_WRP</code></li>
+            	 	  <li>4 : <code>FLASH_ERROR_OPERATION</code>.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_Write_Byte(0x08008000, data_);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This function can be used within all the device supply voltage ranges.</p>
+            <p>This routine is valid only for ST devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="flash_addresstosector">FLASH_AddressToSector</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> FLASH_AddressToSector(<b>unsigned long</b> Address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine returns the FLASH sector number of the specifed address.</p>
+            <p>This routine is valid only for STM32F2XX and STM32F4XX devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>Address:</code> specified address.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory sector number. The returned value can be: 
+            	  <ul>
+            	 	  <li>0x0000 : <code>_FLASH_SECTOR_0</code>,</li>
+            	 	  <li>0x0008 : <code>_FLASH_SECTOR_1</code>,</li>
+            	 	  <li>0x0010 : <code>_FLASH_SECTOR_2</code>,</li>
+            	 	  <li>0x0018 : <code>_FLASH_SECTOR_3</code></li>
+            	 	  <li>0x0020 : <code>_FLASH_SECTOR_4</code>.</li>
+            	 	  <li>0x0028 : <code>_FLASH_SECTOR_5</code>,</li>
+            	 	  <li>0x0030 : <code>_FLASH_SECTOR_6</code>,</li>
+            	 	  <li>0x0038 : <code>_FLASH_SECTOR_7</code>,</li>
+            	 	  <li>0x0040 : <code>_FLASH_SECTOR_8</code></li>
+            	 	  <li>0x0048 : <code>_FLASH_SECTOR_9</code>.</li>
+            	 	  <li>0x0050 : <code>_FLASH_SECTOR_10</code>,</li>
+            	 	  <li>0x0058 : <code>_FLASH_SECTOR_11</code>,</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_AddressToSector(0x08008000);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F2XX and STM32F4XX devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_sectorsize">FLASH_SectorSize</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>long</b> FLASH_SectorSize(<b>unsigned long</b> flash_sector);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine returns the size of the specified FLASH sector number.</p>
+            <p>This routine is valid only for STM32F2XX and STM32F4XX devices.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>flash_sector:</code> specified FLASH sector.
+	            <li><code>FLASH_Sector:</code> Specifies the sector number to be erased. Valid values :
+	            <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_0</td>
+          					  <td valign="top">FLASH sector 0.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_1</td>
+          					  <td valign="top">FLASH sector 1.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_2</td>
+          					  <td valign="top">FLASH sector 2.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_FLASH_SECTOR_3</td>
+          					  <td valign="top">FLASH sector 3.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_4</td>
+          					  <td valign="top">FLASH sector 4.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_5</td>
+          					  <td valign="top">FLASH sector 5.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_6</td>
+          					  <td valign="top">FLASH sector 6.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_FLASH_SECTOR_7</td>
+          					  <td valign="top">FLASH sector 7.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_8</td>
+          					  <td valign="top">FLASH sector 8.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_9</td>
+          					  <td valign="top">FLASH sector 9.</td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_SECTOR_10</td>
+          					  <td valign="top">FLASH sector 10.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         						  <td class="code" valign="top">_FLASH_SECTOR_11</td>
+          					  <td valign="top">FLASH sector 11.</td>
+                    </tr>
+                    
+                  </tbody>
+                </table> 
+              </li>             	
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li>FLASH memory sector size. The returned value can be: 
+            	  <ul>
+            	 	  <li><code>16*1024:</code> for FLASH sectors from 0 to 3,</li>
+            	 	  <li><code>64*1024:</code> for FLASH sector 4,</li>
+            	 	  <li><code>128*1024:</code> for the rest of the FLASH sectors,</li>
+            	 	  <li><code>-1 :</code> if an error occured.</li>
+            	  </ul>
+              </li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = FLASH_SectorSize(_FLASH_SECTOR_0);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for STM32F2XX and STM32F4XX devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_getsecuritystate">Flash_GetSecurityState</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_GetSecurityState();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function retrieves the current Flash security status, including the security enabling state and the backdoor key enabling state.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+						<p>Flash security status. The returned value can be :</p> 
+            	  <ul>
+            	 	  <li><code>_FLASH_NOT_SECURE:</code> Flash currently not in secure state,</li>
+            	 	  <li><code>_FLASH_SECURE_BACKDOOR_ENABLED:</code> Flash is secured and backdoor key access enabled,</li>
+            	 	  <li><code>_FLASH_SECURE_BACKDOOR_DISABLED:</code> Flash is secured and backdoor key access disabled.</li>
+            	  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = Flash_GetSecurityState();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for Kinetis devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_init">Flash_Init</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function initializes program Flash memory.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Flash_Init();
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for Kinetis devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_programlongword">Flash_ProgramLongword</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_ProgramLongword(<b>unsigned long</b> address, <b>unsigned long</b> dataToWrite);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function programs four previously-erased bytes in the program flash memory using an embedded algorithm.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>address:</code> the address of the data.</li>
+            	<li><code>dataToWrite:</code> new data to write.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for Kinetis K2x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_programphrase">Flash_ProgramPhrase</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_ProgramPhrase(<b>unsigned long</b> address, <b>unsigned char</b> *dataToWrite);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function programs 8 previously-erased bytes in the program flash memory using an embedded algorithm.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>address:</code> starting address for programming 8 bytes.</li>
+            	<li><code>dataToWrite:</code> pointer to data.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine is valid only for Kinetis K6x devices.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_programsection">Flash_ProgramSection</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_ProgramSection(<b>unsigned long</b> address, <b>unsigned long</b> *dataToWrite, <b>unsigned int</b> count);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function programs the data found in the section program buffer to previously erased locations in the flash memory using an embedded algorithm.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>address:</code> the start address of the data.</li>
+            	<li><code>dataToWrite:</code> pointer to data buffer; must be n * 128bits long [n = 1 .. 64].</li>
+            	<li><code>count:</code> number of 128bits to program.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis K6x devices.</li>
+            	<li>Address must be 128bits aligned ([3:0] = 0000).</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_erasesector">Flash_EraseSector</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_EraseSector(<b>unsigned long</b> address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function erases program Flash memory sector.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>address:</code> starting address of the sector.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            	<li>Sector size/offset is 0x800 (2kB).</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_eraseblock">Flash_EraseBlock</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_EraseBlock(<b>unsigned long</b> address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function erases all addresses in a single program flash or dataflash block.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>address:</code> address in block.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_eraseallblocks">Flash_EraseAllBlocks</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_EraseAllBlocks();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function operation erases whole Flash memory, initializes the FlexRAM, verifies all memory contents, and releases MCU security.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_read1sallblocks">Flash_Read1sAllBlocks</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_Read1sAllBlocks(<b>unsigned char</b> margin);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function checks if the program flash blocks, data flash blocks, EEPROM backup records, and data flash IFR have been erased to the specified read margin level, if applicable, and releases security if the readout passes, i.e. all data reads as '1'.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>margin:</code> Read-1 margin choices:
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_NORMAL</td>
+          					  <td valign="top"></td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_USER</td>
+          					  <td valign="top"></td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_FACTORY</td>
+          					  <td valign="top"></td>
+                    </tr>
+
+                  </tbody>
+                </table> 
+						  </li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_read1sblock">Flash_Read1sBlock</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_Read1sBlock(<b>unsigned long</b> address, <b>unsigned char</b> margin);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function checks to see if an entire program flash block has been erased to the specified margin level.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>address:</code> address in block.</li>
+						  <li><code>margin:</code> Read-1 margin choices:
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_NORMAL</td>
+          					  <td valign="top"></td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_USER</td>
+          					  <td valign="top"></td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_FACTORY</td>
+          					  <td valign="top"></td>
+                    </tr>
+
+                  </tbody>
+                </table> 
+						  </li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3 id="flash_read1ssection">Flash_Read1sSection</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_Read1sBlock(<b>unsigned long</b> address, <b>unsigned char</b> margin);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function checks if a section of program flash or data flash memory is erased to the specified read margin level.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>address:</code> address in block.</li>
+						  <li><code>margin:</code> Read-1 margin choices:
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_NORMAL</td>
+          					  <td valign="top"></td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_USER</td>
+          					  <td valign="top"></td>
+                    </tr>
+                    
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_MARGIN_FACTORY</td>
+          					  <td valign="top"></td>
+                    </tr>
+                  </tbody>
+                </table> 
+						  </li>
+						  <li><code>numOfBits:</code> number of bits to be checked.</li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis K6x devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_verifybackdooraccesskey">Flash_VerifyBackdoorAccessKey</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_VerifyBackdoorAccessKey(<b>unsigned char</b> *keys);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The Verify Backdoor Access Key command releases security if user-supplied keys in the FCCOB match those stored in the Backdoor Comparison Key bytes of the Flash Configuration Field.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>keys:</code> pointer to user provided keys.</li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            	<li>The Verify Backdoor Access Key command only executes if the mode and security conditions are satisfied. 
+            	<br>The Verify Backdoor Access Key command releases security if user-supplied keys in the FCCOB match those stored in the Backdoor Comparison Key bytes of the Flash Configuration Field.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_programcheck">Flash_ProgramCheck</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_ProgramCheck(<b>unsigned long</b> address, <b>unsigned char</b> margin, <b>unsigned char</b>* dataToCheck);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function tests a previously programmed program flash or data flash longword to see if it reads correctly at the specified margin level.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>address:</code> the start address of the data that will be checked.</li>
+						  <li><code>margin:</code> user provided margin choice.</li>
+						  <li><code>dataToCheck:</code> data to be verified.</li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_readresource">Flash_ReadResource</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_ReadResource(<b>unsigned long</b> address, <b>unsigned long</b> *readData, <b>unsigned char</b> resourceSelectCode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function reads data from special-purpose memory resources located within the flash memory module.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>address:</code> address for IFR or Version ID.</li>
+						  <li><code>readData:</code> pointer to read data.</li>
+						  <li><code>resourceSelectCode:</code> select resource:
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_RESOURCE_CODE_IFR</td>
+          					  <td valign="top"></td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_RESOURCE_CODE_ID</td>
+          					  <td valign="top"></td>
+                    </tr>
+                  </tbody>
+                </table> 
+						  </li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_readonce">Flash_ReadOnce</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_ReadOnce(<b>unsigned long</b> recordIndex, <b>unsigned long</b> *readData);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function reads a reserved 96-byte field located in the program flash 0 IFR.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>recordIndex:</code> program once record index 0x00 - 0x13.</li>
+						  <li><code>readData:</code> pointer to read data.</li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_programonce">Flash_ProgramOnce</h3>
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Flash_ProgramOnce(<b>unsigned long</b> recordIndex, <b>unsigned long</b> *readData);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function writes to a reserved 96-byte field in the program flash 0 IFR.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>recordIndex:</code> program once record index 0x00 - 0x13.</li>
+						  <li><code>readData:</code> pointer to read data.</li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              <li><code>_FLASH_STATUS_FAIL:</code></li>
+            	<li><code>_FLASH_STATUS_OK:</code></li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is valid only for Kinetis devices.</li>
+            </ul>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_addresstosector">FLASH_AddressToSector</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_AddressToSector(<b>unsigned long</b> address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function gets sector number from the given Flash address.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> address in the Flash memory.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>sector number of given address</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Flash can be in sizes of 256kB and 128kB. There are always two banks. Sector values from 0..31 or 0..15 bank from 0..1.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_memoryinfo">FLASH_MemoryInfo</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_MemoryInfo(<b>unsigned long</b> address, <b>unsigned long</b> *sector, <b>unsigned long</b> *bank);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function gets memory information (sector, bank) from the given Flash address.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> address in the Flash memory.</li>
+             	<li><code>sector:</code> calc sector mask will be stored here.</li>
+             	<li><code>bank:</code> calc bank num will be stored here (<code>_FLASH_BANK0</code> or <code>_FLASH_BANK1</code>).</li>           	
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>_FLASH_OK</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_unprotectsectors">FLASH_UnprotectSectors</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_UnprotectSectors(<b>unsigned long</b> bank, <b>unsigned long</b> sectorMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will unprotect sectors for erase/write.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>bank:</code> sector's bank. Valid values :
+	            <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_BANK0</td>
+          					  <td valign="top">FLASH bank 0.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_BANK1</td>
+          					  <td valign="top">FLASH bank 1.</td>
+                    </tr>
+                    
+                  </tbody>
+                </table> 
+             	<li><code>sectorMask:</code> mask of sectors to be unprotected.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>_FLASH_OK</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_protectsectors">FLASH_ProtectSectors</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_ProtectSectors(<b>unsigned long</b> bank, <b>unsigned long</b> sectorMask);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will protect sectors for erase/write.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>bank:</code> sector's bank. Valid values :
+	            <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_BANK0</td>
+          					  <td valign="top">FLASH bank 0.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_FLASH_BANK1</td>
+          					  <td valign="top">FLASH bank 1.</td>
+                    </tr>
+                    
+                  </tbody>
+                </table> 
+             	<li><code>sectorMask:</code> mask of sectors to be protected.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>_FLASH_OK</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_erasesector">FLASH_EraseSector</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_EraseSector(<b>unsigned long</b> address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will erase one sector from the given address in the Flash memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>address:</code> Flash memory address.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>_FLASH_OK</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_erasebank0">FLASH_EraseBank0</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_EraseBank0(<b>unsigned char</b> sectorCount);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will erase sectors located in the Bank0 of the Flash memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>sectorCount:</code> number of sectors in the Bank0.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>_FLASH_OK</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_erasebank1">FLASH_EraseBank1</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_EraseBank1(<b>unsigned char</b> sectorCount);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will erase sectors located in the Bank1 of the Flash memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>sectorCount:</code> number of sectors in the Bank1.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>_FLASH_OK</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_masserase">FLASH_MassErase</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_MassErase();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will erase all unprotected sectors.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>_FLASH_OK</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="flash_programmemory">FLASH_ProgramMemory</h3>
+
+    <!-- tabela: flash_write -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> FLASH_ProgramMemory(<b>unsigned long</b> *source, <b>unsigned long</b> *destination, <b>unsigned long</b> _length);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function will program given amount of bytes to the Flash memory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>source:</code> source data.</li>
+             	<li><code>destination:</code> write destination.</li>
+             	<li><code>_length:</code> number of bytes to program.</li>             	
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>_FLASH_OK</code> - if execution was successful.</li>
+							<li><code>_FLASH_ERROR</code> - if an error occurred.</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>User must call first <a href="#flash_unprotectsectors">FLASH_UnprotectSectors.</a> funstion to unlock sectors for write operation. Also, destination memory must be erased, all bits at logical '1'..</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3>Library Example</h3>
+		
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<b>unsigned long</b> buff[32];
+<b>unsigned long</b> i;
+<b>unsigned long</b> Address = 0xC00;
+<b>unsigned</b> long* ptr;
+
+<b>void</b> main() {
+  GPIO_Digital_Output(&#38;GPIO_PORTH, _GPIO_PINMASK_ALL);    <i>// digital output GPIO_PORTH</i>
+  GPIO_Digital_Output(&#38;GPIO_PORTJ, _GPIO_PINMASK_ALL);    <i>// digital output GPIO_PORTJ</i>
+
+  <b>for</b>(i=0; i&#60;32; i++)
+    buff[i]=i+(i&#60;&#60;16);
+
+  Flash_Erase_Block(Address);            <i>// erase block (Address must be 1024 byte aligned)</i>
+  Flash_Write_Buffer(Address, buff);     <i>// write buffer with 32 long words</i>
+
+  ptr = (<b>unsigned</b> long*)Address;
+  <b>for</b>(i=0; i&#60;32; i++) {
+    GPIO_PORTH_DATA = *ptr;
+    GPIO_PORTJ_DATA = *ptr &#62;&#62; 16;
+    ptr++;
+    Delay_ms(250);
+  }
+
+  Delay_ms(1000);
+  
+  Flash_Write(Address + 32*4, 0xAAAAAAAA); <i>// write one word</i>
+
+  ptr = Address + 32*4;
+  GPIO_PORTH_DATA = *ptr;
+  GPIO_PORTJ_DATA = *ptr &#62;&#62; 16;
+}
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+#include &#60;built_in.h&#62;
+
+<b>unsigned long</b> buff[32];
+<b>unsigned long</b> i, tmp;
+<b>unsigned long</b> Address = 0x08008000;
+<b>unsigned long</b> Address2 = 0x08009000;
+<b>unsigned</b> long* ptr;
+
+<b>void</b> main() {
+  GPIO_Digital_Output(&#38;GPIOD_BASE, _GPIO_PINMASK_ALL);    <i>// digital output PORTD</i>
+  GPIO_Digital_Output(&#38;GPIOE_BASE, _GPIO_PINMASK_ALL);    <i>// digital output PORTE</i>
+
+  <b>for</b>(i=0; i&#60;32; i++)
+    buff[i]=i+(i&#60;&#60;16);
+
+  FLASH_ErasePage(Address);            <i>// erase block (Address must be 2048 byte aligned)</i>
+  <b>for</b>(i=0; i&#60;32; i++)
+    FLASH_Write_Word(Address + i*4, buff[i]);     <i>// write buffer with 32 long words</i>
+
+  ptr = (<b>unsigned</b> long*)Address;
+  <b>for</b>(i=0; i&#60;32; i++) {
+    tmp = *ptr;
+    GPIOD_ODR = HiWord(tmp);
+    GPIOE_ODR = LoWord(tmp) &#60;&#60; 8;
+    ptr++;
+    Delay_ms(50);
+  }
+
+  Delay_ms(1000);
+  FLASH_ErasePage(Address2);            <i>// erase block (Address must be 2048 byte aligned)</i>
+  FLASH_Write_HalfWord(Address2, 0xAAAA); <i>// write one word</i>
+  GPIOD_ODR = 0;
+  ptr = (<b>unsigned</b> long*)Address2;
+  i = *ptr;
+  GPIOE_ODR = (LoWord(i)) &#60;&#60; 8;
+  
+}
+</pre>
+    </div>
+  </div> 
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

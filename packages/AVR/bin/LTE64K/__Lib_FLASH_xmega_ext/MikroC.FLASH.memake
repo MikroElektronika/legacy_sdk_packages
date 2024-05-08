@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_FLASH_xmega_ext.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATXMEGA8E5$|^ATXMEGA64A1$|^ATXMEGA64A1U$|^ATXMEGA64B1$|^ATXMEGA64B3$|^ATXMEGA64D3$|^ATXMEGA64A3$|^ATXMEGA64C3$|^ATXMEGA64A3U$|^ATXMEGA32E5$|^ATXMEGA64A4U$|^ATXMEGA16E5$|^ATXMEGA32C3$|^ATXMEGA32D3$|^ATXMEGA64D4$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

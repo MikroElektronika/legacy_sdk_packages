@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_UART_124567.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F423CH$|^STM32F413CH$|^STM32F413CG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

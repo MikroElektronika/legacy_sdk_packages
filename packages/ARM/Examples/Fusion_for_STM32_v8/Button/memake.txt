@@ -1,0 +1,18 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: Button
+
+sources: {
+    Button.c
+}
+
+uses: {
+    MikroC.System
+    MikroC.Button
+}
+
+depends: {
+    MikroC.System
+    MikroC.Button
+}

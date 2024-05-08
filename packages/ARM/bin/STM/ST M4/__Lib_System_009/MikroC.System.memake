@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_MathDouble.emcl",
+        "__Lib_System_4XX.emcl",
+        "__Lib_GPIO_32F411x_Defs.emcl",
+        "__Lib_GPIO_32F4x1.emcl",
+        "__Lib_Math.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F411RE$|^STM32F411CE$|^STM32F411CC$|^STM32F411RC$|^STM32F411VE$|^STM32F411VC$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

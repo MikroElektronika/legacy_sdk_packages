@@ -1,0 +1,508 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>ADC Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">ADC Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="mikroC_hardware_libraries.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="can_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>ADC Library</h2></a>
+
+
+    <p>ADC (Analog to Digital Converter) module is available with a number of PIC32 MCU modules. <acronym title="Analog to Digital Converter">ADC</acronym> is an electronic circuit that converts continuous signals to discrete digital numbers. <acronym title="Analog to Digital Converter">ADC</acronym> Library provides you a comfortable work with the module.</p>
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#adcx_init">ADCx_Init</a></li>
+      <li><a href="#adcx_init_advanced">ADCx_Init_Advanced</a></li>
+      <li><a href="#adcx_get_sample">ADCx_Get_Sample</a></li>
+      <li><a href="#adcx_read">ADCx_Read</a></li>
+    </ul>
+
+    <!-- -->
+    
+    <h3 id="adcx_init">ADCx_Init</h3>
+
+
+    <!-- tabela: ADCx_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> ADCx_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routines configures <acronym title="Analog to Digital Conversion">ADC</acronym> module to work with default settings.</p>
+          	<p>The internal <acronym title="Analog to Digital Conversion">ADC</acronym> module is set to:
+              <ul>
+                <li>single channel conversion</li>
+              	<li>10-bit conversion resolution</li>
+              	<li>unsigned integer data format</li>
+              	<li>auto-convert</li>
+              	<li>VRef+ : AVdd, VRef- : AVss</li>
+              	<li>instruction cycle clock</li>
+                <li>conversion clock : 32*Tcy</li>
+                <li>auto-sample time : 31TAD</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+ADC1_Init();  <i>// Initialize ADC module with default settings</i></pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="adcx_init_advanced">ADCx_Init_Advanced</h3>
+
+
+    <!-- tabela: ADCx_Init_Advanced -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> ADC1_Init_Advanced(<b>unsigned</b> Reference);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>This routine configures the internal <acronym title="Analog to Digital Conversion">ADC</acronym> module to work with user defined settings.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+              	<li><code>Reference:</code> voltage reference used in <acronym title="Analog to Digital Conversion">ADC</acronym> process.</li>
+              </ul>
+              <ul>
+                <table>
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>
+
+								  <tr align="center">                  	
+                  	<td colspan=2><b>Voltage reference:</b></td>
+                  </tr>
+             
+                  <tr align="center">
+										<td><code>Internal voltage reference</code></td>
+										<td><code>_ADC_INTERNAL_REF</code></td>
+                  </tr>
+             
+                  <tr align="center">
+										<td><code>External voltage reference</code></td>
+										<td><code>_ADC_EXTERNAL_REF</code></td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>Internal positive voltage reference, external negative voltage reference</code></td>
+										<td><code>_ADC_VREFH_INTERNAL_VREFL_EXTERNAL</code></td>
+                  </tr>
+
+                  <tr align="center">
+										<td><code>External positive voltage reference, internal negative voltage reference</code></td>
+										<td><code>_ADC_VREFH_EXTERNAL_VREFL_INTERNAL</code></td>
+                  </tr>
+                  
+                </table> 
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>ADC1_Init_Advanced(_ADC_INTERNAL_REF);  <i>// set internal reference used</i></pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>Not all MCUs support advanced configuration. Please, read the appropriate datasheet before utilizing this library.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="adcx_get_sample">ADCx_Get_Sample</h3>
+
+
+    <!-- tabela: ADCx_Get_Sample -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> ADCx_Get_Sample(<b>unsigned</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function enables <acronym title="Analog to Digital Conversion">ADC</acronym> module and reads the specified analog channel input.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>channel</code> represents the channel from which the analog value is to be acquired.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>10-bit unsigned value from the specified <code>channel</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            	<li>Prior to using this routine, ADC module needs to be initialized. See <a href="#adcx_init">ADCx_Init</a> and <a href="#adcx_init_advanced">ADCx_Init_Advanced</a>.</li>
+            	<li>Before using the function, be sure to configure the appropriate TRISx bits to designate pins as inputs.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> adc_value;
+...
+adc_value = ADC1_Get_Sample(10);    <i>// read analog value from ADC module channel 10</i></pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>The function sets the appropriate bit in the AD1PCFG registers to enable analog function of the chosen pin.</li>
+            	<li>Refer to the appropriate Datasheet for channel-to-pin mapping.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele --> 
+
+    <!-- -->
+
+
+    <h3 id="adcx_read">ADCx_Read</h3>
+
+
+    <!-- tabela: ADCx_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> ADCx_Read(<b>unsigned</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function initializes, enables <acronym title="Analog to Digital Conversion">ADC</acronym> module and reads the specified analog channel input.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>channel</code> represents the channel from which the analog value is to be acquired.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>10-bit unsigned value from the specified <code>channel</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            	<li>Before using the function, be sure to configure the appropriate TRISx bits to designate pins as inputs.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> adc_value;
+...
+adc_value = ADC1_Read(10);    <i>// read analog value from ADC1 module channel 10</i></pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This is a standalone routine, so there is no need for a previous initialization of <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            	<li>The function sets the appropriate bit in the ADPCFG registers to enable analog function of the chosen pin.</li>
+            	<li>Refer to the appropriate Datasheet for channel-to-pin mapping.</li>
+            </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+:: Base project template
+
+:: project: HID_Read_Write_Interrupt
+target: HID_Read_Write_Interrupt
+
+type: executable
+
+sources: {
+    HID_Read_Write_Interrupt.c
+    USBdsc.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.USB
+}
+
+uses: {
+    MikroC.System
+    MikroC.USB
+}

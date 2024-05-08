@@ -1,0 +1,19 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: Button
+
+type: executable
+
+sources: {
+    Button.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.Button
+}
+
+others: {
+    ./Buttons.png
+}

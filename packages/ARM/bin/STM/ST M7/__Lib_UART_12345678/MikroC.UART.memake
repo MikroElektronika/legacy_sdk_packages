@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M7",
+    "binaries": [
+        "__Lib_UART_12345678.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F722IC$|^STM32F722VC$|^STM32F722VE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

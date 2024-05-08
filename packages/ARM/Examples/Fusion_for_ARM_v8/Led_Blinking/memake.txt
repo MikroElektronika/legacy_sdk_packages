@@ -1,0 +1,16 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: Led_Blinking
+
+sources: {
+    Led_Blinking.c
+}
+
+uses: {
+    MikroC.System
+}
+
+depends: {
+    MikroC.System
+}

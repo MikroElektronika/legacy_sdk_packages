@@ -1,0 +1,27 @@
+:: Base project template
+
+:: project: Touch_Panel_Calibration_and_Write
+target: Touch_Panel_Calibration_and_Write
+
+type: executable
+
+sources: {
+    Touch_Panel_Calibration_and_Write.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.Glcd_Fonts
+    MikroC.Glcd
+    MikroC.ADC
+    MikroC.TouchPanel
+    MikroC.TFT_TouchPanel
+}
+
+uses: {
+    MikroC.System
+    MikroC.Glcd_Fonts
+    MikroC.Glcd
+    MikroC.ADC
+    MikroC.TouchPanel
+}

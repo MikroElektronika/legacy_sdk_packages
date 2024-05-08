@@ -1,0 +1,18 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_System.mcl",
+        "__Lib_Math_NoMOVW.mcl",
+        "__Lib_MathDouble.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATMEGA103$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

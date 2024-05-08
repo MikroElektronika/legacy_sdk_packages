@@ -1,0 +1,1952 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>SPI Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+
+	
+
+
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">SPI Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="sound_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="spi_ethernet_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Serial Peripheral Interface">SPI</acronym> Library</h2></a>
+
+
+    <p>The <acronym title="Serial Peripheral Interface">SPI</acronym> module is available with all ARM MCUs. 
+    	mikroC PRO for ARM provides a library for initializing the Slave mode and initializing and comfortable work with the Master mode. 
+    	The ARM can easily communicate with other devices via <acronym title="Serial Peripheral Interface">SPI</acronym>: 
+    	A/D converters, D/A converters, MAX7219, LTC1290, etc. </p>
+    
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+      <ul>
+    	  <li><acronym title="Serial Peripheral Interface">SPI</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Serial Peripheral Interface">SPI</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>8</b>.</li>
+    	  <li>Number of <acronym title="Serial Peripheral Interface">SPI</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	  <li>Switching between the <acronym title="Serial Peripheral Interface">SPI</acronym> modules in the <acronym title="Serial Peripheral Interface">SPI</acronym> library is done by the <a href="#spi_set_active">SPI_Set_Active</a> function (both <acronym title="Serial Peripheral Interface">SPI</acronym> modules have to be previously initialized).</li>
+      </ul>
+    </div> 
+    <p></p>
+          
+    <!-- -->
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#spi_init">SPIx_Init</a></li>
+      <li><a href="#spi_init_advanced">SPIx_Init_Advanced</a></li>
+      <li><a href="#spi_read">SPIx_Read</a></li>  
+      <li><a href="#spi_write">SPIx_Write</a></li>    
+      <li><a href="#spi_set_active">SPI_Set_Active</a></li>
+    </ul>
+
+    <h4>Generic Routines</h4>
+
+    <ul>
+      <li><a href="#spi_read_gen">SPI_Read</a></li>  
+      <li><a href="#spi_write_gen">SPI_Write</a></li>    
+    </ul>
+
+    <!-- -->
+
+
+    <h3 id="spi_init">SPIx_Init</h3>
+
+
+    <!-- tabela: SPIx_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPIx_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configures and initializes the <acronym title="Serial Peripheral Interface">SPI</acronym> module with default settings.</p>
+            <p>Default settings for Stellaris MCUs : </p>
+            	<ul>
+            		<li>Master mode.</li>
+            		<li>8-bit data mode.</li>
+            		<li>Serial clock set to 2 MHz.</li>
+           	   	<li>Clock idle state low.</li>
+           	  	<li>Serial output data changes on the first clock edge transition.</li>
+           	  </ul>
+
+            <p>Default settings for MSP432 MCUs : </p>
+            	<ul>
+            		<li>Master mode.</li>
+            		<li>8-bit data mode.</li>
+            		<li>Low-speed subsystem master clock as clock source.</li>
+           	  	<li>Serial output data changes on the first clock edge transition.</li>
+           	   	<li>MSB sent first.</li>              	  	
+           	  </ul>
+
+            <p>Default settings for ST MCUs : </p>
+            	<ul>
+            		<li>Master mode.</li>
+            		<li>8-bit data mode.</li>
+            		<li>Serial clock set to Peripheral clock/64.</li>
+           	   	<li>Clock idle state low.</li>
+           	  	<li>Serial output data changes on the first clock edge transition.</li>
+           	  	<li>Slave Select output disabled.</li>
+                <li>Software Slave Management disabled.</li>
+           	  </ul>
+
+            <p>Default settings for CEC1x02 : </p>
+            	<ul>
+            		<li>Master mode.</li>
+            		<li>8-bit data mode.</li>
+            		<li>Serial clock set to 1 MHz.</li>
+           	   	<li>Clock idle state low.</li>
+           	  	<li>Serial output data changes on the first clock edge transition.</li>
+           	   	<li>MSB sent first.</li>           	  	
+           	  </ul>
+
+            <p>Default settings for Kinetis : </p>
+            	<ul>
+            		<li>Master mode.</li>
+            		<li>8-bit data mode.</li>
+            		<li>Serial clock set to 8 MHz.</li>
+           	   	<li>Clock idle state low.</li>
+           	  	<li>Serial output data changes on the first clock edge transition.</li>
+           	   	<li>MSB sent first.</li>           	  	
+           	  </ul>
+           	  
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the <acronym title="Serial Peripheral Interface">SPI</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Initialize the SPI1 module with default settings</i>
+SPI1_Init();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+              <li><acronym title="Serial Peripheral Interface">SPI</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Serial Peripheral Interface">SPI</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>8</b>.</li>
+    	        <li>Number of <acronym title="Serial Peripheral Interface">SPI</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	        <li><code>SPI_Rd_Ptr()</code> and <code>SPI_Wr_Ptr()</code> global function pointers are assigned when a <acronym title="Serial Peripheral Interface">SPI</acronym> module is initialized. They point to the appropriate read and write routines (determined by the initialized <acronym title="Serial Peripheral Interface">SPI</acronym> module) so they can be used for <acronym title="Serial Peripheral Interface">SPI</acronym> read and write operations.</li>
+    	        <li>Switching between the <acronym title="Serial Peripheral Interface">SPI</acronym> modules in the <acronym title="Serial Peripheral Interface">SPI</acronym> library is done by the <a href="#spi_set_active">SPI_Set_Active</a> function (both <acronym title="Serial Peripheral Interface">SPI</acronym> modules have to be previously initialized).</li>
+              <li>SPI modules are set on the following pins :
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+							<ul>
+								<li>SPI0 : 
+								<ul>
+								  <li><b>PA2/PA4/PA5</b> - all Cortex M3 and M4 MCUs.</li>
+								</ul>
+								</li>
+								<li>SPI1 :
+								<ul>
+									<li><b>PB5/PE4/PE5</b> - TM4C129x Cortex M4 MCUs.</li>
+									<li><b>PD0/PD2/PD3</b> - all other Cortex M4 MCUs not listed before.</li>									
+									<li><b>PE0/PE2/PE3</b> - all Cortex M3 MCUs.</li>
+								</ul>
+							 </li>	
+								<li>SPI2 :
+								<ul>
+									<li><b>PG7/PG5/PG4</b> - TM4C129x Cortex M4 MCUs.</li>
+									<li><b>PH4/PH6/PH7</b> - LM4F112x, LM4F122x, LM4F132x, LM4F212x and LM4F232x Cortex M4 MCUs.</li>
+									<li><b>PB4/PB5/PB7</b> - all other Cortex M4 MCUs not listed before.</li>
+								</ul>
+								</li>
+								<li>SPI3 :
+								<ul>
+									<li><b>PQ0/PQ2/PQ3</b> - TM4C129x Cortex M4 MCUs.</li>
+									<li><b>PH0/PH2/PH3</b> - LM4F112x, LM4F122x, LM4F132x, LM4F212x and LM4F232x Cortex M4 MCUs.</li>
+									<li><b>PD0/PD2/PD3</b> - all other Cortex M4 MCUs not listed before.</li>
+								</ul>
+								</li>
+							</ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+							<ul>
+								<li>SPI1 :
+								  <ul>
+								    <li><b>PA1/PA2/PA3</b>.</li>
+								  </ul>
+							  </li>	
+								<li>SPI2 :
+								  <ul>
+								    <li><b>PA9/PA10/PA11</b>.</li>
+								  </ul>
+								</li>
+								<li>SPI3 :
+								  <ul>
+							  		<li><b>PB1/PB2/PB3</b>.</li>
+						  		</ul>
+								</li>
+								<li>SPI4 :
+								  <ul>
+							  		<li><b>PE5/PE6/PE7</b>.</li>
+						  		</ul>
+								</li>
+								<li>SPI5 :
+								  <ul>
+							  		<li><b>PA5/PA6/PA7</b>.</li>
+						  		</ul>
+								</li>
+								<li>SPI6 :
+								  <ul>
+							  		<li><b>PC11/PC13/PC12</b>.</li>
+						  		</ul>
+								</li>
+								<li>SPI7 :
+								  <ul>
+							  		<li><b>PB5/PB6/PB7</b>.</li>
+						  		</ul>
+								</li>
+								<li>SPI8 :
+								  <ul>
+							  		<li><b>PE9/PE10/PE11</b>.</li>
+						  		</ul>
+								</li>																																								
+							</ul>
+
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+							<ul>
+								<li>SPI1 :
+								<ul>
+									<li><b>PA5/PA6/PA7</b> - all Cortex M0, M3 and M4 MCUs.</li>
+								</ul>
+							 </li>	
+								<li>SPI2 :
+								<ul>
+									<li><b>PB10/PB14/PB15</b> - STM32F373x/STM32F378x/STM32F383x Cortex M4 MCUs.</li>
+									<li><b>PB13/PB14/PB15</b> - all Cortex M0, M3 and other Cortex M4 MCUs not listed before.</li>
+								</ul>
+								</li>
+								<li>SPI3 :
+								<ul>
+									<li><b>PB3/PB4/PB5</b> - all Cortex M3 and M4 MCUs.</li>
+								</ul>
+								</li>
+								<li>SPI4 :
+								<ul>
+									<li><b>PE2/PE5/PE6</b> - all Cortex M3 and M4 MCUs.</li>
+								</ul>
+								</li>
+								<li>SPI5 :
+								<ul>
+									<li><b>PB0/PA12/PA10</b> - STM32F411x Cortex M4 MCUs.</li>
+									<li><b>PF7/PF8/PF9</b> - all other Cortex M4 MCUs not listed before.</li>
+								</ul>
+								</li>
+								<li>SPI6 :
+								<ul>
+									<li><b>PG12/PG13/PG14</b> - all Cortex M4 MCUs.</li>
+								</ul>
+								</li>																								
+							</ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1302</h2>
+							<ul>
+								<li>SPI0 :
+								<ul>
+									<li><b>P153/P164/P054</b></li>
+								</ul>
+							 </li>	
+							</ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1702</h2>
+							<ul>
+								<li>SPI0 :
+								<ul>
+									<li><b>P034/P036/P001</b></li>
+								</ul>
+							 </li>	
+							</ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>Kinetis</h2>
+							<ul>
+								<li>SPI0 :
+								<ul>
+									<li><b>PD1/PD3/PD2</b></li>
+								</ul>
+							 </li>
+								<li>SPI1 :
+								<ul>
+									<li><b>PD5/PD7/PD6</b></li>
+								</ul>
+							 </li>
+								<li>SPI2 :
+								<ul>
+									<li><b>PB21/PB23/PB22</b></li>
+								</ul>
+							 </li>							 
+							</ul>
+    </div>
+
+  </div>
+
+</li>
+     	      </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_init_advanced">SPIx_Init_Advanced</h3>
+
+
+    <!-- tabela: SPIx_Init_Advanced -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs :</i> 
+            <p><b>void</b> SPIx_Init_Advanced(<b>unsigned long</b> bit_rate_Hz, <b>unsigned</b> master_slave_mode, <b>unsigned</b> config);</p>
+            <i>// for Stellaris MCUs with alternative PORT functions on <acronym title="General Purpose Input/Output">GPIO</acronym> pins :</i>
+            <p><b>void</b> SPIx_Init_Advanced(<b>unsigned long</b> bit_rate_Hz, <b>unsigned</b> master_slave_mode, <b>unsigned</b> config, <b>const</b> Module_Struct *module);</p>
+            <i>// for MCP432 MCUs :</i>
+            <p><b>void</b> SPIx_Init_Advanced(<b>int</b> mst, <b>int</b> clkDiv, <b>int</b> clkSource, <b>int</b> msbFirst, <b>int</b> clkPhase, <b>int</b> clkPolarity, <b>int</b> spiMode, <b>const</b> Module_Struct *module);</p>
+            <i>// for ST MCUs :</i>
+            <p><b>void</b> SPIx_Init_Advanced(<b>char</b> clock_divider, <b>long</b> config, <b>const</b> Module_Struct *module);</p>
+            <i>// for CEC1x02 :</i>
+            <p><b>void</b> SPI0_Init_Advanced(<b>unsigned long</b> bit_rate_Hz, <b>unsigned</b> lsb_first, <b>unsigned char</b> config);</p>
+            <i>// for Kinetis :</i>
+            <p><b>void</b> SPI0_Init_Advanced(<b>unsigned long</b> baudRate, <b>unsigned long</b> config, Module_Struct* module);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configures and initializes the <acronym title="Serial Peripheral Interface">SPI</acronym> module with user defined settings.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+            <ul>
+                <li>The <code>bit_rate_Hz</code> parameter determines the SPI clock value in Hz.</li>
+                <li>The <code>master_slave_mode</code> parameter determines the working mode for <acronym title="Serial Peripheral Interface">SPI</acronym> module.
+                <table>			
+									<tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Master/Slave mode</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+									
+									<tr align="center">
+										<td><code>Master mode</code></td>
+										<td><code>_SPI_MASTER</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Slave mode</code></td>
+										<td><code>_SPI_SLAVE</code></td>
+                  </tr>
+                </table>
+                </li>
+                 
+								<p></p>
+                <li>The parameter <code>config</code> determines the data size, clock polarity and clock phase. 
+                    <br>This value is deriven from OR-ing the following constants :
+                <table>	
+									<tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Data Length Size</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>4-bit data size</code></td>
+										<td><code>_SPI_4_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>5-bit data size</code></td>
+										<td><code>_SPI_5_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>6-bit data size</code></td>
+										<td><code>_SPI_6_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>7-bit data size</code></td>
+										<td><code>_SPI_7_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>8-bit data size</code></td>
+										<td><code>_SPI_8_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>9-bit data size</code></td>
+										<td><code>_SPI_9_BIT</code></td>
+                  </tr>
+									<tr align="center">
+										<td><code>10-bit data size</code></td>
+										<td><code>_SPI_10_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>11-bit data size</code></td>
+										<td><code>_SPI_11_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>12-bit data size</code></td>
+										<td><code>_SPI_12_BIT</code></td>
+                  </tr>
+									<tr align="center">
+										<td><code>13-bit data size</code></td>
+										<td><code>_SPI_13_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>14-bit data size</code></td>
+										<td><code>_SPI_14_BIT</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>15-bit data size</code></td>
+										<td><code>_SPI_15_BIT</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>16-bit data size</code></td>
+										<td><code>_SPI_16_BIT</code></td>
+                  </tr>
+
+                </table>
+
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Clock Polarity</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>IDLE state is Lo, ACTIVE state is Hi</code></td>
+										<td><code>_SPI_CLK_IDLE_LOW</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>IDLE state is Hi, ACTIVE state is Lo</code></td>
+										<td><code>_SPI_CLK_IDLE_HIGH</code></td>
+                  </tr> 
+                </table> 
+
+								<p></p>
+                <table>
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Clock Phase</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>Data is sampled on the first clock edge transition</code></td>
+										<td><code>_SPI_FIRST_CLK_EDGE_TRANSITION</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>Data is sampled on the second clock edge transition</code></td>
+										<td><code>_SPI_SECOND_CLK_EDGE_TRANSITION</code></td>
+                  </tr> 
+                </table> 
+                </li>
+             	<p></p>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_SPI</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+            <ul>
+                <li>The <code>mst</code> parameter determines the working mode for <acronym title="Serial Peripheral Interface">SPI</acronym> module. Valid values :
+                <table>
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	  
+									
+									<tr align="center">
+										<td><code>Master mode</code></td>
+										<td><code>_SPI_MASTER</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Slave mode</code></td>
+										<td><code>_SPI_SLAVE</code></td>
+                  </tr>
+                </table>
+                </li>
+
+								<p></p>
+                <li>The <code>clkDiv</code> parameter determines the working clock for <acronym title="Serial Peripheral Interface">SPI</acronym> module. Valid values are from 1 to 65535.</li>
+
+								<p></p>
+            		<li><code>clockSource:</code> clock source for <acronym title="Serial Peripheral Interface">SPI</acronym> module. Valid values :
+ 	                <table>
+                    <tr align="center">
+								  		<td bgcolor=#f5f2ec><b>Description</b></td>
+								  		<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                    </tr>
+
+								  	<tr align="center">
+								  		<td><code>Auxiliary clock</code></td>
+								  		<td><code>_SPI_CLOCKSOURCE_ACLK</code></td>
+                    </tr>
+
+								  	<tr align="center">
+								  		<td><code>Low-speed subsystem master clock</code></td>
+								  		<td><code>_SPI_CLOCKSOURCE_SMCLK</code></td>
+                    </tr>
+                    
+            		  </table>
+           			</li>
+
+               <p></p>
+								<li><code>msbFirst:</code> most/least significant bit first. Valid values :
+ 	                <table>
+                    <tr align="center">
+								  		<td bgcolor=#f5f2ec><b>Description</b></td>
+								  		<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                    </tr>
+
+ 								  	<tr align="center">
+								  		<td><code>Most significant bit first</code></td>
+								  		<td><code>_SPI_MSB_FIRST</code></td>
+                    </tr>
+
+								  	<tr align="center">
+								  		<td><code>Least significant bit first</code></td>
+								  		<td><code>_SPI_LSB_FIRST</code></td>
+                    </tr>
+            		  </table>
+                </li>
+
+								<p></p>
+								<li><code>clkPhase:</code> clock phase. Valid values :
+  	              <table>
+                    <tr align="center">
+								  		<td bgcolor=#f5f2ec><b>Description</b></td>
+								  		<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                    </tr>
+
+ 								  	<tr align="center">
+								  		<td><code>Data is changed on the first clock edge and captured on the following edge</code></td>
+								  		<td><code>_SPI_PHASE_DATA_CHANGE_FIRST_CAPTURE_NEXT</code></td>
+                    </tr>
+
+								  	<tr align="center">
+								  		<td><code>Data is captured on the first clock edge and changed on the following edge.</code></td>
+								  		<td><code>_SPI_PHASE_DATA_CAPTURE_FIRST_CHANGE_NEXT</code></td>
+                    </tr>
+            		  </table>
+								</li>
+
+								<p></p>
+								<li><code>clkPolarity:</code> clock polarity. Valid values :
+	                <table>
+                    <tr align="center">
+								  		<td bgcolor=#f5f2ec><b>Description</b></td>
+								  		<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                    </tr>
+
+ 								  	<tr align="center">
+								  		<td><code>The inactive state is low</code></td>
+								  		<td><code>_SPI_CLK_IDLE_LOW</code></td>
+                    </tr>
+
+								  	<tr align="center">
+								  		<td><code>The inactive state is high</code></td>
+								  		<td><code>_SPI_CLK_IDLE_HIGH</code></td>
+                    </tr>
+            		  </table>
+								</li>
+								
+								<p></p>
+								<li><code>spiMode:</code> 3 wire or 4 wire <acronym title="Serial Peripheral Interface">SPI</acronym>. Valid values :
+	                <table>
+                    <tr align="center">
+								  		<td bgcolor=#f5f2ec><b>Description</b></td>
+								  		<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                    </tr>
+
+ 								  	<tr align="center">
+								  		<td><code>3-pin <acronym title="Serial Peripheral Interface">SPI</acronym></code></td>
+								  		<td><code>_SPI_3PIN</code></td>
+                    </tr>
+
+								  	<tr align="center">
+								  		<td><code>4-pin <acronym title="Serial Peripheral Interface">SPI</acronym> with UCxSTE active high: Slave enabled when UCxSTE = 1</code></td>
+								  		<td><code>_SPI_4PIN_UCxSTE_ACTIVE_HIGH</code></td>
+                    </tr>
+                    
+								  	<tr align="center">
+								  		<td><code>4-pin <acronym title="Serial Peripheral Interface">SPI</acronym> with UCxSTE active low: Slave enabled when UCxSTE = 0</code></td>
+								  		<td><code>_SPI_4PIN_UCxSTE_ACTIVE_LOW</code></td>
+                    </tr>                    
+            		  </table>
+								</li>
+
+             	<p></p>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_SPI</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+            <ul>
+                <li>The <code>clock_divider</code> parameter determines the clock for <acronym title="Serial Peripheral Interface">SPI</acronym> module (ST specifics).
+                <table>			
+									<tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b><acronym title="Serial Peripheral Interface">SPI</acronym> Clock</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+									
+									<tr align="center">
+										<td><code>Peripheral Clock/2</code></td>
+										<td><code>_SPI_FPCLK_DIV2</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Peripheral Clock/4</code></td>
+										<td><code>_SPI_FPCLK_DIV4</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Peripheral Clock/8</code></td>
+										<td><code>_SPI_FPCLK_DIV8</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Peripheral Clock/16</code></td>
+										<td><code>_SPI_FPCLK_DIV16</code></td>
+                  </tr>
+                  
+									<tr align="center">
+										<td><code>Peripheral Clock/32</code></td>
+										<td><code>_SPI_FPCLK_DIV32</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Peripheral Clock/64</code></td>
+										<td><code>_SPI_FPCLK_DIV64</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Peripheral Clock/128</code></td>
+										<td><code>_SPI_FPCLK_DIV128</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Peripheral Clock/256</code></td>
+										<td><code>_SPI_FPCLK_DIV256</code></td>
+                  </tr>
+
+                </table>
+                </li>
+
+								<p></p>
+                <li>The parameter <code>config</code> determines the data size, clock polarity and clock phase. 
+                    <br>This value is deriven from OR-ing the following constants :
+                <table>	
+									<tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Data Length Size</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>8-bit data size</code></td>
+										<td><code>_SPI_8_BIT</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>16-bit data size</code></td>
+										<td><code>_SPI_16_BIT</code></td>
+                  </tr>
+
+                </table>
+
+								<p></p>
+                <table>			
+									<tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Master/Slave mode</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+									
+									<tr align="center">
+										<td><code>Master mode</code></td>
+										<td><code>_SPI_MASTER</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Slave mode</code></td>
+										<td><code>_SPI_SLAVE</code></td>
+                  </tr>
+                </table>
+
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Clock Polarity</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>IDLE state is Lo, ACTIVE state is Hi</code></td>
+										<td><code>_SPI_CLK_IDLE_LOW</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>IDLE state is Hi, ACTIVE state is Lo</code></td>
+										<td><code>_SPI_CLK_IDLE_HIGH</code></td>
+                  </tr> 
+                </table> 
+                
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Clock Phase</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>Data is sampled on the first clock edge transition</code></td>
+										<td><code>_SPI_FIRST_CLK_EDGE_TRANSITION</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>Data is sampled on the second clock edge transition</code></td>
+										<td><code>_SPI_SECOND_CLK_EDGE_TRANSITION</code></td>
+                  </tr> 
+                </table> 
+
+                
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Bit Sending Hierarchy</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>Most Significant Bit (MSB) sent first</code></td>
+										<td><code>_SPI_MSB_FIRST</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>Least Significant Bit (MSB) sent first</code></td>
+										<td><code>_SPI_LSB_FIRST</code></td>
+                  </tr> 
+                </table> 
+
+                
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Software Slave Management</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>Software Slave Management Enable</code></td>
+										<td><code>_SPI_SSM_ENABLE</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>Software Slave Management Disable</code></td>
+										<td><code>_SPI_SSM_DISABLE</code></td>
+                  </tr> 
+                </table> 
+
+								<p></p>
+                <table>
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Slave Select Output</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Slave Select Output Enable</code></td>
+										<td><code>_SPI_SS_ENABLE</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Slave Select Output Disable</code></td>
+										<td><code>_SPI_SS_DISABLE</code></td>
+                  </tr>
+                </table>
+
+								<p></p>
+                <table>
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Internal Slave Select</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>Internal Slave Select = 0</code></td>
+										<td><code>_SPI_SSI_0</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>Internal Slave Select = 1</code></td>
+										<td><code>_SPI_SSI_1</code></td>
+                  </tr> 
+                </table> 
+
+                </li>
+             	<p></p>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_SPI</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+            <ul>
+                <li>The <code>bit_rate_Hz</code> parameter determines the clock for <acronym title="Serial Peripheral Interface">SPI</acronym> module in Hz.</li>
+                <li>The parameter <code>lsb_first</code> determines the bit numbering. Valid values:
+                <table>	
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>MSB sent first</code></td>
+										<td><code>_SPI_MSB_FIRST</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>LSB sent first</code></td>
+										<td><code>_SPI_LSB_FIRST</code></td>
+                  </tr>
+                </table>
+                </li>
+                <li>The parameter <code>config</code> determines the clock polarity and clock phase. This value is deriven from OR-ing the following constants :
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Clock Polarity</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>IDLE state is Lo, ACTIVE state is Hi</code></td>
+										<td><code>_SPI_CLK_IDLE_LOW</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>IDLE state is Hi, ACTIVE state is Lo</code></td>
+										<td><code>_SPI_CLK_IDLE_HIGH</code></td>
+                  </tr> 
+                </table> 
+                
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Clock Phase</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>Data is sampled on the rising clock edge</code></td>
+										<td><code>_SPI_SAMPLE_DATA_RISING_EDGE</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>Data is sampled on the falling clock edge</code></td>
+										<td><code>_SPI_SAMPLE_DATA_FALLING_EDGE</code></td>
+                  </tr> 
+                </table> 
+                </li>
+
+                </ul>
+    </div>
+
+    <div class="tabbertab">
+    <h2>Kinetis</h2>
+            <ul>
+                <li>The <code>baudRate</code> parameter determines the clock for <acronym title="Serial Peripheral Interface">SPI</acronym> module (ST specifics).
+                <li>The parameter <code>config</code> determines the data size, clock polarity and clock phase. 
+                    <br>This value is deriven from OR-ing the following constants :
+                <table>	
+									<tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Data Length Size</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>4-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_4BITS</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>5-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_5BITS</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>6-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_6BITS</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>7-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_7BITS</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>8-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_8BITS</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>9-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_9BITS</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>10-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_10BITS</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>11-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_11BITS</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>12-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_12BITS</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>13-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_13BITS</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>14-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_14BITS</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>15-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_15BITS</code></td>
+                  </tr>
+
+
+									<tr align="center">
+										<td><code>16-bit data size</code></td>
+										<td><code>_SPI_CFG_FRAME_SIZE_16BITS</code></td>
+                  </tr>
+									
+                </table>
+
+								<p></p>
+                <table>			
+									<tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Master/Slave mode</b></td>
+                  </tr>
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+									
+									<tr align="center">
+										<td><code>Master mode</code></td>
+										<td><code>_SPI_CFG_MASTER</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Slave mode</code></td>
+										<td><code>_SPI_CFG_SLAVE</code></td>
+                  </tr>
+                </table>
+
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Clock Polarity</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>IDLE state is Lo, ACTIVE state is Hi</code></td>
+										<td><code>_SPI_CFG_CLK_IDLE_LOW</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>IDLE state is Hi, ACTIVE state is Lo</code></td>
+										<td><code>_SPI_CFG_CLK_IDLE_HIGH</code></td>
+                  </tr> 
+                </table> 
+                
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Clock Phase</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>Data is sampled on the first clock edge transition</code></td>
+										<td><code>_SPI_CFG_CLK_PHASE_CAPT_LEADING</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>Data is sampled on the second clock edge transition</code></td>
+										<td><code>_SPI_CFG_CLK_PHASE_CHG_LEADING</code></td>
+                  </tr> 
+                </table> 
+
+                
+								<p></p>
+                <table> 				
+                  <tr align="center">
+										<td colspan=2; bgcolor=#f5f2ec><b>Bit Sending Hierarchy</b></td>
+                  </tr>                
+
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>	
+
+									<tr align="center">
+										<td><code>Most Significant Bit (MSB) sent first</code></td>
+										<td><code>_SPI_CFG_MSB_FIRST</code></td>
+                  </tr>    
+
+									<tr align="center">
+										<td><code>Least Significant Bit (MSB) sent first</code></td>
+										<td><code>_SPI_CFG_LSB_FIRST</code></td>
+                  </tr> 
+                </table> 
+
+             	<p></p>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_SPI</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+    </div>
+
+  </div>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p><acronym title="MicroController Unit">MCU</acronym> must have the <acronym title="Serial Peripheral Interface">SPI</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+<i>// Set SPI1 to the Master Mode, data length is 16-bit, clock = 2MHz, clock IDLE state high and data transmitted at the first clock edge transition :</i>
+SPI1_Init_Advanced(2000000, _SPI_MASTER, _SPI_16_BIT | _SPI_CLK_IDLE_HIGH | _SPI_FIRST_CLK_EDGE_TRANSITION);
+
+<i>// Set SPI1 to the Master Mode, data length is 16-bit, clock = 2MHz, clock IDLE state high and data transmitted at the first clock edge transition, on GPIO_PORTE :</i>
+SPI1_Init_Advanced(2000000, _SPI_MASTER, _SPI_16_BIT | _SPI_CLK_IDLE_HIGH | _SPI_FIRST_CLK_EDGE_TRANSITION, &_GPIO_MODULE_SPI1_E023);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+<i>// Set SPI1 to the Master Mode, 3-pin interface, SMCLK divided by 6, MSB transmitted first, Data is changed on the first UCLK edge and captured on the following edge, inactive state is low :</i>
+SPI1_Init_Advanced(_SPI_MASTER, 6, _SPI_CLOCKSOURCE_SMCLK, _SPI_MSB_FIRST, _SPI_PHASE_DATA_CHANGE_FIRST_CAPTURE_NEXT, _SPI_CLK_IDLE_LOW, _SPI_3PIN, _GPIO_MODULE_SPIA0_A123);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<pre>
+<i>// Set SPI1 to the Master Mode, data length is 8-bit, clock = Peripheral/64, clock IDLE state low and data transmitted at the first clock edge transition, MSB transferred first, Slave Select Disabled :</i>
+SPI1_Init_Advanced(_SPI_FPCLK_DIV64, _SPI_MASTER | _SPI_8_BIT | _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION | _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1, &_GPIO_MODULE_SPI1_PA567);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+<pre>
+<i>// Set SPI0 with clock = 1MHz, MSB sent first, clock IDLE state low and data transmitted at the rising clock edge transition :</i>
+SPI0_Init_Advanced(1000000,  _SPI_MSB_FIRST, _SPI_CLK_IDLE_LOW | _SPI_SAMPLE_DATA_RISING_EDGE);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>Kinetis</h2>
+<pre>
+<i>// Set SPI1 to the Master Mode, data length is 8-bit, clock = 8 MHz, clock IDLE state low and data transmitted at the first clock edge transition, MSB transferred first :</i>
+SPI1_Init_Advanced(8000000, _SPI_CFG_MASTER | _SPI_CFG_FRAME_SIZE_8BITS | _SPI_CFG_CLK_IDLE_LOW | _SPI_CFG_CLK_PHASE_CAPT_LEADING | _SPI_CFG_MSB_FIRST, &_GPIO_Module_SPI0_PD1_3_2);
+</pre>
+
+  </div>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Serial Peripheral Interface">SPI</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Serial Peripheral Interface">SPI</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>8</b>.</li>
+    	      	<li>Number of <acronym title="Serial Peripheral Interface">SPI</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	        <li><code>SPI_Rd_Ptr()</code> and <code>SPI_Wr_Ptr()</code> global function pointers are assigned when a <acronym title="Serial Peripheral Interface">SPI</acronym> module is initialized. They point to the appropriate read and write routines (determined by the initialized <acronym title="Serial Peripheral Interface">SPI</acronym> module) so they can be used for <acronym title="Serial Peripheral Interface">SPI</acronym> read and write operations.</li>
+    	        <li>Switching between the <acronym title="Serial Peripheral Interface">SPI</acronym> modules in the <acronym title="Serial Peripheral Interface">SPI</acronym> library is done by the <a href="#spi_set_active">SPI_Set_Active</a> function (both <acronym title="Serial Peripheral Interface">SPI</acronym> modules have to be previously initialized).</li>
+    	      	<li>For available working modes for a specific MCU please read the appropriate datasheet.</li>
+    	      </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_read">SPIx_Read</h3>
+
+
+    <!-- tabela: SPIx_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> SPIx_Read(<b>unsigned long</b> buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one word from the SPI bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>buffer:</code> dummy data for clock generation (see device Datasheet for SPI modules implementation details)</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Received data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Routine requires at least one SPI module.</p>
+            <p>Used <acronym title="Serial Peripheral Interface">SPI</acronym> module must be initialized before using this function. See the 
+            	<a href="#spi_init">SPIx_Init</a> and <a href="#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// read a byte from the SPI bus</i> 
+<b>char</b> take, buffer;
+...
+take = SPI1_Read(buffer);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Serial Peripheral Interface">SPI</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Serial Peripheral Interface">SPI</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>8</b>.</li>
+    	      	<li>Number of <acronym title="Serial Peripheral Interface">SPI</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	      </ul>
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_write">SPIx_Write</h3>
+
+
+    <!-- tabela: SPIx_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPIx_Write(<b>unsigned</b> data_out);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes one word via the SPI bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>data_out:</code> data to be sent</li>
+          	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Routine requires at least one SPI module.</p>
+            <p>Used <acronym title="Serial Peripheral Interface">SPI</acronym> module must be initialized before using this function. See the <a href="#spi_init">SPIx_Init</a> and <a href="#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// write a buffer to the SPI bus</i>
+<b>unsigned</b> buffer;
+...
+SPI1_Write(buffer);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <ul>
+    	      	<li><acronym title="Serial Peripheral Interface">SPI</acronym> library routines require you to specify the module you want to use. To select the desired <acronym title="Serial Peripheral Interface">SPI</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>0</b> to <b>8</b>.</li>
+    	      	<li>Number of <acronym title="Serial Peripheral Interface">SPI</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	      </ul>   
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="spi_set_active">SPI_Set_Active</h3>
+
+
+    <!-- tabela: SPI_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Set_Active(<b>unsigned</b> (*read_ptr)(<b>unsigned</b>), <b>void</b>(*write_ptr)(<b>unsigned</b>));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the active SPI module which will be used by the <a href="#spi_read">SPIx_Read</a> and <a href="#spi_write">SPIx_Write</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>Parameters :</p> 
+            	<ul>
+            		<li><code>read_ptr:</code> <a href="#spi1_read">SPI1_Read</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#spi1_write">SPI1_Write</a> handler</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>Routine is available only for MCUs with multiple SPI modules.</p>
+            <p>Used <acronym title="Serial Peripheral Interface">SPI</acronym> module must be initialized before using this function. See the  
+            	<a href="#spi_init">SPIx_Init</a> and <a href="#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_Set_Active(SPI1_Read, SPI1_Write); <i>// Sets the SPI1 module active</i></pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <p>Number of <acronym title="Serial Peripheral Interface">SPI</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</p>    	      
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+
+    <!-- -->
+
+
+    <h3 id="spi_read_gen">SPI_Read</h3>
+
+
+    <!-- tabela: SPI_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> SPI_Read(<b>unsigned int</b> buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one word or byte from the SPI bus.</p>
+            <p>This is a generic routine which uses the active SPI module previously activated by the <a href="#spi_set_active">SPI_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>buffer:</code> dummy data for clock generation (see device Datasheet for SPI modules implementation details)</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Received data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Routine requires at least one SPI module.</p>
+            <p>Used <acronym title="Serial Peripheral Interface">SPI</acronym> module must be initialized before using this function. See the 
+            	<a href="#spi_init">SPIx_Init</a> and <a href="#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// read a word from the SPI bus</i> 
+<b>unsigned int</b> take, buffer;
+...
+take = SPI_Read(buffer);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <p>None.</p>
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_write_gen">SPI_Write</h3>
+
+
+    <!-- tabela: SPI_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>procedure</b> SPI_Write(data_out : word);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes one word or byte via the SPI bus.</p>
+            <p>This is a generic routine which uses the active SPI module previously activated by the <a href="#spi_set_active">SPI_Set_Active</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>data_out:</code> data to be sent</li>
+          	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Routine requires at least one SPI module.</p>
+            <p>Used <acronym title="Serial Peripheral Interface">SPI</acronym> module must be initialized before using this function. See the <a href="#spi_init">SPIx_Init</a> and <a href="#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// write a word to the SPI bus</i>
+<b>unsigned int</b> buffer;
+...
+SPI_Write(buffer);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+    	      <p>None.</p>
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->    
+
+    <!-- 
+
+    <h3>Library Example</h3>
+
+    <p>The code demonstrates how to use <acronym title="Serial Peripheral Interface">SPI</acronym> library functions for communication between SPI module of the MCU and MCP4921 DAC chip.</p>
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<i>// DAC module connections</i>
+<b>sbit</b> Chip_Select <b>at</b> GPIO_PORTA_DATA.B1;
+<i>// End DAC module connections</i>
+
+<b>unsigned int</b> value;
+
+<b>void</b> InitMain() {
+  <i>// Set RB0 and RB1 pins as input</i>
+  GPIO_Digital_Input(&#38;GPIO_PORTB, _GPIO_PINMASK_0 | _GPIO_PINMASK_1);
+  GPIO_Digital_Output(&#38;GPIO_PORTA, _GPIO_PINMASK_1);     <i>// Set CS# pin as Output</i>
+  Chip_Select = 1;                                       <i>// Deselect DAC</i>
+  SPI0_Init();                                           <i>// Initialize SPI2 module</i>
+}
+
+<i>// DAC increments (0..4095) --&#62; output voltage (0..Vref)</i>
+<b>void</b> DAC_Output(<b>unsigned int</b> valueDAC) {
+  <b>char</b> temp;
+
+  Chip_Select = 0;                       <i>// Select DAC chip</i>
+
+  <i>// Send High Byte</i>
+  temp = (valueDAC &#62;&#62; 8) &#38; 0x0F;         <i>// Store valueDAC[11..8] to temp[3..0]</i>
+  temp |= 0x30;                          <i>// Define DAC setting, see MCP4921 datasheet</i>
+  SPI0_Write(temp);                      <i>// Send high byte via SPI</i>
+
+  <i>// Send Low Byte</i>
+  temp = valueDAC;                       <i>// Store valueDAC[7..0] to temp[7..0]</i>
+  SPI0_Write(temp);                      <i>// Send low byte via SPI</i>
+
+  Chip_Select = 1;                       <i>// Deselect DAC chip</i>
+}
+
+<b>void</b> main() {
+
+  InitMain();                            <i>// Perform main initialization</i>
+
+  value = 2048;                          <i>// When program starts, DAC gives</i>
+                                         <i>//   the output in the mid-range</i>
+
+  <b>while</b> (1) {                            <i>// Endless loop</i>
+
+    <b>if</b> ((GPIO_PORTB_DATA.B0) &#38;&#38; (value &#60; 4095)) {   <i>// If RB0 button is pressed</i>
+      value++;                           <i>//   increment value</i>
+    }
+    <b>else</b> {
+      <b>if</b> ((GPIO_PORTB_DATA.B1) &#38;&#38; (value &#62; 0)) {    <i>// If RB1 button is pressed</i>
+        value--;                         <i>//   decrement value</i>
+        }
+    }
+
+    DAC_Output(value);                   <i>// Send value to DAC chip</i>
+    Delay_ms(1);                         <i>// Slow down key repeat pace</i>
+  }
+}
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<i>// DAC module connections</i>
+<b>sbit</b> Chip_Select <b>at</b> GPIOB_ODR.B1;
+<i>// End DAC module connections</i>
+
+<b>unsigned int</b> value;
+
+<b>void</b> InitMain() {
+  <i>// Set RC0 and RC1 pins as input</i>
+  GPIO_Digital_Input(&#38;GPIOC_BASE,  _GPIO_PINMASK_6 | _GPIO_PINMASK_7);
+  GPIO_Digital_Output(&#38;GPIOB_BASE, _GPIO_PINMASK_1);     <i>// Set CS# pin as Output</i>
+  Chip_Select = 1;                                       <i>// Deselect DAC</i>
+
+  <i>// Use SPI1 module at PORTB[3:5]</i>
+  SPI1_Init_Advanced(_SPI_FPCLK_DIV4, _SPI_MASTER | _SPI_8_BIT |
+                     _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                     _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                     &#38;_GPIO_MODULE_SPI1_PB345);
+
+  GPIO_Alternate_Function_Enable(&#38;_GPIO_MODULE_SWJ_JTAGDISABLE);
+}
+
+<i>// DAC increments (0..4095) --&#62; output voltage (0..Vref)</i>
+<b>void</b> DAC_Output(<b>unsigned int</b> valueDAC) {
+  <b>char</b> temp;
+
+  Chip_Select = 0;                       <i>// Select DAC chip</i>
+
+  <i>// Send High Byte</i>
+  temp = (valueDAC &#62;&#62; 8) &#38; 0x0F;         <i>// Store valueDAC[11..8] to temp[3..0]</i>
+  temp |= 0x30;                          <i>// Define DAC setting, see MCP4921 datasheet</i>
+  SPI1_Write(temp);                      <i>// Send high byte via SPI</i>
+
+  <i>// Send Low Byte</i>
+  temp = valueDAC;                       <i>// Store valueDAC[7..0] to temp[7..0]</i>
+  SPI1_Write(temp);                      <i>// Send low byte via SPI</i>
+
+  Chip_Select = 1;                       <i>// Deselect DAC chip</i>
+}
+
+<b>void</b> main() {
+
+  InitMain();                            <i>// Perform main initialization</i>
+
+  value = 2048;                          <i>// When program starts, DAC gives</i>
+                                         <i>//   the output in the mid-range</i>
+
+  <b>while</b> (1) {                            <i>// Endless loop</i>
+
+    <b>if</b> ((GPIOC_IDRbits.IDR7) &#38;&#38; (value &#60; 4095)) {   <i>// If RC7 button is pressed</i>
+      value++;                                      <i>//   increment value</i>
+    }
+    <b>else</b> {
+      <b>if</b> ((GPIOC_IDRbits.IDR6) &#38;&#38; (value &#62; 0)) {    <i>// If RC6 button is pressed</i>
+        value--;                                    <i>//   decrement value</i>
+        }
+    }
+
+    DAC_Output(value);                   <i>// Send value to DAC chip</i>
+    Delay_ms(1);                         <i>// Slow down key repeat pace</i>
+  }
+}
+</pre>
+    </div>
+  </div>
+
+
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="SPI connection" src="img/Schemes/scheme_spi.gif"></p>
+    <p class="center small">SPI HW connection</p>
+-->
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,2602 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>Ethernet Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_arm.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Ethernet Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="epi_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="flash_memory_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Ethernet Library</h2></a>
+
+   <p>The internal Ethernet Controller consists of a fully integrated media access controller (MAC) and network physical (PHY) interface (Stellaris M3 family only). The Ethernet Controller conforms to IEEE 802.3 specifications and fully supports 10BASE-T and 100BASE-TX standards.</p>
+   
+   <p>The internal Ethernet library supports :</p>   
+   <ul>
+   	 <li>IPv4 protocol.</li>
+     <li><acronym title="Address Resolution Protocol">ARP</acronym> requests.</li>
+     <li><acronym title="Internet Control Message Protocol">ICMP</acronym> echo requests.</li>
+     <li><acronym title="User Datagram Protocol">UDP</acronym> requests.</li>
+     <li><acronym title="Transmission Control Protocol">TCP</acronym> requests (no stack, no packet reconstruction).</li>
+     <li><acronym title="Address Resolution Protocol">ARP</acronym> client with cache.</li>
+     <li><acronym title="Domain Name Server">DNS</acronym> client.</li>
+     <li><acronym title="User Datagram Protocol">UDP</acronym> client.</li>
+     <li><acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> client.</li>
+     <li>packet fragmentation is <b>NOT</b> supported.</li>
+   </ul>
+  
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+      <ul>
+    	  <li>Global library variable <code>Ethernet_Intern_userTimerSec</code> is used to keep track of time for all client implementations (<acronym title="Address Resolution Protocol">ARP</acronym>, <acronym title="Domain Name Server">DNS</acronym>, <acronym title="User Datagram Protocol">UDP</acronym> and <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym>). It is user responsibility to increment this variable each second in it's code if any of the clients is used.</li>
+    	  <li>For advanced users there are <code>__Ethernet_Intern_Private.h</code> and <code>__Ethernet_Intern.h</code> in Uses folder of the compiler with description of all routines and global variables, relevant to the user, implemented in the Ethernet Library.</li>
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+	    <ul>
+	    	<li><a href="#ethernet_intern_init">Ethernet_Intern_Init</a></li>
+	    	<li><a href="#ethernet_intern_enable">Ethernet_Intern_Enable</a></li>
+	    	<li><a href="#ethernet_intern_disable">Ethernet_Intern_Disable</a></li>
+	    	<li><a href="#ethernet_intern_conffilter">Ethernet_Intern_confFilter</a></li>
+	    	<li><a href="#ethernet_intern_dopacket">Ethernet_Intern_doPacket</a></li>
+	    	<li><a href="#ethernet_intern_writepayloadbyte">Ethernet_Intern_writePayloadByte</a></li>		
+	    	<li><a href="#ethernet_intern_writepayloadbytes">Ethernet_Intern_writePayloadBytes</a></li>
+	    	<li><a href="#ethernet_intern_writepayloadstring">Ethernet_Intern_writePayloadString</a></li>
+	    	<li><a href="#ethernet_intern_readpayloadbyte">Ethernet_Intern_readPayloadByte</a></li>	
+	    	<li><a href="#ethernet_intern_readpayloadbytes">Ethernet_Intern_readPayloadBytes</a></li>	
+	    	<li><a href="#ethernet_intern_putbyte">Ethernet_Intern_putByte</a></li>		
+	    	<li><a href="#ethernet_intern_putbytes">Ethernet_Intern_putBytes</a></li>
+	    	<li><a href="#ethernet_intern_putstring">Ethernet_Intern_putString</a></li>
+	    	<li><a href="#ethernet_intern_putconststring">Ethernet_Intern_putConstString</a></li>
+	    	<li><a href="#ethernet_intern_putconstbytes">Ethernet_Intern_putConstBytes</a></li>
+	    	<li><a href="#ethernet_intern_getbyte">Ethernet_Intern_getByte</a></li>	
+	    	<li><a href="#ethernet_intern_getbytes">Ethernet_Intern_getBytes</a></li>		    	
+	    	<li><a href="#ethernet_intern_usertcp">Ethernet_Intern_UserTCP</a></li>	
+	    	<li><a href="#ethernet_intern_userudp">Ethernet_Intern_UserUDP</a></li>			
+	    	<li><a href="#ethernet_intern_getipaddress">Ethernet_Intern_getIpAddress</a></li>
+	    	<li><a href="#ethernet_intern_getgwipaddress">Ethernet_Intern_getGwIpAddress</a></li>
+	    	<li><a href="#ethernet_intern_getdnsipaddress">Ethernet_Intern_getDnsIpAddress</a></li>
+	    	<li><a href="#ethernet_intern_getipmask">Ethernet_Intern_getIpMask</a></li>
+	    	<li><a href="#ethernet_intern_confnetwork">Ethernet_Intern_confNetwork</a></li>
+	    	<li><a href="#ethernet_intern_arpresolve">Ethernet_Intern_arpResolve</a></li>
+	    	<li><a href="#ethernet_intern_sendudp">Ethernet_Intern_sendUDP</a></li>
+	    	<li><a href="#ethernet_intern_dnsresolve">Ethernet_Intern_dnsResolve</a></li>		
+	    	<li><a href="#ethernet_intern_initdhcp">Ethernet_Intern_initDHCP</a></li>
+	    	<li><a href="#ethernet_intern_dodhcpleasetime">Ethernet_Intern_doDHCPLeaseTime</a></li>
+	    	<li><a href="#ethernet_intern_renewdhcp">Ethernet_Intern_renewDHCP</a></li>
+	    </ul>	
+	  
+    <!-- -->
+    
+    <h3 id="ethernet_intern_init">Ethernet_Intern_Init</h3>
+
+
+    <!-- tabela: Ethernet_Intern_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <i>// for Stellaris MCUs</i>
+            <p><b>void</b> Ethernet_Intern_Init(<b>unsigned char</b> *mac, <b>unsigned char</b> *ip, <b>unsigned char</b> config);</p>
+            <i>// for ST MCUs</i>
+            <p><b>unsigned char</b> Ethernet_Intern_Init(<b>unsigned char</b> *mac, <b>unsigned char</b> *ip, <b>unsigned char</b> config, <b>const</b> Module_Struct *module);</p>
+            <i>// for Kinetis MCUs</i>
+            <p><b>unsigned char</b> Ethernet_Intern_Init(<b>unsigned char</b> *mac, <b>unsigned char</b> *ip, <b>const</b> Module_Struct *module);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>1</code> - if error occured.</li>
+            	<li><code>0</code> - if there was no error.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It initializes Ethernet controller. This function is internaly splited into 2 parts to help linker when coming short of memory.</p>
+            <p>
+            	Ethernet controller settings (parameters not mentioned here are set to default):
+            	<ul>
+            		<li><acronym title="Random Access Memory">RAM</acronym> buffer read/write pointers in auto-increment mode.</li> 
+            		<li>receive filters set to default: <acronym title="Cyclic Redundancy Check">CRC</acronym> + <acronym title="Media Access Control">MAC</acronym> Unicast + <acronym title="Media Access Control">MAC</acronym> Broadcast in OR mode.</li> 
+            		<li>flow control with TX and RX pause frames in full duplex mode.</li> 
+            		<li>maximum packet size is set to <code>1536</code>.</li> 
+            		<li>Back-to-Back Inter-Packet Gap: <code>0x15</code> in full duplex mode; <code>0x12</code> in half duplex mode.</li> 
+            		<li>Non-Back-to-Back Inter-Packet Gap: <code>0x0012</code> in full duplex mode; <code>0x0C12</code> in half duplex mode.</li> 
+            		<li>half duplex loopback disabled.</li> 
+            		<li><acronym title="Light Emitting Diode">LED</acronym> configuration: default (LEDA-link status, LEDB-link activity).</li> 
+              </ul>	
+            </p>
+          	<p>Parameters:</p>
+            <ul>
+	   			    <li><code>mac:</code> <acronym title="Random Access Memory">RAM</acronym> buffer containing valid <acronym title="Media Access Control">MAC</acronym> address.</li>
+	  			    <li><code>ip:</code> <acronym title="Random Access Memory">RAM</acronym> buffer containing valid <acronym title="Internet Protocol">IP</acronym> address.</li>
+	  			    <li><code>configuration:</code> ethernet duplex mode switch. Valid values: 
+								<ul>
+									<li><code>_ETHERNET_HALFDUPLEX</code></li>
+									<li><code>_ETHERNET_FULLDUPLEX</code></li>
+									<li><code>_ETHERNET_SPD10</code></li>
+									<li><code>_ETHERNET_SPD100</code></li>
+									<li><code>_ETHERNET_AUTO_NEGOTIATION</code></li>
+									<li><code>_ETHERNET_MANUAL_NEGOTIATION</code></li>
+								</ul>
+							</li>
+             	<li><code>module:</code> appropriate module pinout. Use <a href="code_editor.htm#code_assistant">Code Assistant</a> to list available module pinouts by typing <code>_GPIO_MODULE_ETH</code> and pressing <kbd>Ctrl</kbd> + <kbd>Space</kbd>.</li>
+            </ul>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              If a <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> server is to be used, <acronym title="Internet Protocol">IP</acronym> address should be set to <code>0.0.0.0</code>.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            Nothing.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+#define Ethernet_Intern_HALFDUPLEX     0
+#define Ethernet_Intern_FULLDUPLEX     1
+
+<b>unsigned char</b> myMacAddr[6] = {0x00, 0x14, 0xA5, 0x76, 0x19, 0x3f}; <i>// my MAC address</i>	
+<b>unsigned char</b> myIpAddr[4]  = {192, 168,   1, 60 };  <i>// my IP addr</i>
+
+Ethernet_Intern_Init(myMacAddr, myIpAddr, _ETHERNET_AUTO_NEGOTIATION);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="ethernet_intern_enable">Ethernet_Intern_Enable</h3>
+
+
+    <!-- tabela: Ethernet_Intern_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Ethernet_Intern_Enable(<b>unsigned char</b> enFlt);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. This routine enables appropriate network traffic on the <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module
+            	 by the means of it's receive filters (unicast, multicast, broadcast, crc). Specific type of network traffic will be enabled if a corresponding bit of this routine's input parameter is set.
+            	 Therefore, more than one type of network traffic can be enabled at the same time.
+            	 For this purpose, predefined library constants (see the table below) can be ORed to form appropriate input value.</p>
+
+            <p>Parameters:</p>
+            <ul>
+              <li><code>enFlt:</code> network traffic/receive filter flags. Each bit corresponds to the appropriate network traffic/receive filter:</li>
+							<p>
+							  <table>
+                  <tr align="center">
+                  	<td><b>Bit</b></td>
+										<td><b>Mask</b></td>
+										<td><b>Description</b></td>
+										<td><b>Predefined library const</b></td>
+                  </tr>
+									<tr align="center">
+                  	<td>0</td>
+										<td>0x01</td>
+										<td><acronym title="Media Access Control">MAC</acronym> Multicast traffic/receive filter flag. When set, <acronym title="Media Access Control">MAC</acronym> multicast traffic will be enabled. </td>
+										<td><code>_ETHERNET_MULTICAST</code></td>
+                  </tr>
+									<tr align="center">
+                  	<td>1</td>
+										<td>0x02</td>
+										<td><acronym title="Cyclic Redundancy Check">CRC</acronym> check flag. When set, packets with invalid <acronym title="Cyclic Redundancy Check">CRC</acronym> field will be discarded.</td>
+										<td><code>_ETHERNET_CRC</code></td>
+                  </tr>
+									<tr align="center">
+                  	<td>2</td>
+										<td>0x04</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>3</td>
+										<td>0x08</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>4</td>
+										<td>0x10</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>5</td>
+										<td>0x20</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>6</td>
+										<td>0x40</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>7</td>
+										<td>0x80</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+                </table>
+						    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      						<img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+									<ul>
+										<li>Advanced filtering available in the <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module such as <code>Pattern Match</code>, <code>Magic Packet</code> and <code>Hash Table</code> can not be enabled by this routine. <br>Additionaly, all filters, except <acronym title="Cyclic Redundancy Check">CRC</acronym>, enabled with this routine will work in OR mode, which means that packet will be received if any of the enabled filters accepts it.</li>
+										<li>This routine will change receive filter configuration on-the-fly. It will not, in any way, mess with enabling/disabling receive/transmit logic or any other part of the <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module. <br>The <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module should be properly cofigured by the means of <a href="#ethernet_intern_init">Ethernet_Intern_Init</a> routine.</li>
+                    <li>This routine is valid only for Stellaris devices.</li>
+									</ul>
+    						</div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Ethernet_Intern_Enable(_Ethernet_Intern_CRC | _Ethernet_Intern_MULTICAST); <i>// enable CRC checking and Multicast traffic</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ethernet_intern_disable">Ethernet_Intern_Disable</h3>
+
+
+    <!-- tabela: Ethernet_Intern_Disable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Ethernet_Intern_Disable(<b>unsigned char</b> disFlt);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+            	Nothing.</li>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. This routine disables appropriate network traffic on the <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module
+            	 by the means of it's receive filters (unicast, multicast, broadcast, crc). Specific type of network traffic will be disabled if a corresponding bit of this routine's input parameter is set.
+            	 Therefore, more than one type of network traffic can be disabled at the same time.
+            	 For this purpose, predefined library constants (see the table below) can be ORed to form appropriate input value.
+            <p>Parameters:</p>
+            <ul>
+              <li><code>disFlt:</code> network traffic/receive filter flags. Each bit corresponds to the appropriate network traffic/receive filter:</li>
+							<p>
+							  <table>
+                  <tr align="center">
+                  	<td><b>Bit</b></td>
+										<td><b>Mask</b></td>
+										<td><b>Description</b></td>
+										<td><b>Predefined library const</b></td>
+                  </tr>
+									<tr align="center">
+                  	<td>0</td>
+										<td>0x01</td>
+										<td><acronym title="Media Access Control">MAC</acronym> Multicast traffic/receive filter flag. When set, <acronym title="Media Access Control">MAC</acronym> multicast traffic will be enabled. </td>
+										<td><code>_ETHERNET_MULTICAST</code></td>
+                  </tr>
+									<tr align="center">
+                  	<td>1</td>
+										<td>0x02</td>
+										<td><acronym title="Cyclic Redundancy Check">CRC</acronym> check flag. When set, packets with invalid <acronym title="Cyclic Redundancy Check">CRC</acronym> field will be discarded.</td>
+										<td><code>_ETHERNET_CRC</code></td>
+                  </tr>
+									<tr align="center">
+                  	<td>2</td>
+										<td>0x04</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>3</td>
+										<td>0x08</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>4</td>
+										<td>0x10</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>5</td>
+										<td>0x20</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>6</td>
+										<td>0x40</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+									<tr align="center">
+                  	<td>7</td>
+										<td>0x80</td>
+										<td>not used</td>
+										<td>none</td>
+                  </tr>
+                </table>
+						    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      						<img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                  <ul>
+                  	<li>Advance filtering available in the <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module such as <code>Pattern Match</code>, <code>Magic Packet</code> and <code>Hash Table</code> can not be disabled by this routine.</li>
+                  	<li>This routine will change receive filter configuration on-the-fly. It will not, in any way, mess with enabling/disabling receive/transmit logic or any other part of the <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module.</li>
+                  	<li>The <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module should be properly cofigured by the means of <a href="#ethernet_intern_init">Ethernet_Intern_Init</a> routine.</li>
+                    <li>This routine is valid only for Stellaris devices.</li>
+                  </ul>
+    						</div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Ethernet_Intern_Disable(_Ethernet_Intern_CRC | _Ethernet_Intern_MULTICAST); <i>// disable CRC checking and Multicast traffic</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->        
+
+    <!-- -->
+
+    <h3 id="ethernet_intern_conffilter">Ethernet_Intern_confFilter</h3>
+
+
+    <!-- tabela: Ethernet_Intern_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Ethernet_Intern_confFilter(<b>unsigned long</b> cfg)</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine enables/disables appropriate network traffic on the MCU's internal Ethernet module by the means of it's receive filters (unicast, multicast, broadcast, crc).
+            <br>Specific type of network traffic will be enabled if a corresponding bit of this routine's input parameter is set.</p>
+  
+            <p>Parameters:</p>
+            <ul>
+              <li><code>cfg:</code> network traffic/receive filter flags. Each bit corresponds to the appropriate network traffic/receive filter:</li>
+<ul>
+	<li><code>_ETHERNET_FILTER_RECEIVE_ALL_EN:</code> All received frames are passed.</li>
+	<li><code>_ETHERNET_FILTER_RECEIVE_ALL_DIS:</code> Only filtered frames are passed. Filters are constructed by OR-ing filter constants below.</li>
+	<li><code>_ETHERNET_FILTER_MULTICAST_RECEIVE_ALL:</code> All received frames with a multicast destination address (first bit in the destination address field is '1') are passed.</li>
+	<li><code>_ETHERNET_FILTER_MULTICAST_FILTER_PERFECT:</code> MAC performs a perfect destination address filtering for multicast frames, that is, it compares the DA field with the values programmed in DA registers.</li>
+	<li><code>_ETHERNET_FILTER_MULTICAST_FILTER_HASH_TABLE:</code> only frames that match the Hash filter are passed.</li>
+	<li><code>_ETHERNET_FILTER_MULTICAST_FILTER_PERFECT_HASH_TABLE:</code> the address filter passes frames that match either the perfect filtering or the hash filtering</li>
+	<li><code>_ETHERNET_FILTER_UNICAST_HASH_TABLE:</code> MAC performs destination address filtering of unicast frames according to the hash table.</li>
+	<li><code>_ETHERNET_FILTER_MULTICAST_FILTER_PERFECT_HASH_TABLE:</code> the address filter passes frames that match either the perfect filtering or the hash filtering</li>
+</ul>
+
+						    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      						<img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+									<ul>
+										<li>Advanced filtering available in the <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module such as <code>Pattern Match</code>, <code>Magic Packet</code> and <code>Hash Table</code> can not be enabled by this routine. <br>Additionaly, all filters, except <acronym title="Cyclic Redundancy Check">CRC</acronym>, enabled with this routine will work in OR mode, which means that packet will be received if any of the enabled filters accepts it.</li>
+										<li>This routine will change receive filter configuration on-the-fly. It will not, in any way, mess with enabling/disabling receive/transmit logic or any other part of the <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module. <br>The <acronym title="MicroController Unit">MCU</acronym>'s internal Ethernet module should be properly cofigured by the means of <a href="#ethernet_intern_init">Ethernet_Intern_Init</a> routine.</li>
+                    <li>This routine is valid only for ST devices.</li>
+									</ul>
+    						</div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Ethernet_Intern_confFilter(_ETHERNET_FILTER_RECEIVE_ALL_EN | _ETHERNET_FILTER_MULTICAST_RECEIVE_ALL); <i>// enable CRC checking and Multicast traffic</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="ethernet_intern_dopacket">Ethernet_Intern_doPacket</h3>
+
+
+    <!-- tabela: Ethernet_Intern_doPacket -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Ethernet_Intern_doPacket();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+            	<ul>
+            		<li><code>0</code> - upon successful packet processing (zero packets received or received packet processed successfully).</li>
+            		<li><code>1</code> - upon reception error or receive buffer corruption. Ethernet controller needs to be restarted.</li>
+            		<li><code>2</code> - received packet was not sent to us (not our <acronym title="Internet Protocol">IP</acronym>, nor <acronym title="Internet Protocol">IP</acronym> broadcast address).</li>
+            		<li><code>3</code> - received <acronym title="Internet Protocol">IP</acronym> packet was not IPv4.</li>
+            		<li><code>4</code> - received packet was of type unknown to the library.</li>
+              </ul>		
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It processes next received packet if such exists. Packets are processed in the following manner:</p>
+            <ul>
+              <li><acronym title="Address Resolution Protocol">ARP</acronym> & <acronym title="Internet Control Message Protocol">ICMP</acronym> requests are replied automatically.</li>
+              <li>upon <acronym title="Transmission Control Protocol">TCP</acronym> request the <a href="#ethernet_intern_usertcp">Ethernet_Intern_UserTCP</a> function is called for further processing.</li>
+              <li>upon <acronym title="User Datagram Protocol">UDP</acronym> request the <a href="#ethernet_intern_userudp">Ethernet_Intern_UserUDP</a> function is called for further processing.</li>
+            </ul>
+    				<div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      				<img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+      				<code>Ethernet_Intern_doPacket</code> must be called as often as possible in user's code.
+    				</div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+if (Ethernet_Intern_doPacket() == 0) { <i>// process received packets</i>
+  ...
+}</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->  
+
+    <h3 id="ethernet_intern_writepayloadbyte">Ethernet_Intern_writePayloadByte</h3>
+
+
+    <!-- tabela: Ethernet_Intern_putByte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Ethernet_Intern_writePayloadByte(<b>char</b> dat, <b>unsigned int</b> offset);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>It writes one byte in the <acronym title="Transmission Control Protocol">TCP</acronym> payload.</p>
+            <p>Parameters:</p>
+            <ul>
+              <li><code>dat:</code> data to store.</li>
+              <li><code>offset:</code> offset from the beginning of the <acronym title="Transmission Control Protocol">TCP</acronym> payload. Considering that the size of the Ethernet buffer is 1480 bytes including the <acronym title="Transmission Control Protocol">TCP</acronym> header (which occupies 20 bytes without the option fields),
+              <br>the maximal value for the <code>offset</code> parameter is 1460.</li>
+            </ul>
+          <p>This routine is called either from the <a href="#ethernet_intern_usertcp">Ethernet_Intern_UserTCP</a> or <a href="#ethernet_intern_userudp">Ethernet_Intern_UserUDP</a>.</p>
+           <p>This routine is valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> data_;
+...
+Ethernet_Intern_writePayloadByte(data_,0); <i>// put a byte at the beginning of the TCP payload</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->  
+
+    <h3 id="ethernet_intern_writepayloadbytes">Ethernet_Intern_writePayloadBytes</h3>
+
+
+    <!-- tabela: Ethernet_Intern_putBytes -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Ethernet_Intern_writePayloadBytes(<b>char</b> *dat, <b>unsigned int</b> offset, <b>unsigned int</b> numOfBytes);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>It writes a requested number of bytes into <acronym title="Transmission Control Protocol">TCP</acronym> payload.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>dat:</code> <acronym title="Random Access Memory">RAM</acronym> buffer containing bytes to be written into the <acronym title="Transmission Control Protocol">TCP</acronym> payload.</li>
+	              <li><code>offset:</code> offset from the beginning of the <acronym title="Transmission Control Protocol">TCP</acronym> payload. Considering that the size of the Ethernet buffer is 1480 bytes including the <acronym title="Transmission Control Protocol">TCP</acronym> header (which occupies 20 bytes without the option fields),
+              <br>the maximal value for the <code>offset</code> parameter is 1460.</li>
+			  			<li><code>n:</code> number of bytes to be written.</li>
+            </ul>
+          <p>This routine is called either from the <a href="#ethernet_intern_usertcp">Ethernet_Intern_UserTCP</a> or <a href="#ethernet_intern_userudp">Ethernet_Intern_UserUDP</a>.</p>
+            <p>This routine is valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> *buffer = "mikroElektronika";	 
+...
+Ethernet_Intern_writePayloadBytes(buffer, 0, 16); <i>// put an RAM array into TCP payload</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+    
+		<!-- -->  
+
+    <h3 id="#ethernet_intern_writepayloadstring">Ethernet_Intern_writePayloadString</h3>
+
+
+    <!-- tabela: Ethernet_Intern_writePayloadString -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned int</b> Ethernet_Intern_writePayloadString(<b>char</b> *dat, <b>unsigned int</b> offset);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Number of bytes written into the <acronym title="Transmission Control Protocol">TCP</acronym> payload.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It stores whole string (excluding null termination) into <acronym title="Random Access Memory">RAM</acronym> at current write location.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>dat:</code> <acronym title="Random Access Memory">RAM</acronym> buffer containing string to be written into the <acronym title="Transmission Control Protocol">TCP</acronym> payload.</li>
+              <li><code>offset:</code> offset from the beginning of the <acronym title="Transmission Control Protocol">TCP</acronym> payload. Considering that the size of the Ethernet buffer is 1480 bytes including the <acronym title="Transmission Control Protocol">TCP</acronym> header (which occupies 20 bytes without the option fields),
+              <br>the maximal value for the <code>offset</code> parameter is 1460.</li>
+            </ul>
+          <p>This routine is called either from the <a href="#ethernet_intern_usertcp">Ethernet_Intern_UserTCP</a> or <a href="#ethernet_intern_userudp">Ethernet_Intern_UserUDP</a>.</p>
+           <p>This routine is valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> *buffer =  "mikroElektronika";	 
+...
+Ethernet_Intern_writePayloadString(buffer, 0); <i>// put a RAM string into TCP payload</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+
+        
+		<!-- -->  
+
+
+    <h3 id="ethernet_intern_readpayloadbyte">Ethernet_Intern_readPayloadByte</h3>
+
+
+    <!-- tabela: Ethernet_Intern_readPayloadByte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Ethernet_Intern_readPayloadByte(<b>unsigned int</b> offset);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Byte read from <acronym title="Transmission Control Protocol">TCP</acronym> payload.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>It fetches a byte from the <acronym title="Transmission Control Protocol">TCP</acronym> payload, from the position detemined by the <code>offset</code> parameter.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>offset:</code> offset from the beginning of the <acronym title="Transmission Control Protocol">TCP</acronym> payload. Considering that the size of the Ethernet buffer is 1480 bytes including the <acronym title="Transmission Control Protocol">TCP</acronym> header (which occupies 20 bytes without the option fields),
+              <br>the maximal value for the <code>offset</code> parameter is 1460.</li>
+            </ul>
+          <p>This routine is called either from the <a href="#ethernet_intern_usertcp">Ethernet_Intern_UserTCP</a> or <a href="#ethernet_intern_userudp">Ethernet_Intern_UserUDP</a>.</p>
+           <p>This routine is valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> buffer; 
+...
+buffer = Ethernet_Intern_readPayloadByte(); <i>// read a byte from TCP payload</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->  
+
+    <h3 id="ethernet_intern_readpayloadbytes">Ethernet_Intern_readPayloadBytes</h3>
+
+
+    <!-- tabela: Ethernet_Intern_readPayloadBytes -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Ethernet_Intern_readPayloadBytes(<b>char</b> *dat, <b>unsigned int</b> offset, <b>unsigned int</b> numOfBytes);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>It fetches requested number of bytes from the <acronym title="Transmission Control Protocol">TCP</acronym> payload.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>dat:</code> buffer for storing bytes read from the <acronym title="Transmission Control Protocol">TCP</acronym> payload.</li>
+              <li><code>offset:</code> offset from the beginning of the <acronym title="Transmission Control Protocol">TCP</acronym> payload. Considering that the size of the Ethernet buffer is 1480 bytes including the <acronym title="Transmission Control Protocol">TCP</acronym> header (which occupies 20 bytes without the option fields),
+              <br>the maximal value for the <code>offset</code> parameter is 1460.</li>
+			  			<li><code>numOfBytes:</code> number of bytes to be read.</li>
+            </ul>
+          <p>This routine is called either from the <a href="#ethernet_intern_usertcp">Ethernet_Intern_UserTCP</a> or <a href="#ethernet_intern_userudp">Ethernet_Intern_UserUDP</a>.</p>
+           <p>This routine is valid only for Stellaris devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> buffer[16];	 
+...
+Ethernet_Intern_readPayloadBytes(buffer, 0, 16); <i>// read 16 bytes, starting from the beginning of the TCP payload</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->        
+
+    <!-- -->  
+
+    <h3 id="ethernet_intern_putbyte">Ethernet_Intern_putByte</h3>
+
+
+    <!-- tabela: Ethernet_Intern_putByte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Ethernet_Intern_putByte(<b>unsigned char</b> v);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It stores one byte to address pointed by the current Ethernet controller's write pointer.
+            </p>
+            <p>Parameters:</p>
+            <ul>
+              <li><code>v:</code> value to store.</li>
+            </ul>
+           <p>This routine is valid for ST and Kinetis devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> data_;
+...
+Ethernet_Intern_putByte(data_);<i> // put an byte into Ethernet controller's buffer</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->  
+
+    <h3 id="ethernet_intern_putbytes">Ethernet_Intern_putBytes</h3>
+
+
+    <!-- tabela: Ethernet_Intern_putBytes -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Ethernet_Intern_putBytes(<b>unsigned char</b> *ptr, <b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It stores requested number of bytes into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym> starting from current Ethernet controller's write pointer location.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>ptr:</code> <acronym title="Random Access Memory">RAM</acronym> buffer containing bytes to be written into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym>.</li>
+			  			<li><code>n:</code> number of bytes to be written.</li>
+            </ul>
+           <p>This routine is valid for ST and Kinetis devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> *buffer =  "mikroElektronika";	 
+...
+Ethernet_Intern_putBytes(buffer, 16); <i>// put an RAM array into Ethernet controller's buffer</i></pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+    
+    <!-- -->  
+
+    <h3 id="ethernet_intern_putconstbytes">Ethernet_Intern_putConstBytes</h3>
+
+
+    <!-- tabela: Ethernet_Intern_putConstBytes -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Ethernet_Intern_putConstBytes(<b>const unsigned char</b> *ptr, <b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It stores requested number of const bytes into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym> starting from current Ethernet controller's write pointer location.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>ptr:</code> const buffer containing bytes to be written into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym>.</li>
+			  			<li><code>n:</code> number of bytes to be written.</li>
+            </ul>
+           <p>This routine is valid for ST and Kinetis devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>const char</b> *buffer =  "mikroElektronika";	 
+...
+Ethernet_Intern_putConstBytes(buffer, 16); <i>// put a const array into Ethernet controller's buffer</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+    
+		<!-- -->  
+
+    <h3 id="ethernet_intern_putstring">Ethernet_Intern_putString</h3>
+
+
+    <!-- tabela: Ethernet_Intern_putString -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned int</b> Ethernet_Intern_putString(<b>unsigned char</b> *ptr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Number of bytes written into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It stores whole string (excluding null termination) into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym> starting from current Ethernet controller's write pointer location.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>ptr:</code> string to be written into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym>.</li>
+            </ul>
+           <p>This routine is valid for ST and Kinetis devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> *buffer =  "mikroElektronika";	 
+...
+Ethernet_Intern_putString(buffer); <i>// put a RAM string into Ethernet controller's buffer</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+
+        
+		<!-- -->  
+
+    <h3 id="ethernet_intern_putconststring">Ethernet_Intern_putConstString</h3>
+
+
+    <!-- tabela: Ethernet_Intern_putConstString -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned int</b> Ethernet_Intern_putConstString(<b>const unsigned char</b> *ptr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Number of bytes written into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It stores whole const string (excluding null termination) into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym> starting from current Ethernet controller's write pointer location.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>ptr:</code> const string to be written into Ethernet controller's <acronym title="Random Access Memory">RAM</acronym>.</li>
+            </ul>
+           <p>This routine is valid for ST and Kinetis devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>const char</b> *buffer =  "mikroElektronika"; 
+...
+Ethernet_Intern_putConstString(buffer); <i>// put a const string into Ethernet controller's buffer</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->       
+
+		<!-- -->  
+
+    <h3 id="ethernet_intern_getbyte">Ethernet_Intern_getByte</h3>
+
+
+    <!-- tabela: Ethernet_Intern_getByte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Ethernet_Intern_getByte();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Byte read from Ethernet controller's <acronym title="Random Access Memory">RAM</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It fetches a byte from address pointed to by current Ethernet controller's read pointer.</p>
+           <p>This routine is valid for ST and Kinetis devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> buffer; 
+...
+buffer = Ethernet_Intern_getByte(); <i>// read a byte from Ethernet controller's buffer</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->  
+
+    <h3 id="ethernet_intern_getbytes">Ethernet_Intern_getBytes</h3>
+
+
+    <!-- tabela: Ethernet_Intern_getBytes -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b>    Ethernet_Intern_getBytes(<b>unsigned char</b> *ptr, <b>unsigned int</b> addr, <b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This is <acronym title="Media Access Control">MAC</acronym> module routine. It fetches equested number of bytes from Ethernet controller's <acronym title="Random Access Memory">RAM</acronym> starting from given address. If value of <code>0xFFFF</code> is passed as the address parameter, the reading will start
+                  from current Ethernet controller's read pointer location.</p>
+						<p>Parameters:</p>
+            <ul>
+              <li><code>ptr:</code> buffer for storing bytes read from Ethernet controller's <acronym title="Random Access Memory">RAM</acronym>.</li>
+              <li><code>addr:</code> Ethernet controller's <acronym title="Random Access Memory">RAM</acronym> start address. Valid values: <code>0</code>..<code>8192</code>.</li>
+			  			<li><code>n:</code> number of bytes to be read.</li>
+            </ul>
+           <p>This routine is valid for ST and Kinetis devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> buffer[16];	 
+...
+Ethernet_Intern_getBytes(buffer, 0x100, 16); <i>// read 16 bytes, starting from address 0x100</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->        
+
+    <!-- -->
+    
+    <h3 id="ethernet_intern_usertcp">Ethernet_Intern_UserTCP</h3>
+
+
+    <!-- tabela: Ethernet_Intern_UserTCP -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Ethernet_Intern_UserTCP(<b>unsigned char</b> *remoteHost, <b>unsigned int</b> remotePort, <b>unsigned int</b> localPort, <b>unsigned int</b> reqLength, <b>TEthInternPktFlags</b> *flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+						  <ul>
+							  <li><code>0</code> - there should not be a reply to the request.</li>
+								<li>Length of <acronym title="Transmission Control Protocol">TCP</acronym>/<acronym title="Hypertext Transfer Protocol">HTTP</acronym> reply data field - otherwise.</li>
+              </ul>						
+						</p>
+						
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+						   This is <acronym title="Transmission Control Protocol">TCP</acronym> module routine. It is internally called by the library. The user accesses to the <acronym title="Transmission Control Protocol">TCP</acronym>/<acronym title="Hypertext Transfer Protocol">HTTP</acronym> request by using some of the 
+						   Ethernet_Intern_get routines. The user puts data in the transmit buffer by using some of the Ethernet_Intern_put routines.
+						   The function must return the length in bytes of the <acronym title="Transmission Control Protocol">TCP</acronym>/<acronym title="Hypertext Transfer Protocol">HTTP</acronym> reply, or 0 if there is nothing to transmit. 
+						   If there is no need to reply to the <acronym title="Transmission Control Protocol">TCP</acronym>/<acronym title="Hypertext Transfer Protocol">HTTP</acronym> requests, just define this function with return(0) as a single 
+						   statement.            	
+            </p>
+            <p>Parameters:</p>
+            <ul>
+              <li><code>remoteHost:</code> client's <acronym title="Internet Protocol">IP</acronym> address.</li>
+              <li><code>remotePort:</code> client's <acronym title="Transmission Control Protocol">TCP</acronym> port.</li>
+              <li><code>localPort:</code> port to which the request is sent.</li>
+              <li><code>reqLength:</code> <acronym title="Transmission Control Protocol">TCP</acronym>/<acronym title="Hypertext Transfer Protocol">HTTP</acronym> request data field length.</li>
+              <li><code>flags:</code> structure consisted of two bit fields : 
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program"><b>typedef struct</b> {
+  <b>unsigned</b> canCloseTCP: 1;  <i>// flag which closes socket</i>
+  <b>unsigned</b> isBroadcast: 1;  <i>// flag which denotes that the IP package has been received via subnet broadcast address</i>
+} TEthInternPktFlags;
+</pre></li>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                The function source code is provided with appropriate example projects. The code should be adjusted by the user to achieve desired reply.
+              </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+
+	<p>This function is internally called by the library and should not be called by the user's code.</p>
+
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->         
+    
+    <h3 id="ethernet_intern_userudp">Ethernet_Intern_UserUDP</h3>
+
+
+    <!-- tabela: Ethernet_Intern_UserUDP -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Ethernet_Intern_UserUDP(<b>unsigned char</b> *remoteHost, <b>unsigned int</b> remotePort, <b>unsigned int</b> destPort, <b>unsigned int</b> reqLength, <b>TEthInternPktFlags</b> *flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<p>
+          		<ul> 
+	          	  <li><code>0</code> - there should not be a reply to the request.</li>
+							  <li>Length of <acronym title="User Datagram Protocol">UDP</acronym> reply data field - otherwise.</li>
+							</ul>  
+						</p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+							 This is <acronym title="User Datagram Protocol">UDP</acronym> module routine. It is internally called by the library. The user accesses to the <acronym title="User Datagram Protocol">UDP</acronym> request by using some of the 
+						   Ethernet_Intern_get routines. The user puts data in the transmit buffer by using some of the Ethernet_Intern_put routines.
+						   The function must return the length in bytes of the <acronym title="User Datagram Protocol">UDP</acronym> reply, or 0 if nothing to transmit. 
+						   If you don't need to reply to the <acronym title="User Datagram Protocol">UDP</acronym> requests, just define this function with a return(0) as single 
+						   statement.
+					  </p><p>Parameters:</p>
+            <ul>
+              <li><code>remoteHost:</code> client's <acronym title="Internet Protocol">IP</acronym> address.</li>
+              <li><code>remotePort:</code> client's port.</li>
+              <li><code>destPort:</code> port to which the request is sent.</li>
+              <li><code>flags:</code> structure consisted of two bit fields : 
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program"><b>typedef struct</b> {
+  <b>unsigned</b> canCloseTCP: 1;  <i>// flag which closes TCP socket (not relevant to UDP)</i>
+  <b>unsigned</b> isBroadcast: 1;  <i>// flag which denotes that the IP package has been received via subnet broadcast address</i>
+} TEthInternPktFlags;
+</pre>
+              <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                The function source code is provided with appropriate example projects. The code should be adjusted by the user to achieve desired reply.
+              </div>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<p>This function is internally called by the library and should not be called by the user's code.</p>
+
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->         
+    
+    <h3 id="ethernet_intern_getipaddress">Ethernet_Intern_getIpAddress</h3>
+
+
+    <!-- tabela: Ethernet_Intern_getIpAddress -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> * Ethernet_Intern_getIpAddress();<p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	Pointer to the global variable holding <acronym title="Internet Protocol">IP</acronym> address.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine should be used when <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> server is present on the network to fetch assigned <acronym title="Internet Protocol">IP</acronym> address.</p>
+    				<div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      				<img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+							User should always copy the <acronym title="Internet Protocol">IP</acronym> address from the <acronym title="Random Access Memory">RAM</acronym> location returned by this routine into it's own <acronym title="Internet Protocol">IP</acronym> address buffer. These locations should not be altered by the user in any case!
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned char</b> ipAddr[4];  <i>// user IP address buffer</i>
+...	
+memcpy(ipAddr, Ethernet_Intern_getIpAddress(), 4); <i>// fetch IP address</i>
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->  
+    
+		<!-- -->         
+    
+    <h3 id="ethernet_intern_getgwipaddress">Ethernet_Intern_getGwIpAddress</h3>
+
+
+    <!-- tabela: Ethernet_Intern_getGwIpAddress -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> * Ethernet_Intern_getGwIpAddress();<p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	Pointer to the global variable holding gateway <acronym title="Internet Protocol">IP</acronym> address.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine should be used when <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> server is present on the network to fetch assigned gateway <acronym title="Internet Protocol">IP</acronym> address.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              User should always copy the <acronym title="Internet Protocol">IP</acronym> address from the <acronym title="Random Access Memory">RAM</acronym> location returned by this routine into it's own gateway <acronym title="Internet Protocol">IP</acronym> address buffer. These locations should not be altered by the user in any case!
+            </div>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned char</b> gwIpAddr[4];  <i>// user gateway IP address buffer</i>
+...	
+memcpy(gwIpAddr, Ethernet_Intern_getGwIpAddress(), 4); <i>// fetch gateway IP address </i>
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->      
+    
+		<!-- -->         
+    
+    <h3 id="ethernet_intern_getdnsipaddress">Ethernet_Intern_getDnsIpAddress</h3>
+
+
+    <!-- tabela: Ethernet_Intern_getDnsIpAddress -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> * Ethernet_Intern_getDnsIpAddress();<p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	Pointer to the global variable holding <acronym title="Domain Name Server">DNS</acronym> <acronym title="Internet Protocol">IP</acronym> address.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine should be used when <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> server is present on the network to fetch assigned <acronym title="Domain Name Server">DNS</acronym> <acronym title="Internet Protocol">IP</acronym> address.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              User should always copy the <acronym title="Internet Protocol">IP</acronym> address from the <acronym title="Random Access Memory">RAM</acronym> location returned by this routine into it's own <acronym title="Domain Name Server">DNS</acronym> <acronym title="Internet Protocol">IP</acronym> address buffer. These locations should not be altered by the user in any case!
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned char</b> dnsIpAddr[4];  <i>// user DNS IP address buffer</i>
+...	
+memcpy(dnsIpAddr, Ethernet_Intern_getDnsIpAddress(), 4); <i>// fetch DNS server address </i>
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->            
+
+		<!-- -->         
+    
+    <h3 id="ethernet_intern_getipmask">Ethernet_Intern_getIpMask</h3>
+
+
+    <!-- tabela: Ethernet_Intern_getIpMask -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> * Ethernet_Intern_getIpMask();<p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	Pointer to the global variable holding <acronym title="Internet Protocol">IP</acronym> subnet mask.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine should be used when <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> server is present on the network to fetch assigned <acronym title="Internet Protocol">IP</acronym> subnet mask.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              User should always copy the <acronym title="Internet Protocol">IP</acronym> address from the <acronym title="Random Access Memory">RAM</acronym> location returned by this routine into it's own <acronym title="Internet Protocol">IP</acronym> subnet mask buffer. These locations should not be altered by the user in any case!
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned char</b> IpMask[4];  <i>// user IP subnet mask buffer</i>
+...	
+memcpy(IpMask, Ethernet_Intern_getIpMask(), 4); <i>// fetch IP subnet mask</i>
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->                
+    
+    <!-- -->         
+    
+    <h3 id="ethernet_intern_confnetwork">Ethernet_Intern_confNetwork</h3>
+
+
+    <!-- tabela: Ethernet_Intern_confNetwork -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Ethernet_Intern_confNetwork(<b>char</b> *ipMask, <b>char</b> *gwIpAddr, <b>char</b> *dnsIpAddr);<p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	Nothing.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+							 Configures network parameters (<acronym title="Internet Protocol">IP</acronym> subnet mask, gateway <acronym title="Internet Protocol">IP</acronym> address, <acronym title="Domain Name Server">DNS</acronym> <acronym title="Internet Protocol">IP</acronym> address) when <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> is not used.
+					  </p>
+					  <p>Parameters:</p>
+            <ul>
+              <li><code>ipMask:</code>  <acronym title="Internet Protocol">IP</acronym> subnet mask.</li>
+              <li><code>gwIpAddr</code> gateway <acronym title="Internet Protocol">IP</acronym> address.</li>
+              <li><code>dnsIpAddr:</code> <acronym title="Domain Name Server">DNS</acronym> <acronym title="Internet Protocol">IP</acronym> address.</li>
+            </ul>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              The above mentioned network parameters should be set by this routine only if <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> module is not used. Otherwise <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> will override these settings.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned char</b> ipMask[4]    = {255, 255, 255,  0 };  <i>// network mask (for example : 255.255.255.0)</i>
+<b>unsigned char</b> gwIpAddr[4]  = {192, 168,   1,  1 };  <i>// gateway (router) IP address</i>
+<b>unsigned char</b> dnsIpAddr[4] = {192, 168,   1,  1 };  <i>// DNS server IP address</i>
+...	
+Ethernet_Intern_confNetwork(ipMask, gwIpAddr, dnsIpAddr); <i>// set network configuration parameters</i>
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->    
+
+    <!-- -->         
+    
+    <h3 id="ethernet_intern_arpresolve">Ethernet_Intern_arpResolve</h3>
+
+
+    <!-- tabela: Ethernet_Intern_arpResolve -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> *Ethernet_Intern_arpResolve(<b>unsigned char</b> *ip, <b>unsigned char</b> tmax);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<p>If successful, returns MAC address, NULL otherwise.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+							This is <acronym title="Address Resolution Protocol">ARP</acronym> module routine. It sends an <acronym title="Address Resolution Protocol">ARP</acronym> request for given <acronym title="Internet Protocol">IP</acronym> address and waits for <acronym title="Address Resolution Protocol">ARP</acronym> reply. 
+							If the requested <acronym title="Internet Protocol">IP</acronym> address was resolved, an <acronym title="Address Resolution Protocol">ARP</acronym> cash entry is used for storing the configuration.
+							<acronym title="Address Resolution Protocol">ARP</acronym> cash can store up to 3 entries. For <acronym title="Address Resolution Protocol">ARP</acronym> cash structure refer to <code>__EthernetPrivate.c</code> header file in the compiler's Uses folder.</p>
+					  <p>Parameters:</p>
+            <ul>
+              <li><code>ip:</code>  <acronym title="Internet Protocol">IP</acronym> address to be resolved.</li>
+              <li><code>tmax:</code> time in seconds to wait for an reply.</li>
+            </ul>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              The Ethernet services are not stopped while this routine waits for <acronym title="Address Resolution Protocol">ARP</acronym> reply. The incoming packets will be processed normaly during this time.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned char</b> IpAddr[4]  = {192, 168,   1,  1 };  <i>// IP address</i>
+...	
+Ethernet_Intern_arpResolve(IpAddr, 5); <i>// get MAC address behind the above IP address, wait 5 secs for the response</i>
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->     
+    
+    <!-- -->         
+    
+    <h3 id="ethernet_intern_sendudp">Ethernet_Intern_sendUDP</h3>
+
+
+    <!-- tabela: Ethernet_Intern_sendUDP -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned int</b> Ethernet_Intern_sendUDP(<b>unsigned char</b> *destIP, <b>unsigned int</b> sourcePort, <b>unsigned int</b> destPort, <b>unsigned char</b> *pkt, <b>unsigned int</b> pktLen); </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>1</code> - <acronym title="User Datagram Protocol">UDP</acronym> packet was sent successfully.</li>
+          		<li><code>0</code> - otherwise.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+							This is <acronym title="User Datagram Protocol">UDP</acronym> module routine. It sends an <acronym title="User Datagram Protocol">UDP</acronym> packet on the network. 
+						</p>
+					  <p>Parameters:</p>
+            <ul>
+              <li><code>destIP:</code>  remote host <acronym title="Internet Protocol">IP</acronym> address.</li>
+              <li><code>sourcePort:</code> local <acronym title="User Datagram Protocol">UDP</acronym> source port number.</li>
+              <li><code>destPort:</code>  destination <acronym title="User Datagram Protocol">UDP</acronym> port number.</li>
+              <li><code>pkt:</code> packet to transmit.</li>
+              <li><code>pktLen:</code> length in bytes of packet to transmit.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned char</b> IpAddr[4]  = {192, 168,   1,  1 };  <i>// remote IP address</i>
+...	
+Ethernet_Intern_sendUDP(IpAddr, 10001, 10001, "Hello", 5); <i>// send Hello message to the above IP address, from UDP port 10001 to UDP port 10001</i> 
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->        
+    
+    <!-- -->         
+    
+    <h3 id="ethernet_intern_dnsresolve">Ethernet_Intern_dnsResolve</h3>
+
+
+    <!-- tabela: Ethernet_Intern_dnsResolve -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned char</b>	*Ethernet_Intern_dnsResolve(<b>unsigned char</b> *host, <b>unsigned char</b> tmax);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+          		<li>pointer to the location holding the <acronym title="Internet Protocol">IP</acronym> address - the requested host name was resolved.</li>
+          		<li><code>0</code> - otherwise.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+							This is <acronym title="Domain Name Server">DNS</acronym> module routine. It sends an <acronym title="Domain Name Server">DNS</acronym> request for given host name and waits for <acronym title="Domain Name Server">DNS</acronym> reply.
+							If the requested host name was resolved, it's <acronym title="Internet Protocol">IP</acronym> address is stored in library global variable 
+							and a pointer containing this address is returned by the routine. <acronym title="User Datagram Protocol">UDP</acronym> port <code>53</code> is used as <acronym title="Domain Name Server">DNS</acronym> port.</p>
+					  <p>Parameters:</p>
+            <ul>
+              <li><code>host:</code> host name to be resolved.</li>
+              <li><code>tmax:</code> time in seconds to wait for an reply.</li>
+            </ul>
+            <p>The above mentioned network parameters should be set by this routine only if <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> module is not used. Otherwise <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> will override these settings.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+							<ul>
+								<li>The Ethernet services are not stopped while this routine waits for <acronym title="Domain Name Server">DNS</acronym> reply. The incoming packets will be processed normaly during this time.</li>
+								<li>User should always copy the <acronym title="Internet Protocol">IP</acronym> address from the <acronym title="Random Access Memory">RAM</acronym> location returned by this routine into it's own resolved host <acronym title="Internet Protocol">IP</acronym> address buffer. These locations should not be altered by the user in any case!</li>
+							</ul>
+            </div>
+					</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned char</b> * remoteHostIpAddr[4];	<i>// user host IP address buffer</i>
+...
+<i>// SNTP server:
+// Zurich, Switzerland: Integrated Systems Lab, Swiss Fed. Inst. of Technology
+// 129.132.2.21: swisstime.ethz.ch
+// Service Area: Switzerland and Europe	</i>
+memcpy(remoteHostIpAddr, Ethernet_Intern_dnsResolve("swisstime.ethz.ch", 5), 4);
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->            
+    
+    <!-- -->         
+    
+    <h3 id="ethernet_intern_initdhcp">Ethernet_Intern_initDHCP</h3>
+
+
+    <!-- tabela: Ethernet_Intern_initDHCP -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned char</b> Ethernet_Intern_initDHCP(<b>unsigned char</b> tmax);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>1</code> - network parameters were obtained successfully.</li>
+          		<li><code>0</code> - otherwise.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+							This is <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> module routine. It sends an <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> 
+							request for network parameters (<acronym title="Internet Protocol">IP</acronym>, gateway, <acronym title="Domain Name Server">DNS</acronym> addresses and <acronym title="Internet Protocol">IP</acronym> subnet mask) and waits for <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> reply.
+						  If the requested parameters were obtained successfully, their values are stored into the library global variables. </p>
+							<p>These parameters can be fetched by using appropriate library <acronym title="Internet Protocol">IP</acronym> get routines:</p>
+							<ul>
+								<li><a href="#ethernet_intern_getipaddress">Ethernet_Intern_getIpAddress</a> - fetch <acronym title="Internet Protocol">IP</acronym> address.</li> 
+								<li><a href="#ethernet_intern_getgwipaddress">Ethernet_Intern_getGwIpAddress</a> - fetch gateway <acronym title="Internet Protocol">IP</acronym> address.</li> 
+								<li><a href="#ethernet_intern_getdnsipaddress">Ethernet_Intern_getDnsIpAddress</a> - fetch <acronym title="Domain Name Server">DNS</acronym> <acronym title="Internet Protocol">IP</acronym> address.</li> 
+								<li><a href="#ethernet_intern_getipmask">Ethernet_Intern_getIpMask</a> - fetch <acronym title="Internet Protocol">IP</acronym> subnet mask.</li> 
+						  </ul>		
+							<p><acronym title="User Datagram Protocol">UDP</acronym> port <code>68</code> is used as <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> client port and
+							<acronym title="User Datagram Protocol">UDP</acronym> port <code>67</code> is used as <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> server port.</p>
+						</p>		
+					  <p>Parameters:</p>
+            <ul>
+              <li><code>tmax:</code> time in seconds to wait for an reply.</li>
+            </ul>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+						  <ul>
+							  <li>The Ethernet services are not stopped while this routine waits for <acronym title="Domain Name Server">DNS</acronym> reply. The incoming packets will be processed normaly during this time.</li>
+							  <li>When <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> module is used, global library variable <code>Ethernet_Intern_userTimerSec</code> is used to keep track of time. It is user responsibility to increment this variable each second in it's code.</li>
+						  </ul>
+            </div>
+				  </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+...	
+Ethernet_Intern_initDHCP(5); <i>// get network configuration from DHCP server, wait 5 sec for the response</i> 
+...
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->                
+    
+    <!-- -->         
+    
+    <h3 id="ethernet_intern_dodhcpleasetime">Ethernet_Intern_doDHCPLeaseTime</h3>
+
+
+    <!-- tabela: Ethernet_Intern_doDHCPLeaseTime -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned int</b> Ethernet_Intern_doDHCPLeaseTime();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>0</code> - lease time has not expired yet.</li>
+          		<li><code>1</code> - lease time has expired, it's time to renew it.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+						This is <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> module routine. It takes care of <acronym title="Internet Protocol">IP</acronym> address lease time by decrementing the global lease time library counter.
+						When this time expires, it's time to contact <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> server and renew the lease.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>while</b>(1) {	
+  ...
+  <b>if</b>(Ethernet_Intern_doDHCPLeaseTime())
+    ... <i>// it's time to renew the IP address lease</i>                  
+}
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->           
+    
+    <!-- -->         
+    
+    <h3 id="ethernet_intern_renewdhcp">Ethernet_Intern_renewDHCP</h3>
+
+
+    <!-- tabela: Ethernet_Intern_renewDHCP -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned int</b> Ethernet_Intern_renewDHCP(<b>unsigned char</b> tmax);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>1</code> - upon success (lease time was renewed).</li>
+          		<li><code>0</code> - otherwise (renewal request timed out).</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+						This is <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> module routine. It sends <acronym title="Internet Protocol">IP</acronym> address lease time renewal request to <acronym title="Dynamic Host Configuration Protocol">DHCP</acronym> server.
+						<p>Parameters:</p>
+            <ul>
+              <li><code>tmax:</code> time in seconds to wait for an reply.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Ethernet module has to be initialized. See <a href="#ethernet_intern_init">Ethernet_Intern_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>while</b>(1) {	
+  ...
+  <b>if</b>(Ethernet_Intern_doDHCPLeaseTime())
+    Ethernet_Intern_renewDHCP(5); <i>// it's time to renew the IP address lease, with 5 secs for a reply</i>                  
+  ...  
+}
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->                  
+    
+    <!-- -->
+<!--
+    <h3>Library Example</h3>
+
+    <p>This code shows how to use the Ethernet library :
+    	<ul>
+        <li>       the board will reply to ARP & ICMP echo requests</li>
+        <li>       the board will reply to UDP requests on any port :</li>
+                       <ul>
+                       	 <li>returns the request in upper char with a header made of remote host IP & port number</li>
+                       </ul>	 
+        <li>       the board will reply to HTTP requests on port 80, GET method with pathnames :</li>
+                       <ul>
+                       	 <li>/               will return the HTML main page</li>
+                         <li>/s              will return board status as text string</li>
+                         <li>/t0 ... /t7     will toggle RD0 to RD7 bit and return HTML main page</li>
+                         <li>all other requests return also HTML main page.</li>
+                       </ul>
+      </ul>
+    </p>
+    
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+
+</pre>	    
+-->
+      <div class="feedback">
+      Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

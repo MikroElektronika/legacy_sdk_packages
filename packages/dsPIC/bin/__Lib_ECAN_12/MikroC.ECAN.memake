@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ECAN",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_ECAN_12.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33FJ256GP710$|^dsPIC33FJ128GP708A$|^dsPIC33FJ256GP710A$|^dsPIC33FJ128GP706$|^dsPIC33FJ64GP706$|^dsPIC33FJ128GP710$|^dsPIC33FJ128GP706A$|^dsPIC33FJ64GP708$|^dsPIC33FJ128GP708$|^dsPIC33FJ128MC708A$|^dsPIC33FJ64MC710A$|^dsPIC33FJ64GP708A$|^dsPIC33FJ64GP710$|^dsPIC33FJ64GP710A$|^PIC24HJ256GP610A$|^dsPIC33FJ128MC710$|^dsPIC33FJ256MC710A$|^dsPIC33FJ64MC710$|^PIC24HJ256GP610$|^dsPIC33FJ128MC708$|^dsPIC33FJ128MC710A$|^dsPIC33FJ128GP710A$|^dsPIC33FJ256MC710$|^dsPIC33FJ64GP706A$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

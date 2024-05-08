@@ -1,0 +1,257 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>IIR Filter Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">IIR Filter Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="dsp_library.htm">DSP Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="fir_filter_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="fft_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    
+    <a name="top_of_page"><h2>IIR Filter Library</h2></a>
+
+
+    <p>mikroC PRO for PIC32 includes a library for Infinite Impulse Response (IIR) filter. All routines work with fractional Q15 format.</p>
+    <p>A infinite impulse response (IIR) filter is a type of a digital filter, whose impulse response (the filter's response to a delta function) is non-zero over an infinite length of time.</p>
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+    	<li><a href="#iir">IIR_Radix</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="iir">IIR_Radix</h3>
+
+
+    <!-- tabela: IIR -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>int</b> IIR_Radix (<b>const int</b> BScale, <b>const int</b> AScale, <b>const int</b> *ptrB, <b>const int</b> *ptrA, <b>unsigned</b> FilterOrder, <b>int</b> *ptrInput, <b>unsigned</b> InputLength, <b>int</b> *ptrOutput, <b>unsigned</b> Index);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			    <p>This function applies IIR filter to <code>ptrInput</code>.</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+				    <ul>
+				      <li><code>BScale:</code> B scale factor.</li>
+				      <li><code>AScale:</code> A scale factor.</li>
+				      <li><code>ptrB:</code> pointer to B coefficients (in program memory).</li>
+				      <li><code>ptrA:</code> pointer to A coefficients (in program memory).</li>
+				      <li><code>FilterOrder:</code> order of the filter + 1.</li>
+				      <li><code>ptrInput:</code> address of input samples.</li>
+				      <li><code>InputLen:</code> number of samples.</li>
+              <li><code>ptrOutput:</code> pointer to output samples. Output length is equal to Input length.</li>
+				      <li><code>Index:</code> index of current sample.</li>
+				    </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Function returns value of the <code>Index</code>-th sample of the filtered signal :</p>
+            <p><img src="img/math/math1.gif" align="absmiddle"></p>
+          </td>
+        </tr>         
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+// Filter setup:
+//     Filter kind: IIR
+//     Filter type: Lowpass filter
+//     Filter order: 2
+//     Design method: Butterworth
+
+const unsigned int
+  FILTER_ORDER  = 2;
+
+const unsigned int
+  COEFF_B[FILTER_ORDER+1] = {0x344D, 0x689A, 0x344D};
+const unsigned int
+  COEFF_A[FILTER_ORDER+1] = {0x4000, 0xA003, 0x2687};
+
+const unsigned int
+  SCALE_B       = 4;
+const unsigned int
+  SCALE_A       = -1;
+
+int inputSamples[3] = {0x4000, 0x2000, 0x1000};
+int outputSamples[10];
+int i;
+
+void main() {
+
+ for(i = 0; i < 7; i++)
+   outputSamples[i] = IIR_Radix(SCALE_B, SCALE_A, COEFF_B, COEFF_A, FILTER_ORDER+1, inputSamples, 3,outputSamples, i);
+   // outputSamples[0] = 1/(2^SCALE_B)*COEFF_B[0]*inputSamples[0]
+   // outputSamples[1] = 1/(2^SCALE_B) * (COEFF_B[0]*inputSamples[1] + COEFF_B[1]*inputSamples[0]) - 1/(2^SCALE_A)*(COEFF_A*outputSamples[0])
+   // .
+   // .
+   // .
+}
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->     
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

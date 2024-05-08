@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M3",
+    "binaries": [
+        "__Lib_PWM_12345.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F105RB$|^STM32F105V8$|^STM32F107VC$|^STM32F105VC$|^STM32F107VB$|^STM32F107RC$|^STM32F105VB$|^STM32F105R8$|^STM32F105RC$|^STM32F107RB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}
+

@@ -1,0 +1,6 @@
+type: subdirs
+project: GLCD_Touch_Panel
+
+subdirs: {
+    Calibration_and_Write_on_Screen
+}

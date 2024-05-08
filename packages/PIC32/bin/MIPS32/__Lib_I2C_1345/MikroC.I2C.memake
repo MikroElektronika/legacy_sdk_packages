@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_I2C_1345.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX675F512H$|^PIC32MX564F128H$|^PIC32MX575F512H$|^PIC32MX775F256H$|^PIC32MX764F128H$|^PIC32MX775F512H$|^PIC32MX675F256H$|^PIC32MX575F256H$|^PIC32MX564F064H$|^PIC32MX664F064H$|^PIC32MX534F064H$|^PIC32MX664F128H$|^PIC32MX795F512H$|^PIC32MX695F512H$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

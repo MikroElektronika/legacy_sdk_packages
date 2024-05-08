@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_GPIO_MSP.emcl",
+        "__Lib_System_MSP432P.emcl",
+        "__Lib_GPIO_MSP_Defs.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_MathDouble.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MSP432P401R$|^MSP432P401M$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

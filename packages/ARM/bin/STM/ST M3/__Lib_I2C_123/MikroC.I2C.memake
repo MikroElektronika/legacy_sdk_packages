@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "M3",
+    "binaries": [
+        "__Lib_I2C_123.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F215VG$|^STM32F205RG$|^STM32F205VC$|^STM32F205ZG$|^STM32F205VE$|^STM32F215ZG$|^STM32F205ZC$|^STM32F205ZE$|^STM32F215RE$|^STM32F205RF$|^STM32F205VG$|^STM32F215VE$|^STM32F205VF$|^STM32F205ZF$|^STM32F215ZE$|^STM32F205VB$|^STM32F215RG$|^STM32F205RC$|^STM32F205RB$|^STM32F205RE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}
+

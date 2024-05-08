@@ -1,0 +1,308 @@
+{
+    "board": {
+        "category": "Development board",
+        "icon": "images/easypic-v8.png",
+        "mikrobus_count": 5,
+        "name": "EasyPIC v8",
+        "tft_display": 4,
+        "version": ""
+    },
+    "display": {
+        "icon": ":/block_icon",
+        "init_code": null,
+        "name": "No display"
+    },
+    "mcu": {
+        "architecture": "PIC",
+        "device_id": "PIC18F47K42|40|DIP40",
+        "family": "PIC18",
+        "flash": "128KB",
+        "icon": "images/micro_chip.png",
+        "isMCUCard": false,
+        "max_speed": "64MHz",
+        "name": "PIC18F47K42",
+        "pin_count": "40",
+        "ram": "8,192B",
+        "settings": {
+            "clock": 64,
+            "config_registers": [
+                {
+                    "fields": [
+                        {
+                            "key": "FEXTOSC",
+                            "value": "00000002"
+                        },
+                        {
+                            "key": "RSTOSC",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "CONFIG1L"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "CLKOUTEN",
+                            "value": "00000001"
+                        },
+                        {
+                            "key": "PR1WAY",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "CSWEN",
+                            "value": "00000008"
+                        },
+                        {
+                            "key": "FCMEN",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "CONFIG1H"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "MCLRE",
+                            "value": "00000001"
+                        },
+                        {
+                            "key": "PWRTS",
+                            "value": "00000006"
+                        },
+                        {
+                            "key": "MVECEN",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "IVT1WAY",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "LPBOREN",
+                            "value": "00000020"
+                        },
+                        {
+                            "key": "BOREN",
+                            "value": "000000c0"
+                        }
+                    ],
+                    "key": "CONFIG2L"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "BORV",
+                            "value": "00000003"
+                        },
+                        {
+                            "key": "ZCD",
+                            "value": "00000004"
+                        },
+                        {
+                            "key": "PPS1WAY",
+                            "value": "00000000"
+                        },
+                        {
+                            "key": "STVREN",
+                            "value": "00000010"
+                        },
+                        {
+                            "key": "DEBUG",
+                            "value": "00000020"
+                        },
+                        {
+                            "key": "XINST",
+                            "value": "00000080"
+                        }
+                    ],
+                    "key": "CONFIG2H"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "WDTCPS",
+                            "value": "0000001f"
+                        },
+                        {
+                            "key": "WDTE",
+                            "value": "00000000"
+                        }
+                    ],
+                    "key": "CONFIG3L"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "WDTCWS",
+                            "value": "00000007"
+                        },
+                        {
+                            "key": "WDTCCS",
+                            "value": "00000038"
+                        }
+                    ],
+                    "key": "CONFIG3H"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "BBSIZE",
+                            "value": "00000007"
+                        },
+                        {
+                            "key": "BBEN",
+                            "value": "00000008"
+                        },
+                        {
+                            "key": "SAFEN",
+                            "value": "00000010"
+                        },
+                        {
+                            "key": "WRTAPP",
+                            "value": "00000080"
+                        }
+                    ],
+                    "key": "CONFIG4L"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "WRTB",
+                            "value": "00000001"
+                        },
+                        {
+                            "key": "WRTC",
+                            "value": "00000002"
+                        },
+                        {
+                            "key": "WRTD",
+                            "value": "00000004"
+                        },
+                        {
+                            "key": "WRTSAF",
+                            "value": "00000008"
+                        },
+                        {
+                            "key": "LVP",
+                            "value": "00000020"
+                        }
+                    ],
+                    "key": "CONFIG4H"
+                },
+                {
+                    "fields": [
+                        {
+                            "key": "CP",
+                            "value": "00000001"
+                        }
+                    ],
+                    "key": "CONFIG5L"
+                },
+                {
+                    "fields": [],
+                    "key": "CONFIG5H"
+                }
+            ],
+            "mcu": "PIC18F47K42",
+            "package": ""
+        },
+        "vendor": "Microchip"
+    },
+    "name": "EasyPIC v8 PIC18F47K42",
+    "prog": {
+        "description": "CODEGRIP Suite is a powerful software tool. It is used to intelligently manage programming tasks, as well as various other options and settings of the CODEGRIP.",
+        "icon": "icon.png",
+        "name": "CODEGRIP",
+        "planet_debug_compatible": "Yes",
+        "settings": {
+            "auto_start_local_gdb": true,
+            "control_port": "1235",
+            "ip_address": "127.0.0.1",
+            "port": "1234",
+            "remote_addresses": [],
+            "remote_password": "",
+            "selected_device": null,
+            "selected_options": {
+                "Erase Type": {
+                    "group": "Target Operation",
+                    "value": "Mass erase"
+                },
+                "Programming Type": {
+                    "group": "Target Connection",
+                    "value": "Vpp first entry mode"
+                },
+                "Protocol": {
+                    "group": "Target Connection",
+                    "value": "ICSP"
+                },
+                "Speed": {
+                    "group": "Target Connection",
+                    "value": "4 MHz"
+                },
+                "Verify Type": {
+                    "group": "Target Operation",
+                    "value": "Readback"
+                },
+                "Verify after Write": {
+                    "group": "Target Operation",
+                    "value": "Enabled"
+                }
+            }
+        },
+        "uid": "codegrip"
+    },
+    "sdk": {
+        "families": [
+            "PIC18",
+            "PIC16",
+            "PIC12",
+            "PIC10"
+        ],
+        "icon": "Resources/icon.png",
+        "legacy": true,
+        "name": "mikroC for PIC Legacy",
+        "sdk_development_kit": false,
+        "uuid": "sdk.mikroc.legacy.pic",
+        "version": "7.6.0"
+    },
+    "toolchain": {
+        "icon": "mikroC_pic.png",
+        "language": "MikroC",
+        "name": "mikroC AI for PIC",
+        "settings": {
+            "actions": {
+                "build": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--build all",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                },
+                "clean": {
+                    "steps": [
+                        {
+                            "class_name": "ProjectManagerModule::MeMakeStep",
+                            "value": {
+                                "arguments": "--clean",
+                                "enabled": true
+                            }
+                        }
+                    ]
+                }
+            },
+            "memake.settings": {
+                "BOARD_NAME": "BOARD_EASYPIC_V8"
+            },
+            "output_path": ""
+        },
+        "uid": "mikrocpic",
+        "vendor": "MikroElektronika",
+        "version": "1.1.1"
+    },
+    "uid": "247d8d3c-7725-4f3e-a949-41f385c005e8"
+}

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FT5XX6",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_FT5XX6_MSP.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MSP432P401R$|^MSP432P401M$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

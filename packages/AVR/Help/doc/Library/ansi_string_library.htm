@@ -1,0 +1,1180 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>ANSI C String Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroelektronikao.yu">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">ANSI C String Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_ansi_libraries.htm">Standard ANSI C Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="ansi_stdlib_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="mikroC_PRO_miscellaneous_libraries.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="American National Standards Institute">ANSI</acronym> C String Library</h2></a>
+
+
+    <p>The mikroC PRO for AVR provides a set of standard <acronym title="American National Standards Institute">ANSI</acronym> C library functions useful for manipulating strings and RAM memory.</p>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+      <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+    <ul>
+    	<li>Not all of the standard functions have been included.</li>
+    	  <li>The functions have been mostly implemented according to the <acronym title="American National Standards Institute">ANSI</acronym> C standard, but certain functions have been modified in order to facilitate AVR programming. Be sure to skim through the description before using standard C functions.</li>
+    </ul>
+    </div>
+
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Functions</h3>
+
+    <ul>
+      <li><a href="#memchr">memchr</a></li>
+      <li><a href="#memcmp">memcmp</a></li>
+      <li><a href="#memcpy">memcpy</a></li>
+      <li><a href="#memmove">memmove</a></li>
+      <li><a href="#memset">memset</a></li>
+      <li><a href="#strcat">strcat</a></li>
+      <li><a href="#strchr">strchr</a></li>
+      <li><a href="#strcmp">strcmp</a></li>
+      <li><a href="#strcpy">strcpy</a></li>
+      <li><a href="#strlen">strlen</a></li>
+      <li><a href="#strncat">strncat</a></li>
+      <li><a href="#strncpy">strncpy</a></li>
+      <li><a href="#strspn">strspn</a></li>
+      <li><a href="#strncmp">strncmp</a></li>
+      <li><a href="#strstr">strstr</a></li>
+	    <li><a href="#strcspn">strcspn</a></li>		
+	    <li><a href="#strpbrk">strpbrk</a></li>
+	    <li><a href="#strrchr">strrchr</a></li>
+      <li><a href="#strtok">strtok</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="memchr">memchr</h3>
+
+
+    <!-- tabela: Memchr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td width="100%" valign="top">
+          	<p><code><b>void</b> *memchr(<b>void</b> *p, <b>char</b> n, <b>unsigned int</b> v);</code></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Function locates the first occurrence of char <code>n</code> in the initial <code>v</code> bytes of memory
+               area starting at the address <code>p</code>. The function returns the pointer to this location 
+              or <code>0</code> if the <code>n</code> was not found.</p>
+            <p>For parameter <code>p</code> you can use either a numerical value (literal/variable/constant)
+               indicating memory address or a dereferenced value of an object,
+               for example <code>&mystring</code> or <code>&PORTB</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+res = memchr(txt, 'e', 16);  // example locates first occurrence of the letter 'e' in the string 'txt' in the first 16 characters of the string
+</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->	
+
+
+
+    <h3 id="memcmp">memcmp</h3>
+
+
+    <!-- tabela: memcmp -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> memcmp(<b>void</b> *s1, <b>void</b> *s2, <b>int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function compares the first <code>n</code> characters of objects pointed to by <code>s1</code> and <code>s2</code> and returns zero if the objects are equal, or returns a difference between the first differing characters (in a left-to-right evaluation). Accordingly, the result is greater than zero if the object pointed to by <code>s1</code> is greater than the object pointed to by <code>s2</code> and vice versa.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub[] = "mikro;
+
+res = memcmp(txt, txt_sub, 16);  // returns 69, which is ASCII code of the first differing character - letter 'E'
+</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="memcpy">memcpy</h3>
+
+
+    <!-- tabela: memcpy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> *memcpy(<b>void</b> *d1, <b>void</b> *s1, <b>int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function copies <code>n</code> characters from the object pointed to by <code>s1</code> into the object pointed to by <code>d1</code>. If copying takes place between objects that overlap, the behavior is undefined. The function returns address of the object pointed to by <code>d1</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub[] = "mikr;
+
+res = memcpy(txt+4, txt_sub, 4);  // string 'txt' will be populated with the first 4 characters of the 'txt_sub' string, beginning from the 4th character
+                                  // routine returns the address of the first populated character, if memory areas of the strings don't overlap
+</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="memmove">memmove</h3>
+
+
+    <!-- tabela: memmove -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> *memmove(<b>void</b> *to, <b>void</b> *from, <b>int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function copies <code>n</code> characters from the object pointed to by <code>from</code> into the object pointed to by <code>to</code>. Unlike <a href="#memcpy">memcpy</a>, the memory areas <code>to</code> and <code>from</code> <em>may</em> overlap. The function returns address of the object pointed to by <code>to</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub[] = "mikr;
+
+res = memmove(txt+7, txt_sub, 4);  // string 'txt' will be populated with first 4 characters of the 'txt_sub' string, beginning from the 7th character
+                                  // routine returns the address of the first populated character (memory areas of the object may overlap)
+</pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="memset">memset</h3>
+
+
+    <!-- tabela: memset -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> *memset(<b>void</b> *p1, <b>char</b> character, <b>int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function copies the value of the <code>character</code> into each of the first <code>n</code> characters of the object pointed by <code>p1</code>. The function returns address of the object pointed to by <code>p1</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+
+memset(txt, 'a', 2);  // routine will copy the character 'a' into each of the first 'n' characters of the string 'txt', </pre>
+
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="strcat">strcat</h3>
+
+
+    <!-- tabela: strcat -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> *strcat(<b>char</b> *to, <b>char</b> *from);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Function appends a copy of the string <code>from</code> to the string <code>to</code>, overwriting the null character at the end of <code>to</code>. Then, a terminating null character is added to the result.
+          	
+          	If copying takes place between objects that overlap, the behavior is undefined. <code>to</code> string must have enough space to store the result. 
+               The function returns address of the object pointed to by <code>to</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> *res;
+
+txt[3] = 0;
+res = strcat(txt, "_test");  // routine will append the '_test' at the place of the first null character, adding terminating null character to the result
+                             // routine returns the address of the 'txt' string</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="strchr">strchr</h3>
+
+
+    <!-- tabela: strchr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> *strchr(<b>char</b> *ptr, <b>char</b> chr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function locates the first occurrence of character <code>chr</code> in the string <code>ptr</code>. The function returns a pointer to the first occurrence of character <code>chr</code>, or a null pointer if <code>chr</code> does not occur in <code>ptr</code>. The terminating null character is considered to be a part of the string.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> *res;
+
+res = strchr(txt, 'E');  // routine will locate the character 'E' in the 'txt' string, and return the address of the character</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="strcmp">strcmp</h3>
+
+
+    <!-- tabela: strcmp -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> strcmp(<b>char</b> *s1, <b>char</b> *s2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function compares strings <code>s1</code> and <code>s2</code> and returns zero if the strings are equal, or returns a difference between the first differing characters (in a left-to-right evaluation). Accordingly, the result is greater than zero if <code>s1</code> is greater than <code>s2</code> and vice versa.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro";
+<b>int</b> res;
+
+res = strcmp(txt,txt_sub);  // compares strings 'txt' and 'txt_sub' and returns returns a difference between the first differing characters, in this case 69 </pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="strcpy">strcpy</h3>
+
+
+    <!-- tabela: strcpy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> *strcpy(<b>char</b> *to, <b>char</b> *from);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function copies the string <code>from</code> into the string <code>to</code>. If copying is successful, the function returns <code>to</code>. If copying takes place between objects that overlap, the behavior is undefined.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro_test";
+<b>int</b> res;
+
+res = strcpy(txt,txt_sub);  // copies string 'txt_sub' to 'txt'</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="strlen">strlen</h3>
+
+
+    <!-- tabela: strlen -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> strlen(<b>char</b> *s);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function returns the length of the string <code>s</code> (the terminating null character does not count against string&#8217;s length).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>int</b> result;
+
+result = strlen(txt);  // calculates the length of the 'txt' string, result = 16</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="strncat">strncat</h3>
+
+
+    <!-- tabela: strncat -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> *strncat(<b>char</b> *to, <b>char</b> *from, <b>int</b> size);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function appends not more than <code>size</code> characters from the string <code>from</code> to <code>to</code>. The initial character of <code>from</code> overwrites the null character at the end of <code>to</code>. The terminating null character is always appended to the result. The function returns <code>to</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro";
+<b>char</b> *result;
+
+txt[5] = 0;
+result = strncat(txt,txt_sub,4);  // routine appends first 4 characters from the string 'txt_sub' at the place of first null character in the 'txt' string</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="strncpy">strncpy</h3>
+
+
+    <!-- tabela: strncpy -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> *strncpy(<b>char</b> *to, <b>char</b> *from, <b>int</b> size);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function copies not more than <code>size</code> characters from string <code>from</code> to <code>to</code>. If copying takes place between objects that overlap, the behavior is undefined. If <code>from</code> is shorter than <code>size</code> characters, then <code>to</code> will be padded out with null characters to make up the difference. The function returns the resulting string <code>to</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro_test";
+<b>int</b> res;
+
+res = strncpy(txt,txt_sub,4);  // copies first 4 characters form the string 'txt_sub' to 'txt'</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="strspn">strspn</h3>
+
+
+    <!-- tabela: strspn -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>int</b> strspn(<b>char</b> *str1, <b>char</b> *str2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function returns the length of the maximum initial segment of <code>str1</code> which consists entirely of characters from <code>str2</code>. The terminating null character at the end of the string is not compared.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro_test";
+<b>int</b> res;
+
+result = strspn(txt,txt_sub);  // routne returns 4</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+	<!-- -->
+
+
+    <h3 id="strncmp">strncmp</h3>
+
+
+    <!-- tabela: Strncmp -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>int</b> strncmp(<b>char</b> *s1, <b>char</b> *s2, <b>char</b> len);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			<p>Function lexicographically compares not more than <code>len</code> characters (characters that follow the null character are not compared) from the string pointed by <code>s1</code> to the string pointed by <code>s2</code>.
+			The function returns a value indicating the <code>s1</code> and <code>s2</code> relationship:</p>
+<pre>
+<b>Value</b>     <b>Meaning</b>
+&lt; 0       s1 &#34;less than&#34; s2
+= 0       s1 &#34;equal to&#34; s2
+&gt; 0       s1 &#34;greater than&#34; s2</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro";
+<b>int</b> res;
+
+res = strncmp(txt_sub,txt,3);  // compares the first 3 characters from the string 'txt' with the sting 'txt_sub' and returns a difference</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+  	<!-- -->    
+
+
+    <h3 id="strstr">strstr</h3>
+
+
+    <!-- tabela: Strstr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>char</b> *strstr(<b>char</b> *s1, <b>char</b> *s2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Function locates the first occurrence of the string <code>s2</code> in the string <code>s1</code>
+              (excluding the terminating null character).</p>
+            <p>The function returns pointer to first occurrence
+               of <code>s2</code> in <code>s1</code>; if no string was found, function returns <code>0</code>.
+               If <code>s2</code> is a null string, the function returns <code>0</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro";
+<b>char</b> *res;
+
+res = strstr(txt, txt_sub);</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+	
+    <!-- -->
+
+
+    <h3 id="strcspn">strcspn</h3>
+
+
+    <!-- tabela: Strcspn -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>char</b> *strcspn(<b>char</b> * s1, <b>char</b> *s2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Function computes the length of the maximum initial segment of 
+               the string pointed to by <code>s1</code> that consists entirely of characters that are not in the string
+               pointed to by <code>s2</code>.</p>
+            <p>The function returns the length of the initial segment.</p>   	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro";
+<b>char</b> *res;
+
+res = strcspn(txt_sub,txt);</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+  	<!-- -->
+
+
+    <h3 id="strpbrk">strpbrk</h3>
+
+
+    <!-- tabela: Strpbrk -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>char</b> *strpbrk(<b>char</b> * s1, <b>char</b> *s2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Function searches <code>s1</code> for the first occurrence of any character from the string
+               <code>s2</code>. The terminating null character is not included in the search.
+               The function returns pointer to the matching character in <code>s1</code>.
+               If <code>s1</code> contains no characters from <code>s2</code>, the function returns <code>0</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+<b>char</b> txt_sub = "mikro";
+<b>char</b> *res;
+
+res = strpbrk(txt_sub,txt);</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="strrchr">strrchr</h3>
+
+
+    <!-- tabela: Strrchr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>char</b> *strrchr(<b>char</b> * ptr, <b>char</b> chr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Function searches the string <code>ptr</code> for the last occurrence of character <code>chr</code>.
+               The null character terminating <code>ptr</code> is not included in the search.
+               The function returns pointer to the last <code>chr</code> found in <code>ptr</code>;
+               if no matching character was found, function returns <code>0</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>char</b> txt[] = "mikroElektronika";
+
+res = strrchr(txt_sub,'k');  // returns the pointer to the 'k' character of the 'txt' string</pre>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+	  <!-- -->
+
+
+    <h3 id="strtok">strtok</h3>
+
+    <!-- tabela: strtok -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>char</b> * strtok(<b>char</b> * s1, <b>char</b> * s2);</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<p>The strtok function returns a pointer to the first character of a token, or a null pointer if there is no 
+          	token.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			<p>A sequence of calls to the strtok function breaks the string pointed to by s1 into a sequence of tokens, each of which is delimited by a character from the string pointed to by s2. The first call in the sequence has s1 as its first argument, and is followed by calls with a null pointer as their first argument. The separator string pointed to by s2 may be different from call to call.</p>
+			<p>The first call in the sequence searches the string pointed to by s1 for the first character that is not contained in the current separator string pointed to by s2. If no such character is found, then there are no tokens in the string pointed to by s1 and the strtok function returns a null pointer. If such character is found, it is the start of the first token.</p>
+		  <p>The strtok function then searches from there for a character that is contained in the current separator string. If no such character is found, the current token extends to the end of the string pointed to by s1, and subsequent searches for a token will return a null pointer. If such a character is found, it is overwritten by a null character, which terminates the current token. The strtok function saves a pointer to the following character, from which the next search for a token will start.</p>
+		  <p>Each subsequent call, with a null pointer as the value of the first argument, starts searching from the saved pointer and behaves as described above.</p>
+          </td>
+        </tr>
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><b>char</b> x[10] ;
+
+<b>void</b> main(){
+
+ strcpy(x, strtok(&#34;mikroEl&#34;, &#34;Ek&#34;));
+ strcpy(x, strtok(0, &#34;kE&#34;));
+
+}</pre>
+          </td>
+        </tr>
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->             
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

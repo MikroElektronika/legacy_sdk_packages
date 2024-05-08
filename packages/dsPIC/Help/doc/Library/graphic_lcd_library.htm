@@ -1,0 +1,2980 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Graphic Lcd Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_dspic.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+
+
+	
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_C_dsPIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Graphic Lcd Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for dsPIC30/33 and PIC24 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="flash_memory_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="i2c_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Graphic <acronym title="Liquid Crystal Display">Lcd</acronym> Library</h2></a>
+
+
+    <p>The mikroC PRO for dsPIC30/33 and PIC24 provides a library for operating Graphic Lcd 128x64 (with commonly used Samsung KS108/KS107 controller).</p>
+    <p>For creating a custom set of Glcd images use <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a> Tool.</p>   
+  
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="Graphic Lcd Library Dependency Tree" src="img/dependencies/glcd_dependency.gif">  
+    <p></p>
+
+   <h3>External dependencies of Graphic Lcd Library</h3>
+
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Graphic Lcd Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D0;</code></td>
+          <td align="left">Data 0 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D0 <b>at</b> LATB0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D1;</code></td>
+          <td align="left">Data 1 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D1 <b>at</b> LATB1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D2;</code></td>
+          <td align="left">Data 2 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D2 <b>at</b> LATF2_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D3;</code></td>
+          <td align="left">Data 3 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D3 <b>at</b> LATF3_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D4;</code></td>
+          <td align="left">Data 4 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D4 <b>at</b> LATD0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D5;</code></td>
+          <td align="left">Data 5 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D5 <b>at</b> LATD1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D6;</code></td>
+          <td align="left">Data 6 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D6 <b>at</b> LATD2_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D7;</code></td>
+          <td align="left">Data 7 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D7 <b>at</b> LATD3_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_CS1;</code></td>
+          <td align="left">Chip Select 1 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_CS1 <b>at</b> LATB4_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_CS2;</code></td>
+          <td align="left">Chip Select 2 line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_CS2 <b>at</b> LATB5_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_RS;</code></td>
+          <td align="left">Register select line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_RS <b>at</b> LATF0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_RW;</code></td>
+          <td align="left">Read/Write line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_RW <b>at</b> LATF1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_EN;</code></td>
+          <td align="left">Enable line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_EN <b>at</b> LATF4_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_RST;</code></td>
+          <td align="left">Reset line.</td>
+          <td align="left"><code><b>sbit</b> GLCD_RST <b>at</b> LATF5_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D0_Direction;</code></td>
+          <td align="left">Direction of the Data 0 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D0_Direction <b>at</b> TRISB0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D1_Direction;</code></td>
+          <td align="left">Direction of the Data 1 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D1_Direction <b>at</b> TRISB1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D2_Direction;</code></td>
+          <td align="left">Direction of the Data 2 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D2_Direction <b>at</b> TRISB2_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D3_Direction;</code></td>
+          <td align="left">Direction of the Data 3 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D3_Direction <b>at</b> TRISB3_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D4_Direction;</code></td>
+          <td align="left">Direction of the Data 4 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D4_Direction <b>at</b> TRISD0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D5_Direction;</code></td>
+          <td align="left">Direction of the Data 5 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D5_Direction <b>at</b> TRISD1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D6_Direction;</code></td>
+          <td align="left">Direction of the Data 6 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D6_Direction <b>at</b> TRISD2_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_D7_Direction;</code></td>
+          <td align="left">Direction of the Data 7 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_D7_Direction <b>at</b> TRISD3_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_CS1_Direction;</code></td>
+          <td align="left">Direction of the Chip Select 1 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_CS1_Direction <b>at</b> TRISB4_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_CS2_Direction;</code></td>
+          <td align="left">Direction of the Chip Select 2 pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_CS2_Direction <b>at</b> TRISB5_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_RS_Direction;</code></td>
+          <td align="left">Direction of the Register select pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_RS_Direction <b>at</b> TRISF0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_RW_Direction;</code></td>
+          <td align="left">Direction of the Read/Write pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_RW_Direction <b>at</b> TRISF1_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_EN_Direction;</code></td>
+          <td align="left">Direction of the Enable pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_EN_Direction <b>at</b> TRISF4_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> GLCD_RST_Direction;</code></td>
+          <td align="left">Direction of the Reset pin.</td>
+          <td align="left"><code><b>sbit</b> GLCD_RST_Direction <b>at</b> TRISF5_bit;</code></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <p>Basic routines:</p>
+    <ul>
+      <li><a href="#glcd_init">Glcd_Init</a></li>
+      <li><a href="#glcd_set_side">Glcd_Set_Side</a></li>
+      <li><a href="#glcd_set_x">Glcd_Set_X</a></li>
+      <li><a href="#glcd_set_page">Glcd_Set_Page</a></li>
+      <li><a href="#glcd_read_data">Glcd_Read_Data</a></li>
+      <li><a href="#glcd_write_data">Glcd_Write_Data</a></li>
+      <li><a href="#glcd_set_ext_buffer">Glcd_Set_Ext_Buffer</a></li>
+    </ul>
+
+    <p>Advanced routines:</p>
+
+    <ul>
+      <li><a href="#glcd_fill">Glcd_Fill</a></li>
+      <li><a href="#glcd_dot">Glcd_Dot</a></li>
+      <li><a href="#glcd_line">Glcd_Line</a></li>
+      <li><a href="#glcd_v_line">Glcd_V_Line</a></li>
+      <li><a href="#glcd_h_line">Glcd_H_Line</a></li>
+      <li><a href="#glcd_rectangle">Glcd_Rectangle</a></li>
+      <li><a href="#glcd_rectangle_round_edges">Glcd_Rectangle_Round_Edges</a></li>
+      <li><a href="#glcd_rectangle_round_edges_fill">Glcd_Rectangle_Round_Edges_Fill</a></li>
+      <li><a href="#glcd_box">Glcd_Box</a></li>
+      <li><a href="#glcd_circle">Glcd_Circle</a></li>
+      <li><a href="#glcd_circle_fill">Glcd_Circle_Fill</a></li>
+      <li><a href="#glcd_set_font">Glcd_Set_Font</a></li>
+      <li><a href="#glcd_set_font_adv">Glcd_Set_Font_Adv</a></li>
+      <li><a href="#glcd_set_ext_font_adv">Glcd_Set_Ext_Font_Adv</a></li>
+      <li><a href="#glcd_write_char">Glcd_Write_Char</a></li>
+      <li><a href="#glcd_write_char_adv">Glcd_Write_Char_Adv</a></li>
+      <li><a href="#glcd_write_text">Glcd_Write_Text</a></li>
+      <li><a href="#glcd_write_text_adv">Glcd_Write_Text_Adv</a></li>
+      <li><a href="#glcd_write_const_text_adv">Glcd_Write_Const_Text_Adv</a></li>
+      <li><a href="#glcd_image">Glcd_Image</a></li>
+      <li><a href="#glcd_ext_image">Glcd_Ext_Image</a></li>
+			<li><a href="#glcd_partialimage">Glcd_PartialImage</a></li>
+			<li><a href="#glcd_ext_partialimage">Glcd_Ext_PartialImage</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_init">Glcd_Init</h3>
+
+
+    <!-- tabela: Glcd_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the Glcd module. Each of the control lines are both port and pin configurable, while data lines must be on a single port (pins <0:7>).</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+    
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>External dependencies of the library from the top of the page must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Glcd pinout settings</i>
+<b>sbit</b> GLCD_D0 <b>at</b> RB0_bit;
+<b>sbit</b> GLCD_D1 <b>at</b> RB1_bit;
+<b>sbit</b> GLCD_D2 <b>at</b> RB2_bit;
+<b>sbit</b> GLCD_D3 <b>at</b> RB3_bit;
+<b>sbit</b> GLCD_D4 <b>at</b> RD0_bit;
+<b>sbit</b> GLCD_D5 <b>at</b> RD1_bit;
+<b>sbit</b> GLCD_D6 <b>at</b> RD2_bit;
+<b>sbit</b> GLCD_D7 <b>at</b> RD3_bit;
+<b>sbit</b> GLCD_CS1 <b>at</b> RB0_bit;
+<b>sbit</b> GLCD_CS2 <b>at</b> RB1_bit;
+<b>sbit</b> GLCD_RS <b>at</b> RB2_bit;
+<b>sbit</b> GLCD_RW <b>at</b> RB3_bit;
+<b>sbit</b> GLCD_EN <b>at</b> RB4_bit;
+<b>sbit</b> GLCD_RST <b>at</b> RB5_bit;
+
+<b>sbit</b> GLCD_D0_Direction <b>at</b> TRISB0_bit;
+<b>sbit</b> GLCD_D1_Direction <b>at</b> TRISB1_bit;
+<b>sbit</b> GLCD_D2_Direction <b>at</b> TRISB2_bit;
+<b>sbit</b> GLCD_D3_Direction <b>at</b> TRISB3_bit;
+<b>sbit</b> GLCD_D4_Direction <b>at</b> TRISD0_bit;
+<b>sbit</b> GLCD_D5_Direction <b>at</b> TRISD1_bit;
+<b>sbit</b> GLCD_D6_Direction <b>at</b> TRISD2_bit;
+<b>sbit</b> GLCD_D7_Direction <b>at</b> TRISD3_bit;
+<b>sbit</b> GLCD_CS1_Direction <b>at</b> TRISB0_bit;
+<b>sbit</b> GLCD_CS2_Direction <b>at</b> TRISB1_bit;
+<b>sbit</b> GLCD_RS_Direction <b>at</b> TRISB2_bit;
+<b>sbit</b> GLCD_RW_Direction <b>at</b> TRISB3_bit;
+<b>sbit</b> GLCD_EN_Direction <b>at</b> TRISB4_bit;
+<b>sbit</b> GLCD_RST_Direction <b>at</b> TRISB5_bit;
+...
+Glcd_Init();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="glcd_set_side">Glcd_Set_Side</h3>
+
+
+    <!-- tabela: Glcd_Set_Side -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Set_Side(<b>unsigned short</b> x_pos);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Selects Glcd side. Refer to the Glcd datasheet for detailed explanation.
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_pos:</code> Specifies position on x-axis of the Glcd. Valid values: 0..127. Values from 0 to 63 specify the left side, values from 64 to 127 specify the right side of the Glcd.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>The following two lines are equivalent, and both of them select the left side of Glcd:</p>
+
+<pre>
+Glcd_Select_Side(0);
+Glcd_Select_Side(10);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For side, x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_set_x">Glcd_Set_X</h3>
+
+
+    <!-- tabela: Glcd_Set_X -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Set_X(<b>unsigned short</b> x_pos);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets x-axis position to <code>x_pos</code> dots from the left border of Glcd within the selected side.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_pos:</code> position on x-axis. Valid values: 0..63</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Glcd_Set_X(25);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For side, x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_set_page">Glcd_Set_Page</h3>
+
+
+    <!-- tabela: Glcd_Set_Page -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Set_Page(<b>unsigned short</b> page);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Selects page of the Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>page:</code> page number. Valid values: 0..7</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Glcd_Set_Page(5);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For side, x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>   
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_read_data">Glcd_Read_Data</h3>
+
+
+    <!-- tabela: Glcd_Read_Data -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> Glcd_Read_Data();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads data from from the current location of Glcd memory and moves to the next location.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>One byte from Glcd memory, formatted as a word (16-bit).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+            <p>Glcd side, x-axis position and page should be set first. See functions <a href="#glcd_set_side">Glcd_Set_Side</a>, <a href="#glcd_set_x">Glcd_Set_X</a>, and <a href="#glcd_set_page">Glcd_Set_Page</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned int</b> data_;
+<i>...</i>
+Glcd_Read_Data();
+data_ = Glcd_Read_Data();
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>This routine needs to be called twice; After the first call, data is placed in the buffer register. After the second call, data is passed from the buffer register to data lines.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_write_data">Glcd_Write_Data</h3>
+
+
+    <!-- tabela: Glcd_Write_Data -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Write_Data(<b>unsigned short</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes one byte to the current location in Glcd memory and moves to the next location.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>data_:</code> data to be written</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+            <p> Glcd side, x-axis position and page should be set first. See functions <a href="#glcd_set_side">Glcd_Set_Side</a>, <a href="#glcd_set_x">Glcd_Set_X</a>, and <a href="#glcd_set_page">Glcd_Set_Page</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><b>unsigned short</b> data_;
+<i>...</i>
+Glcd_Write_Data(data_);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_set_ext_buffer">Glcd_Set_Ext_Buffer</h3>
+
+
+    <!-- tabela: Glcd_Set_Ext_Buffer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Set_Ext_Buffer(char* (*getExtDataPtr)(<b>unsigned long</b> offset, <b>unsigned int</b> count, <b>unsigned int</b> *num));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets pointer to the user function which manipulates the external resource.</p>
+            <p>Parameters :</p>
+              <ul>
+	              <li><code>offset</code> - offset from the beginning of the resource from where the data is requested.</li>
+	              <li><code>count</code> - requested number of bytes.</li>
+	              <li><code>num</code> - variable for holding the returned number ob byte (less or equal to the number of acqired bytes).</li>
+              </ul>
+            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b>* ReadExternalBuffer(<b>unsigned long</b> offset, <b>unsigned int</b> count, <b>unsigned int</b> *num){
+  <b>unsigned long</b> start_sector;
+  <b>unsigned int</b> pos;
+
+  start_sector = Mmc_Get_File_Write_Sector() + offset/512;
+  pos = (<b>unsigned long</b>)offset%512;
+
+  <b>if</b>(start_sector == currentSector+1){
+    Mmc_Multi_Read_Buffer(EXT_BUFFER);
+    currentSector = start_sector;
+  }<b>else</b>
+    <b>if</b>(start_sector != currentSector){
+      Mmc_Multi_Read_Stop();
+      Mmc_Multi_Read_Start(start_sector);
+      Mmc_Multi_Read_Buffer(EXT_BUFFER);
+      currentSector = start_sector;
+    }
+
+  <b>if</b>(count&#62;512-pos){
+    *num = 512-pos;
+  }
+  <b>else</b>
+    *num = count;
+
+  <b>return</b> EXT_BUFFER+pos;
+}
+
+Glcd_Set_Ext_Buffer(ReadExternalBuffer);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_fill">Glcd_Fill</h3>
+
+
+    <!-- tabela: Glcd_Fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Fill(<b>unsigned short</b> pattern);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills Glcd memory with the byte <code>pattern</code>.</p>
+            <p>To clear the Glcd screen, use <code>Glcd_Fill(0)</code>.</p>
+            <p>To fill the screen completely, use <code>Glcd_Fill(0xFF)</code>.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>pattern:</code> byte to fill Glcd memory with.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Clear screen</i>
+Glcd_Fill(0);</pre>  
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_dot">Glcd_Dot</h3>
+
+
+    <!-- tabela: Glcd_Dot -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Dot(<b>unsigned short</b> x_pos, <b>unsigned short</b> y_pos, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a dot on Glcd at coordinates (<code>x_pos</code>, <code>y_pos</code>). </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_pos:</code> x position. Valid values: 0..127</li>
+           		<li><code>y_pos:</code> y position. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+              <p>The parameter <code>color</code> determines a dot state: 0 clears dot, 1 puts a dot, and 2 inverts dot state.</p>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Invert the dot in the upper left corner</i>
+Glcd_Dot(0, 0, 2);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For x and y axis layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_line">Glcd_Line</h3>
+
+
+    <!-- tabela: Glcd_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Line(<b>int</b> x_start, <b>int</b> y_start, <b>int</b> x_end, <b>int</b> y_end, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a line on Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_start:</code> x coordinate of the line start. Valid values: 0..127</li>
+           		<li><code>y_start:</code> y coordinate of the line start. Valid values: 0..63</li>
+           		<li><code>x_end:</code> x coordinate of the line end. Valid values: 0..127</li>
+           		<li><code>y_end:</code> y coordinate of the line end. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+              <p>The parameter <code>color</code> determines the line color: 0 white, 1 black, and 2 inverts each dot.</p>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a line between dots (0,0) and (20,30)</i>
+Glcd_Line(0, 0, 20, 30, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_v_line">Glcd_V_Line</h3>
+
+
+    <!-- tabela: Glcd_V_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_V_Line(<b>unsigned short</b> y_start, <b>unsigned short</b> y_end, <b>unsigned short</b> x_pos, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a vertical line on Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>y_start:</code> y coordinate of the line start. Valid values: 0..63</li>
+           		<li><code>y_end:</code> y coordinate of the line end. Valid values: 0..63</li>
+           		<li><code>x_pos:</code> x coordinate of vertical line. Valid values: 0..127</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+             </ul>
+             <p>The parameter <code>color</code> determines the line color: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a vertical line between dots (10,5) and (10,25)</i>
+Glcd_V_Line(5, 25, 10, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_h_line">Glcd_H_Line</h3>
+
+
+    <!-- tabela: Glcd_H_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_H_Line(<b>unsigned short</b> x_start, <b>unsigned short</b> x_end, <b>unsigned short</b> y_pos, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a horizontal line on Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_start:</code> x coordinate of the line start. Valid values: 0..127</li>
+           		<li><code>x_end:</code> x coordinate of the line end. Valid values: 0..127</li>
+           		<li><code>y_pos:</code> y coordinate of horizontal line. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the line color: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a horizontal line between dots (10,20) and (50,20)</i>
+Glcd_H_Line(10, 50, 20, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_rectangle">Glcd_Rectangle</h3>
+
+
+    <!-- tabela: Glcd_Rectangle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Rectangle(<b>unsigned short</b> x_upper_left, <b>unsigned short</b> y_upper_left, <b>unsigned short</b> x_bottom_right, <b>unsigned short</b> y_bottom_right, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rectangle on Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner. Valid values: 0..127</li>
+           		<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner. Valid values: 0..63</li>
+           		<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner. Valid values: 0..127</li>
+           		<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the rectangle border: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a rectangle between dots (5,5) and (40,40)</i>
+Glcd_Rectangle(5, 5, 40, 40, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_rectangle_round_edges">Glcd_Rectangle_Round_Edges</h3>
+
+
+    <!-- tabela: Glcd_Rectangle_Round_Edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Rectangle_Round_Edges(<b>unsigned short</b> x_upper_left, <b>unsigned short</b> y_upper_left, <b>unsigned short</b> x_bottom_right, <b>unsigned short</b> y_bottom_right, <b>unsigned short</b> round_radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rounded edge rectangle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner. Valid values: 0..127</li>
+            	<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner. Valid values: 0..63</li>
+            	<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner. Valid values: 0..127</li>
+            	<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner. Valid values: 0..63</li>
+            	<li><code>round_radius:</code> radius of the rounded edge.</li>
+            	<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the rectangle border: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a rounded edge rectangle between dots (5,5) and (40,40) with the radius of 12</i>
+Glcd_Rectangle_Round_Edges(5, 5, 40, 40, 12, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_rectangle_round_edges_fill">Glcd_Rectangle_Round_Edges_Fill</h3>
+
+
+    <!-- tabela: Glcd_Rectangle_Round_Edges_Fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Rectangle_Round_Edges_Fill(<b>unsigned short</b> x_upper_left, <b>unsigned short</b> y_upper_left, <b>unsigned short</b> x_bottom_right, <b>unsigned short</b> y_bottom_right, <b>unsigned short</b> round_radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled rounded edge rectangle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_upper_left:</code> x coordinate of the upper left rectangle corner. Valid values: 0..127</li>
+           		<li><code>y_upper_left:</code> y coordinate of the upper left rectangle corner. Valid values: 0..63</li>
+           		<li><code>x_bottom_right:</code> x coordinate of the lower right rectangle corner. Valid values: 0..127</li>
+          		<li><code>y_bottom_right:</code> y coordinate of the lower right rectangle corner. Valid values: 0..63</li>
+           		<li><code>round_radius:</code> radius of the rounded edge</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the rectangle : 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draws a filled rounded edge rectangle between dots (5,5) and (40,40) with the radius of 12</i>
+Glcd_Rectangle_Round_Edges_Fill(5, 5, 40, 40, 12, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_box">Glcd_Box</h3>
+
+
+    <!-- tabela: Glcd_Box -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Box(<b>unsigned short</b> x_upper_left, <b>unsigned short</b> y_upper_left, <b>unsigned short</b> x_bottom_right, <b>unsigned short</b> y_bottom_right, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a box on Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_upper_left:</code> x coordinate of the upper left box corner. Valid values: 0..127</li>
+           		<li><code>y_upper_left:</code> y coordinate of the upper left box corner. Valid values: 0..63</li>
+           		<li><code>x_bottom_right:</code> x coordinate of the lower right box corner. Valid values: 0..127</li>
+           		<li><code>y_bottom_right:</code> y coordinate of the lower right box corner. Valid values: 0..63</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+             </ul>
+             <p>The parameter <code>color</code> determines the color of the box fill: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a box between dots (5,15) and (20,40)</i>
+Glcd_Box(5, 15, 20, 40, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_circle">Glcd_Circle</h3>
+
+
+    <!-- tabela: Glcd_Circle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Circle(<b>int</b> x_center, <b>int</b> y_center, <b>int</b> radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a circle on Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_center:</code> x coordinate of the circle center. Valid values: 0..127</li>
+           		<li><code>y_center:</code> y coordinate of the circle center. Valid values: 0..63</li>
+           		<li><code>radius:</code> radius size</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the circle line: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw a circle with center in (50,50) and radius=10</i>
+Glcd_Circle(50, 50, 10, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_circle_fill">Glcd_Circle_Fill</h3>
+
+
+    <!-- tabela: Glcd_Circle_Fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Circle_Fill(<b>int</b> x_center, <b>int</b> y_center, <b>int</b> radius, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled circle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>x_center:</code> x coordinate of the circle center. Valid values: 0..127</li>
+            	<li><code>y_center:</code> y coordinate of the circle center. Valid values: 0..63</li>
+            	<li><code>radius:</code> radius size</li>
+            	<li><code>color:</code> color parameter. Valid values: 0..2</li>
+              </ul>
+            <p>The parameter <code>color</code> determines the color of the circle line: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draws a filled circle with center in (50,50) and radius=10</i>
+Glcd_Circle_Fill(50, 50, 10, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_set_font">Glcd_Set_Font</h3>
+
+
+    <!-- tabela: Glcd_Set_Font -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Set_Font(<b>const char</b> *activeFont, <b>unsigned short</b> aFontWidth, <b>unsigned short</b> aFontHeight, <b>unsigned int</b> aFontOffs);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#glcd_write_char">Glcd_Write_Char</a> and <a href="#glcd_write_text">Glcd_Write_Text</a> routines.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. Needs to be formatted as an array of char</li>
+           		<li><code>aFontWidth:</code> width of the font characters in dots.</li>
+           		<li><code>aFontHeight:</code> height of the font characters in dots.</li>
+           		<li><code>aFontOffs:</code> number that represents difference between the mikroC PRO for dsPIC30/33 and PIC24 character set and regular ASCII set (eg. if 'A' is 65 in ASCII character, and 'A' is 45 in the mikroC PRO for dsPIC30/33 and PIC24 character set, aFontOffs is 20). Demo fonts supplied with the library have an offset of 32, which means that they start with space.</li>
+            </ul>
+            <p>The user can use fonts given in the file &#8220;__Lib_GLCDFonts&#8221; file located in the Uses folder or create his own fonts.</p>
+            List of supported fonts:
+            <ul>
+            	<li><code>Font_Glcd_System3x5</code></li>
+            	<li><code>Font_Glcd_System5x7</code></li>
+            	<li><code>Font_Glcd_5x7</code></li>
+            	<li><code>Font_Glcd_Character8x7</code></li>
+            </ul>
+            <p>For the sake of the backward compatibility, these fonts are supported also:</p>
+            <ul>
+            	<li><code>System3x5</code> (equivalent to <code>Font_Glcd_System3x5</code>)</li>
+            	<li><code>FontSystem5x7_v2</code> (equivalent to <code>Font_Glcd_System5x7</code>)</li>
+            	<li><code>font5x7</code> (equivalent to <code>Font_Glcd_5x7</code>)</li>
+            	<li><code>Character8x7</code> (equivalent to <code>Font_Glcd_Character8x7</code>)</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Use the custom 5x7 font &#34;myfont&#34; which starts with space (32):</i>
+Glcd_Set_Font(&myfont, 5, 7, 32);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_set_font_adv">Glcd_Set_Font_Adv</h3>
+
+
+    <!-- tabela: Glcd_Set_Font_Adv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Set_Font_Adv(<b>const far char</b> *activeFont, <b>unsigned char</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#glcd_write_char_adv">Glcd_Write_Char_Adv</a> and <a href="#glcd_write_text_Adv">Glcd_Write_Text_Adv</a> routines.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. Needs to be formatted as an array of char.</li>
+           		<li><code>font_color:</code> sets font color.</li>
+           		<li><code>font_orientation:</code> sets font orientation.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Glcd_Set_Font_Adv(&myfont, 0, 0);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="glcd_set_ext_font_adv">Glcd_Set_Ext_Font_Adv</h3>
+
+
+    <!-- tabela: Glcd_Set_Font -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Set_Ext_Font_Adv(<b>unsigned long</b> activeFont, <b>unsigned int</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#glcd_write_char_adv">Glcd_Write_Char_Adv</a> and <a href="#glcd_write_text_adv">Glcd_Write_Text_Adv</a> routines.  Font is located in an external resource.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. This parameter represents the address in the exteral resource from where the font data begins.</li>
+           		<li><code>font_color:</code> sets font color.</li>
+           		<li><code>font_orientation:</code> sets font orientation.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Glcd_Set_Ext_Font_Adv(173296, 5, 7, 32);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_write_char">Glcd_Write_Char</h3>
+
+
+    <!-- tabela: Glcd_Write_Char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Write_Char(<b>unsigned short</b> character, <b>unsigned short</b> x_pos, <b>unsigned short</b> page_num, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints character on the Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>character:</code> character to be written</li>
+           		<li><code>x_pos:</code> character starting position on x-axis. Valid values: 0..(127-FontWidth)</li>
+           		<li><code>page_num:</code> the number of the page on which character will be written. Valid values: 0..7</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+              <p>The parameter <code>color</code> determines the color of the character: 0 white, 1 black, and 2 inverts each dot.</p>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine. Use <a href="#glcd_set_font">Glcd_Set_Font</a> to specify the font for display; if no font is specified, then default <code>Font_Glcd_System5x7</code> font supplied with the library will be used.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write character 'C' on the position 10 inside the page 2:</i>
+Glcd_Write_Char('C', 10, 2, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_write_char_adv">Glcd_Write_Char_Adv</h3>
+
+
+    <!-- tabela: TFT_Write_Char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Write_Char_Adv(<b>unsigned int</b> ch, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a char on the glcd at coordinates (x, y).</p>
+            	<ul>
+            		<li><code>c:</code> char to be written.</li>
+            		<li><code>x:</code> char position on x-axis.</li>
+            		<li><code>y:</code> char position on y-axis.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>glcd module needs to be initialized. See the <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Glcd_Write_Char_Adv('A',22,23);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_write_text">Glcd_Write_Text</h3>
+
+
+    <!-- tabela: Glcd_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Write_Text(<b>char</b> *text, <b>unsigned short</b> x_pos, <b>unsigned short</b> page_num, <b>unsigned short</b> color);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints text on Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>text:</code> text to be written</li>
+           		<li><code>x_pos:</code> text starting position on x-axis.</li>
+           		<li><code>page_num:</code> the number of the page on which text will be written. Valid values: 0..7</li>
+           		<li><code>color:</code> color parameter. Valid values: 0..2</li>
+            </ul>
+            <p>The parameter <code>color</code> determines the color of the text: 0 white, 1 black, and 2 inverts each dot.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine. Use <a href="#glcd_set_font">Glcd_Set_Font</a> to specify the font for display; if no font is specified, then default <code>Font_Glcd_System5x7</code> font supplied with the library will be used.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write text "Hello world!" on the position 10 inside the page 2:</i>
+Glcd_Write_Text(&#34;Hello world!&#34;, 10, 2, 1);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>For x axis and page layout explanation see schematic at the bottom of this page.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_write_text_adv">Glcd_Write_Text_Adv</h3>
+
+
+    <!-- tabela: Glcd_Write_Text_Adv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Write_Text_Adv(<b>unsigned char</b> *text, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text on the glcd at coordinates (x, y).</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>text:</code> text to be written.</li>
+            		<li><code>x:</code> text position on x-axis.</li>
+            		<li><code>y:</code> text position on y-axis.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+Glcd_Write_Text_Adv("GLCD LIBRARY DEMO, WELCOME !", 0, 0);	
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="glcd_write_const_text_adv">Glcd_Write_Const_Text_Adv</h3>
+
+
+    <!-- tabela: Glcd_Write_Text_Adv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Write_Const_Text_Adv(<b>const far char</b> *ctext, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text located in the program memory on the glcd at coordinates (x, y).</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>text:</code> text to be written.</li>
+            		<li><code>x:</code> text position on x-axis.</li>
+            		<li><code>y:</code> text position on y-axis.</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+<b>const </b> ctext[] = "mikroElektronika"
+...
+Glcd_Write_Const_Text_Adv(ctext, 0, 0)
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="glcd_image">Glcd_Image</h3>
+
+
+    <!-- tabela: Glcd_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Image(<b>code const far char</b> *image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays bitmap on Glcd.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+         	  <ul>
+         		  <li><code>image:</code> image to be displayed. Bitmap array can be located in both code and RAM memory (due to the mikroC PRO for dsPIC30/33 and PIC24 pointer to const and pointer to RAM equivalency).</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Draw image my_image on Glcd</i>
+Glcd_Image(&my_image);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use the mikroC PRO for dsPIC30/33 and PIC24 integrated Glcd Bitmap Editor, <b><a href="tools.htm">Tools</a> &gt; <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a></b>, to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+           
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="glcd_ext_image">Glcd_Ext_Image</h3>
+
+
+    <!-- tabela: Glcd_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Ext_Image(<b>unsigned long</b> image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a bitmap from an external resource.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+         	  <ul>
+         		  <li><code>image:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Glcd_Ext_Image(153608);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use the mikroC PRO for dsPIC30/33 and PIC24 integrated Glcd Bitmap Editor, <b><a href="tools.htm">Tools</a> &gt; <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a></b>, to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+           
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="glcd_partialimage">Glcd_PartialImage</h3>
+
+
+    <!-- tabela: Glcd_PartialImage -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>code const far char</b> * image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image on a desired location.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+           		<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+           		<li><code>width:</code> desired image width.</li>
+           		<li><code>height:</code> desired image height.</li>
+           		<li><code>picture_width:</code> width of the original image.</li>
+           		<li><code>picture_height:</code> height of the original image.</li>
+           		<li><code>image:</code> image to be displayed. Bitmap array can be located in both code and RAM memory (due to the mikroC PRO for dsPIC30/33 and PIC24 pointer to const and pointer to RAM equivalency).</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Draws a 10x15 part of the image starting from the upper left corner on the coordinate (10,12). Original image size is 16x32.</i> 
+Glcd_PartialImage(10, 12, 10, 15, 16, 32, image);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use the mikroC PRO for dsPIC30/33 and PIC24 integrated Glcd Bitmap Editor, <b><a href="tools.htm">Tools</a> &gt; <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a></b>, to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>      
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="glcd_ext_partialimage">Glcd_Ext_PartialImage</h3>
+
+
+    <!-- tabela: Glcd_PartialImage -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Glcd_Ext_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>unsigned long</b> image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image, located on an external resource, on a desired location of the screen.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+           		<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+           		<li><code>width:</code> desired image width.</li>
+           		<li><code>height:</code> desired image height.</li>
+           		<li><code>picture_width:</code> width of the original image.</li>
+           		<li><code>picture_height:</code> height of the original image.</li>
+           		<li><code>image:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#glcd_init">Glcd_Init</a> routine.</p>          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Glcd_Ext_PartialImage(10, 12, 10, 15, 16, 32, 0);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use the mikroC PRO for dsPIC30/33 and PIC24 integrated Glcd Bitmap Editor, <b><a href="tools.htm">Tools</a> &gt; <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a></b>, to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>      
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3>Library Example</h3>
+
+    <p>The following drawing demo tests advanced routines of the Glcd library.</p>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>//Declarations------------------------------------------------------------------</i>
+<b>const code char</b> truck_bmp[1024];
+<i>//--------------------------------------------------------------end-declarations</i>
+
+<i>// Glcd module connections</i>
+<b>sbit</b> GLCD_D7 <b>at</b> RD3_bit;
+<b>sbit</b> GLCD_D6 <b>at</b> RD2_bit;
+<b>sbit</b> GLCD_D5 <b>at</b> RD1_bit;
+<b>sbit</b> GLCD_D4 <b>at</b> RD0_bit;
+<b>sbit</b> GLCD_D3 <b>at</b> RB3_bit;
+<b>sbit</b> GLCD_D2 <b>at</b> RB2_bit;
+<b>sbit</b> GLCD_D1 <b>at</b> RB1_bit;
+<b>sbit</b> GLCD_D0 <b>at</b> RB0_bit;
+<b>sbit</b> GLCD_D7_Direction <b>at</b> TRISD3_bit;
+<b>sbit</b> GLCD_D6_Direction <b>at</b> TRISD2_bit;
+<b>sbit</b> GLCD_D5_Direction <b>at</b> TRISD1_bit;
+<b>sbit</b> GLCD_D4_Direction <b>at</b> TRISD0_bit;
+<b>sbit</b> GLCD_D3_Direction <b>at</b> TRISB3_bit;
+<b>sbit</b> GLCD_D2_Direction <b>at</b> TRISB2_bit;
+<b>sbit</b> GLCD_D1_Direction <b>at</b> TRISB1_bit;
+<b>sbit</b> GLCD_D0_Direction <b>at</b> TRISB0_bit;
+
+<b>sbit</b> GLCD_CS1 <b>at</b> LATB4_bit;
+<b>sbit</b> GLCD_CS2 <b>at</b> LATB5_bit;
+<b>sbit</b> GLCD_RS  <b>at</b> LATF0_bit;
+<b>sbit</b> GLCD_RW  <b>at</b> LATF1_bit;
+<b>sbit</b> GLCD_EN  <b>at</b> LATF4_bit;
+<b>sbit</b> GLCD_RST <b>at</b> LATF5_bit;
+<b>sbit</b> GLCD_CS1_Direction <b>at</b> TRISB4_bit;
+<b>sbit</b> GLCD_CS2_Direction <b>at</b> TRISB5_bit;
+<b>sbit</b> GLCD_RS_Direction  <b>at</b> TRISF0_bit;
+<b>sbit</b> GLCD_RW_Direction  <b>at</b> TRISF1_bit;
+<b>sbit</b> GLCD_EN_Direction  <b>at</b> TRISF4_bit;
+<b>sbit</b> GLCD_RST_Direction <b>at</b> TRISF5_bit;
+<i>// End Glcd module connections</i>
+
+<b>void</b> delay2S(){                                  <i>// 2 seconds delay function</i>
+  Delay_ms(2000);
+}
+
+<b>void</b> main() {                       
+  <b>unsigned short</b> ii;
+  <b>char</b> *someText;
+
+  #define COMPLETE_EXAMPLE                       <i>// Comment this line to make simpler/smaller example</i>
+  ADPCFG = 0xFFFF;                               <i>// Configure AN pins as digital</i>
+
+  Glcd_Init();                                   <i>// Initialize GLCD</i>
+  Glcd_Fill(0x00);                               <i>// Clear GLCD</i>
+
+  <b>while</b>(1) {
+    #ifdef COMPLETE_EXAMPLE
+      Glcd_Image(truck_bmp);                     <i>// Draw image</i>
+      delay2S(); delay2S();
+    #endif
+    
+    Glcd_Fill(0x00);                             <i>// Clear GLCD</i>
+
+    Glcd_Box(62,40,124,56,1);                    <i>// Draw box</i>
+    Glcd_Rectangle(5,5,84,35,1);                 <i>// Draw rectangle</i>
+    Glcd_Line(0, 0, 127, 63, 1);                 <i>// Draw line</i>
+    delay2S();
+
+<b>for</b>(ii = 5; ii &#60; 60; ii+=5 ){                    <i>// Draw horizontal and vertical lines</i>
+      Delay_ms(250);
+      Glcd_V_Line(2, 54, ii, 1);
+      Glcd_H_Line(2, 120, ii, 1);
+    }
+
+    delay2S();
+
+    Glcd_Fill(0x00);                             <i>// Clear GLCD</i>
+    #ifdef COMPLETE_EXAMPLE
+      Glcd_Set_Font(Character8x7, 8, 7, 32);     <i>// Choose font, see __Lib_GLCDFonts.c in Uses folder</i>
+    #endif
+    Glcd_Write_Text(&#34;mikroE&#34;, 1, 7, 2);          <i>// Write string</i>
+
+    <b>for</b> (ii = 1; ii &#60;= 10; ii++)                 <i>// Draw circles</i>
+      Glcd_Circle(63,32, 3*ii, 1);
+    delay2S();
+
+    Glcd_Box(12,20, 70,57, 2);                   <i>// Draw box</i>
+    delay2S();
+
+    #ifdef COMPLETE_EXAMPLE
+      Glcd_Fill(0xFF);                           <i>// Fill GLCD</i>
+
+      Glcd_Set_Font(Character8x7, 8, 7, 32);     <i>// Change font</i>
+      someText = &#34;8x7 Font&#34;;
+      Glcd_Write_Text(someText, 5, 0, 2);        <i>// Write string</i>
+      delay2S();
+
+      Glcd_Set_Font(System3x5, 3, 5, 32);        <i>// Change font</i>
+      someText = &#34;3X5 CAPITALS ONLY&#34;;
+      Glcd_Write_Text(someText, 60, 2, 2);       <i>// Write string</i>
+      delay2S();
+
+      Glcd_Set_Font(font5x7, 5, 7, 32);          <i>// Change font</i>
+      someText = &#34;5x7 Font&#34;;
+      Glcd_Write_Text(someText, 5, 4, 2);        <i>// Write string</i>
+      delay2S();
+
+      Glcd_Set_Font(FontSystem5x7_v2, 5, 7, 32); <i>// Change font</i>
+      someText = &#34;5x7 Font (v2)&#34;;
+      Glcd_Write_Text(someText, 5, 6, 2);        <i>// Write string</i>
+      delay2S();
+    #endif
+  }
+}
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Glcd HW connection" src="img/Schemes/scheme_glcd.gif"></p>
+    <p class="center small">Glcd HW connection</p>
+
+
+    <div class="feedback">
+      Copyright (c) 2002-2018 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

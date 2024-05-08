@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_PWM_1_3_14_15_16_17.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F070CB$|^STM32F030RC$|^STM32F070RB$|^STM32F030C8$|^STM32F030R8$|^STM32F030CC$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.USB",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_USB_EP.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33EP512MU814$|^PIC24EP512GU810$|^dsPIC33EP512MU810$|^PIC24EP512GU814$|^PIC24EP256GU810$|^PIC24EP256GU814$|^dsPIC33EP256MU806$|^dsPIC33EP256MU814$|^dsPIC33EP256MU810$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

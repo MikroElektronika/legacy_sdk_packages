@@ -1,0 +1,1909 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>CAN Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroelektronika.co.yu">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">CAN Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="adc_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="canspi_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Controller Area Network">CAN</acronym> Library</h2></a>
+
+    <p>The mikroC PRO for PIC32 provides a library (driver) for working with the PIC32 <acronym title="Controller Area Network">CAN</acronym> module.</p>
+    <p>The <acronym title="Controller Area Network">CAN</acronym> is a very robust protocol that has error detection and signalization, self–checking and fault confinement. Faulty <acronym title="Controller Area Network">CAN</acronym> data and remote frames are re-transmitted automatically, similar to the Ethernet.</p>
+    <p> Data transfer rates depend on distance. For example, 1 Mbit/s can be achieved at network lengths below 40m while 250 Kbit/s can be achieved at network lengths below 250m. The greater distance the lower maximum bitrate that can be achieved. The lowest bitrate defined by the standard is 200Kbit/s. Cables used are shielded twisted pairs.</p>
+    <p><acronym title="Controller Area Network">CAN</acronym> supports two message formats:</p>
+    <ul>
+      <li>Standard format, with 11 identifier bits and</li>
+      <li>Extended format, with 29 identifier bits</li>
+    </ul>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>
+      <ul>
+        <li>Consult the <acronym title="Controller Area Network">CAN</acronym> standard about <acronym title="Controller Area Network">CAN</acronym> bus termination resistance.</li>    
+    	  <li><acronym title="Controller Area Network">CAN</acronym> library routines require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	  <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+      </ul>
+    </div>
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#can1setoperationmode">CANxSetOperationMode</a></li>
+      <li><a href="#can1getoperationmode">CANxGetOperationMode</a></li>
+      <li><a href="#can1initialize">CANxInitialize</a></li>
+      <li><a href="#can1assignbuffer">CANxAssignBuffer</a></li>
+      <li><a href="#can1configurefifo">CANxConfigureFIFO</a></li>
+      <li><a href="#can1setbaudrate">CANxSetBaudRate</a></li>
+      <li><a href="#can1setmask">CANxSetMask</a></li>
+      <li><a href="#can1setfilter">CANxSetFilter</a></li>
+      <li><a href="#can1filterenable">CANxFilterEnable</a></li>
+      <li><a href="#can1filterdisable">CANxFilterDisable</a></li>
+      <li><a href="#can1readbuffer">CANxReadBuffer</a></li>
+      <li><a href="#can1read">CANxRead</a></li>
+      <li><a href="#can1writebuffer">CANxWriteBuffer</a></li>
+      <li><a href="#can1write">CANxWrite</a></li>
+    </ul>
+    
+
+    <!-- -->
+
+
+    <h3 id="can1setoperationmode">CANxSetOperationMode</h3>
+
+
+    <!-- tabela: CANxSetOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxSetOperationMode(<b>unsigned int</b> mode, <b>unsigned int</b> WAIT);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the <acronym title="Controller Area Network">CAN</acronym> module to requested mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+         	  <ul>
+              <li><code>mode:</code> <acronym title="Controller Area Network">CAN</acronym> module operation mode. Valid values: <code>CAN_OP_MODE</code> constants. See <a href="#can_op_mode">CAN_OP_MODE</a> constants.</li>
+              <li><code>WAIT:</code> <acronym title="Controller Area Network">CAN</acronym> mode switching verification request. If <code>WAIT == 0</code>, the call is non-blocking. The function does not verify if the <acronym title="Controller Area Network">CAN</acronym> module is switched to requested mode or not. Caller must use <a href="#can1getoperationmode">CANxGetOperationMode</a> to verify correct operation mode before performing mode specific operation. If <code>WAIT != 0</code>, the call is blocking &#8211; the function won&#8217;t &#8220;return&#8221; until the requested mode is set.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set the CAN1 module into configuration mode (wait inside CAN1SetOperationMode until this mode is set)</i>
+CAN1SetOperationMode(_CAN_MODE_CONFIG, 0xFF);</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1getoperationmode">CANxGetOperationMode</h3>
+
+
+    <!-- tabela: CANxGetOperationMode -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> CANxGetOperationMode();</p>
+          </td>
+        </tr>
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function returns current operation mode of the <acronym title="Controller Area Network">CAN</acronym> module. See <a href="#can_op_mode">CAN_OP_MODE</a> constants or device datasheet for operation mode codes.</p>
+          </td>
+        </tr>
+ 
+         <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Current operation mode.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// check whether the CAN1 module is in Normal mode and if it is then do something.</i>
+<b>if</b> (CAN1GetOperationMode() == _CAN_MODE_NORMAL) {
+  ...
+}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1initialize">CANxInitialize</h3>
+
+
+    <!-- tabela: CANxInitialize -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxInitialize(<b>unsigned int</b> SJW, <b>unsigned int</b> BRP, <b>unsigned int</b> PHSEG1, <b>unsigned int</b> PHSEG2, <b>unsigned int</b> PROPSEG, <b>unsigned int</b> CAN_CONFIG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+            <p>The internal <acronym title="Controller Area Network">CAN</acronym> module is set to :</p>
+              <ul>
+              	<li> Disable <acronym title="Controller Area Network">CAN</acronym> capture</li>
+              	<li> Continue <acronym title="Controller Area Network">CAN</acronym> operation in Idle mode</li>
+              	<li> Do not abort pending transmissions</li>
+                <li> Fcan clock : 4*Tcy (Fosc)</li>
+                <li> Baud rate is set according to given parameters</li>
+                <li> <acronym title="Controller Area Network">CAN</acronym> mode is set to Normal</li>
+                <li> Filter and mask registers IDs are set to zero</li>
+                <li> Filter and mask message frame type is set according to <code>CAN_CONFIG_FLAGS</code> value</li>
+              </ul>
+            <p><code>SAM</code>, <code>SEG2PHTS</code>, <code>WAKFIL</code> and <code>DBEN</code> bits are set according to <code>CAN_CONFIG_FLAGS</code> value.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>SJW</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>BRP</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG1</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG2</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PROPSEG</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>CAN_CONFIG_FLAGS</code> is formed from predefined constants. See <a href="#can_config_flag">CAN_CONFIG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// initialize the CAN1 module with appropriate baud rate and message acceptance flags along with the sampling rules</i>
+<b>unsigned int</b> can_config_flags;
+...  
+Can_Init_Flags = _CAN_CONFIG_SAMPLE_THRICE &#38;            <i>// Form value to be used</i>
+                   _CAN_CONFIG_PHSEG2_PRG_ON &#38;            <i>// with CAN1Initialize</i>
+                   _CAN_CONFIG_XTD_MSG &#38;
+                   _CAN_CONFIG_MATCH_MSG_TYPE &#38;
+                   _CAN_CONFIG_LINE_FILTER_OFF;
+
+CAN1Initialize(1,3,3,3,1,Can_Init_Flags);              <i>// initialize the CAN1 module</i></pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+            <li><acronym title="Controller Area Network">CAN</acronym> mode NORMAL will be set on exit.</li>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1assignbuffer">CANxAssignBuffer</h3>
+
+
+    <!-- tabela: CANxAssignBuffer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxAssignBuffer(<b>char</b> *buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Assigns FIFO buffer for the <acronym title="Controller Area Network">CAN</acronym> module .</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>buffer:</code> pointer to a space in the RAM where the <acronym title="Controller Area Network">CAN</acronym> message FIFO buffers will be stored.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// reserve space for 2 buffers with 8 messages (each message is 16 bytes)
+// beggining of the buffer must be 32bit aligned</i>
+<b>char</b> buffer[2*8*16] absolute 0xA0000000;
+CAN1AssignBuffer(buffer);
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> module can have up to 32 FIFO buffers, each having up to 32 messages. Transmit message size is 16 bytes long, while the receive message size may be 16 bytes (for full receive message mode) or 8 bytes for data-only message receive.</li>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1configurefifo">CANxConfigureFIFO</h3>
+
+
+    <!-- tabela: CANxConfigureFIFO -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxConfigureFIFO(<b>char</b> num, <b>char</b> size, <b>unsigned int</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configures <acronym title="Controller Area Network">CAN</acronym> FIFO buffers.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>num:</code> FIFO buffer number.</li>
+              <li><code>size:</code> Size of the FIFO buffer (in messages).</li>
+              <li><code>flags:</code> parameter is formed from the predefined constants. See <a href="#can_rx_msg_flag">CAN_RX_MSG_FLAGS</a>, <a href="#can_tx_msg_flag">CAN_TX_MSG_FLAGS</a> and <a href="#can_fifo">CAN_FIFO</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// configure RX FIFO buffer</i>
+CAN1ConfigureFIFO(_CAN_BUFFER_0, 8,_CAN_FIFO_RX &#38; _CAN_FULL_MESSAGE); <i>//RX buffer 8 messages deep</i>
+<i>// configure TX FIFO buffer</i>
+CAN1ConfigureFIFO(_CAN_BUFFER_1, 8,_CAN_FIFO_TX &#38; _CAN_TX_PRIORITY_3 &#38; _CAN_TX_NO_RTR_FRAME); <i>//TX buffer 8 messages deep</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+            <li><acronym title="Controller Area Network">CAN</acronym> mode NORMAL will be set on exit.</li>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1setbaudrate">CANxSetBaudRate</h3>
+
+
+    <!-- tabela: CANxSetBaudRate -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxSetBaudRate(<b>unsigned int</b> SJW, <b>unsigned int</b> BRP, <b>unsigned int</b> PHSEG1, <b>unsigned int</b> PHSEG2, <b>unsigned int</b> PROPSEG, <b>unsigned int</b> CAN_CONFIG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets <acronym title="Controller Area Network">CAN</acronym> baud rate. Due to complexity of the <acronym title="Controller Area Network">CAN</acronym> protocol, you can not simply force a bps value. Instead, use this function when <acronym title="Controller Area Network">CAN</acronym> is in Config mode. Refer to datasheet for details.</p>
+            <p><code>SAM</code>, <code>SEG2PHTS</code> and <code>WAKFIL</code> bits are set according to <code>CAN_CONFIG_FLAGS</code> value. Refer to datasheet for details.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>SJW</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>BRP</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG1</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PHSEG2</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>PROPSEG</code> as defined in MCU's datasheet (<acronym title="Controller Area Network">CAN</acronym> Module)</li>
+              <li><code>CAN_CONFIG_FLAGS</code> is formed from predefined constants. See <a href="#can_config_flag">CAN_CONFIG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// set required baud rate and sampling rules</i>
+<b>unsigned int</b> can_config_flags;
+...  
+CAN1SetOperationMode(_CAN_MODE_CONFIG,0xFF);              <i>// set CONFIGURATION mode (CAN1 module must be in config mode for baud rate settings)</i>
+
+can_config_flags = _CAN_CONFIG_SAMPLE_THRICE &#38;            <i>// Form value to be used</i>
+                   _CAN_CONFIG_PHSEG2_PRG_ON &#38;            <i>// with CAN1SetBaudRate</i>
+                   _CAN_CONFIG_STD_MSG &#38;
+                   _CAN_CONFIG_MATCH_MSG_TYPE &#38;
+                   _CAN_CONFIG_LINE_FILTER_OFF;
+
+CAN1SetBaudRate(1,3,3,3,1,can_config_flags);             <i>// set the CAN1 module baud rate</i></pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1setmask">CANxSetMask</h3>
+
+
+    <!-- tabela: CANxSetMask -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxSetMask(<b>unsigned int</b> CAN_MASK, <b>unsigned long</b> val, <b>unsigned int</b> CAN_CONFIG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function configures appropriate mask for advanced message filtering.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>CAN_MASK:</code> <acronym title="Controller Area Network">CAN</acronym> module mask number. Valid values: <code>CAN_MASK</code> constants. See <a href="#can_mask">CAN_MASK</a> constants.</li>
+              <li><code>val:</code> mask register value. This value is bit-adjusted to appropriate buffer mask registers.</li>
+              <li><code>CAN_CONFIG_FLAGS:</code> selects type of message to filter. Valid values: 
+                <ul>
+              	  <li><code>_CAN_CONFIG_ALL_VALID_MSG</code>,</li>
+              	  <li><code>_CAN_CONFIG_MATCH_MSG_TYPE &#38; _CAN_CONFIG_STD_MSG</code>,</li>
+              	  <li><code>_CAN_CONFIG_MATCH_MSG_TYPE &#38; _CAN_CONFIG_XTD_MSG</code>.</li>
+              	</ul>     	
+              	See <a href="#can_config_flag">CAN_CONFIG_FLAGS</a> constants.
+              </li>	    
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// set appropriate filter mask and message type value</i>
+CAN1SetOperationMode(_CAN_MODE_CONFIG,0xFF);              <i>// set CONFIGURATION mode (CAN1 module must be in config mode for mask settings)</i>
+CAN1SetMask(_CAN_MASK_0, -1, _CAN_CONFIG_MATCH_MSG_TYPE &#38; _CAN_CONFIG_XTD_MSG);   <i>// set all mask1 bits to ones</i>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1filterenable">CANxFilterEnable</h3>
+
+
+    <!-- tabela: CANxFilterEnable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxFilterEnable(<b>char</b> CAN_FILTER);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function enables appropriate receive message filters.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>CAN_FILTER:</code> filter enable selection parameter. Each bit corresponds to appropriate filter. By setting bit the corresponding filter will be enabled.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Filters 0, 4, 8, 12 are to be enabled:</i>
+CAN1FilterEnable(0x1111);
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1filterdisable">CANxFilterDisable</h3>
+
+
+    <!-- tabela: CANxFilterDisable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxFilterDisable(<b>char</b> CAN_FILTER);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function disables appropriate receive message filters.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>CAN_FILTER:</code> filter disable selection parameter. Each bit corresponds to appropriate filter. By setting bit the corresponding filter will be disabled.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Filters 0, 4, 8, 12 are to be disabled:</i>
+CAN1FilterDisable(0x1111);
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1setfilter">CANxSetFilter</h3>
+
+
+    <!-- tabela: CANxSetFilter -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> CANxSetFilter(<b>char</b> CAN_FILTER, <b>long</b> val, <b>unsigned int</b> CAN_FILTER_MASK, <b>unsigned int</b> CAN_FILTER_RXBUFF, <b>unsigned int</b> CAN_CONFIG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets message filter. Given <code>value</code> is bit adjusted to appropriate buffer mask registers.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>CAN_FILTER:</code> <acronym title="Controller Area Network">CAN</acronym> module filter number. Valid values: <code>CAN_FILTER</code> constants. See <a href="#can_filter">CAN_FILTER</a> constants.</li>
+              <li><code>val:</code> filter register value. This value is bit-adjusted to appropriate filter registers </li>
+              <li><code>CAN_FILTER_MASK:</code> selects type of message to filter. See <a href="#can_mask">CAN_MASK</a> constants.</li>
+              <li><code>CAN_FILTER_RXBUFF:</code> selects type of message to filter. See <a href="#can_buffer">CAN_BUFFER</a> constants.</li>
+              <li><code>CAN_CONFIG_FLAGS:</code> selects type of message to filter. Valid values: See <a href="#can_config_flag">CAN_CONFIG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+						<p><acronym title="Controller Area Network">CAN</acronym> must be in Config mode, otherwise the function will be ignored. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// set appropriate filter value and message type</i>
+CAN1SetOperationMode(_CAN_MODE_CONFIG,0xFF);                  <i>// set CONFIGURATION mode (CAN1 module must be in config mode for filter settings)</i>
+
+CAN1SetFilter(_CAN_FILTER_31, ID_1st, _CAN_MASK_3, _CAN_BUFFER_0, _CAN_CONFIG_XTD_MSG);   <i>// set id of filter_B1_F1 to 1st node ID</i></pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1readbuffer">CANxReadBuffer</h3>
+
+
+    <!-- tabela: CANxReadBuffer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> CANxReadBuffer(<b>unsigned long</b> *id, <b>char</b> *Data_, <b>char</b> buffer, <b>unsigned int</b> *dataLen, <b>unsigned int</b> *CAN_RX_MSG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>If a full Receive Buffer is found, it will be processed in the following way :</p>
+            	<ul>
+            		<li>Message ID is retrieved and stored to location pointed by <code>id</code> pointer.</li>
+            		<li>Message data is retrieved and stored to array pointed by <code>Data_</code> pointer.</li>
+            		<li>Message receive buffer is determined by the <code>buffer</code> parameter.</li>
+            		<li>Message length is retrieved and stored to location pointed by <code>dataLen</code> pointer.</li>
+            		<li>Message flags are retrieved and stored to location pointed by <code>CAN_RX_MSG_FLAGS</code> pointer.</li>
+            	</ul>		
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>id:</code> message identifier address.</li>
+              <li><code>data_:</code> an array of bytes up to 8 bytes in length.</li>
+              <li><code>buffer:</code> receive buffer.</li>
+              <li><code>dataLen:</code> data length address.</li>
+              <li><code>CAN_RX_MSG_FLAGS:</code> message flags address. For message receive flags format refer to <code>CAN_RX_MSG_FLAGS</code> constants. See <a href="#can_rx_msg_flag">CAN_RX_MSG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+   
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li><code>0</code> if nothing is received</li>
+              <li><code>0xFFFF</code> if one of the Receive Buffers is full (message received)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+            <p>The <acronym title="Controller Area Network">CAN</acronym> module must be in a mode in which receiving is possible. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre> 
+if (msg_rcvd = CAN1ReadBuffer(&msg_id, data, _CAN_BUFFER_0, &data_len, &rx_flags)) {
+  ...
+}</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1read">CANxRead</h3>
+
+
+    <!-- tabela: CANxRead -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> CANxRead(<b>unsigned long</b> *id, <b>char</b> *Data_, <b>unsigned int</b> *dataLen, <b>unsigned int</b> *CAN_RX_MSG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>If at least one full Receive Buffer is found, it will be processed in the following way :</p>
+            	<ul>
+            		<li>Message ID is retrieved and stored to location pointed by <code>id</code> pointer</li>
+            		<li>Message data is retrieved and stored to array pointed by <code>Data_</code> pointer</li>
+            		<li>Message length is retrieved and stored to location pointed by <code>dataLen</code> pointer</li>
+            		<li>Message flags are retrieved and stored to location pointed by <code>CAN_RX_MSG_FLAGS</code> pointer</li>
+            	</ul>		
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>id:</code> message identifier address</li>
+              <li><code>Data_:</code> an array of bytes up to 8 bytes in length</li>
+              <li><code>dataLen:</code> data length address</li>
+              <li><code>CAN_RX_MSG_FLAGS:</code> message flags address. For message receive flags format refer to <code>CAN_RX_MSG_FLAGS</code> constants. See <a href="#can_rx_msg_flag">CAN_RX_MSG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+   
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li><code>0</code> if nothing is received</li>
+              <li><code>0xFFFF</code> if one of the Receive Buffers is full (message received)</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+            <p>The <acronym title="Controller Area Network">CAN</acronym> module must be in a mode in which receiving is possible. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// check the CAN1 module for received messages. If any was received do something.</i> 
+<b>unsigned int</b> msg_rcvd, rx_flags, data_len;
+<b>char</b> data[8];
+<b>unsigned long</b> msg_id;
+...
+CAN1SetOperationMode(_CAN_MODE_NORMAL,0xFF);                  <i>// set NORMAL mode (CAN1 module must be in mode in which receive is possible)</i>
+...
+rx_flags = 0;                                                <i>// clear message flags</i>
+if (msg_rcvd = CAN1Read(&msg_id, data, &data_len, &rx_flags)) {
+  ...
+}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1writebuffer">CANxWriteBuffer</h3>
+
+
+    <!-- tabela: CANxWrite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> CANxWriteBuffer(<b>unsigned long</b> id, <b>char</b> *Data_, <b>char</b> buffer, <b>unsigned int</b> DataLen, <b>unsigned int</b> CAN_TX_MSG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>If a empty Transmit Buffer is found, the function sends message in the queue for transmission.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>id:</code> <acronym title="Controller Area Network">CAN</acronym> message identifier. Valid values: 11 or 29 bit values, depending on message type (standard or extended)</li>
+              <li><code>Data_:</code> data to be sent</li>
+            	<li>Message transmit buffer is determined by the <code>buffer</code> parameter.</li>
+              <li><code>DataLen:</code> data length. Valid values: <code>0..8</code></li>
+              <li><code>CAN_TX_MSG_FLAGS:</code> message flags. Valid values: <code>CAN_TX_MSG_FLAGS</code> constants. See <a href="#can_tx_msg_flag">CAN_TX_MSG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li><code>0</code> if all Transmit Buffers are busy</li>
+              <li><code>0xFFFF</code> if at least one Transmit Buffer is available</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+            <p>The <acronym title="Controller Area Network">CAN</acronym> module must be in mode in which transmission is possible. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+					</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// send message extended CAN message with appropriate ID and data</i>
+<b>unsigned int</b> tx_flags;
+<b>char</b> data[8];
+<b>unsigned long</b> msg_id;
+...
+CAN1SetOperationMode(_CAN_MODE_NORMAL,0xFF);                  <i>// set NORMAL mode (CAN1 must be in mode in which transmission is possible)</i>
+
+tx_flags = _CAN_TX_PRIORITY_0 &#38;            
+           _CAN_TX_XTD_FRAME &#38;             
+           _CAN_TX_NO_RTR_FRAME;                       <i>// set message flags</i>
+CAN1Write(msg_id, data, _CAN_BUFFER_0, 1, tx_flags);</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can1write">CANxWrite</h3>
+
+
+    <!-- tabela: CANxWrite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> CANxWrite(<b>unsigned long</b> id, <b>char</b> *Data_, <b>unsigned int</b> DataLen, <b>unsigned int</b> CAN_TX_MSG_FLAGS);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>If at least one empty Transmit Buffer is found, the function sends message in the queue for transmission.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>id:</code> <acronym title="Controller Area Network">CAN</acronym> message identifier. Valid values: 11 or 29 bit values, depending on message type (standard or extended)</li>
+              <li><code>Data_:</code> data to be sent</li>
+              <li><code>DataLen:</code> data length. Valid values: <code>0..8</code></li>
+              <li><code>CAN_TX_MSG_FLAGS:</code> message flags. Valid values: <code>CAN_TX_MSG_FLAGS</code> constants. See <a href="#can_tx_msg_flag">CAN_TX_MSG_FLAGS</a> constants.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+          	<ul>
+              <li><code>0</code> if all Transmit Buffers are busy</li>
+              <li><code>0xFFFF</code> if at least one Transmit Buffer is available</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU with the <acronym title="Controller Area Network">CAN</acronym> module.</p>
+						<p><acronym title="MicroController Unit">MCU</acronym> must be connected to the <acronym title="Controller Area Network">CAN</acronym> transceiver (MCP2551 or similar) which is connected to the <acronym title="Controller Area Network">CAN</acronym> bus.</p>
+            <p>The <acronym title="Controller Area Network">CAN</acronym> module must be in mode in which transmission is possible. See <a href="#can1setoperationmode">CANxSetOperationMode</a>.</p>
+					</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// send message extended CAN message with appropriate ID and data</i>
+<b>unsigned int</b> tx_flags;
+<b>char</b> data[8];
+<b>unsigned long</b> msg_id;
+...
+CAN1SetOperationMode(_CAN_MODE_NORMAL,0xFF);                  <i>// set NORMAL mode (CAN1 must be in mode in which transmission is possible)</i>
+
+tx_flags = _CAN_TX_PRIORITY_0 &#38;            
+           _CAN_TX_XTD_FRAME &#38;             
+           _CAN_TX_NO_RTR_FRAME;                       <i>// set message flags</i>
+CAN1Write(msg_id, data, 1, tx_flags);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+        	  <li><acronym title="Controller Area Network">CAN</acronym> library routine require you to specify the module you want to use. To use the desired <acronym title="Controller Area Network">CAN</acronym> module, simply change the letter <b>x</b> in the routine prototype for a number from <b>1</b> to <b>2</b>.</li>
+    	      <li>Number of <acronym title="Controller Area Network">CAN</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="can_constants"><acronym title="Controller Area Network">CAN</acronym> Constants</h3>
+    <p>There is a number of constants predefined in <acronym title="Controller Area Network">CAN</acronym> library. To be able to use the library effectively, you need to be familiar with these. You might want to check the example at the end of the chapter.</p>
+
+    <h4 id="can_op_mode">CAN_OP_MODE Constants</h4>
+    <p><code>CAN_OP_MODE</code> constants define <acronym title="Controller Area Network">CAN</acronym> operation mode. Function <a href="#can1setoperationmode">CANxSetOperationMode</a> expects one of these as its argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MODE_BITS</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xE00000</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Use&nbsp;this&nbsp;to&nbsp;access&nbsp;opmode&nbsp;&nbsp;bits
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MODE_NORMAL</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x00</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MODE_DISABLE</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x01</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MODE_LOOP</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x02</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MODE_LISTEN</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x03</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MODE_CONFIG</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x04</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MODE_LISTEN_ALL</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x07</span><span class="cpp1-symbol">;
+</span></code></pre>
+
+    <p></p>
+    <h4 id="can_config_flag">CAN_CONFIG_FLAGS Constants</h4>
+    <p><code>CAN_CONFIG_FLAGS</code> constants define flags related to <acronym title="Controller Area Network">CAN</acronym> module configuration. Functions <a href="#can1initialize">CANxInitialize</a> and <a href="#can1setbaudrate">CANxSetBaudRate</a> expect one of these (or a bitwise combination) as their argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_DEFAULT</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;11111111
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_PHSEG2_PRG_BIT</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x01</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_PHSEG2_PRG_ON</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXXXX1
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_PHSEG2_PRG_OFF</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFE</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXXXX0
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_LINE_FILTER_BIT</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x02</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_LINE_FILTER_ON</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXXX1X
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_LINE_FILTER_OFF</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFD</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXXX0X
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_SAMPLE_BIT</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x04</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_SAMPLE_ONCE</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXX1XX
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_SAMPLE_THRICE</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFB</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXX0XX
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_MSG_TYPE_BIT</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x08</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_STD_MSG</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXX1XXX
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_XTD_MSG</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xF7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXX0XXX
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_MATCH_TYPE_BIT</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x20</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_ALL_VALID_MSG</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xDF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XX0XXXXX
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_MATCH_MSG_TYPE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XX1XXXXX
+</span></code></pre>
+
+    <p>You may use bitwise AND (<code>&#38;</code>) to form config byte out of these values. For example:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-identifier">init</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_SAMPLE_THRICE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_PHSEG2_PRG_ON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_STD_MSG</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_DBL_BUFFER_ON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_VALID_XTD_MSG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_LINE_FILTER_OFF;
+...
+CAN1Initialize(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">init);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;initialize&nbsp;CAN
+</span></code></pre>
+
+
+    <h4 id="can_tx_msg_flag">CAN_TX_MSG_FLAGS Constants</h4>
+    <p><code>CAN_TX_MSG_FLAGS</code> are flags related to transmission of a <acronym title="Controller Area Network">CAN</acronym> message:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_PRIORITY_BITS</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0003</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_PRIORITY_0</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFC</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXXX00
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_PRIORITY_1</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFD</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXXX01
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_PRIORITY_2</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFE</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXXX10
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_PRIORITY_3</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXXX11
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_FRAME_BIT</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x08</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_STD_FRAME</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXX1XX
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_XTD_FRAME</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xF7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;XXXXX0XX
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_RTR_BIT</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0040</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_NO_RTR_FRAME</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;X1XXXXXX
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_RTR_FRAME</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFBF</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;X0XXXXXX
+</span></code></pre>
+
+    <p>You may use bitwise AND (<code>&#38;</code>) to adjust the appropriate flags. For example:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-comment">//&nbsp;form&nbsp;value&nbsp;to&nbsp;be&nbsp;used&nbsp;with&nbsp;CANSendMessage:
+</span><span class="cpp1-identifier">send_config</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_TX_PRIORITY_0</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_XTD_FRAME</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_NO_RTR_FRAME;
+...
+CAN1Write(id,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">data,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">send_config);
+</span></code></pre>
+
+    <h4 id="can_rx_msg_flag">CAN_RX_MSG_FLAGS Constants</h4>
+    <p><code>CAN_RX_MSG_FLAGS</code> are flags related to reception of <acronym title="Controller Area Network">CAN</acronym> message. If a particular bit is set; corresponding meaning is TRUE or else it will be FALSE.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_RX_FILTER_BITS</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x001F</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Use&nbsp;this&nbsp;to&nbsp;access&nbsp;filter&nbsp;bits
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_RX_OVERFLOW</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0020</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;if&nbsp;Overflowed,&nbsp;else&nbsp;cleared
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_RX_INVALID_MSG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0040</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;if&nbsp;invalid,&nbsp;else&nbsp;cleared
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_RX_XTD_FRAME</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0080</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;if&nbsp;XTD&nbsp;message,&nbsp;else&nbsp;cleared
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_RX_RTR_FRAME</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0100</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;if&nbsp;RTR&nbsp;message,&nbsp;else&nbsp;cleared
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_RX_DATA_ONLY</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0200</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;if&nbsp;Data&nbsp;Only&nbsp;message
+</span></code></pre>
+
+    <p>You may use bitwise AND (<code>&#38;</code>) to adjust the appropriate flags. For example:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(MsgFlag</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_RX_OVERFLOW</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">!=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">...
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Receiver&nbsp;overflow&nbsp;has&nbsp;occurred.
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;We&nbsp;have&nbsp;lost&nbsp;our&nbsp;previous&nbsp;message.
+</span><span class="cpp1-symbol">}
+</span></code></pre>
+
+
+    <h4 id="can_buffer">CAN_BUFFER Constants</h4>
+    <p><code>CAN_BUFFER</code> constants define CAN buffers. Function <a href="#can1setfilter">CANxSetFilter</a> expects one of these as its argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_0</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_1</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_2</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_3</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_4</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_5</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_6</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">6</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_7</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_8</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_9</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">9</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_10</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_11</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">11</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_12</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">12</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_13</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">13</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_14</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">14</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_15</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">15</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_16</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">16</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_17</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">17</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_18</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">18</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_19</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">19</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_20</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">20</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_21</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">21</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_22</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">22</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_23</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">23</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_24</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">24</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_25</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">25</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_26</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">26</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_27</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">27</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_28</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">28</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_29</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">29</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_30</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">30</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_31</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">31</span><span class="cpp1-symbol">;
+</span></code></pre>
+
+
+    <h4 id="can_fifo">CAN_FIFO Constants</h4>
+    <p><code>CAN_FIFO</code> constants define FIFO constants. Function <a href="#can1configurefifo">CANxConfigureFIFO</a> expects one of these as its argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FIFO_TXEN_BIT</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0080</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FIFO_TX</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFF7F</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FIFO_RX</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;
+&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FIFO_DONLY_BIT</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x1000</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_DATA_ONLY</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xEFFF</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FULL_MESSAGE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">;
+</span></code></pre>
+
+
+    <h4 id="can_mask">CAN_MASK Constants</h4>
+    <p><code>CAN_MASK</code> constants define mask codes. Function <a href="#can1setmask">CANxSetMask</a> expects one of these as its argument:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MASK_0</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MASK_1</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MASK_2</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_MASK_3</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-symbol">;
+</span></code></pre>
+
+    <p></p>
+    <h4 id="can_filter">CAN_FILTER Constants</h4>
+    <p><code>CAN_FILTER</code> constants define filter codes. Function <a href="#can1setfilter">CANxSetFilter</a> expects one of these as its argument:</p>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_0</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_1</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_2</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_3</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_4</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_5</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">5</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_6</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_7</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_8</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_9</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-number">9</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_11</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">11</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_12</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">12</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_13</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">13</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_14</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">14</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_15</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">15</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_16</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">16</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_17</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">17</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_18</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">18</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_19</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">19</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_20</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">20</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_21</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">21</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_22</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">22</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_23</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">23</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_24</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">24</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_25</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">25</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_26</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">26</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_27</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">27</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_28</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">28</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_29</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">29</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_30</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">30</span><span class="cpp1-symbol">,
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_FILTER_31</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">31</span><span class="cpp1-symbol">;
+</span></code></pre>
+
+
+    <h3>Library Example</h3>
+
+    <p>The example demonstrates <acronym title="Controller Area Network">CAN</acronym> protocol. The 1st node initiates the communication with the 2nd node by sending some
+      data to its address. The 2nd node responds by sending back the data incremented by 1. The 1st node then does the same and sends incremented data
+      back to the 2nd node, etc.</p>
+
+    <p>Code for the first CAN node:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Init_Flags,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Rcv_Flags;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;can&nbsp;flags
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Rx_Data_Len;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;received&nbsp;data&nbsp;length&nbsp;in&nbsp;bytes
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data[</span><span class="cpp1-number">8</span><span class="cpp1-symbol">];</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Msg_Rcvd;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;reception&nbsp;flag
+</span><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">long</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">ID_1st</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">12111</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">ID_2nd</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;node&nbsp;IDs
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">long</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Rx_ID;
+
+</span><span class="cpp1-comment">//&nbsp;reserve&nbsp;space&nbsp;for&nbsp;2&nbsp;buffers&nbsp;with&nbsp;8&nbsp;messages&nbsp;(each&nbsp;message&nbsp;is&nbsp;16&nbsp;bytes)
+//&nbsp;beggining&nbsp;of&nbsp;the&nbsp;buffer&nbsp;must&nbsp;be&nbsp;32bit&nbsp;aligned
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">FIFObuffers[</span><span class="cpp1-number">2</span><span class="cpp1-symbol">*</span><span class="cpp1-number">8</span><span class="cpp1-symbol">*</span><span class="cpp1-number">16</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">absolute</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xA0000000</span><span class="cpp1-symbol">;
+
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i;
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">AD1PCFG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">LATB</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">TRISB</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Init_Flags</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;clear&nbsp;flags
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Rcv_Flags</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;form&nbsp;value&nbsp;to&nbsp;be&nbsp;used
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_XTD_FRAME</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;with&nbsp;CAN1Write
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_NO_RTR_FRAME;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Init_Flags</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_SAMPLE_THRICE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;form&nbsp;value&nbsp;to&nbsp;be&nbsp;used
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_PHSEG2_PRG_ON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;with&nbsp;CAN1Initialize
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_XTD_MSG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_MATCH_MSG_TYPE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_LINE_FILTER_OFF;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1Initialize(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,Can_Init_Flags);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;initialize&nbsp;CAN1
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1SetOperationMode(_CAN_MODE_CONFIG,</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;set&nbsp;CONFIGURATION&nbsp;mode
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1AssignBuffer(FIFObuffers);</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-comment">//assign&nbsp;the&nbsp;buffers
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//configure&nbsp;rx&nbsp;fifo
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1ConfigureFIFO(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,_CAN_FIFO_RX</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_FULL_MESSAGE);</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-comment">//RX&nbsp;buffer&nbsp;8&nbsp;messages&nbsp;deep
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//configure&nbsp;tx&nbsp;fifo
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1ConfigureFIFO(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,_CAN_FIFO_TX</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_TX_PRIORITY_3</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_TX_NO_RTR_FRAME);</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-comment">//TX&nbsp;buffer&nbsp;8&nbsp;messages&nbsp;deep
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//set&nbsp;mask&nbsp;0
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1SetMask(_CAN_MASK_0,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">-</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_MATCH_MSG_TYPE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_XTD_MSG);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;set&nbsp;all&nbsp;mask1&nbsp;bits&nbsp;to&nbsp;ones
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//set&nbsp;filter&nbsp;1
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1SetFilter(_CAN_FILTER_31,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">ID_2nd,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_MASK_0,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_0,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_XTD_MSG);</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;set&nbsp;id&nbsp;of&nbsp;filter1&nbsp;to&nbsp;2nd&nbsp;node&nbsp;ID
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1SetOperationMode(_CAN_MODE_NORMAL,</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;set&nbsp;NORMAL&nbsp;mode
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">RxTx_Data[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFE</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1Write(ID_1st,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags);
+</span><span class="cpp1-space">&nbsp;&nbsp;
+&nbsp;&nbsp;</span><span class="cpp1-reservedword">while</span><span class="cpp1-symbol">(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">){
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Msg_Rcvd</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CAN1Read(&amp;Rx_ID,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;Rx_Data_Len,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;Can_Rcv_Flags);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;receive&nbsp;message
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">((Rx_ID</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">==</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">ID_2nd)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Msg_Rcvd)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;if&nbsp;message&nbsp;received&nbsp;check&nbsp;id
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">LATB</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">];</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;id&nbsp;correct,&nbsp;output&nbsp;data&nbsp;at&nbsp;PORTB
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">RxTx_Data[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">]++;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;increment&nbsp;received&nbsp;data
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">delay_ms(</span><span class="cpp1-number">10</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1Write(ID_1st,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;send&nbsp;incremented&nbsp;data&nbsp;back
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+
+
+</span></code>
+</pre>
+
+    <p>Code for the second CAN node:</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Init_Flags,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Rcv_Flags;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;can&nbsp;flags
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Rx_Data_Len;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;received&nbsp;data&nbsp;length&nbsp;in&nbsp;bytes
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data[</span><span class="cpp1-number">8</span><span class="cpp1-symbol">];</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;can&nbsp;rx/tx&nbsp;data&nbsp;buffer
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Msg_Rcvd;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;reception&nbsp;flag
+</span><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">long</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">ID_1st</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">12111</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">ID_2nd</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">3</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;node&nbsp;IDs
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">long</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Rx_ID;
+
+</span><span class="cpp1-comment">//&nbsp;reserve&nbsp;space&nbsp;for&nbsp;2&nbsp;buffers&nbsp;with&nbsp;8&nbsp;messages&nbsp;(each&nbsp;message&nbsp;is&nbsp;16&nbsp;bytes)
+//&nbsp;beggining&nbsp;of&nbsp;the&nbsp;buffer&nbsp;must&nbsp;be&nbsp;32bit&nbsp;aligned
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">FIFIObuffers[</span><span class="cpp1-number">2</span><span class="cpp1-symbol">*</span><span class="cpp1-number">8</span><span class="cpp1-symbol">*</span><span class="cpp1-number">16</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">absolute</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xA0000000</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TX_Data[</span><span class="cpp1-number">8</span><span class="cpp1-symbol">];
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">AD1PCFG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">LATB</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">TRISB</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Init_Flags</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;clear&nbsp;flags
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Rcv_Flags</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;form&nbsp;value&nbsp;to&nbsp;be&nbsp;used
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_XTD_FRAME</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;with&nbsp;CAN1Write
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_TX_NO_RTR_FRAME;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Can_Init_Flags</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_SAMPLE_THRICE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;form&nbsp;value&nbsp;to&nbsp;be&nbsp;used
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_PHSEG2_PRG_ON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;with&nbsp;CAN1Initialize
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_XTD_MSG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_MATCH_MSG_TYPE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_LINE_FILTER_OFF;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1Initialize(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-number">3</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,Can_Init_Flags);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;initialize&nbsp;CAN1
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1SetOperationMode(_CAN_MODE_CONFIG,</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;set&nbsp;CONFIGURATION&nbsp;mode
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1AssignBuffer(FIFIObuffers);</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-comment">//assign&nbsp;the&nbsp;buffers
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//configure&nbsp;rx&nbsp;fifo
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1ConfigureFIFO(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_FIFO_RX</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_FULL_MESSAGE);</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-comment">//RX&nbsp;buffer&nbsp;8&nbsp;messages&nbsp;deep
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//configure&nbsp;tx&nbsp;fifo
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1ConfigureFIFO(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_FIFO_TX</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_TX_PRIORITY_3</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_TX_NO_RTR_FRAME);</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-comment">//TX&nbsp;buffer&nbsp;8&nbsp;messages&nbsp;deep
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//set&nbsp;mask&nbsp;1
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1SetMask(_CAN_MASK_1,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">-</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_MATCH_MSG_TYPE</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_XTD_MSG);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;set&nbsp;all&nbsp;mask1&nbsp;bits&nbsp;to&nbsp;ones
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//set&nbsp;filter&nbsp;5
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1SetFilter(_CAN_FILTER_31,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">ID_1st,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_MASK_1,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_BUFFER_0,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_CAN_CONFIG_XTD_MSG);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1SetOperationMode(_CAN_MODE_NORMAL,</span><span class="cpp1-hexadecimal">0xFF</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;set&nbsp;CONFIGURATION&nbsp;mode
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">RxTx_Data[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">TRISD</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">while</span><span class="cpp1-symbol">(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;endless&nbsp;loop
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Msg_Rcvd</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CAN1Read(&amp;Rx_ID</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;Rx_Data_Len,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;Can_Rcv_Flags);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;receive&nbsp;message
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">latd</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Rcv_Flags;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">((Rx_ID</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">==</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">ID_1st)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Msg_Rcvd)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;if&nbsp;message&nbsp;received&nbsp;check&nbsp;id
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">LATB</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">];</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;id&nbsp;correct,&nbsp;output&nbsp;data&nbsp;at&nbsp;PORTB
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">RxTx_Data[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">]++;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;increment&nbsp;received&nbsp;data
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">CAN1Write(ID_2nd,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RxTx_Data,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Can_Send_Flags);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;send&nbsp;incremented&nbsp;data&nbsp;back
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+
+
+</span></code>
+</pre>
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Example of interfacing CAN transceiver with MCU and bus" src="img/Schemes/scheme_can.gif"></p>
+    <p class="center small">Example of interfacing <acronym title="Controller Area Network">CAN</acronym> transceiver with MCU and <acronym title="Controller Area Network">CAN</acronym> bus</p>
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

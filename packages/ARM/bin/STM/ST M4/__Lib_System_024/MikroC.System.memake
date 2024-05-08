@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32F42x_43x.emcl",
+        "__Lib_GPIO_32F4x9_Vx_Zx_Defs.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_System_4XXHS.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F469ZE$|^STM32F469VE$|^STM32F479ZG$|^STM32F479VG$|^STM32F469ZI$|^STM32F479VI$|^STM32F479ZI$|^STM32F469ZG$|^STM32F469VG$|^STM32F469VI$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

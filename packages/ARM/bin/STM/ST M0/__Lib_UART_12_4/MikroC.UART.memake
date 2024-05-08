@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_UART_12_4.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L071KZ$|^STM32L071K8$|^STM32L072KZ$|^STM32L081KZ$|^STM32L082KZ$|^STM32L071KB$|^STM32L072KB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

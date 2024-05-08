@@ -1,0 +1,20 @@
+
+uses: {
+    MikroC.System
+    MikroC.Button
+}
+
+depends: {
+    MikroC.System
+    MikroC.Button
+}
+
+type: executable
+
+sources: {
+    Button.c
+}
+
+others: {
+    
+}

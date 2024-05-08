@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.PWM16bit",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_PWM16bit_12.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATMEGA8A$|^ATTINY84A$|^ATMEGA8515$|^ATTINY24$|^ATMEGA32A$|^ATTINY44A$|^ATTINY828$|^ATTINY2313A$|^ATTINY1634$|^ATMEGA32$|^ATMEGA8535$|^ATMEGA16$|^ATTINY24A$|^ATMEGA8$|^ATTINY4313$|^ATTINY2313$|^ATMEGA16A$|^ATTINY84$|^ATTINY44$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

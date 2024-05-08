@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_UART_2.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L021F4$|^STM32L031G6$|^STM32L041G6$|^STM32L011D3$|^STM32L011K3$|^STM32L031C6$|^STM32L041C6$|^STM32L021D4$|^STM32L031E4$|^STM32L031C4$|^STM32L031F4$|^STM32L011F4$|^STM32L031E6$|^STM32L031G4$|^STM32L011D4$|^STM32L011E4$|^STM32L011G3$|^STM32L031K4$|^STM32L011E3$|^STM32L041K6$|^STM32L041F6$|^STM32L011F3$|^STM32L011K4$|^STM32L021K4$|^STM32L031K6$|^STM32L021G4$|^STM32L031F6$|^STM32L011G4$|^STM32L041E6$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

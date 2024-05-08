@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_ADC_1_p30_pwm.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33FJ09GS302$|^dsPIC33FJ32GS606$|^dsPIC33FJ06GS001$|^dsPIC33FJ06GS101A$|^dsPIC33FJ32GS608$|^dsPIC33FJ06GS102$|^dsPIC33FJ06GS202A$|^dsPIC33FJ64GS606$|^dsPIC33FJ16GS402$|^dsPIC33FJ16GS502$|^dsPIC30F1010$|^dsPIC33FJ32GS610$|^dsPIC30F2020$|^dsPIC33FJ64GS406$|^dsPIC33FJ32GS406$|^dsPIC33FJ06GS202$|^dsPIC33FJ16GS504$|^dsPIC33FJ64GS608$|^dsPIC33FJ06GS102A$|^dsPIC33FJ06GS101$|^dsPIC33FJ16GS404$|^dsPIC33FJ64GS610$|^dsPIC30F2023$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

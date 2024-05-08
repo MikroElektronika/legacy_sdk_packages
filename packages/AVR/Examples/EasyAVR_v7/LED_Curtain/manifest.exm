@@ -1,0 +1,8 @@
+{
+    "name": "Led Curtain",
+    "description": "This is a simple 'Hello World' project. It turns LEDs on/off.",
+    "image" : "LEDs.png",
+    "toolchain": ["mikrocavr"],
+    "hw" : ["EasyAVR v7"],
+    "category" : ["mikroC legacy AVR"]
+}

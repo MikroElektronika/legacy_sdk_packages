@@ -1,0 +1,20 @@
+:: Base project template
+
+:: project: Button
+target: Button
+
+type: executable
+
+sources: {
+    main.c
+}
+
+depends: {
+    MikroC.Button
+    MikroC.System
+}
+
+uses: {
+    MikroC.Button
+    MikroC.System
+}

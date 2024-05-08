@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Compact_Flash_FAT16",
+    "global_visibility": true,
+    "arch": "M4DSP",
+    "binaries": [
+        "__Lib_CFFat16.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK53DN512.+10$|^MK60DN256.+10$|^MK60DN512.+10$|^MK51DN512.+10$|^MK20DN128.+5$|^MK60DX256.+10$|^MK51DX256.+10$|^MK51DN256.+10$|^MK53DX256.+10$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

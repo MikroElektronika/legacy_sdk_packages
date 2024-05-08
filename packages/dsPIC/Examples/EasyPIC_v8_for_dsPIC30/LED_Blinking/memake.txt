@@ -1,0 +1,18 @@
+:: Base project template
+
+:: project: LED_Blinking
+target: LED_Blinking
+
+type: executable
+
+sources: {
+    LED_Blinking.c
+}
+
+depends: {
+    MikroC.System
+}
+
+others: {
+    ./io_group.png
+}

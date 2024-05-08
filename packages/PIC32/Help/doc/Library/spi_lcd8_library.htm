@@ -1,0 +1,859 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>SPI Lcd8 Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">SPI Lcd8 Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="spi_lcd_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="spi_t6963c_graphic_lcd_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>SPI <acronym title="Liquid Crystal Display">Lcd</acronym>8 (8-bit interface) Library</h2></a>
+
+    <p>The mikroC PRO for PIC32 provides a library for communication with <acronym title="Liquid Crystal Display">Lcd</acronym> (with HD44780 compliant controllers) in 8-bit mode via <acronym title="Serial Peripheral Interface">SPI</acronym> interface.</p>
+    
+    
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+       <ul>
+       	<li>When using this library with PIC32 family <acronym title="MicroController Unit">MCU</acronym>s be aware of their voltage incompatibility with certain number of Lcd modules. <br>So, additional external power supply for these modules may be required.</li>
+       	<li>Library uses the SPI module for communication. The user must initialize the appropriate SPI module before using the SPI Lcd8 Library.</li>
+       	<li>For MCUs with multiple SPI modules it is possible to initialize all of them and then switch by using the <code>SPI_Set_Active()</code> routine. See the <a href="spi_library.htm">SPI Library</a> functions.</li>
+       	<li>This Library is designed to work with the mikroElektronika's Serial Lcd/Glcd Adapter Board pinout, see schematic at the bottom of this page for details.</li>
+       </ul>
+    </div>   
+
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="SPI Lcd8 Library Dependency Tree" src="img/dependencies/spilcd8_dependency.gif">  
+    <p></p>  
+
+    <h3>External dependencies of <acronym title="Serial Peripheral Interface">SPI</acronym> <acronym title="Liquid Crystal Display">Lcd</acronym> Library</h3>
+    
+    <p>The implementation of <acronym title="Serial Peripheral Interface">SPI</acronym> <acronym title="Liquid Crystal Display">Lcd</acronym> Library routines is 
+    	 based on Port Expander Library routines.</p>
+    <p>External dependencies are the same as <a href="port_expander_library.htm">Port Expander Library external dependencies</a>.</p>
+   
+    <!-- -->
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#spi_lcd8_config">SPI_Lcd8_Config</a></li>
+      <li><a href="#spi_lcd8_out">SPI_Lcd8_Out</a></li>
+      <li><a href="#spi_lcd8_out_cp">SPI_Lcd8_Out_Cp</a></li>
+      <li><a href="#spi_lcd8_chr">SPI_Lcd8_Chr</a></li>
+      <li><a href="#spi_lcd8_chr_cp">SPI_Lcd8_Chr_Cp</a></li>
+      <li><a href="#spi_lcd8_cmd">SPI_Lcd8_Cmd</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="spi_lcd8_config">SPI_Lcd8_Config</h3>
+
+
+    <!-- tabela: SPI_Lcd8_Config -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Lcd8_Config(<b>char</b> DeviceAddress);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the Lcd module via <acronym title="Serial Peripheral Interface">SPI</acronym> interface.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>DeviceAddress:</code> SPI expander hardware address, see schematic at the bottom of this page</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	Global variables :
+          	<ul>
+          	  <li><code>SPExpanderCS</code>: Chip Select line
+              <li><code>SPExpanderRST</code>: Reset line 
+              <li><code>SPExpanderCS_Direction</code>: Direction of the Chip Select pin
+              <li><code>SPExpanderRST_Direction</code>: Direction of the Reset pin	
+            </ul>
+            must be defined before using this function.
+            <p><br>The <acronym title="Serial Peripheral Interface">SPI</acronym> module needs to be initialized.
+          		 See <a href="spi_library.htm#spi_init">SPIx_Init</a> and <a href="spi_library.htm#spi_init_advanced">SPIx_Init_Advanced</a> routines.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST <b>at</b> LATF0_bit;
+<b>sbit</b>  SPExpanderCS  <b>at</b> LATF1_bit;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> TRISF0_bit;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> TRISF1_bit;
+<i>// End Port Expander module connections</i>
+
+...
+
+<i>// If Port Expander Library uses SPI1 module</i>
+SPI1_Init();                                <i>// Initialize SPI module used with PortExpander</i>
+SPI_Lcd8_Config(0);                         <i>// intialize Lcd in 8bit mode via SPI</i>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="spi_lcd8_out">SPI_Lcd8_Out</h3>
+
+
+    <!-- tabela: SPI_Lcd8_Out -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Lcd8_Out(<b>unsigned short</b> row, <b>unsigned short</b> column, <b>char</b> *text);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints text on Lcd starting from specified position. Both string variables and literals can be passed as a text.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>row:</code> starting position row number</li>
+             	<li><code>column:</code> starting position column number</li>
+             	<li><code>text:</code> text to be written</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Lcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_lcd8_config">SPI_Lcd8_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write text &#34;Hello!&#34; on Lcd starting from row 1, column 3:</i>
+SPI_Lcd8_Out(1, 3, &#34;Hello!&#34;);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_lcd8_out_cp">SPI_Lcd8_Out_Cp</h3>
+
+
+    <!-- tabela: SPI_Lcd8_Out_Cp -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Lcd8_Out_CP(<b>char</b> *text);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints text on Lcd at current cursor position. Both string variables and literals can be passed as a text.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>text:</code> text to be written</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Lcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_lcd8_config">SPI_Lcd8_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Write text &#34;Here!&#34; at current cursor position:</i>
+SPI_Lcd8_Out_Cp(&#34;Here!&#34;);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_lcd8_chr">SPI_Lcd8_Chr</h3>
+
+
+    <!-- tabela: SPI_Lcd8_Chr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Lcd8_Chr(<b>unsigned short</b> row, <b>unsigned short</b> column, <b>char</b> out_char);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints character on Lcd at specified position. Both variables and literals can be passed as character.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>row:</code> writing position row number</li>
+             	<li><code>column:</code> writing position column number</li>
+             	<li><code>out_char:</code> character to be written</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Lcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_lcd8_config">SPI_Lcd8_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+          	
+<pre>
+<i>// Write character "i" at row 2, column 3:</i>
+SPI_Lcd8_Chr(2, 3, 'i');
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_lcd8_chr_cp">SPI_Lcd8_Chr_Cp</h3>
+
+
+    <!-- tabela: SPI_Lcd8_Chr_Cp -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Lcd8_Chr_CP(<b>char</b> out_char);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Prints character on Lcd at current cursor position. Both variables and literals can be passed as character.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>out_char:</code> character to be written</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Lcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_lcd8_config">SPI_Lcd8_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Print &#8220;e&#8221; at current cursor position:</p>
+
+<pre>
+<i>// Write character "e" at current cursor position:</i>
+SPI_Lcd8_Chr_Cp('e');
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_lcd8_cmd">SPI_Lcd8_Cmd</h3>
+
+
+    <!-- tabela: SPI_Lcd8_Cmd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Lcd8_Cmd(<b>char</b> out_char);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends command to Lcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>out_char:</code> command to be sent</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Lcd needs to be initialized for <acronym title="Serial Peripheral Interface">SPI</acronym> communication, 
+            	see <a href="#spi_lcd8_config">SPI_Lcd8_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Clear Lcd display:</i>
+SPI_Lcd8_Cmd(_LCD_CLEAR);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Predefined constants can be passed to the routine, see <a href="#lcd_commands">Available SPI Lcd8 Commands.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h4 id="lcd_commands">Available SPI Lcd8 Commands</h4>
+
+    <!-- tabela: SPI Lcd8 Commands -->
+
+    <table class="small">
+
+      <!--
+      <caption></caption>
+      -->
+
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">SPI Lcd8 Command</th>
+          <th valign="top">Purpose</th>
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_FIRST_ROW</td>
+          <td valign="top">Move cursor to the 1st row</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_SECOND_ROW</td>
+          <td valign="top">Move cursor to the 2nd row</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_THIRD_ROW</td>
+          <td valign="top">Move cursor to the 3rd row</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_FOURTH_ROW</td>
+          <td valign="top">Move cursor to the 4th row</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_CLEAR</td>
+          <td valign="top">Clear display</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_RETURN_HOME</td>
+          <td valign="top">Return cursor to home position, returns a shifted display to its original position. Display data RAM is unaffected.</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_CURSOR_OFF</td>
+          <td valign="top">Turn off cursor</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_UNDERLINE_ON</td>
+          <td valign="top">Underline cursor on</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_BLINK_CURSOR_ON</td>
+          <td valign="top">Blink cursor on</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_MOVE_CURSOR_LEFT</td>
+          <td valign="top">Move cursor left without changing display data RAM</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_MOVE_CURSOR_RIGHT</td>
+          <td valign="top">Move cursor right without changing display data RAM</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_TURN_ON</td>
+          <td valign="top">Turn Lcd display on</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_TURN_OFF</td>
+          <td valign="top">Turn Lcd display off</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_SHIFT_LEFT</td>
+          <td valign="top">Shift display left without changing display data RAM</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_LCD_SHIFT_RIGHT</td>
+          <td valign="top">Shift display right without changing display data RAM</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>This example demonstrates how to communicate Lcd in 8-bit mode via the SPI module, using serial to parallel convertor MCP23S17.</p>
+
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">*text</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;mikroElektronika&quot;</span><span class="cpp1-symbol">;
+
+</span><span class="cpp1-comment">//&nbsp;Port&nbsp;Expander&nbsp;module&nbsp;connections
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPExpanderRST</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD8_bit;
+sbit</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPExpanderCS</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD9_bit;
+sbit</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPExpanderRST_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD8_bit;
+sbit</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPExpanderCS_Direction</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD9_bit;
+</span><span class="cpp1-comment">//&nbsp;End&nbsp;Port&nbsp;Expander&nbsp;module&nbsp;connections
+
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Loop&nbsp;variable
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Move_Delay()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Function&nbsp;used&nbsp;for&nbsp;text&nbsp;moving
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">500</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;You&nbsp;can&nbsp;change&nbsp;the&nbsp;moving&nbsp;speed&nbsp;here
+</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CHECON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x32</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">AD1PCFG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Configure&nbsp;AN&nbsp;pins&nbsp;as&nbsp;digital
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;If&nbsp;Port&nbsp;Expander&nbsp;Library&nbsp;uses&nbsp;SPI2&nbsp;module
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;SPI&nbsp;module&nbsp;used&nbsp;with&nbsp;PortExpander
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI2_Init_Advanced(_SPI_MASTER,_SPI_8_BIT,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">_SPI_SS_DISABLE,_SPI_DATA_SAMPLE_MIDDLE,_SPI_CLK_IDLE_LOW,_SPI_ACTIVE_2_IDLE);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Config(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;Lcd&nbsp;over&nbsp;SPI&nbsp;interface
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Cmd(_LCD_CLEAR);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Clear&nbsp;display
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Cmd(_LCD_CURSOR_OFF);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Turn&nbsp;cursor&nbsp;off
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Out(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;mikroE&quot;</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Print&nbsp;text&nbsp;to&nbsp;Lcd,&nbsp;1st&nbsp;row,&nbsp;6th&nbsp;column
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Chr_CP(</span><span class="cpp1-character">'!'</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Append&nbsp;'!'
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Out(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">text);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Print&nbsp;text&nbsp;to&nbsp;Lcd,&nbsp;2nd&nbsp;row,&nbsp;1st&nbsp;column
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;SPI_Lcd8_Out(3,1,&quot;mikroE&quot;);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;For&nbsp;Lcd&nbsp;with&nbsp;more&nbsp;than&nbsp;two&nbsp;rows
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;SPI_Lcd8_Out(4,15,&quot;mikroE&quot;);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;For&nbsp;Lcd&nbsp;with&nbsp;more&nbsp;than&nbsp;two&nbsp;rows
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">2000</span><span class="cpp1-symbol">);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Moving&nbsp;text
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(i=</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i&lt;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Move&nbsp;text&nbsp;to&nbsp;the&nbsp;right&nbsp;4&nbsp;times
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Cmd(_LCD_SHIFT_RIGHT);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Move_Delay();
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">while</span><span class="cpp1-symbol">(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Endless&nbsp;loop
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(i=</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i&lt;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Move&nbsp;text&nbsp;to&nbsp;the&nbsp;left&nbsp;7&nbsp;times
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Cmd(_LCD_SHIFT_LEFT);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Move_Delay();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(i=</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i&lt;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Move&nbsp;text&nbsp;to&nbsp;the&nbsp;right&nbsp;7&nbsp;times
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">SPI_Lcd8_Cmd(_LCD_SHIFT_RIGHT);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Move_Delay();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+
+}
+</span></code>
+</pre>
+
+    <p class="center"><img alt="SPI Lcd8 HW connection" src="img/Schemes/scheme_spi_lcd8.gif"></p>
+    <p class="center small">SPI Lcd8 HW connection</p>
+   
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>

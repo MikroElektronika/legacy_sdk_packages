@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_ADC_ref2.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATTINY44A$|^ATTINY84A$|^ATTINY44$|^ATTINY84$|^ATTINY1634$|^ATTINY24A$|^ATTINY24$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

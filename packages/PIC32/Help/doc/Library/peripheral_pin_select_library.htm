@@ -1,0 +1,956 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Peripheral Pin Select Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroelektronika.co.yu">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_PIC32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Peripheral Pin Select Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="onewire_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="port_expander_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Peripheral Pin Select Library</h2></a>
+
+
+    <p>The Peripheral Pin Select library enables user to have more than one digital peripheral multiplexed on a single pin.
+    Users may independently map the input and/or output of any one of many digital peripherals to any one of these I/O pins.
+    <br>The peripherals managed by the Peripheral Pin Select library are all digital only peripherals.</p>
+    
+    <p>A key difference between pin select and non pin select peripherals is that pin select peripherals are not associated
+    with a default I/O pin. The peripheral must always be assigned to a specific I/O pin before it can be
+    used. 
+    <br>In contrast, non pin select peripherals are always available on a default pin, assuming that the peripheral
+    is active and not conflicting with another peripheral.</p>
+    
+    <p>When a pin selectable peripheral is active on a given I/O pin, it takes priority over all other digital I/O and digital
+    communication peripherals associated with the pin.</p>
+
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+	    <ul>
+	    	<li>For input only, peripheral pin select functionality does not have priority over TRISx settings.  Therefore, when configuring RPn pin for input, the corresponding bit in the TRISx register must also be configured for input (set to 1).</li>
+	    	<li>This library applies applies only to the MCUs with Peripheral Pin Select functionality (PIC32MX1xxFxxxB, PIC32MX1xxFxxxC, PIC32MX1xxFxxxD, PIC32MX2xxFxxxB, PIC32MX2xxFxxxC and PIC32MX2xxFxxxD).</li>
+	    </ul>
+    </div>
+
+
+    <!-- -->
+
+
+    <p></p>
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#unlock_iolock">Unlock_IOLOCK</a></li>
+      <li><a href="#lock_iolock">Lock_IOLOCK</a></li>
+      <li><a href="#pps_mapping">PPS_Mapping</a></li>
+      <li><a href="#pps_mapping_nolock">PPS_Mapping_NoLock</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="unlock_iolock">Unlock_IOLOCK</h3>
+
+
+    <!-- tabela: Unlock_IOLOCK -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Unlock_IOLOCK();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Unlocks I/O pins for Peripheral Pin Mapping.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>Unlock_IOLOCK();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="lock_iolock">Lock_IOLOCK</h3>
+
+
+    <!-- tabela: Lock_IOLOCK -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Lock_IOLOCK();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Locks I/O pins for Peripheral Pin Mapping.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>Lock_IOLOCK();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pps_mapping">PPS_Mapping</h3>
+
+
+    <!-- tabela: PPS_Mapping -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> PPS_Mapping(<b>unsigned short</b> rp_num, <b>unsigned short</b> direction, <b>unsigned short</b> funct_name);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets desired internal MCU module to be mapped on the requested pins.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>rp_num</code>: Remappable pin number. See <a href="#pins">Remappable Pins</a> table for adequate values.</li>
+              <li><code>direction</code>: Sets requested pin to be used as an input or output. See <a href="#direction">Direction Parameters</a> for adequate values.</li>
+              <li><code>funct_name</code>: Selects internal MCU module function for usage. See <a href="#input">Input Functions</a> or <a href="#output">Output Functions</a> for adequate values.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+            	<li><code>0</code> - if non-existing peripheral pin is selected.</li> 
+            	<li><code>255</code> - if peripheral pin mapping was successful.</li>  
+            </ul>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+PPS_Mapping(_RPC6, _OUTPUT, _U1TX);   // Sets pin PORTC.B6 to be Output and maps UART1 Transmit to it
+PPS_Mapping(_RPC7, _INPUT, _U1RX);    // Sets pin PORTC.B7 to be Input and maps UART1 Receive to it
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use this routine when <code>IOL1WAY</code> bit is cleared.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="pps_mapping_nolock">PPS_Mapping_NoLock</h3>
+
+
+    <!-- tabela: PPS_Mapping -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> PPS_Mapping_NoLock(<b>unsigned short</b> rp_num, <b>unsigned short</b> input_output, <b>unsigned short</b> funct_name);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets desired internal MCU module to be mapped on the requested pins.</p>
+            <p>This function doesn't use <a href="#unlock_iolock">Unlock_IOLOCK</a> and <a href="#lock_iolock">Lock_IOLOCK</a> routines, so the user must call them before and after this function call (very useful if <code>IOL1WAY</code> bit is set, when after one lock sequence it is not possible to unlock it).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>rp_num</code>: Remappable pin number. See <a href="#pins">Remappable Pins</a> table for adequate values.</li>
+              <li><code>input_output</code>: Sets requested pin to be used as an input or output. See <a href="#direction">Direction Parameters</a> for adequate values.</li>
+              <li><code>funct_name</code>: Selects internal MCU module function for usage. See <a href="#input">Input Functions</a> or <a href="#output">Output Functions</a> for adequate values.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+           	<ul>
+            	<li><code>0</code> - if non-existing peripheral pin is selected.</li> 
+            	<li><code>255</code> - if peripheral pin mapping was successful.</li>  
+            </ul>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Unlock_IOLOCK();
+
+PPS_Mapping(_RPC6, _OUTPUT, _U1TX);   // Sets pin PORTC.B6 to be Output and maps UART1 Transmit to it
+PPS_Mapping(_RPC7, _INPUT, _U1RX);    // Sets pin PORTC.B7 to be Input and maps UART1 Receive to it
+
+Lock_IOLOCK();
+
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h4 id="pins">Remappable Pins</h4>
+
+    <!-- tabela: Available Modules -->
+
+    <table class="small">
+
+      <!--
+      <caption></caption>
+      -->
+
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Pin Identifer</th>
+          <th valign="top">Description</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPA0</td>
+          <td valign="top">Remappable Pin PORTA.B0</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPA1</td>
+          <td valign="top">Remappable Pin PORTA.B1</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPA2</td>
+          <td valign="top">Remappable Pin PORTA.B2</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPA3</td>
+          <td valign="top">Remappable Pin PORTA.B3</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPA4</td>
+          <td valign="top">Remappable Pin PORTA.B4</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPA8</td>
+          <td valign="top">Remappable Pin PORTA.B8</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPA9</td>
+          <td valign="top">Remappable Pin PORTA.B9</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB0</td>
+          <td valign="top">Remappable Pin PORTB.B0</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB1</td>
+          <td valign="top">Remappable Pin PORTB.B1</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB2</td>
+          <td valign="top">Remappable Pin PORTB.B2</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB3</td>
+          <td valign="top">Remappable Pin PORTB.B3</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB4</td>
+          <td valign="top">Remappable Pin PORTB.B4</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB5</td>
+          <td valign="top">Remappable Pin PORTB.B5</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB6</td>
+          <td valign="top">Remappable Pin PORTB.B6</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB7</td>
+          <td valign="top">Remappable Pin PORTB.B7</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB8</td>
+          <td valign="top">Remappable Pin PORTB.B8</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB9</td>
+          <td valign="top">Remappable Pin PORTB.B9</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB10</td>
+          <td valign="top">Remappable Pin PORTB.B10</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB11</td>
+          <td valign="top">Remappable Pin PORTB.B11</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB12</td>
+          <td valign="top">Remappable Pin PORTB.B12</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB13</td>
+          <td valign="top">Remappable Pin PORTB.B13</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB14</td>
+          <td valign="top">Remappable Pin PORTB.B14</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPB15</td>
+          <td valign="top">Remappable Pin PORTB.B15</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC0</td>
+          <td valign="top">Remappable Pin PORTC.B0</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC1</td>
+          <td valign="top">Remappable Pin PORTC.B1</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC2</td>
+          <td valign="top">Remappable Pin PORTC.B2</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC3</td>
+          <td valign="top">Remappable Pin PORTC.B3</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC4</td>
+          <td valign="top">Remappable Pin PORTC.B4</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC5</td>
+          <td valign="top">Remappable Pin PORTC.B5</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC6</td>
+          <td valign="top">Remappable Pin PORTC.B6</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC7</td>
+          <td valign="top">Remappable Pin PORTC.B7</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC8</td>
+          <td valign="top">Remappable Pin PORTC.B8</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_RPC9</td>
+          <td valign="top">Remappable Pin PORTC.B9</td>
+        </tr>
+
+    </table>
+
+
+    <!-- kraj tabele -->
+
+    <h4 id="direction">Direction Parameters</h4>
+
+    <table class="small">
+      
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Direction Parameter</th>
+          <th valign="top">Description</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_INPUT</td>
+          <td valign="top">Sets selected pin as input</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_OUTPUT</td>
+          <td valign="top">Sets selected pin as output</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <h4 id="input">Input Functions</h4>
+
+    <!-- tabela: Available Modules -->
+
+    <table class="small">
+
+      <!--
+      <caption></caption>
+      -->
+
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Function Name</th>
+          <th valign="top">Description</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_REFCLKI</td>
+          <td valign="top">Reference Input Clock</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_OCFA</td>
+          <td valign="top">Output Compare Fault A Input</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_OCFB</td>
+          <td valign="top">Output Compare Fault B Inputk</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_IC1</td>
+          <td valign="top">Input Capture 1</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_IC2</td>
+          <td valign="top">Input Capture 2</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_IC3</td>
+          <td valign="top">Input Capture 3</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_IC4</td>
+          <td valign="top">Input Capture 4</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_IC5</td>
+          <td valign="top">Input Capture 5</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_INT1</td>
+          <td valign="top">External Interrupt 1</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_INT2</td>
+          <td valign="top">External Interrupt 2</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_INT3</td>
+          <td valign="top">External Interrupt 3</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_INT4</td>
+          <td valign="top">External Interrupt 4</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_SDI1</td>
+          <td valign="top">SPI1 Data Input</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_SDI2</td>
+          <td valign="top">SPI2 Data Input</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_SS1</td>
+          <td valign="top">SPI1 Slave Select Input</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_SS2</td>
+          <td valign="top">SPI2 Slave Select Input</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_T2CK</td>
+          <td valign="top">Timer2 External Clock</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_T3CK</td>
+          <td valign="top">Timer3 External Clock</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_T4CK</td>
+          <td valign="top">Timer4 External Clock</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_T5CK</td>
+          <td valign="top">Timer5 External Clock</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_U1CTS</td>
+          <td valign="top">UART1 Clear To Send</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_U2CTS</td>
+          <td valign="top">UART2 Clear To Send</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_U1RX</td>
+          <td valign="top">UART1 Receive</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_U2RX</td>
+          <td valign="top">UART2 Receive</td>
+        </tr>
+
+    </table>
+
+    <h4 id="output">Output Functions</h4>
+
+    <table class="small">
+ 
+      <thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Function Name</th>
+          <th valign="top">Description</th>
+        </tr>
+
+      </thead>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_C1OUT</td>
+          <td valign="top">Comparator 1 Output</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_C2OUT</td>
+          <td valign="top">Comparator 2 Output</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_OC1</td>
+          <td valign="top">Output Compare 1</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_OC2</td>
+          <td valign="top">Output Compare 2</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_OC3</td>
+          <td valign="top">Output Compare 3</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_OC4</td>
+          <td valign="top">Output Compare 4</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_OC5</td>
+          <td valign="top">Output Compare 5</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_REFCLKO</td>
+          <td valign="top">REFCLK output signal</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_SDO1</td>
+          <td valign="top">SPI1 Data Output</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_SDO2</td>
+          <td valign="top">SPI2 Data Output</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_SS1X</td>
+          <td valign="top"> SPI1 Slave Synchronization or Frame Pulse I/O</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_SS2X</td>
+          <td valign="top">SPI2 Slave Synchronization or Frame Pulse I/O</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_U1RTS</td>
+          <td valign="top">UART1 Request To Send</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_U2RTS</td>
+          <td valign="top">UART2 Request To Send</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_U1TX</td>
+          <td valign="top">UART1 Transmit</td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td class="code" valign="top">_U2TX</td>
+          <td valign="top">UART2 Transmit</td>
+        </tr>
+
+      </tbody>
+    
+    </table>
+
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

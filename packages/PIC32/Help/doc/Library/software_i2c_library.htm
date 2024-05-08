@@ -1,0 +1,839 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Software I2C Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Software I2C Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="rs-485_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="software_spi_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Library</h2></a>
+
+
+    <p>The mikroC PRO for PIC32 provides routines for implementing Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> communication. These routines are hardware independent and can be used with any MCU. The Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library enables you to use MCU as Master in <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> communication. Multi-master mode is not supported.</p>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>         
+      <ul>
+    	  <li>This library implements time-based activities, so interrupts need to be disabled when using Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym>.</li>
+    	  <li>All <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Library functions are blocking-call functions (they are waiting for <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> clock line to become logical one).</li>
+    	  <li>The pins used for the Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> communication should be connected to the pull-up resistors. Turning off the LEDs connected to these pins may also be required.</li>
+        <li>Every Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library routine has its own counterpart in Hardware <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> library, except <code>I2C_Repeated_Start</code>. <code>Soft_I2C_Start</code> is used instead of <code>I2C_Repeated_Start</code>.</li>
+    	  <li>Working clock frequency of the Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> is 20kHz.</li>
+      </ul>
+    </div>
+    
+    <!-- -->
+
+    <p></p>
+    <h3>External dependencies of Software I&sup2;C Library</h3>
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Software I&sup2;C Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern atomic sbit</b> Soft_I2C_Scl;</code></td>
+          <td align="left">Soft I&sup2;C Clock line.</td>
+          <td align="left"><code><b>sbit</b> Soft_I2C_Scl <b>at</b> RB11_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern atomic sbit</b> Soft_I2C_Sda;</code></td>
+          <td align="left">Soft I&sup2;C Data line.</td>
+          <td align="left"><code><b>sbit</b> Soft_I2C_Sda <b>at</b> RB12_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern atomic sbit</b> Soft_I2C_Scl_Direction;</code></td>
+          <td align="left">Direction of the Soft I&sup2;C Clock pin.</td>
+          <td align="left"><code><b>sbit</b> Soft_I2C_Scl_Direction <b>at</b> TRISB11_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern atomic sbit</b> Soft_I2C_Sda_Direction;</code></td>
+          <td align="left">Direction of the Soft I&sup2;C Data pin.</td>
+          <td align="left"><code><b>sbit</b> Soft_I2C_Sda_Direction <b>at</b> TRISB12_bit;</code></td>
+        </tr>
+ 
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#soft_i2c_init">Soft_I2C_Init</a></li>
+      <li><a href="#soft_i2c_start">Soft_I2C_Start</a></li>
+      <li><a href="#soft_i2c_read">Soft_I2C_Read</a></li>
+      <li><a href="#soft_i2c_write">Soft_I2C_Write</a></li>
+      <li><a href="#soft_i2c_stop">Soft_I2C_Stop</a></li>
+      <li><a href="#soft_i2c_break">Soft_I2C_Break</a></li>
+    </ul>
+
+    <!-- -->
+
+    <h3 id="soft_i2c_init">Soft_I2C_Init</h3>
+
+
+    <!-- tabela: Soft_I2C_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Soft_I2C_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configures the software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          Global variables :
+          <ul>  
+            <li><code>Soft_I2C_Scl</code>: Soft I&sup2;C clock line</li>
+            <li><code>Soft_I2C_Sda</code>: Soft I&sup2;C data line</li>
+            <li><code>Soft_I2C_Scl_Pin_Direction</code>: Direction of the Soft I&sup2;C clock pin</li>
+            <li><code>Soft_I2C_Sda_Pin_Direction</code>: Direction of the Soft I&sup2;C data pin</li>
+          </ul>
+          must be defined before using this function. 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Software I2C connections</i>
+<b>sbit</b> Soft_I2C_Scl           <b>at</b> RB11_bit;
+<b>sbit</b> Soft_I2C_Sda           <b>at</b> RB12_bit;
+<b>sbit</b> Soft_I2C_Scl_Direction <b>at</b> TRISB11_bit;
+<b>sbit</b> Soft_I2C_Sda_Direction <b>at</b> TRISB12_bit;
+<i>// End Software I2C connections</i>
+...
+Soft_I2C_Init();</i></pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_i2c_start">Soft_I2C_Start</h3>
+
+
+    <!-- tabela: Soft_I2C_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Soft_I2C_Start();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Determines if the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus is free and issues START signal.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#soft_i2c_init">Soft_I2C_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+         <td valign="top">
+
+<pre>
+<i>// Issue START signal</i>
+Soft_I2C_Start();</pre>
+
+          </td>
+       </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_i2c_read">Soft_I2C_Read</h3>
+
+
+    <!-- tabela: Soft_I2C_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> Soft_I2C_Read(<b>unsigned int</b> ack);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one byte from the slave.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>ack:</code> acknowledge signal parameter. If the <code>ack==0</code> <em>not acknowledge</em> signal will be sent after reading, otherwise the <em>acknowledge</em> signal will be sent.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>One byte from the Slave.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Soft <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#soft_i2c_init">Soft_I2C_Init</a> routine.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#soft_i2c_start">Soft_I2C_Start</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned short</b> take;
+...
+<i>// Read data and send the not_acknowledge signal</i>
+take = Soft_I2C_Read(0);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_i2c_write">Soft_I2C_Write</h3>
+
+
+    <!-- tabela: Soft_I2C_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> Soft_I2C_Write(<b>unsigned short</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends data byte via the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>data_:</code> data to be sent</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+         	  <ul>
+         	    <li><code>0</code> if there were no errors.</li>
+         	    <li><code>1</code> if write collision was detected on the <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> bus.</li>
+         	  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Soft <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#soft_i2c_init">Soft_I2C_Init</a> routine.</p>
+            <p>Also, START signal needs to be issued in order to use this function. See <a href="#soft_i2c_start">Soft_I2C_Start</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><b>unsigned short</b> data_, error;
+<i>...</i>
+error = Soft_I2C_Write(data_);
+error = Soft_I2C_Write(0xA3);</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_i2c_stop">Soft_I2C_Stop</h3>
+
+
+    <!-- tabela: Soft_I2C_Stop -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Soft_I2C_Stop();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Issues STOP signal.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Soft <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> must be configured before using this function. See <a href="#soft_i2c_init">Soft_I2C_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Issue STOP signal</i>
+Soft_I2C_Stop();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="soft_i2c_break">Soft_I2C_Break</h3>
+
+
+    <!-- tabela: Soft_I2C_Break -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Soft_I2C_Break();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>All Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Library functions can block the program flow (see note at the top of this page). Calling this routine from interrupt will unblock the program execution. This mechanism is similar to <acronym title="Watch Dog Timer">WDT</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            Nothing.
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre><i>// Software I2C connections</i>
+<b>sbit</b> Soft_I2C_Scl           <b>at</b> RC0_bit;
+<b>sbit</b> Soft_I2C_Sda           <b>at</b> RC1_bit;
+<b>sbit</b> Soft_I2C_Scl_Direction <b>at</b> TRISC0_bit;
+<b>sbit</b> Soft_I2C_Sda_Direction <b>at</b> TRISC1_bit;
+<i>// End Software I2C connections</i>
+
+<b>char</b> counter = 0;
+
+<b>void</b> Timer1Int() <b>org</b> IVT_ADDR_T1INTERRUPT {
+
+  <b>if</b> (counter &#62;= 20) {
+    Soft_I2C_Break();
+    counter = 0;                <i>// reset counter</i>
+  }
+  
+  <b>else</b>
+    counter++;                  <i>// increment counter</i>
+  
+  T1IF_bit = 0;                 <i>// Clear Timer1 overflow interrupt flag</i>
+}
+
+<b>void</b> main() {
+
+  ...
+  
+  <i>// try Soft_I2C_Init with blocking prevention mechanism</i>
+  IPC0   = IPC0 | 0x1000;       <i>// Interrupt priority level = 1</i>
+  T1IE_bit= 1;                  <i>// Enable Timer1 interrupts</i>
+  T1CON = 0x8030;               <i>// Timer1 ON, internal clock FCY, prescaler 1:256</i>
+
+  Soft_I2C_Init();
+  T1IE_bit= 0;                  <i>// Disable Timer1 interrupts</i>
+}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Interrupts should be disabled before using Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> routines again (see note at the top of this page).</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>The example demonstrates use of the Software <acronym title="Inter-Integrated Circuit">I&sup2;C</acronym> Library. The PIC32 MCU is connected (SCL, SDA pins) to PCF8583 RTC (real-time clock). Program sends date/time to RTC.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">seconds,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">minutes,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">hours,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">day,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">month,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">year;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Global&nbsp;date/time&nbsp;variables
+
+//&nbsp;Software&nbsp;I2C&nbsp;connections
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Scl</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RF3_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Sda</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RF4_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Scl_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISF3_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Sda_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISF4_bit;
+</span><span class="cpp1-comment">//&nbsp;End&nbsp;Software&nbsp;I2C&nbsp;connections
+
+//&nbsp;LCD&nbsp;module&nbsp;connections
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_RS</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATB2_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_EN</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATB3_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_D4</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATB4_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_D5</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATB5_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_D6</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATB6_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_D7</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATB7_bit;
+
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_RS_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISB2_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_EN_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISB3_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_D4_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISB4_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_D5_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISB5_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_D6_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISB6_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LCD_D7_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISB7_bit;
+</span><span class="cpp1-comment">//&nbsp;End&nbsp;LCD&nbsp;module&nbsp;connections
+
+//---------------------&nbsp;Reads&nbsp;time&nbsp;and&nbsp;date&nbsp;information&nbsp;from&nbsp;RTC&nbsp;(PCF8583)
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Read_Time()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Start();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Issue&nbsp;start&nbsp;signal
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Write(</span><span class="cpp1-hexadecimal">0xA0</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Address&nbsp;PCF8583,&nbsp;see&nbsp;PCF8583&nbsp;datasheet
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Write(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Start&nbsp;from&nbsp;address&nbsp;2
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Start();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Issue&nbsp;repeated&nbsp;start&nbsp;signal
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Write(</span><span class="cpp1-hexadecimal">0xA1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Address&nbsp;PCF8583&nbsp;for&nbsp;reading&nbsp;R/W=1
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">seconds</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Read(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Read&nbsp;seconds&nbsp;byte
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">minutes</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Read(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Read&nbsp;minutes&nbsp;byte
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">hours</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Read(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Read&nbsp;hours&nbsp;byte
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">day</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Read(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Read&nbsp;year/day&nbsp;byte
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">month</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Read(</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Read&nbsp;weekday/month&nbsp;byte
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Stop();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Issue&nbsp;stop&nbsp;signal
+
+</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-comment">//--------------------&nbsp;Formats&nbsp;date&nbsp;and&nbsp;time
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Transform_Time()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">seconds</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">((seconds</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xF0</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&gt;&gt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">)*</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(seconds</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0F</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Transform&nbsp;seconds
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">minutes</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">((minutes</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xF0</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&gt;&gt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">)*</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(minutes</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0F</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Transform&nbsp;months
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">hours</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">((hours</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xF0</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">&gt;&gt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">)*</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(hours</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0F</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Transform&nbsp;hours
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">year</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">(day</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xC0</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&gt;&gt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">6</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Transform&nbsp;year
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">day</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">((day</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x30</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&gt;&gt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">)*</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(day</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0F</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Transform&nbsp;day
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">month</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">((month</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">&gt;&gt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4</span><span class="cpp1-symbol">)*</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(month</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0F</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Transform&nbsp;month
+</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-comment">//--------------------&nbsp;Output&nbsp;values&nbsp;to&nbsp;LCD
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Display_Time()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(day</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">/</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Print&nbsp;tens&nbsp;digit&nbsp;of&nbsp;day&nbsp;variable
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(day</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">%</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Print&nbsp;oness&nbsp;digit&nbsp;of&nbsp;day&nbsp;variable
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">9</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(month</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">/</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">10</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(month</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">%</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">15</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">year</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">49</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Print&nbsp;year&nbsp;vaiable&nbsp;+&nbsp;1&nbsp;(start&nbsp;from&nbsp;year&nbsp;2011)
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(hours</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">/</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">7</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(hours</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">%</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">9</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(minutes</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">/</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">10</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(minutes</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">%</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">12</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(seconds</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">/</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">13</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(seconds</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">%</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">);
+}
+
+</span><span class="cpp1-comment">//------------------&nbsp;Performs&nbsp;project-wide&nbsp;init
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Init_Main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CHECON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x30</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">AD1PCFG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;AN&nbsp;pins&nbsp;as&nbsp;digital
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_I2C_Init();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;Soft&nbsp;I2C&nbsp;communication
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Init();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;LCD
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Cmd(_LCD_CLEAR);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Clear&nbsp;LCD&nbsp;display
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Cmd(_LCD_CURSOR_OFF);</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Turn&nbsp;cursor&nbsp;off
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Out(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-string">&quot;Date:&quot;</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Prepare&nbsp;and&nbsp;output&nbsp;static&nbsp;text&nbsp;on&nbsp;LCD
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-character">':'</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">11</span><span class="cpp1-symbol">,</span><span class="cpp1-character">':'</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Out(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-string">&quot;Time:&quot;</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">8</span><span class="cpp1-symbol">,</span><span class="cpp1-character">':'</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Chr(</span><span class="cpp1-number">2</span><span class="cpp1-symbol">,</span><span class="cpp1-number">11</span><span class="cpp1-symbol">,</span><span class="cpp1-character">':'</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Lcd_Out(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-number">12</span><span class="cpp1-symbol">,</span><span class="cpp1-string">&quot;201&quot;</span><span class="cpp1-symbol">);
+}
+
+</span><span class="cpp1-comment">//-----------------&nbsp;Main&nbsp;procedure
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">100</span><span class="cpp1-symbol">);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Init_Main();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Perform&nbsp;initialization
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">while</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Endless&nbsp;loop
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Read_Time();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Read&nbsp;time&nbsp;from&nbsp;RTC(PCF8583)
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Transform_Time();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Format&nbsp;date&nbsp;and&nbsp;time
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Display_Time();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Prepare&nbsp;and&nbsp;display&nbsp;on&nbsp;LCD
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Wait&nbsp;1&nbsp;second
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+</span></code>
+</pre>
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_GPIO_32L43x_Kx.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32L43x_Kx_Defs.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_System_L4xx_HSI48.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L432KC$|^STM32L442KC$|^STM32L432KB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

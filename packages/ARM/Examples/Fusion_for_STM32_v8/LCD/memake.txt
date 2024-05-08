@@ -1,0 +1,20 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: LCD
+
+sources: {
+    LCD.c
+}
+
+uses: {
+    MikroC.System
+    MikroC.Lcd_Constants
+    MikroC.Lcd
+}
+
+depends: {
+    MikroC.System
+    MikroC.Lcd_Constants
+    MikroC.Lcd
+}

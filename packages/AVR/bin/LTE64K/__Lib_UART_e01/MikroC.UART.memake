@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.UART",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_UART_e01.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATMEGA645A$|^ATMEGA649$|^ATMEGA3250$|^ATMEGA6490$|^ATMEGA649A$|^ATMEGA169PA$|^ATMEGA6450A$|^ATMEGA3290A$|^ATMEGA329PA$|^ATMEGA169A$|^ATMEGA169P$|^ATMEGA3290$|^ATMEGA3290P$|^ATMEGA325P$|^ATMEGA3250PA$|^ATMEGA6450$|^ATMEGA645P$|^ATMEGA165PA$|^ATMEGA165P$|^ATMEGA645$|^ATMEGA6490A$|^ATMEGA325A$|^ATMEGA6490P$|^ATMEGA649P$|^ATMEGA169$|^ATMEGA329A$|^ATMEGA6450P$|^ATMEGA329$|^ATMEGA165A$|^ATMEGA329P$|^ATMEGA3250A$|^ATMEGA3250P$|^ATMEGA165$|^ATMEGA325$|^ATMEGA325PA$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

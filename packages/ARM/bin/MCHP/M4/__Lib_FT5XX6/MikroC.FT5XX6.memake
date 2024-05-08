@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.FT5XX6",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_FT5XX6.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^CEC1302$|^CEC1702$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

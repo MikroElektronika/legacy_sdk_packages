@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.DAC",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_DAC_32F07x_12.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F091CB$|^STM32F091RB$|^STM32F071V8$|^STM32F091VB$|^STM32F072RB$|^STM32F072V8$|^STM32F072CB$|^STM32F078CB$|^STM32F078RB$|^STM32F071RB$|^STM32F091CC$|^STM32F098CC$|^STM32F072R8$|^STM32F071C8$|^STM32F098VC$|^STM32F071VB$|^STM32F072VB$|^STM32F071CB$|^STM32F098RC$|^STM32F091RC$|^STM32F072C8$|^STM32F078VB$|^STM32F091VC$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

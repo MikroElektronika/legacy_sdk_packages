@@ -1,0 +1,19 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: UART
+
+sources: {
+    UART.c
+}
+
+
+uses: {
+    MikroC.System
+    MikroC.UART
+}
+
+depends: {
+    MikroC.System
+    MikroC.UART
+}

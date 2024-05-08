@@ -1,0 +1,3606 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>SPI T6963C Graphic Lcd Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Nikola Topalovic & Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">SPI T6963C Graphic Lcd Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="spi_lcd8_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="t6963c_graphic_lcd_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Serial Peripheral Interface">SPI</acronym> T6963C Graphic <acronym title="Liquid Crystal Display">Lcd</acronym> Library</h2></a>
+
+    <p>The mikroC PRO for AVR provides a library for working with Glcds based on TOSHIBA T6963C controller 
+    	via <acronym title="Serial Peripheral Interface">SPI</acronym> interface. The Toshiba T6963C is a very popular <acronym title="Liquid Crystal Display">Lcd</acronym> controller for the use in small graphics modules. It is capable of controlling displays with a resolution up to 240x128. Because of its low power and small outline it is most suitable for mobile applications such as PDAs, MP3 players or mobile measurement equipment. Although this controller is small, it has a capability of displaying and merging text and graphics and it manages all interfacing signals to the displays Row and Column drivers.</p>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>   
+    <ul>
+    	<li>The library uses the <acronym title="Serial Peripheral Interface">SPI</acronym> module for communication.</li>
+    	<li>The user must initialize <acronym title="Serial Peripheral Interface">SPI</acronym> module before using the SPI T6963C Glcd Library.</li>
+    	<li>This Library is designed to work with mikroElektronika's Serial Glcd 240x128 and 240x64 Adapter Boards pinout, see schematic at the bottom of this page for details.</li>
+      	<li>To use constants located in <code>__Lib_SPIT6963C_Const.h</code> file, user must include it the source file : <code>#include "__SPIT6963C.h"</code>.</li>
+    </ul>
+   </div>
+   
+    <p>Some mikroElektronika's adapter boards have pinout different from T6369C datasheets. Appropriate relations between these labels are given in the table below:</p>
+                <table>
+                  <tr align="center">
+                  	<th><b>Adapter Board</b></th>
+										<th><b>T6369C datasheet</b></th>
+                  </tr>
+									<tr align="center">
+                  	<td>RS</td>
+										<td>C/D</td>
+                  </tr>
+									<tr align="center">
+                  	<td>R/W</td>
+										<td>/RD</td>
+                  </tr>
+									<tr align="center">
+                  	<td>E</td>
+										<td>/WR</td>
+                  </tr>
+                </table> 
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="SPI T6963C Library Dependency Tree" src="img/dependencies/spit6963c_dependencies.gif">  
+    <p></p>
+
+    <h3>External dependencies of SPI T6963C Graphic <acronym title="Liquid Crystal Display">Lcd</acronym> Library</h3>
+    <p>The implementation of SPI T6963C Graphic <acronym title="Liquid Crystal Display">Lcd</acronym> Library routines is based on Port Expander Library routines.</p>
+    <p>External dependencies are the same as <a href="port_expander_library.htm">Port Expander Library external dependencies</a>.</p>
+    
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#spi_t6963c_config">SPI_T6963C_Config</a></li>
+      <li><a href="#spi_t6963c_writedata">SPI_T6963C_writeData</a></li>
+      <li><a href="#spi_t6963c_writecommand">SPI_T6963C_writeCommand</a></li>
+      <li><a href="#spi_t6963c_setptr">SPI_T6963C_setPtr</a></li>
+      <li><a href="#spi_t6963C_set_ext_buffer">SPI_T6963C_Set_Ext_Buffer</a></li>
+      <li><a href="#spi_t6963c_waitready">SPI_T6963C_waitReady</a></li>
+      <li><a href="#spi_t6963c_fill">SPI_T6963C_fill</a></li>
+      <li><a href="#spi_t6963c_dot">SPI_T6963C_dot</a></li>
+      <li><a href="#spi_t6963c_set_font_adv">SPI_T6963C_Set_Font_Adv</a></li>
+      <li><a href="#spi_t6963C_set_ext_font_adv">SPI_T6963C_Set_Font_Ext_Adv</a></li>
+      <li><a href="#spi_t6963c_write_char">SPI_T6963C_write_char</a></li>
+      <li><a href="#spi_t6963c_write_char_adv">SPI_T6963C_Write_Char_Adv</a></li>
+			<li><a href="#spi_t6963c_write_text">SPI_T6963C_write_text</a></li>
+			<li><a href="#spi_t6963c_write_text_adv">SPI_T6963C_Write_Text_Adv</a></li>
+			<li><a href="#spi_t6963c_write_const_text_adv">SPI_T6963C_Write_Const_Text_Adv</a></li>
+			<li><a href="#spi_t6963c_line">SPI_T6963C_line</a></li>
+			<li><a href="#spi_t6963c_rectangle">SPI_T6963C_rectangle</a></li>
+			<li><a href="#spi_t6963c_rectangle_round_edges">SPI_T6963C_rectangle_round_edges</a></li>
+			<li><a href="#spi_t6963c_rectangle_round_edges_fill">SPI_T6963C_rectangle_round_edges_fill</a></li>
+			<li><a href="#spi_t6963c_box">SPI_T6963C_box</a></li>
+			<li><a href="#spi_t6963c_circle">SPI_T6963C_circle</a></li>
+			<li><a href="#spi_t6963c_circle_fill">SPI_T6963C_circle_fill</a></li>
+			<li><a href="#spi_t6963c_image">SPI_T6963C_image</a></li>
+			<li><a href="#spi_t6963c_ext_image">SPI_T6963C_Ext_Image</a></li>
+			<li><a href="#spi_t6963c_partialimage">SPI_T6963C_PartialImage</a></li>
+			<li><a href="#spi_t6963c_ext_partialimage">SPI_T6963C_Ext_PartialImage</a></li>
+			<li><a href="#spi_t6963c_sprite">SPI_T6963C_sprite</a></li>
+			<li><a href="#spi_t6963c_set_cursor">SPI_T6963C_set_cursor</a></li>
+		  <li><a href="#spi_t6963c_clearbit">SPI_T6963C_clearBit</a></li>      
+			<li><a href="#spi_t6963c_setbit">SPI_T6963C_setBit</a></li> 
+			<li><a href="#spi_t6963c_negbit">SPI_T6963C_negBit</a></li>
+		</ul>	
+			<p>The following low level library routines are implemented as macros. These macros can be found in the <code>__SPIT6963C.h</code> header file which is located in the SPI T6963C example projects folders.</p>
+		<ul>
+			<li><a href="#spi_t6963c_displaygrpanel">SPI_T6963C_displayGrPanel</a></li>
+			<li><a href="#spi_t6963c_displaytxtpanel">SPI_T6963C_displayTxtPanel</a></li>
+			<li><a href="#spi_t6963c_setgrpanel">SPI_T6963C_setGrPanel</a></li>
+			<li><a href="#spi_t6963c_settxtpanel">SPI_T6963C_setTxtPanel</a></li>
+			<li><a href="#spi_t6963c_panelfill">SPI_T6963C_panelFill</a></li>
+			<li><a href="#spi_t6963c_grfill">SPI_T6963C_grFill</a></li>
+			<li><a href="#spi_t6963c_txtfill">SPI_T6963C_txtFill</a></li>
+			<li><a href="#spi_t6963c_cursor_height">SPI_T6963C_cursor_height</a></li>
+			<li><a href="#spi_t6963c_graphics">SPI_T6963C_graphics</a></li>
+			<li><a href="#spi_t6963c_text">SPI_T6963C_text</a></li>
+			<li><a href="#spi_t6963c_cursor">SPI_T6963C_cursor</a></li>
+			<li><a href="#spi_t6963c_cursor_blink">SPI_T6963C_cursor_blink</a></li>
+    </ul>
+    
+    <h3 id="spi_t6963c_config">SPI_T6963C_Config</h3>
+
+
+    <!-- tabela: SPI_T6963C_Config -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_Config(<b>unsigned int</b> width, <b>unsigned char</b> height, <b>unsigned char</b> fntW, <b>char</b> DeviceAddress, <b>unsigned char</b> wr, <b>unsigned char</b> rd, <b>unsigned char</b> cd, <b>unsigned char</b> rst);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>
+						 Initializes T6963C Graphic Lcd controller.</p> 
+						<p>Parameters :
+            	<ul>
+            	  <li><code>width:</code> width of the Glcd panel</li>
+                <li><code>height:</code> height of the Glcd panel</li>
+                <li><code>fntW:</code> font width</li>
+                <li><code>DeviceAddress:</code> SPI expander hardware address, see schematic at the bottom of this page</li>
+                <li><code>wr:</code> write signal pin on Glcd control port</li>
+                <li><code>rd:</code> read signal pin on Glcd control port</li>
+                <li><code>cd:</code> command/data signal pin on Glcd control port</li>
+                <li><code>rst:</code> reset signal pin on Glcd control port</li>
+              </ul>
+            </p>
+						<p>
+						 Display RAM organization:<br>
+						 The library cuts RAM into panels : a complete panel is one graphics panel followed by a text panel (see schematic below).
+						</p> 
+						<pre>
+schematic:
++---------------------+ /\
++ GRAPHICS PANEL #0   +  |
++                     +  |
++                     +  |
++                     +  |
++---------------------+  | PANEL 0
++ TEXT PANEL #0       +  |
++                     + \/
++---------------------+ /\
++ GRAPHICS PANEL #1   +  |
++                     +  |
++                     +  |
++                     +  |
++---------------------+  | PANEL 1
++ TEXT PANEL #1       +  |
++                     +  |
++---------------------+ \/            	
+            </pre>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          Global variables :
+          	<ul>
+          	  <li><code>SPExpanderCS</code>: Chip Select line
+              <li><code>SPExpanderRST</code>: Reset line 
+              <li><code>SPExpanderCS_Direction</code>: Direction of the Chip Select pin
+              <li><code>SPExpanderRST_Direction</code>: Direction of the Reset pin	
+            </ul>
+            must be defined before using this function.
+          	<p><br>The <acronym title="Serial Peripheral Interface">SPI</acronym> module needs to be initialized.
+          		 See <a href="spi_library.htm#spi1_init">SPI1_Init</a> and <a href="spi_library.htm#spi1_init_advanced">SPI1_Init_Advanced</a> routines.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST <b>at</b> PORTB0_bit;
+<b>sbit</b>  SPExpanderCS  <b>at</b> PORTB1_bit;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> DDB0_bit;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> DDB1_bit;
+<i>// End Port Expander module connections</i>
+
+...
+
+<i>// Initialize SPI module</i>
+SPI1_Init_Advanced(_SPI_MASTER, _SPI_FCY_DIV32, _SPI_CLK_HI_TRAILING);
+SPI_T6963C_Config(240, 64, 8, 0, 0, 1, 3, 4);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_writedata">SPI_T6963C_writeData</h3>
+
+
+    <!-- tabela: SPI_T6963C_WriteData -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_writeData(<b>unsigned char</b> Ddata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes data to T6963C controller via <acronym title="Serial Peripheral Interface">SPI</acronym> interface.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>Ddata:</code> data to be written</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td 
+        valign="top">
+            <p>Toshiba Glcd module needs to be 
+        initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_writeData(AddrL);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_writecommand">SPI_T6963C_writeCommand</h3>
+
+
+    <!-- tabela: SPI_T6963C_WriteCommand  -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_writeCommand(<b>unsigned char</b> Ddata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes command to T6963C controller via <acronym title="Serial Peripheral Interface">SPI</acronym> interface.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>Ddata:</code> command to be written</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_writeCommand(SPI_T6963C_CURSOR_POINTER_SET);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_setptr">SPI_T6963C_setPtr</h3>
+
+
+    <!-- tabela: SPI_T6963C_setPtr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_setPtr(<b>unsigned int</b> p, <b>unsigned char</b> c);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the memory pointer p for command c.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>p:</code> address where command should be written</li>
+            		<li><code>c:</code> command to be written</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>SToshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_setPtr(SPI_T6963C_grHomeAddr + start, SPI_T6963C_ADDRESS_POINTER_SET);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963C_set_ext_buffer">SPI_T6963C_Set_Ext_Buffer</h3>
+
+
+    <!-- tabela: T6963C_Set_Ext_Buffer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_Set_Ext_Buffer(char* (*getExtDataPtr)(<b>unsigned long</b> offset, <b>unsigned int</b> count, <b>unsigned int</b> *num));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets pointer to the user function which manipulates the external resource.</p>
+            <p>Parameters :</p>
+              <ul>
+	              <li><code>offset</code> - offset from the beginning of the resource from where the data is requested.</li>
+	              <li><code>count</code> - requested number of bytes.</li>
+	              <li><code>num</code> - variable for holding the returned number of bytes (less or equal to the number of acquired bytes).</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b>* ReadExternalBuffer(<b>unsigned long</b> offset, <b>unsigned int</b> count, <b>unsigned int</b> *num){
+  <b>unsigned long</b> start_sector;
+  <b>unsigned int</b> pos;
+
+  start_sector = Mmc_Get_File_Write_Sector() + offset/512;
+  pos = (<b>unsigned long</b>)offset%512;
+
+  <b>if</b>(start_sector == currentSector+1){
+    Mmc_Multi_Read_Buffer(EXT_BUFFER);
+    currentSector = start_sector;
+  }<b>else</b>
+    <b>if</b>(start_sector != currentSector){
+      Mmc_Multi_Read_Stop();
+      Mmc_Multi_Read_Start(start_sector);
+      Mmc_Multi_Read_Buffer(EXT_BUFFER);
+      currentSector = start_sector;
+    }
+
+  <b>if</b>(count&#62;512-pos){
+    *num = 512-pos;
+  }
+  <b>else</b>
+    *num = count;
+
+  <b>return</b> EXT_BUFFER+pos;
+}
+
+SPI_T6963C_Set_Ext_Buffer(ReadExternalBuffer);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_waitready">SPI_T6963C_waitReady</h3>
+
+
+    <!-- tabela: SPI_T6963C_WaitReady  -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_waitReady(<b>void</b>);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Pools the status byte, and loops until Toshiba Glcd module is ready.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_waitReady();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_fill">SPI_T6963C_fill</h3>
+
+
+    <!-- tabela: SPI_T6963C_Fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_fill(<b>unsigned char</b> v, <b>unsigned int</b> start, <b>unsigned int</b> len);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+           <p>Fills controller memory block with given byte.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>v:</code> byte to be written</li>
+            		<li><code>start:</code> starting address of the memory block</li>
+            		<li><code>len:</code> length of the memory block in bytes</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_fill(0x33,0x00FF,0x000F);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_dot">SPI_T6963C_dot</h3>
+
+
+    <!-- tabela: SPI_T6963C_Dot -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_dot(<b>int</b> x, <b>int</b> y, <b>unsigned char</b> color);</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a dot in the current graphic panel of Glcd at coordinates (x, y). 
+		        </p>
+		        <p>Parameters :
+            	<ul>
+            		<li><code>x:</code> dot position on x-axis</li>
+            		<li><code>y:</code> dot position on y-axis</li>
+            		<li><code>color:</code> color parameter. Valid values: SPI_T6963C_BLACK, SPI_T6963C_WHITE and SPI_T6963C_INVERT.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_dot(x0, y0, SPI_T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_set_font_adv">SPI_T6963C_Set_Font_Adv</h3>
+
+
+    <!-- tabela: T6963C_Set_Font_Adv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_Set_Font_Adv(<b>const far char</b> *activeFont, <b>unsigned char</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#spi_t6963c_write_char_adv">SPI_T6963C_Write_Char_Adv</a> and <a href="#spi_t6963c_write_text_adv">SPI_T6963C_Write_Text_Adv</a> routines.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. Needs to be formatted as an array of char.</li>
+           		<li><code>font_color:</code> sets font color.</li>
+           		<li><code>font_orientation:</code> sets font orientation.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>SPI_T6963C_Set_Font_Adv(&myfont, 1, 0);</pre>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="spi_t6963c_set_ext_font_adv">SPI_T6963C_Set_Ext_Font_Adv</h3>
+
+
+    <!-- tabela: T6963C_Set_Font -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_Set_Ext_Font_Adv(<b>unsigned long</b> activeFont, <b>unsigned char</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#spi_t6963c_write_char_adv">SPI_T6963C_Write_Char_Adv</a> and <a href="#spi_t6963c_write_text_Adv">SPI_T6963C_Write_Text_Adv</a> routines. Font is located in an external resource.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. This parameter represents the address in the exteral resource from where the font data begins.</li>
+           		<li><code>font_color:</code> sets font color.</li>
+           		<li><code>font_orientation:</code> sets font orientation.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_Set_Ext_Font_Adv(173296, 0, 0);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_write_char">SPI_T6963C_write_char</h3>
+
+
+    <!-- tabela: SPI_T6963C_write_char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_write_char(<b>unsigned char</b> c, <b>unsigned char</b> x, <b>unsigned char</b> y, <b>unsigned char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a char in the current text panel of Glcd at coordinates (x, y).</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>c:</code> char to be written</li>
+            		<li><code>x:</code> char position on x-axis</li>
+            		<li><code>y:</code> char position on y-axis</li>
+            		<li><code>mode:</code> mode parameter. Valid values: <code>SPI_T6963C_ROM_MODE_OR</code>, <code>SPI_T6963C_ROM_MODE_XOR</code>, <code>SPI_T6963C_ROM_MODE_AND</code> and <code>SPI_T6963C_ROM_MODE_TEXT</code></li>
+              </ul>
+            </p>
+            <p>Mode parameter explanation:
+            	<ul>
+            		<li><code>SPI_T6963C_ROM_MODE_OR</code> Mode: In the OR-Mode, text and graphics can be displayed and the data is logically “OR-ed”. This is the most common way of combining text and graphics for example labels on buttons.</li>
+                <li><code>SPI_T6963C_ROM_MODE_XOR</code> Mode: In this mode, the text and graphics data are combined via the logical “exclusive OR”. This can be useful to display text in negative mode, i.e. white text on black background.</li>
+                <li><code>SPI_T6963C_ROM_MODE_AND</code> Mode: The text and graphic data shown on display are combined via the logical “AND function”.</li>
+                <li><code>SPI_T6963C_ROM_MODE_TEXT</code> Mode: This option is only available when displaying just a text. The Text Attribute values are stored in the graphic area of display memory.</li>
+              </ul>
+            For more details see the T6963C datasheet.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_write_char("A",22,23,SPI_T6963C_ROM_MODE_AND);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_write_char_adv">SPI_T6963C_write_char_adv</h3>
+
+
+    <!-- tabela: T6963C_Write_Char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_write_char_adv(<b>unsigned char</b> ch, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a char in the current text panel of Glcd at coordinates (x, y).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>c:</code> char to be written</li>
+           		<li><code>x:</code> char position on x-axis</li>
+           		<li><code>y:</code> char position on y-axis</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_Write_Char_Adv('A',22,23);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_write_text">SPI_T6963C_write_text</h3>
+
+
+    <!-- tabela: SPI_T6963C_write_text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_write_text(<b>unsigned char</b> *str, <b>unsigned char</b> x, <b>unsigned char</b> y, <b>unsigned char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text in the current text panel of Glcd at coordinates (x, y).</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>str:</code> text to be written</li>
+            		<li><code>x:</code> text position on x-axis</li>
+            		<li><code>y:</code> text position on y-axis</li>
+            		<li><code>mode:</code> mode parameter. Valid values: <code>SPI_T6963C_ROM_MODE_OR</code>, <code>SPI_T6963C_ROM_MODE_XOR</code>, <code>SPI_T6963C_ROM_MODE_AND</code> and <code>SPI_T6963C_ROM_MODE_TEXT</code></li>
+              </ul>
+            </p>
+            <p>Mode parameter explanation:
+            	<ul>
+            		<li><code>SPI_T6963C_ROM_MODE_OR</code> Mode: In the OR-Mode, text and graphics can be displayed and the data is logically “OR-ed”. This is the most common way of combining text and graphics for example labels on buttons.</li>
+                <li><code>SPI_T6963C_ROM_MODE_XOR</code> Mode: In this mode, the text and graphics data are combined via the logical “exclusive OR”. This can be useful to display text in negative mode, i.e. white text on black background.</li>
+                <li><code>SPI_T6963C_ROM_MODE_AND</code> Mode: The text and graphic data shown on display are combined via the logical “AND function”.</li>
+                <li><code>SPI_T6963C_ROM_MODE_TEXT</code> Mode: This option is only available when displaying just a text. The Text Attribute values are stored in the graphic area of display memory.</li>
+              </ul>
+              For more details see the T6963C datasheet.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+SPI_T6963C_write_text("Glcd LIBRARY DEMO, WELCOME !", 0, 0, SPI_T6963C_ROM_MODE_XOR);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+   <!-- -->
+
+
+    <h3 id="spi_t6963c_write_text_adv">SPI_T6963C_Write_Text_Adv</h3>
+
+
+    <!-- tabela: T6963C_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_Write_Text_Adv(<b>unsigned char</b> *text, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text in the current text panel of Glcd at coordinates (x, y).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>str:</code> text to be written</li>
+           		<li><code>x:</code> text position on x-axis</li>
+           		<li><code>y:</code> text position on y-axis</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+SPI_T6963C_Write_Text_Adv("Glcd LIBRARY DEMO, WELCOME !", 0, 0);	
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+   <!-- -->
+
+
+    <h3 id="spi_t6963c_write_const_text_adv">SPI_T6963C_Write_Const_Text_Adv</h3>
+
+
+    <!-- tabela: T6963C_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_Write_Const_Text_Adv(<b>const far char</b> *text, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text located in the program memory on the glcd at coordinates (x, y).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>str:</code> text to be written</li>
+           		<li><code>x:</code> text position on x-axis</li>
+           		<li><code>y:</code> text position on y-axis</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+<b>const char</b> ctext[] = "mikroElektronika";
+...
+SPI_T6963C_Write_Const_Text_Adv(ctext, 0, 0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="spi_t6963c_line">SPI_T6963C_line</h3>
+
+
+    <!-- tabela: SPI_T6963C_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_line(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a line from (x0, y0) to (x1, y1).</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>x0:</code> x coordinate of the line start</li>
+            		<li><code>y0:</code> y coordinate of the line end</li>
+            		<li><code>x1:</code> x coordinate of the line start</li>
+            		<li><code>y1:</code> y coordinate of the line end</li>
+            		<li><code>pcolor:</code> color parameter. Valid values: SPI_T6963C_BLACK, SPI_T6963C_WHITE and SPI_T6963C_INVERT.</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_line(0, 0, 239, 127, SPI_T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_rectangle">SPI_T6963C_rectangle</h3>
+
+
+    <!-- tabela: SPI_T6963C_rectangle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_rectangle(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rectangle on Glcd.</p>
+		    		<p>Parameters :
+            	<ul>
+            		<li><code>x0:</code> x coordinate of the upper left rectangle corner</li>
+            		<li><code>y0:</code> y coordinate of the upper left rectangle corner</li>
+            		<li><code>x1:</code> x coordinate of the lower right rectangle corner</li>
+            		<li><code>y1:</code> y coordinate of the lower right rectangle corner</li>
+            		<li><code>pcolor:</code> color parameter. Valid values: SPI_T6963C_BLACK, SPI_T6963C_WHITE and SPI_T6963C_INVERT.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>            	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_rectangle(20, 20, 219, 107, SPI_T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963C_rectangle_round_edges">SPI_T6963C_rectangle_round_edges</h3>
+
+
+    <!-- tabela: SPI_T6963C_rectangle_round_edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_rectangle_round_edges(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>int</b> round_radius, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rounded edge rectangle on Glcd.</p>
+		    		<p>Parameters :
+            	<ul>
+            		<li><code>x0:</code> x coordinate of the upper left rectangle corner</li>
+            		<li><code>y0:</code> y coordinate of the upper left rectangle corner</li>
+            		<li><code>x1:</code> x coordinate of the lower right rectangle corner</li>
+            		<li><code>y1:</code> y coordinate of the lower right rectangle corner</li>
+            		<li><code>round_radius:</code> radius of the rounded edge.</li>
+            		<li><code>pcolor:</code> color parameter. Valid values: SPI_T6963C_BLACK, SPI_T6963C_WHITE and SPI_T6963C_INVERT.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>            	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_rectangle_round_edges(20, 20, 219, 107, 12, SPI_T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_rectangle_round_edges_fill">SPI_T6963C_rectangle_round_edges_fill</h3>
+
+
+    <!-- tabela: SPI_T6963C_rectangle_round_edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_rectangle_round_edges_fill(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>int</b> round_radius, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled rounded edge rectangle on Glcd.</p>
+		    		<p>Parameters :
+            	<ul>
+            		<li><code>x0:</code> x coordinate of the upper left rectangle corner</li>
+            		<li><code>y0:</code> y coordinate of the upper left rectangle corner</li>
+            		<li><code>x1:</code> x coordinate of the lower right rectangle corner</li>
+            		<li><code>y1:</code> y coordinate of the lower right rectangle corner</li>
+            		<li><code>round_radius:</code> radius of the rounded edge</li>
+            		<li><code>pcolor:</code> color parameter. Valid values: SPI_T6963C_BLACK, SPI_T6963C_WHITE and SPI_T6963C_INVERT.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>            	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_rectangle_round_edges_fill(20, 20, 219, 107, 12, SPI_T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_box">SPI_T6963C_box</h3>
+
+
+    <!-- tabela: SPI_T6963C_box -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_box(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a box on the Glcd</p>
+		 				<p>Parameters :
+            	<ul>
+            		<li><code>x0:</code> x coordinate of the upper left box corner</li>
+            		<li><code>y0:</code> y coordinate of the upper left box corner</li>
+            		<li><code>x1:</code> x coordinate of the lower right box corner</li>
+            		<li><code>y1:</code> y coordinate of the lower right box corner</li>
+            		<li><code>pcolor:</code> color parameter. Valid values: SPI_T6963C_BLACK, SPI_T6963C_WHITE and SPI_T6963C_INVERT.</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_box(0, 119, 239, 127, SPI_T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_circle">SPI_T6963C_circle</h3>
+
+
+    <!-- tabela: SPI_T6963C_Circle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_circle(<b>int</b> x, <b>int</b> y, <b>long</b> r, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a circle on the Glcd.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>x:</code> x coordinate of the circle center</li>
+            		<li><code>y:</code> y coordinate of the circle center</li>
+            		<li><code>r:</code> radius size</li>
+            		<li><code>pcolor:</code> color parameter. Valid values: SPI_T6963C_BLACK, SPI_T6963C_WHITE and SPI_T6963C_INVERT.</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_circle(120, 64, 110, SPI_T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_circle_fill">SPI_T6963C_circle_fill</h3>
+
+
+    <!-- tabela: SPI_T6963C_Circle_fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_circle_fill(<b>int</b> x, <b>int</b> y, <b>long</b> r, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled circle on the Glcd.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>x:</code> x coordinate of the circle center</li>
+            		<li><code>y:</code> y coordinate of the circle center</li>
+            		<li><code>r:</code> radius size</li>
+            		<li><code>pcolor:</code> color parameter. Valid values: SPI_T6963C_BLACK, SPI_T6963C_WHITE and SPI_T6963C_INVERT.</li>
+              </ul>
+            </p>	
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_circle_fill(120, 64, 110, SPI_T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_image">SPI_T6963C_image</h3>
+
+
+    <!-- tabela: SPI_T6963C_image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_image(<b>const code char</b> *pic);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays bitmap on Glcd.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>image:</code> image to be displayed. Bitmap array is located in code memory.</li>
+              </ul>
+            <p>Use the integrated Glcd Bitmap Editor (menu option <b>Tools&#160;&#8250;&#160;Glcd Bitmap Editor</b>) to convert image to a constant array suitable for displaying on Glcd.</p>
+             <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                Image dimension must match the display dimension.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_image(my_image);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="spi_t6963c_ext_image">SPI_T6963C_Ext_Image</h3>
+
+
+    <!-- tabela: T6963C_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_Ext_Image(<b>unsigned long</b> image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a bitmap from an external resource.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+           		<li><code>pic:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_Ext_image(153608);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Image dimension must match the display dimension.</p>
+            <p>Use the integrated Glcd Bitmap Editor (menu option <b>Tools&#160;&#8250;&#160;Glcd Bitmap Editor</b>) to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="spi_t6963c_partialimage">SPI_T6963C_PartialImage</h3>
+
+
+    <!-- tabela: SPI_T6963C_PartialImage -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>code const unsigned short</b> * image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image on a desired location.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+            		<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+            		<li><code>width:</code> desired image width.</li>
+            		<li><code>height:</code> desired image height.</li>
+            		<li><code>picture_width:</code> width of the original image.</li>
+            		<li><code>picture_height:</code> height of the original image.</li>
+            		<li><code>image:</code> image to be displayed. Bitmap array is located in code memory.</li>
+              </ul>
+            </p>	
+            <p>Use the integrated Glcd Bitmap Editor (menu option <b>Tools&#160;&#8250;&#160;Glcd Bitmap Editor</b>) to convert image to a constant array suitable for displaying on Glcd.</p>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              Image dimension must match the display dimension.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Draws a 10x15 part of the image starting from the upper left corner on the coordinate (10,12). Original image size is 16x32.</i> 
+SPI_T6963C_PartialImage(10, 12, 10, 15, 16, 32, image);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3 id="spi_t6963c_ext_partialimage">SPI_T6963C_Ext_PartialImage</h3>
+
+
+    <!-- tabela: T6963C_PartialImage -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_Ext_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>unsigned long</b> image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image on a desired location.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+            	<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+            	<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+            	<li><code>width:</code> desired image width.</li>
+            	<li><code>height:</code> desired image height.</li>
+            	<li><code>picture_width:</code> width of the original image.</li>
+            	<li><code>picture_height:</code> height of the original image.</li>
+            	<li><code>image:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_Ext_PartialImage(10, 12, 10, 15, 16, 32, 0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Image dimension must match the display dimension.</p>
+            <p>Use the integrated Glcd Bitmap Editor (menu option <b>Tools&#160;&#8250;&#160;Glcd Bitmap Editor</b>) to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_sprite">SPI_T6963C_sprite</h3>
+
+
+    <!-- tabela: SPI_T6963C_Sprite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_sprite(<b>unsigned char</b> px, <b>unsigned char</b> py, <b>const code char</b> *pic, <b>unsigned char</b> sx, <b>unsigned char</b> sy);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills graphic rectangle area (px, py) to (px+sx, py+sy) with custom size picture.</p>
+            <p>Parameters :</p>
+            	<ul>
+            		<li><code>px:</code> x coordinate of the upper left picture corner. Valid values: multiples of the font width</li>
+            		<li><code>py:</code> y coordinate of the upper left picture corner</li>
+            		<li><code>pic:</code> picture to be displayed</li>
+            		<li><code>sx:</code> picture width. Valid values: multiples of the font width</li>
+            		<li><code>sy:</code> picture height</li>
+              </ul>
+            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+              If <code>px</code> and <code>sx</code> parameters are not multiples of the font width they will be scaled to the nearest lower number that is a multiple of the font width.
+            </div>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_sprite(76, 4, einstein, 88, 119); <i>// draw a sprite</i>
+</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_set_cursor">SPI_T6963C_set_cursor</h3>
+
+
+    <!-- tabela: SPI_T6963C_Set_Cursor -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_set_cursor(<b>unsigned char</b> x, <b>unsigned char</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets cursor to row x and column y.</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>x:</code> cursor position row number</li>
+            		<li><code>y:</code> cursor position column number</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_set_cursor(cposx, cposy);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_clearbit">SPI_T6963C_clearbit</h3>
+
+
+    <!-- tabela: SPI_T6963C_clearBit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_clearBit(<b>char</b> b);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Clears control port bit(s).</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>b:</code> bit mask.  The function will clear bit <code>x</code> on control port if 
+            			bit <code>x</code> in bit mask is set to 1.</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// clear bits 0 and 1 on control port</i>
+SPI_T6963C_clearBit(0x03);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_setbit">SPI_T6963C_setBit</h3>
+
+
+    <!-- tabela: SPI_T6963C_SetBit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_setBit(<b>char</b> b);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets control port bit(s).</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>b:</code> bit mask. The function will set bit <code>x</code> on control port if 
+            			bit <code>x</code> in bit mask is set to 1.</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set bits 0 and 1 on control port</i>
+SPI_T6963C_setBit(0x03);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>             
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_negbit">SPI_T6963C_negBit</h3>
+
+
+    <!-- tabela: SPI_T6963C_negBit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_negBit(<b>char</b> b);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Negates control port bit(s).</p>
+            <p>Parameters :
+            	<ul>
+            		<li><code>b:</code> bit mask. The function will negate bit <code>x</code> on control port if 
+            			bit <code>x</code> in bit mask is set to 1.</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// negate bits 0 and 1 on control port</i>
+SPI_T6963C_negBit(0x03);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_displaygrpanel">SPI_T6963C_DisplayGrPanel</h3>
+
+
+    <!-- tabela: SPI_T6963C_DisplayGrPanel -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_displayGrPanel(<b>char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Display selected graphic panel.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> graphic panel number.  Valid values: <code>0</code> and <code>1</code>.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// display graphic panel 1</i>
+SPI_T6963C_displayGrPanel(1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_displaytxtpanel">SPI_T6963C_displayTxtPanel</h3>
+
+
+    <!-- tabela: SPI_T6963C_DisplayTxtPanel -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_displayTxtPanel(<b>char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Display selected text panel.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> text panel number.  Valid values: <code>0</code> and <code>1</code>.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// display text panel 1</i>
+SPI_T6963C_displayTxtPanel(1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table> 
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_setgrpanel">SPI_T6963C_setGrPanel</h3>
+
+
+    <!-- tabela: SPI_T6963C_SetGrPanel -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_setGrPanel(<b>char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Compute start address for selected graphic panel and set appropriate internal pointers. All subsequent graphic operations will be preformed at this graphic panel.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> graphic panel number.  Valid values: <code>0</code> and <code>1</code>.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set graphic panel 1 as current graphic panel.</i>
+SPI_T6963C_setGrPanel(1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_settxtpanel">SPI_T6963C_setTxtPanel</h3>
+
+
+    <!-- tabela: SPI_T6963C_SetTxtPanel -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_setTxtPanel(<b>char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Compute start address for selected text panel and set appropriate internal pointers. All subsequent text operations will be preformed at this text panel.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> text panel number.  Valid values: <code>0</code> and <code>1</code>.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set text panel 1 as current text panel.</i>
+SPI_T6963C_setTxtPanel(1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_panelfill">SPI_T6963C_panelFill</h3>
+
+
+    <!-- tabela: SPI_T6963C_PanelFill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_panelFill(<b>unsigned char</b> v);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fill current panel in full (graphic+text) with appropriate value (0 to clear).</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>v:</code> value to fill panel with.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>clear current panel</i>
+SPI_T6963C_panelFill(0);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_grfill">SPI_T6963C_grFill</h3>
+
+
+    <!-- tabela: SPI_T6963C_GrFill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_grFill(<b>unsigned char</b> v);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fill current graphic panel with appropriate value (0 to clear).</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>v:</code> value to fill graphic panel with.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// clear current graphic panel</i>
+SPI_T6963C_grFill(0);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_txtfill">SPI_T6963C_txtFill</h3>
+
+
+    <!-- tabela: SPI_T6963C_TxtFill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_txtFill(<b>unsigned char</b> v);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fill current text panel with appropriate value (0 to clear).</p>
+			<p>Parameters :
+            	<ul>
+            		<li><code>v:</code> this value increased by 32 will be used to fill text panel.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// clear current text panel</i>
+SPI_T6963C_txtFill(0);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_cursor_height">SPI_T6963C_cursor_height</h3>
+
+
+    <!-- tabela: SPI_T6963C_Cursor_Height -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_cursor_height(<b>unsigned char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Set cursor size.</p>
+			<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> cursor height. Valid values: <code>0</code>..<code>7</code>.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_T6963C_cursor_height(7);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table> 
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_graphics">SPI_T6963C_graphics</h3>
+
+
+    <!-- tabela: SPI_t6963c_graphics -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_graphics(<b>char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enable/disable graphic displaying.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> graphic enable/disable parameter. Valid values: <code>0</code> (disable graphic dispaying) and <code>1</code> (enable graphic displaying).</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// enable graphic displaying</i>
+SPI_T6963C_graphics(1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_text">SPI_T6963C_text</h3>
+
+
+    <!-- tabela: SPI_T6963C_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_text(<b>char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enable/disable text displaying.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> text enable/disable parameter. Valid values: <code>0</code> (disable text dispaying) and <code>1</code> (enable text displaying).</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// enable text displaying</i>
+SPI_T6963C_text(1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>                                                                       
+
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_cursor">SPI_T6963C_cursor</h3>
+
+
+    <!-- tabela: SPI_T6963C_Cursor -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_cursor(<b>char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Set cursor on/off.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> on/off parameter. Valid values: <code>0</code> (set cursor off) and <code>1</code> (set cursor on).</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set cursor on</i>
+SPI_T6963C_cursor(1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table> 
+    
+    <!-- -->
+
+
+    <h3 id="spi_t6963c_cursor_blink">SPI_T6963C_cursor_blink</h3>
+
+
+    <!-- tabela: SPI_T6963C_Cursor_Blink -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_T6963C_cursor_blink(<b>char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enable/disable cursor blinking.</p>
+						<p>Parameters :
+            	<ul>
+            		<li><code>n:</code> cursor blinking enable/disable parameter. Valid values: <code>0</code> (disable cursor blinking) and <code>1</code> (enable cursor blinking).</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#spi_t6963c_config">SPI_T6963C_Config</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// enable cursor blinking</i>
+SPI_T6963C_cursor_blink(1);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>     
+
+    <!-- -->
+
+    <!-- kraj tabele -->    
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>The following drawing demo tests advanced routines of the SPI T6963C Glcd library. 
+		   Hardware configurations in this example are made for the T6963C 240x128 display, EasyAVR6 board and ATmega16.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+#include        &#34;__SPIT6963C.h&#34;
+
+<i>/*
+ * bitmap pictures stored in ROM
+ */</i>
+<b>const code char</b> mikroE_240x128_bmp[];
+<b>const code char</b> einstein[];
+
+<i>// Port Expander module connections</i>
+<b>sbit</b>  SPExpanderRST <b>at</b> PORTB0_bit;
+<b>sbit</b>  SPExpanderCS  <b>at</b> PORTB1_bit;
+<b>sbit</b>  SPExpanderRST_Direction <b>at</b> DDB0_bit;
+<b>sbit</b>  SPExpanderCS_Direction  <b>at</b> DDB1_bit;
+<i>// End Port Expander module connections</i>
+
+<b>void</b> main() {
+  <b>char</b> txt1[] = &#34; EINSTEIN WOULD HAVE LIKED mE&#34;;
+  <b>char</b> txt[] =  &#34; GLCD LIBRARY DEMO, WELCOME !&#34;;
+
+  <b>unsigned char</b>  panel;         <i>// Current panel</i>
+  <b>unsigned int</b>   i;             <i>// General purpose register</i>
+  <b>unsigned char</b>  curs;          <i>// Cursor visibility</i>
+  <b>unsigned int</b>   cposx, cposy;  <i>// Cursor x-y position</i>
+
+  DDA0_bit = 0;                 <i>// Set PA0 as input</i>
+  DDA1_bit = 0;                 <i>// Set PA1 as input</i>
+  DDA2_bit = 0;                 <i>// Set PA2 as input</i>
+  DDA3_bit = 0;                 <i>// Set PA3 as input</i>
+  DDA4_bit = 0;                 <i>// Set PA4 as input</i>
+
+  <i>// If Port Expander Library uses SPI1 module</i>
+  SPI1_Init_Advanced(_SPI_MASTER, _SPI_FCY_DIV2, _SPI_CLK_HI_TRAILING);
+
+
+  <i>// If Port Expander Library uses SPI2 module</i>
+  <i>// SPI2_Init_Advanced(_SPI_MASTER, _SPI_FCY_DIV2, _SPI_CLK_HI_TRAILING);</i>
+
+  <i>/*
+   * init display for 240 pixel width and 128 pixel height
+   * 8 bits character width
+   * data bus on MCP23S17 portB
+   * control bus on MCP23S17 portA
+   * bit 2 is !WR
+   * bit 1 is !RD
+   * bit 0 is !CD
+   * bit 4 is RST
+   * chip enable, reverse on, 8x8 font internaly set in library
+   */</i>
+
+  SPI_T6963C_Config(240, 128, 8, 0, 2, 1, 0, 4);
+  Delay_ms(1000);
+
+  <i>/*
+   * Enable both graphics and text display at the same time
+   */</i>
+  SPI_T6963C_graphics(1);
+  SPI_T6963C_text(1);
+
+  panel = 0;
+  i = 0;
+  curs = 0;
+  cposx = cposy = 0;
+  <i>/*
+   * Text messages
+   */</i>
+  SPI_T6963C_write_text(txt, 0, 0, SPI_T6963C_ROM_MODE_XOR);
+  SPI_T6963C_write_text(txt1, 0, 15, SPI_T6963C_ROM_MODE_XOR);
+
+  <i>/*
+   * Cursor
+   */</i>
+  SPI_T6963C_cursor_height(8);       <i>// 8 pixel height</i>
+  SPI_T6963C_set_cursor(0, 0);       <i>// Move cursor to top left</i>
+  SPI_T6963C_cursor(0);              <i>// Cursor off</i>
+  
+  <i>/*
+   * Draw rectangles
+   */</i>
+  SPI_T6963C_rectangle(0, 0, 239, 127, SPI_T6963C_WHITE);
+  SPI_T6963C_rectangle(20, 20, 219, 107, SPI_T6963C_WHITE);
+  SPI_T6963C_rectangle(40, 40, 199, 87, SPI_T6963C_WHITE);
+  SPI_T6963C_rectangle(60, 60, 179, 67, SPI_T6963C_WHITE);
+
+  <i>/*
+   * Draw a cross
+   */</i>
+  SPI_T6963C_line(0, 0, 239, 127, SPI_T6963C_WHITE);
+  SPI_T6963C_line(0, 127, 239, 0, SPI_T6963C_WHITE);
+
+  <i>/*
+   * Draw solid boxes
+   */</i>
+  SPI_T6963C_box(0, 0, 239, 8, SPI_T6963C_WHITE);
+  SPI_T6963C_box(0, 119, 239, 127, SPI_T6963C_WHITE);
+  
+  <i>/*
+   * Draw circles
+   */</i>
+  SPI_T6963C_circle(120, 64, 10, SPI_T6963C_WHITE);
+  SPI_T6963C_circle(120, 64, 30, SPI_T6963C_WHITE);
+  SPI_T6963C_circle(120, 64, 50, SPI_T6963C_WHITE);
+  SPI_T6963C_circle(120, 64, 70, SPI_T6963C_WHITE);
+  SPI_T6963C_circle(120, 64, 90, SPI_T6963C_WHITE);
+  SPI_T6963C_circle(120, 64, 110, SPI_T6963C_WHITE);
+  SPI_T6963C_circle(120, 64, 130, SPI_T6963C_WHITE);
+
+
+  SPI_T6963C_sprite(76, 4, einstein, 88, 119);  <i>// Draw a sprite</i>
+  SPI_T6963C_setGrPanel(1);                     <i>// Select other graphic panel</i>
+  SPI_T6963C_image(mikroE_240x128_bmp);         <i>// Draw an image</i>
+  
+  <b>while</b>(1) {                                    <i>// Endless loop</i>
+  
+    <i>/*
+     * If PORTA_0 is pressed, toggle the display between graphic panel 0 and graphic 1
+     */</i>
+    <b>if</b>(PINA0_bit) {
+      panel++;
+      panel &#38;= 1;
+      SPI_T6963C_displayGrPanel(panel);
+      Delay_ms(300);
+      }
+
+    <i>/*
+     * If PORTA_1 is pressed, display only graphic panel
+     */</i>
+    <b>else if</b>(PINA1_bit) {
+      SPI_T6963C_graphics(1);
+      SPI_T6963C_text(0);
+      Delay_ms(300);
+      }
+
+    <i>/*
+     * If PORTA_2 is pressed, display only text panel
+     */</i>
+    <b>else if</b>(PINA2_bit) {
+      SPI_T6963C_graphics(0);
+      SPI_T6963C_text(1);
+      Delay_ms(300);
+      }
+
+    <i>/*
+     * If PORTA_3 is pressed, display text and graphic panels
+     */</i>
+    <b>else if</b>(PINA3_bit) {
+      SPI_T6963C_graphics(1);
+      SPI_T6963C_text(1);
+      Delay_ms(300);
+      }
+
+    <i>/*
+     * If PORTA_4 is pressed, change cursor
+     */</i>
+    <b>else if</b>(PINA4_bit) {
+      curs++;
+      <b>if</b>(curs == 3) curs = 0;
+      <b>switch</b>(curs) {
+        <b>case</b> 0:
+          <i>// no cursor</i>
+          SPI_T6963C_cursor(0);
+          <b>break</b>;
+        <b>case</b> 1:
+          <i>// blinking cursor</i>
+          SPI_T6963C_cursor(1);
+          SPI_T6963C_cursor_blink(1);
+          <b>break</b>;
+        <b>case</b> 2:
+          <i>// non blinking cursor</i>
+          SPI_T6963C_cursor(1);
+          SPI_T6963C_cursor_blink(0);
+          <b>break</b>;
+        }
+      Delay_ms(300);
+      }
+
+    <i>/*
+     * Move cursor, even if not visible
+     */</i>
+    cposx++;
+    <b>if</b>(cposx == SPI_T6963C_txtCols) {
+      cposx = 0;
+      cposy++;
+      <b>if</b>(cposy == SPI_T6963C_grHeight / SPI_T6963C_CHARACTER_HEIGHT) {
+        cposy = 0;
+        }
+      }
+    SPI_T6963C_set_cursor(cposx, cposy);
+
+    Delay_ms(100);
+
+    }
+}
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="SPI T6963C Glcd HW connection" src="img/schemes/scheme_spi_t6963.gif"></p>
+    <p class="center small">SPI T6963C Glcd HW connection</p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

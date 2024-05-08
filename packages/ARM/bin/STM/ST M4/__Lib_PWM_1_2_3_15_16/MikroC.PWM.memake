@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_PWM_1_2_3_15_16.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L451CE$|^STM32L452CC$|^STM32L452CE$|^STM32L452VE$|^STM32L462CE$|^STM32L451VC$|^STM32L462VE$|^STM32L451CC$|^STM32L451RC$|^STM32L451VE$|^STM32L451RE$|^STM32L452VC$|^STM32L462RE$|^STM32L452RC$|^STM32L452RE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

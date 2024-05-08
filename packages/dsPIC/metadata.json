@@ -1,0 +1,9 @@
+{
+    "mcu.uid": "PIC30F4013",
+    "commit.hash": "{5d3da283e12bc0de1026566710e4ef475efb6f08}",
+    "toolchain.uid": "mikrocdspic",
+    "mikrosdk.version": "v7.1.0",
+    "board.uid": "generic",
+    "mikrosdk.name": "mikroC PRO for dsPIC Libraries",
+    "guid": "sdk.mikroc.legacy.dspic"
+}

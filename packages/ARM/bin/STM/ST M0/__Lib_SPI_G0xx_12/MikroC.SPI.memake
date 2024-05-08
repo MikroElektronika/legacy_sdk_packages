@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_SPI_G0xx_12.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32G070CB$|^STM32G071G8$|^STM32G071GB$|^STM32G071CB$|^STM32G071KB$|^STM32G081RB$|^STM32G070KB$|^STM32G070RB$|^STM32G071EB$|^STM32G071RB$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

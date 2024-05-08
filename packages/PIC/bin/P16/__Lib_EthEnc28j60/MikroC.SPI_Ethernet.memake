@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI_Ethernet",
+    "global_visibility": true,
+    "arch": "P16",
+    "binaries": [
+        "__Lib_EthEnc28j60.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F887$|^PIC16F946$|^PIC16F727$|^PIC16C67$|^PIC16F726$|^PIC16F877$|^PIC16C77$|^PIC16F76$|^PIC16F916$|^PIC16F777$|^PIC16LF726$|^PIC16C926$|^PIC16CR926$|^PIC16C66$|^PIC16F877A$|^PIC16F77$|^PIC16F767$|^PIC16F707$|^PIC16F876$|^PIC16F886$|^PIC16F876A$|^PIC16C76$|^PIC16LF707$|^PIC16LF727$|^PIC16F917$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

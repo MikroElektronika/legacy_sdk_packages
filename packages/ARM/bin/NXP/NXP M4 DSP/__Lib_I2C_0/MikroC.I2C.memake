@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "M4DSP",
+    "binaries": [
+        "__Lib_I2C_0.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK20DN128.+5$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

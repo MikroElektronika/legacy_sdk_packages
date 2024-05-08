@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Peripheral_Pin_Select",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_PPS_p33FJ06GS101_x02_16GSx02_x04_DPC18.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33FJ06GS101$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

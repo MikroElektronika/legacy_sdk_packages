@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.TFT_16bit_Defs",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_TFT_16bit_Defs.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC16F18877$|^PIC16F18857$|^PIC16F19197$|^PIC16LF19197$|^PIC16LF18857$|^PIC16LF18877$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

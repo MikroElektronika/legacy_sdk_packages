@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_SPI_123.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX550F256H$|^PIC32MX570F512H$|^PIC32MX170F512H$|^PIC32MX230F128H$|^PIC32MX530F128H$|^PIC32MX120F064H$|^PIC32MX130F128H$|^PIC32MX150F256H$|^PIC32MX250F256H$|^PIC32MX270F512H$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

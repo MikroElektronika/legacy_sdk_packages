@@ -1,0 +1,4073 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>T6963C Graphic Lcd Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_dspic.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_C_dsPIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">T6963C Graphic Lcd Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for dsPIC30/33 and PIC24 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="stmpe610_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="tft_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>T6963C Graphic <acronym title="Liquid Crystal Display">Lcd</acronym> Library</h2></a>
+
+    <p>The mikroC PRO for dsPIC30/33 and PIC24 provides a library for working with Glcds 
+    based on TOSHIBA T6963C controller. The Toshiba T6963C is a very popular Lcd 
+    controller for the use in small graphics modules. It is capable of controlling 
+    displays with a resolution up to 240x128. Because of its low power and small 
+    outline it is most suitable for mobile applications such as PDAs, MP3 
+    players or mobile measurement equipment. Although small, this contoller has 
+    a capability of displaying and merging text and graphics and it manages 
+    all the interfacing signals to the displays Row and Column drivers.</p>
+    
+    <p>For creating a custom set of Glcd images use <a href="integrated_tools.htm#glcd_bmp_editor">Glcd Bitmap Editor</a> Tool.</p>   
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+      <ul>
+      	<li>When using this library with dsPIC33 and PIC24 family of <acronym title="MicroController Unit">MCU</acronym>s be aware of their voltage incompatibility with certain number of T6963C based Glcd modules. So, additional external power supply for these modules may be required.</li>
+      	<li>ChipEnable(CE), FontSelect(FS) and Reverse(MD) have to be set to appropriate levels by the user outside of the T6963C_Init() function. See the Library Example code at the bottom of this page.</li>
+      	<li>Glcd size based initialization routines can be found in setup library files located in the Uses folder.</li>
+      	<li>The user must make sure that used MCU has appropriate ports and pins. If this is not the case the user should adjust initialization routines.</li>
+      </ul>
+    </div>
+    <br>Some mikroElektronika's adapter boards have pinout different from T6369C datasheets. Appropriate relations between these labels are given in the table below :
+                <table>
+                  <tr align="center">
+                  	<th><b>Adapter Board</b></th>
+										<th><b>T6369C datasheet</b></th>
+                  </tr>
+									<tr align="center">
+                  	<td>RS</td>
+										<td>C/D</td>
+                  </tr>
+									<tr align="center">
+                  	<td>R/W</td>
+										<td>/RD</td>
+                  </tr>
+									<tr align="center">
+                  	<td>E</td>
+										<td>/WR</td>
+                  </tr>
+                </table>
+    
+    <!-- -->
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="T6963C Library Dependency Tree" src="img/dependencies/t6963c_dependency.gif">  
+    <p></p>
+
+    <h3>External dependencies of T6963C Graphic Lcd Library</h3>
+
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using T6963C Graphic Lcd library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr unsigned int</b> T6963C_dataPort;</code></td>
+          <td align="left">T6963C Data Port.</td>
+          <td align="left"><code><b>char</b> T6963C_dataPort <b>at</b> PORTB;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> T6963C_ctrlwr;</code></td>
+          <td align="left">Write signal.</td>
+          <td align="left"><code><b>sbit</b> T6963C_ctrlwr <b>at</b> LATF2_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> T6963C_ctrlrd;</code></td>
+          <td align="left">Read signal.</td>
+          <td align="left"><code><b>sbit</b> T6963C_ctrlrd <b>at</b> LATF1_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> T6963C_ctrlcd;</code></td>
+          <td align="left">Command/Data signal.</td>
+          <td align="left"><code><b>sbit</b> T6963C_ctrlcd <b>at</b> LATF0_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> T6963C_ctrlrst;</code></td>
+          <td align="left">Reset signal.</td>
+          <td align="left"><code><b>sbit</b> T6963C_ctrlrst <b>at</b> LATF4_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> T6963C_ctrlwr_Direction;</code></td>
+          <td align="left">Direction of the Write pin.</td>
+          <td align="left"><code><b>sbit</b> T6963C_ctrlwr_Direction <b>at</b> TRISF2_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> T6963C_ctrlrd_Direction;</code></td>
+          <td align="left">Direction of the Read pin.</td>
+          <td align="left"><code><b>sbit</b> T6963C_ctrlrd_Direction <b>at</b> TRISF1_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> T6963C_ctrlcd_Direction;</code></td>
+          <td align="left">Direction of the Command/Data pin.</td>
+          <td align="left"><code><b>sbit</b> T6963C_ctrlcd_Direction <b>at</b> TRISF0_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> T6963C_ctrlrst_Direction;</code></td>
+          <td align="left">Direction of the Reset pin.</td>
+          <td align="left"><code><b>sbit</b> T6963C_ctrlrst_Direction <b>at</b> TRISF4_bit;</code></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+    
+  
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#t6963c_init">T6963C_init</a></li>
+      <li><a href="#t6963c_writedata">T6963C_writeData</a></li>
+      <li><a href="#t6963c_writecommand">T6963C_writeCommand</a></li>
+      <li><a href="#t6963c_setptr">T6963C_setPtr</a></li>
+      <li><a href="#t6963C_set_ext_buffer">T6963C_Set_Ext_Buffer</a></li>
+      <li><a href="#t6963c_waitready">T6963C_waitReady</a></li>
+      <li><a href="#t6963c_fill">T6963C_fill</a></li>
+      <li><a href="#t6963c_dot">T6963C_dot</a></li>
+      <li><a href="#t6963c_set_font_adv">T6963C_Set_Font_Adv</a></li>
+      <li><a href="#T6963C_set_ext_font_adv">T6963C_Set_Font_Ext_Adv</a></li>
+      <li><a href="#t6963c_write_char">T6963C_write_char</a></li>
+      <li><a href="#t6963c_write_char_adv">T6963C_Write_Char_Adv</a></li>
+			<li><a href="#t6963c_write_text">T6963C_write_text</a></li>
+			<li><a href="#t6963c_write_text_adv">T6963C_Write_Text_Adv</a></li>
+			<li><a href="#t6963c_write_const_text_adv">T6963C_Write_Const_Text_Adv</a></li>
+			<li><a href="#t6963c_line">T6963C_line</a></li>
+			<li><a href="#t6963c_rectangle">T6963C_rectangle</a></li>
+			<li><a href="#t6963c_rectangle_round_edges">T6963C_rectangle_round_edges</a></li>
+			<li><a href="#t6963c_rectangle_round_edges_fill">T6963C_rectangle_round_edges_fill</a></li>
+			<li><a href="#t6963c_box">T6963C_box</a></li>
+			<li><a href="#t6963c_circle">T6963C_circle</a></li>
+			<li><a href="#t6963c_circle_fill">T6963C_circle_fill</a></li>
+			<li><a href="#t6963c_image">T6963C_image</a></li>
+			<li><a href="#t6963c_ext_image">T6963C_Ext_Image</a></li>
+			<li><a href="#t6963c_partialimage">T6963C_PartialImage</a></li>
+			<li><a href="#t6963c_ext_partialimage">T6963C_Ext_PartialImage</a></li>
+			<li><a href="#t6963c_sprite">T6963C_sprite</a></li>
+			<li><a href="#t6963c_set_cursor">T6963C_set_cursor</a></li>
+		</ul>
+		
+    <p>The following low level library routines are implemented as macros. These macros can be found in the <code>__T6963C.h</code> header file which is located in the T6963C example projects folders.</p> 
+
+		<ul>	
+			<li><a href="#t6963c_clearbit">T6963C_clearBit</a></li>      
+			<li><a href="#t6963c_setbit">T6963C_setBit</a></li> 
+			<li><a href="#t6963c_negbit">T6963C_negBit</a></li>
+			<li><a href="#t6963c_displaygrpanel">T6963C_displayGrPanel</a></li>
+			<li><a href="#t6963c_displaytxtpanel">T6963C_displayTxtPanel</a></li>
+			<li><a href="#t6963c_setgrpanel">T6963C_setGrPanel</a></li>
+			<li><a href="#t6963c_settxtpanel">T6963C_setTxtPanel</a></li>
+			<li><a href="#t6963c_panelfill">T6963C_panelFill</a></li>
+			<li><a href="#t6963c_grfill">T6963C_grFill</a></li>
+			<li><a href="#t6963c_txtfill">T6963C_txtFill</a></li>
+			<li><a href="#t6963c_cursor_height">T6963C_cursor_height</a></li>
+			<li><a href="#t6963c_graphics">T6963C_graphics</a></li>
+			<li><a href="#t6963c_text">T6963C_text</a></li>
+			<li><a href="#t6963c_cursor">T6963C_cursor</a></li>
+			<li><a href="#t6963c_cursor_blink">T6963C_cursor_blink</a></li>
+    </ul>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_init">T6963C_init</h3>
+
+
+    <!-- tabela: T6963C_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_init(<b>unsigned int</b> width, <b>unsigned char</b> height, <b>unsigned char</b> fntW);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+						 Initalizes the Graphic Lcd controller.</p> 
+						 Display RAM organization:<br>
+						 The library cuts the RAM into panels : a complete panel is one graphics panel followed by a text panel (see schematic below).
+						</p> 
+						<pre>
++---------------------+ /\
++ GRAPHICS PANEL #0   +  |
++                     +  |
++                     +  |
++                     +  |
++---------------------+  | PANEL 0
++ TEXT PANEL #0       +  |
++                     + \/   
++---------------------+ /\  
++ GRAPHICS PANEL #1   +  |
++                     +  |
++                     +  |
++                     +  |
++---------------------+  | PANEL 1
++ TEXT PANEL #1       +  |
++                     +  |
++---------------------+ \/            	
+            </pre>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>width:</code> width of the Glcd panel</li>
+              <li><code>height:</code> height of the Glcd panel</li>
+              <li><code>fntW:</code> font width</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>External dependencies of the library from the top of the page must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// T6963C module connections</i>
+<b>char</b> T6963C_dataPort <b>at</b> PORTB;                   <i>// DATA port</i>
+
+<b>sbit</b> T6963C_ctrlwr  <b>at</b> LATF2_bit;                <i>// WR write signal</i>
+<b>sbit</b> T6963C_ctrlrd  <b>at</b> LATF1_bit;                <i>// RD read signal</i>
+<b>sbit</b> T6963C_ctrlcd  <b>at</b> LATF0_bit;                <i>// CD command/data signal</i>
+<b>sbit</b> T6963C_ctrlrst <b>at</b> LATF4_bit;                <i>// RST reset signal</i>
+<b>sbit</b> T6963C_ctrlwr_Direction  <b>at</b> TRISF2_bit;     <i>// WR write signal</i>
+<b>sbit</b> T6963C_ctrlrd_Direction  <b>at</b> TRISF1_bit;     <i>// RD read signal</i>
+<b>sbit</b> T6963C_ctrlcd_Direction  <b>at</b> TRISF0_bit;     <i>// CD command/data signal</i>
+<b>sbit</b> T6963C_ctrlrst_Direction <b>at</b> TRISF4_bit;     <i>// RST reset signal</i>
+
+<i>// Signals not used by library, they are set in main function</i>
+<b>sbit</b> T6963C_ctrlce <b>at</b> LATF3_bit;                 <i>// CE signal</i>
+<b>sbit</b> T6963C_ctrlfs <b>at</b> LATF6_bit;                 <i>// FS signal</i>
+<b>sbit</b> T6963C_ctrlmd <b>at</b> LATF5_bit;                 <i>// MD signal</i>
+<b>sbit</b> T6963C_ctrlce_Direction  <b>at</b> TRISF3_bit;     <i>// CE signal direction</i>
+<b>sbit</b> T6963C_ctrlfs_Direction  <b>at</b> TRISF6_bit;     <i>// FS signal direction</i>
+<b>sbit</b> T6963C_ctrlmd_Direction  <b>at</b> TRISF5_bit;     <i>// MD signal direction</i>
+<i>// End T6963C module connections</i>
+       
+...
+<i>// init display for 240 pixel width, 128 pixel height and 8 bits character width</i>
+T6963C_init(240, 128, 8);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_writedata">T6963C_writeData</h3>
+
+
+    <!-- tabela: T6963C_WriteData -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_writeData(<b>unsigned char</b> mydata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes data to T6963C controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>mydata:</code> data to be written</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_writeData(AddrL);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_writecommand">T6963C_writeCommand</h3>
+
+
+    <!-- tabela: T6963C_WriteCommand  -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_writeCommand(<b>unsigned char</b> mydata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes command to T6963C controller.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>mydata:</code> command to be written</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_writeCommand(T6963C_CURSOR_POINTER_SET);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_setptr">T6963C_setPtr</h3>
+
+
+    <!-- tabela: T6963C_SetPtr -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_setPtr(<b>unsigned int</b> p, <b>unsigned char</b> c);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the memory pointer <code>p</code> for command <code>p</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>p:</code> address where command should be written</li>
+           		<li><code>c:</code> command to be written</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_setPtr(T6963C_grHomeAddr + start, T6963C_ADDRESS_POINTER_SET);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="t6963C_set_ext_buffer">T6963C_Set_Ext_Buffer</h3>
+
+
+    <!-- tabela: T6963C_Set_Ext_Buffer -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_Set_Ext_Buffer(<b>char</b>* (*getExtDataPtr)(<b>unsigned long</b> offset, <b>unsigned int </b> count, <b>unsigned int</b> *num));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Function sets pointer to the user function which manipulates the external resource.</p>
+            <p>Parameters :</p>
+              <ul>
+	              <li><code>offset</code> - offset from the beginning of the resource from where the data is requested.</li>
+	              <li><code>count</code> - requested number of bytes.</li>
+	              <li><code>num</code> - variable for holding the returned number ob byte (less or equal to the number of acqired bytes).</li>
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b>* ReadExternalBuffer(<b>unsigned long</b> offset, <b>unsigned int</b> count, <b>unsigned int</b> *num){
+  <b>unsigned long</b> start_sector;
+  <b>unsigned int</b> pos;
+
+  start_sector = Mmc_Get_File_Write_Sector() + offset/512;
+  pos = (<b>unsigned long</b>)offset%512;
+
+  <b>if</b>(start_sector == currentSector+1){
+    Mmc_Multi_Read_Buffer(EXT_BUFFER);
+    currentSector = start_sector;
+  }<b>else</b>
+    <b>if</b>(start_sector != currentSector){
+      Mmc_Multi_Read_Stop();
+      Mmc_Multi_Read_Start(start_sector);
+      Mmc_Multi_Read_Buffer(EXT_BUFFER);
+      currentSector = start_sector;
+    }
+
+  <b>if</b>(count&#62;512-pos){
+    *num = 512-pos;
+  }
+  <b>else</b>
+    *num = count;
+
+  <b>return</b> EXT_BUFFER+pos;
+}
+
+T6963C_Set_Ext_Buffer(ReadExternalBuffer);
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_waitready">T6963C_waitReady</h3>
+
+
+    <!-- tabela: T6963C_WaitReady  -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_waitReady();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Pools the status byte, and loops until Toshiba Glcd module is ready.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_waitReady();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_fill">T6963C_fill</h3>
+
+
+    <!-- tabela: T6963C_Fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_fill(<b>unsigned char</b> v, <b>unsigned int</b> start, <b>unsigned int</b> len);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills controller memory block with given byte.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>v:</code> byte to be written</li>
+           		<li><code>start:</code> starting address of the memory block</li>
+           		<li><code>len:</code> length of the memory block in bytes</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_fill(0x33,0x00FF,0x000F);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_dot">T6963C_dot</h3>
+
+
+    <!-- tabela: T6963C_Dot -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_dot(<b>int</b> x, <b>int</b> y, <b>unsigned char</b> color);</p>
+         </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a dot in the current graphic panel of Glcd at coordinates (x, y). </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x:</code> dot position on x-axis</li>
+          		<li><code>y:</code> dot position on y-axis</li>
+           		<li><code>color:</code> color parameter. Valid values: T6963C_BLACK, T6963C_WHITE and T6963C_INVERT.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_dot(x0, y0, pcolor);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="t6963c_set_font_adv">T6963C_Set_Font_Adv</h3>
+
+
+    <!-- tabela: T6963C_Set_Font_Adv -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_Set_Font_Adv(<b>const far char</b> *activeFont, <b>unsigned char</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#t6963c_write_char_adv">T6963C_Write_Char_Adv</a> and <a href="#t6963c_write_text_adv">T6963C_Write_Text_Adv</a> routines.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. Needs to be formatted as an array of char.</li>
+           		<li><code>font_color:</code> sets font color.</li>
+           		<li><code>font_orientation:</code> sets font orientation.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#t6963c_init">T6963C_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>T6963C_Set_Font_Adv(&myfont, 1, 0);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="t6963c_set_ext_font_adv">T6963C_Set_Ext_Font_Adv</h3>
+
+
+    <!-- tabela: T6963C_Set_Font -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_Set_Ext_Font_Adv(<b>unsigned long</b> activeFont, <b>unsigned int</b> font_color, <b>char</b> font_orientation);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets font that will be used with <a href="#t6963c_write_char_adv">T6963C_Write_Char_Adv</a> and <a href="#t6963c_write_text_adv">T6963C_Write_Text_Adv</a> routines.  Font is located in an external resource.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>activeFont:</code> font to be set. This parameter represents the address in the exteral resource from where the font data begins.</li>
+           		<li><code>font_color:</code> sets font color.</li>
+           		<li><code>font_orientation:</code> sets font orientation.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Glcd needs to be initialized, see <a href="#t6963c_init">T6963C_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_Set_Ext_Font_Adv(173296, 5, 7, 32);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>    
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_write_char">T6963C_write_char</h3>
+
+
+    <!-- tabela: T6963C_Write_Char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_write_char(<b>unsigned char</b> c, <b>unsigned char</b> x, <b>unsigned char</b> y, <b>unsigned char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a char in the current text panel of Glcd at coordinates (x, y).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>c:</code> char to be written</li>
+           		<li><code>x:</code> char position on x-axis</li>
+           		<li><code>y:</code> char position on y-axis</li>
+           		<li><code>mode:</code> mode parameter. Valid values: T6963C_ROM_MODE_OR, T6963C_ROM_MODE_XOR, T6963C_ROM_MODE_AND and T6963C_ROM_MODE_TEXT</li>
+            </ul>
+            <p>Mode parameter explanation:
+            	<ul>
+            		<li>OR Mode: In the OR-Mode, text and graphics can be displayed and the data is logically "OR-ed". This is the most common way of combining text and graphics for example labels on buttons.</li>
+                <li>XOR-Mode: In this mode, the text and graphics data are combined via the logical "exclusive OR". This can be useful to display text in the negative mode, i.e. white text on black background.</li>
+                <li>AND-Mode: The text and graphic data shown on display are combined via the logical "AND function".</li>
+                <li>TEXT-Mode: This option is only available when displaying just a text. The Text Attribute values are stored in the graphic area of display memory.</li>
+              </ul>
+            For more details see the T6963C datasheet.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_write_char('A',22,23,T6963C_ROM_MODE_AND);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_write_char_adv">T6963C_write_char_adv</h3>
+
+
+    <!-- tabela: T6963C_Write_Char -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_write_char_adv(<b>unsigned char</b> c, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a char in the current text panel of Glcd at coordinates (x, y).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>c:</code> char to be written</li>
+           		<li><code>x:</code> char position on x-axis</li>
+           		<li><code>y:</code> char position on y-axis</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_write_char_adv('A',22,23);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_write_text">T6963C_write_text</h3>
+
+
+    <!-- tabela: T6963C_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_write_text(<b>unsigned char</b> *str, <b>unsigned int</b> x, <b>unsigned int</b> y, <b>unsigned char</b> mode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text in the current text panel of Glcd at coordinates (x, y).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>str:</code> text to be written</li>
+           		<li><code>x:</code> text position on x-axis</li>
+           		<li><code>y:</code> text position on y-axis</li>
+           		<li><code>mode:</code> mode parameter. Valid values: T6963C_ROM_MODE_OR, T6963C_ROM_MODE_XOR, T6963C_ROM_MODE_AND and T6963C_ROM_MODE_TEXT</li>
+            </ul>
+            <p>Mode parameter explanation:
+            	<ul>
+            		<li>OR Mode: In the OR-Mode, text and graphics can be displayed and the data is logically "OR-ed". This is the most common way of combining text and graphics for example labels on buttons.</li>
+                <li>XOR-Mode: In this mode, the text and graphics data are combined via the logical "exclusive OR". This can be useful to display text in the negative mode, i.e. white text on black background.</li>
+                <li>AND-Mode: The text and graphic data shown on display are combined via the logical "AND function".</li>
+                <li>TEXT-Mode: This option is only available when displaying just a text. The Text Attribute values are stored in the graphic area of display memory.</li>
+              </ul>
+              For more details see the T6963C datasheet.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+T6963C_write_text("Glcd LIBRARY DEMO, WELCOME !", 0, 0, T6963C_ROM_MODE_XOR);	
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_write_text_adv">T6963C_Write_Text_Adv</h3>
+
+
+    <!-- tabela: T6963C_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_Write_Text_Adv(<b>unsigned char</b> *text, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text in the current text panel of Glcd at coordinates (x, y).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>str:</code> text to be written</li>
+           		<li><code>x:</code> text position on x-axis</li>
+           		<li><code>y:</code> text position on y-axis</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+T6963C_Write_Text_Adv("Glcd LIBRARY DEMO, WELCOME !", 0, 0);	
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_write_const_text_adv">T6963C_Write_Const_Text_Adv</h3>
+
+
+    <!-- tabela: T6963C_Write_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_Write_Const_Text_Adv(<b>const far ßchar</b> *text, <b>unsigned int</b> x, <b>unsigned int</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes text located in the program memory on the glcd at coordinates (x, y).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>str:</code> text to be written</li>
+           		<li><code>x:</code> text position on x-axis</li>
+           		<li><code>y:</code> text position on y-axis</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">            
+<pre>
+<b>const char</b> ctext[] = "mikroElektronika";
+...
+T6963C_Write_Const_Text_Adv(ctext, 0, 0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="t6963c_line">T6963C_line</h3>
+
+
+    <!-- tabela: T6963C_Line -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p>void T6963C_line(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a line from (x0, y0) to (x1, y1).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x0:</code> x coordinate of the line start</li>
+           		<li><code>y0:</code> y coordinate of the line end</li>
+           		<li><code>x1:</code> x coordinate of the line start</li>
+           		<li><code>y1:</code> y coordinate of the line end</li>
+           		<li><code>pcolor:</code> color parameter. Valid values: T6963C_BLACK, T6963C_WHITE and T6963C_INVERT.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_line(0, 0, 239, 127, T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_rectangle">T6963C_rectangle</h3>
+
+
+    <!-- tabela: T6963C_Rectangle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_rectangle(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rectangle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x0:</code> x coordinate of the upper left rectangle corner</li>
+           		<li><code>y0:</code> y coordinate of the upper left rectangle corner</li>
+           		<li><code>x1:</code> x coordinate of the lower right rectangle corner</li>
+           		<li><code>y1:</code> y coordinate of the lower right rectangle corner</li>
+           		<li><code>pcolor:</code> color parameter. Valid values: T6963C_BLACK, T6963C_WHITE and T6963C_INVERT.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_rectangle(20, 20, 219, 107, T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+     <!-- -->
+
+
+    <h3 id="t6963c_rectangle_round_edges">T6963C_rectangle_round_edges</h3>
+
+
+    <!-- tabela: T6963C_rectangle_round_edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_rectangle_round_edges(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>int</b> round_radius, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a rounded edge rectangle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x0:</code> x coordinate of the upper left rectangle corner</li>
+           		<li><code>y0:</code> y coordinate of the upper left rectangle corner</li>
+           		<li><code>x1:</code> x coordinate of the lower right rectangle corner</li>
+           		<li><code>y1:</code> y coordinate of the lower right rectangle corner</li>
+           		<li><code>round_radius:</code> radius of the rounded edge.</li>
+           		<li><code>pcolor:</code> color parameter. Valid values: T6963C_BLACK, T6963C_WHITE and T6963C_INVERT.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_rectangle_round_edges(20, 20, 219, 107, 12, T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+     <!-- -->
+
+
+    <h3 id="t6963c_rectangle_round_edges_fill">T6963C_rectangle_round_edges_fill</h3>
+
+
+    <!-- tabela: T6963C_rectangle_round_edges -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_rectangle_round_edges_fill(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>int</b> round_radius, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled rounded edge rectangle on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x0:</code> x coordinate of the upper left rectangle corner</li>
+           		<li><code>y0:</code> y coordinate of the upper left rectangle corner</li>
+           		<li><code>x1:</code> x coordinate of the lower right rectangle corner</li>
+           		<li><code>y1:</code> y coordinate of the lower right rectangle corner</li>
+           		<li><code>round_radius:</code> radius of the rounded edge</li>
+           		<li><code>pcolor:</code> color parameter. Valid values: T6963C_BLACK, T6963C_WHITE and T6963C_INVERT.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+						<p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_rectangle_round_edges_fill(20, 20, 219, 107, 12, T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_box">T6963C_box</h3>
+
+
+    <!-- tabela: T6963C_Box -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_box(<b>int</b> x0, <b>int</b> y0, <b>int</b> x1, <b>int</b> y1, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a box on the Glcd</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x0:</code> x coordinate of the upper left box corner</li>
+           		<li><code>y0:</code> y coordinate of the upper left box corner</li>
+           		<li><code>x1:</code> x coordinate of the lower right box corner</li>
+           		<li><code>y1:</code> y coordinate of the lower right box corner</li>
+           		<li><code>pcolor:</code> color parameter. Valid values: T6963C_BLACK, T6963C_WHITE and T6963C_INVERT.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_box(0, 119, 239, 127, T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_circle">T6963C_circle</h3>
+
+
+    <!-- tabela: T6963C_Circle -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_circle(<b>int</b> x, <b>int</b> y, <b>long</b> r, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a circle on the Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x:</code> x coordinate of the circle center</li>
+           		<li><code>y:</code> y coordinate of the circle center</li>
+           		<li><code>r:</code> radius size</li>
+           		<li><code>pcolor:</code> color parameter. Valid values: T6963C_BLACK, T6963C_WHITE and T6963C_INVERT.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_circle(120, 64, 110, T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_circle_fill">T6963C_circle_fill</h3>
+
+
+    <!-- tabela: T6963C_circle_fill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_circle_fill(<b>int</b> x, <b>int</b> y, <b>long</b> r, <b>unsigned char</b> pcolor);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Draws a filled circle on the Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x:</code> x coordinate of the circle center</li>
+           		<li><code>y:</code> y coordinate of the circle center</li>
+           		<li><code>r:</code> radius size</li>
+           		<li><code>pcolor:</code> color parameter. Valid values: T6963C_BLACK, T6963C_WHITE and T6963C_INVERT.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_circle_fill(120, 64, 110, T6963C_WHITE);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_image">T6963C_image</h3>
+
+
+    <!-- tabela: T6963C_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_image(<b>const code far char</b> *pic);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays bitmap on Glcd.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+           		<li><code>pic:</code> image to be displayed. Bitmap array can be located in both code and RAM memory (due to the mikroC PRO for dsPIC30/33 and PIC24 pointer to const and pointer to RAM equivalency).</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_image(my_image);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Image dimension must match the display dimension.</p>
+            <p>Use the integrated Glcd Bitmap Editor (menu option <b>Tools&#160;&#8250;&#160;Glcd Bitmap Editor</b>) to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="t6963c_ext_image">T6963C_Ext_Image</h3>
+
+
+    <!-- tabela: T6963C_Image -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_Ext_Image(<b>unsigned long</b> image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a bitmap from an external resource.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+           		<li><code>pic:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_Ext_image(153608);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Image dimension must match the display dimension.</p>
+            <p>Use the integrated Glcd Bitmap Editor (menu option <b>Tools&#160;&#8250;&#160;Glcd Bitmap Editor</b>) to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="t6963c_partialimage">T6963C_PartialImage</h3>
+
+
+    <!-- tabela: T6963C_PartialImage -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>code const far char</b> * image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image on a desired location.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+            	<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+            	<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+            	<li><code>width:</code> desired image width.</li>
+            	<li><code>height:</code> desired image height.</li>
+            	<li><code>picture_width:</code> width of the original image.</li>
+            	<li><code>picture_height:</code> height of the original image.</li>
+            	<li><code>image:</code> image to be displayed. Bitmap array can be located in both code and RAM memory (due to the mikroC PRO for dsPIC30/33 and PIC24 pointer to const and pointer to RAM equivalency).</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#t6963c_init">T6963C_init</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Draws a 10x15 part of the image starting from the upper left corner on the coordinate (10,12). Original image size is 16x32.</i> 
+T6963C_PartialImage(10, 12, 10, 15, 16, 32, image);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Image dimension must match the display dimension.</p>
+            <p>Use the integrated Glcd Bitmap Editor (menu option <b>Tools&#160;&#8250;&#160;Glcd Bitmap Editor</b>) to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="t6963c_ext_partialimage">T6963C_Ext_PartialImage</h3>
+
+
+    <!-- tabela: T6963C_PartialImage -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_Ext_PartialImage(<b>unsigned int</b> x_left, <b>unsigned int</b> y_top, <b>unsigned int</b> width, <b>unsigned int</b> height, <b>unsigned int</b> picture_width, <b>unsigned int</b> picture_height, <b>unsigned long</b> image);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Displays a partial area of the image (from an external resource) on a desired location.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+            	<li><code>x_left:</code> x coordinate of the desired location (upper left coordinate).</li>
+            	<li><code>y_top:</code> y coordinate of the desired location (upper left coordinate).</li>
+            	<li><code>width:</code> desired image width.</li>
+            	<li><code>height:</code> desired image height.</li>
+            	<li><code>picture_width:</code> width of the original image.</li>
+            	<li><code>picture_height:</code> height of the original image.</li>
+            	<li><code>image:</code> image to be displayed. This parameter represents the address in the exteral resource from where the image data begins.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See <a href="#t6963c_init">T6963C_init</a> routine.</p></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_Ext_PartialImage(10, 12, 10, 15, 16, 32, 0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Image dimension must match the display dimension.</p>
+            <p>Use the integrated Glcd Bitmap Editor (menu option <b>Tools&#160;&#8250;&#160;Glcd Bitmap Editor</b>) to convert image to a constant array suitable for displaying on Glcd.</p>
+          </td>
+        </tr> 
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="t6963c_sprite">T6963C_sprite</h3>
+
+
+    <!-- tabela: T6963C_Sprite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_sprite(<b>unsigned char</b> px, <b>unsigned char</b> py, <b>const code char</b> *pic, <b>unsigned char</b> sx, <b>unsigned char</b> sy);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fills graphic rectangle area (px, py) to (px+sx, py+sy) with custom size picture.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>px:</code> x coordinate of the upper left picture corner. Valid values: multiples of the font width</li>
+           		<li><code>py:</code> y coordinate of the upper left picture corner</li>
+           		<li><code>pic:</code> picture to be displayed</li>
+          		<li><code>sx:</code> picture width. Valid values: multiples of the font width</li>
+           		<li><code>sy:</code> picture height</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_sprite(76, 4, einstein, 88, 119); <i>// draw a sprite</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>If <code>px</code> and <code>sx</code> parameters are not multiples of the font width they will be scaled to the nearest lower number that is a multiple of the font width.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="t6963c_set_cursor">T6963C_set_cursor</h3>
+
+
+    <!-- tabela: T6963C_Set_Cursor -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_set_cursor(<b>unsigned char</b> x, <b>unsigned char</b> y);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets cursor to row x and column y.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>x:</code> cursor position row number</li>
+           		<li><code>y:</code> cursor position column number</li>
+          	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_set_cursor(cposx, cposy);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+    <!-- kraj tabele -->
+
+    <h3 id="t6963c_clearbit">T6963C_clearBit</h3>
+
+
+    <!-- tabela: T6963C_ClearBit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_clearBit(<b>unsigned int</b> b);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Clears control port bit(s).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>b:</code> bit mask.  The function will clear bit <code>x</code> on control port if bit <code>x</code> in bit mask is set to 1.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// clear bits 0 and 1 on control port</i>
+T6963C_clearBit(0x0003);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_setbit">T6963C_setBit</h3>
+
+
+    <!-- tabela: T6963C_SetBit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_setBit(<b>unsigned int</b> b);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Sets control port bit(s).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>b:</code> bit mask.  The function will set bit <code>x</code> on control port if bit <code>x</code> in bit mask is set to 1.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set bits 0 and 1 on control port</i>
+T6963C_setBit(0x0003);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>             
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_negbit">T6963C_negBit</h3>
+
+
+    <!-- tabela: T6963C_NegBit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_negBit(<b>unsigned int</b> b);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Negates control port bit(s).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>b:</code> bit mask.  The function will negate bit <code>x</code> on control port if bit <code>x</code> in bit mask is set to 1.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// negate bits 0 and 1 on control port</i>
+T6963C_negBit(0x0003);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_displaygrpanel">T6963C_displayGrPanel</h3>
+
+
+    <!-- tabela: T6963C_DisplayGrPanel -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_displayGrPanel(<b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Display selected graphic panel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>n:</code> graphic panel number.  Valid values: <code>0</code> and <code>1</code>.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// display graphic panel 1</i>
+T6963C_displayGrPanel(1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_displaytxtpanel">T6963C_displayTxtPanel</h3>
+
+
+    <!-- tabela: T6963C_DisplayTxtPanel -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_displayTxtPanel(<b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Display selected text panel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>n:</code> text panel number. Valid values: <code>0</code> and <code>1</code>.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// display text panel 1<i>
+T6963C_displayTxtPanel(1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table> 
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_setgrpanel">T6963C_setGrPanel</h3>
+
+
+    <!-- tabela: T6963C_SetGrPanel -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_setGrPanel(<b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Compute start address for selected graphic panel and set appropriate internal pointers. All subsequent graphic operations will be preformed at this graphic panel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>n:</code> graphic panel number.  Valid values: <code>0</code> and <code>1</code>.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set graphic panel 1 as current graphic panel.</i> 
+T6963C_setGrPanel(1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_settxtpanel">T6963C_setTxtPanel</h3>
+
+
+    <!-- tabela: T6963C_SetTxtPanel -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_setTxtPanel(<b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Compute start address for selected text panel and set appropriate internal pointers. All subsequent text operations will be preformed at this text panel.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>n:</code> text panel number.  Valid values: <code>0</code> and <code>1</code>.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set text panel 1 as current text panel.</i> 
+T6963C_setTxtPanel(1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_panelfill">T6963C_panelFill</h3>
+
+
+    <!-- tabela: T6963C_PanelFill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_panelFill(<b>unsigned char</b> v);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fill current panel in full (graphic+text) with appropriate value (0 to clear).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>v:</code> value to fill panel with.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>clear current panel</i>
+T6963C_panelFill(0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_grfill">T6963C_grFill</h3>
+
+
+    <!-- tabela: T6963C_GrFill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_grFill(<b>unsigned char</b> v);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fill current graphic panel with appropriate value (0 to clear).</p>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>v:</code> value to fill graphic panel with.</li>
+          	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// clear current graphic panel</i> 
+T6963C_grFill(0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_txtfill">T6963C_txtFill</h3>
+
+
+    <!-- tabela: T6963C_TxtFill -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_txtFill(<b>unsigned char</b> v);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Fill current text panel with appropriate value (0 to clear).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>v:</code> this value increased by 32 will be used to fill text panel.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// clear current text panel</i>
+T6963C_txtFill(0);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_cursor_height">T6963C_cursor_height</h3>
+
+
+    <!-- tabela: T6963C_Cursor_Height -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_cursor_height(<b>unsigned char</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Set cursor size.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+           		<li><code>n:</code> cursor height. Valid values: <code>0</code>..<code>7</code>.</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+T6963C_cursor_height(7);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table> 
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_graphics">T6963C_graphics</h3>
+
+
+    <!-- tabela: t6963c_graphics -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_graphics(<b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enable/disable graphic displaying.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>n:</code> graphic enable/disable parameter. Valid values: <code>0</code> (disable graphic dispaying) and <code>1</code> (enable graphic displaying).</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// enable graphic displaying</i>
+T6963C_graphics(1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_text">T6963C_text</h3>
+
+
+    <!-- tabela: T6963C_Text -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_text(<b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enable/disable text displaying.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>n:</code> on/off parameter. Valid values: <code>0</code> (disable text displaying) and <code>1</code> (enable text displaying).</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// enable text displaying</i> 
+T6963C_text(1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>                                                                       
+
+    <!-- -->
+
+
+    <h3 id="t6963c_cursor">T6963C_cursor</h3>
+
+
+    <!-- tabela: T6963C_Cursor -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_cursor(<b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Set cursor on/off.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>n:</code> on/off parameter. Valid values: <code>0</code> (set cursor off) and <code>1</code> (set cursor on).</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set cursor on</i>
+T6963C_cursor(1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table> 
+    
+    <!-- -->
+
+
+    <h3 id="t6963c_cursor_blink">T6963C_cursor_blink</h3>
+
+
+    <!-- tabela: T6963C_Cursor_Blink -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> T6963C_cursor_blink(<b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enable/disable cursor blinking.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>n:</code> cursor blinking enable/disable parameter. Valid values: <code>0</code> (disable cursor blinking) and <code>1</code> (enable cursor blinking).</li>
+           	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Toshiba Glcd module needs to be initialized. See the <a href="#t6963c_init">T6963C_init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// enable cursor blinking</i> 
+T6963C_cursor_blink(1);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>     
+
+    <!-- kraj tabele -->    
+
+    <!-- -->
+
+    <h3>Library Example</h3>
+
+    <p>The following drawing demo tests advanced routines of the T6963C Glcd library.
+		   Hardware configurations in this example are made for the dsPICPRO2 board and dsPIC30F6014A.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+#include        &#34;__T6963C.h&#34;
+
+<i>// T6963C module connections</i>
+<b>char</b> T6963C_dataPort <b>at</b> PORTB;                   <i>// DATA port</i>
+
+<b>sbit</b> T6963C_ctrlwr  <b>at</b> LATF2_bit;                <i>// WR write signal</i>
+<b>sbit</b> T6963C_ctrlrd  <b>at</b> LATF1_bit;                <i>// RD read signal</i>
+<b>sbit</b> T6963C_ctrlcd  <b>at</b> LATF0_bit;                <i>// CD command/data signal</i>
+<b>sbit</b> T6963C_ctrlrst <b>at</b> LATF4_bit;                <i>// RST reset signal</i>
+<b>sbit</b> T6963C_ctrlwr_Direction  <b>at</b> TRISF2_bit;     <i>// WR write signal</i>
+<b>sbit</b> T6963C_ctrlrd_Direction  <b>at</b> TRISF1_bit;     <i>// RD read signal</i>
+<b>sbit</b> T6963C_ctrlcd_Direction  <b>at</b> TRISF0_bit;     <i>// CD command/data signal</i>
+<b>sbit</b> T6963C_ctrlrst_Direction <b>at</b> TRISF4_bit;     <i>// RST reset signal</i>
+
+<i>// Signals not used by library, they are set in main function</i>
+<b>sbit</b> T6963C_ctrlce <b>at</b> LATF3_bit;                 <i>// CE signal</i>
+<b>sbit</b> T6963C_ctrlfs <b>at</b> LATF6_bit;                 <i>// FS signal</i>
+<b>sbit</b> T6963C_ctrlmd <b>at</b> LATF5_bit;                 <i>// MD signal</i>
+<b>sbit</b> T6963C_ctrlce_Direction  <b>at</b> TRISF3_bit;     <i>// CE signal direction</i>
+<b>sbit</b> T6963C_ctrlfs_Direction  <b>at</b> TRISF6_bit;     <i>// FS signal direction</i>
+<b>sbit</b> T6963C_ctrlmd_Direction  <b>at</b> TRISF5_bit;     <i>// MD signal direction</i>
+
+<i>// End T6963C module connections</i>
+
+<i>/*
+ * bitmap pictures stored in ROM
+ */</i>
+<b>const code char</b> mikroE_240x128_bmp[];
+<b>const code char</b> einstein[];
+
+
+<b>void</b> main() {
+  <b>char</b> txt1[] = &#34; EINSTEIN WOULD HAVE LIKED mE&#34;;
+  <b>char</b> txt[] =  &#34; GLCD LIBRARY DEMO, WELCOME !&#34;;
+
+  <b>unsigned char</b>  panel;         <i>// Current panel</i>
+  <b>unsigned int</b>   i;             <i>// General purpose register</i>
+  <b>unsigned char</b>  curs;          <i>// Cursor visibility</i>
+  <b>unsigned int</b>   cposx, cposy;  <i>// Cursor x-y position</i>
+
+  #define COMPLETE_EXAMPLE      <i>// comment this line to make simpler/smaller example</i>
+
+  ADPCFG = 0xFFFF;              <i>// Configure AN pins as digital</i>
+
+  TRISB8_bit = 1;               <i>// Set RF0 as input</i>
+  TRISB9_bit = 1;               <i>// Set RF1 as input</i>
+  TRISB10_bit = 1;              <i>// Set RF2 as input</i>
+  TRISB11_bit = 1;              <i>// Set RF3 as input</i>
+  TRISB12_bit = 1;              <i>// Set RF4 as input</i>
+
+  T6963C_ctrlce_Direction = 0;
+  T6963C_ctrlce = 0;            <i>// Enable T6963C</i>
+  T6963C_ctrlfs_Direction = 0;
+  T6963C_ctrlfs = 0;            <i>// Font Select 8x8</i>
+  T6963C_ctrlmd_Direction = 0;
+  T6963C_ctrlmd = 0;            <i>// Column number select</i>
+
+
+  <i>// Initialize T6963C</i>
+  T6963C_init(240, 128, 8);
+
+  <i>/*
+   * Enable both graphics and text display at the same time
+   */</i>
+  T6963C_graphics(1);
+  T6963C_text(1);
+
+  panel = 0;
+  i = 0;
+  curs = 0;
+  cposx = cposy = 0;
+  <i>/*
+   * Text messages
+   */</i>
+  T6963C_write_text(txt, 0, 0, T6963C_ROM_MODE_XOR);
+  T6963C_write_text(txt1, 0, 15, T6963C_ROM_MODE_XOR);
+
+  <i>/*
+   * Cursor
+   */</i>
+  T6963C_cursor_height(8);       <i>// 8 pixel height</i>
+  T6963C_set_cursor(0, 0);       <i>// Move cursor to top left</i>
+  T6963C_cursor(0);              <i>// Cursor off</i>
+
+  <i>/*
+   * Draw rectangles
+   */</i>
+  T6963C_rectangle(0, 0, 239, 127, T6963C_WHITE);
+  T6963C_rectangle(20, 20, 219, 107, T6963C_WHITE);
+  T6963C_rectangle(40, 40, 199, 87, T6963C_WHITE);
+  T6963C_rectangle(60, 60, 179, 67, T6963C_WHITE);
+
+  <i>/*
+   * Draw a cross
+   */</i>
+  T6963C_line(0, 0, 239, 127, T6963C_WHITE);
+  T6963C_line(0, 127, 239, 0, T6963C_WHITE);
+
+  <i>/*
+   * Draw solid boxes
+   */</i>
+  T6963C_box(0, 0, 239, 8, T6963C_WHITE);
+  T6963C_box(0, 119, 239, 127, T6963C_WHITE);
+
+  #ifdef COMPLETE_EXAMPLE
+    <i>/*
+     * Draw circles
+     */</i>
+    T6963C_circle(120, 64, 10, T6963C_WHITE);
+    T6963C_circle(120, 64, 30, T6963C_WHITE);
+    T6963C_circle(120, 64, 50, T6963C_WHITE);
+    T6963C_circle(120, 64, 70, T6963C_WHITE);
+    T6963C_circle(120, 64, 90, T6963C_WHITE);
+    T6963C_circle(120, 64, 110, T6963C_WHITE);
+    T6963C_circle(120, 64, 130, T6963C_WHITE);
+
+    T6963C_sprite(76, 4, einstein, 88, 119);         <i>// Draw a sprite</i>
+
+    T6963C_setGrPanel(1);                            <i>// Select other graphic panel</i>
+
+    T6963C_image(mikroE_240x128_bmp);                <i>// Draw an image</i>
+
+  #endif
+
+  <b>for</b>(;;) {                                          <i>// Endless loop</i>
+    <i>/*
+     * If RF0 is pressed, display only graphic panel
+     */</i>
+    <b>if</b>(RB8_bit) {
+      T6963C_graphics(1);
+      T6963C_text(0);
+      Delay_ms(300);
+      }
+    #ifdef COMPLETE_EXAMPLE
+      <i>/*
+       * If RF1 is pressed, toggle the display between graphic panel 0 and graphic panel 1
+       */</i>
+      <b>else if</b>(RB9_bit) {
+        panel++;
+        panel &#38;= 1;
+        T6963C_displayGrPanel(panel);
+        Delay_ms(300);
+        }
+    #endif
+    <i>/*
+     * If RF2 is pressed, display only text panel
+     */</i>
+    <b>else if</b>(RB10_bit) {
+      T6963C_graphics(0);
+      T6963C_text(1);
+      Delay_ms(300);
+      }
+
+    <i>/*
+     * If RF3 is pressed, display text and graphic panels
+     */</i>
+    <b>else if</b>(RB11_bit) {
+      T6963C_graphics(1);
+      T6963C_text(1);
+      Delay_ms(300);
+      }
+    <i>/*
+     * If RF4 is pressed, change cursor
+     */</i>
+    <b>else if</b>(RB12_bit) {
+      curs++;
+      <b>if</b>(curs == 3) curs = 0;
+      <b>switch</b>(curs) {
+        <b>case</b> 0:
+          <i>// no cursor</i>
+          T6963C_cursor(0);
+          <b>break</b>;
+        <b>case</b> 1:
+          <i>// blinking cursor</i>
+          T6963C_cursor(1);
+          T6963C_cursor_blink(1);
+          <b>break</b>;
+        <b>case</b> 2:
+          <i>// non blinking cursor</i>
+          T6963C_cursor(1);
+          T6963C_cursor_blink(0);
+          <b>break</b>;
+        }
+      Delay_ms(300);
+      }
+
+    <i>/*
+     * Move cursor, even if not visible
+     */</i>
+    cposx++;
+    <b>if</b>(cposx == T6963C_txtCols) {
+      cposx = 0;
+      cposy++;
+      <b>if</b>(cposy == T6963C_grHeight / T6963C_CHARACTER_HEIGHT) {
+        cposy = 0;
+        }
+      }
+    T6963C_set_cursor(cposx, cposy);
+
+    Delay_ms(100);
+    }
+}
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="T6963C Glcd HW connection" src="img/Schemes/scheme_t6963.gif"></p>
+    <p class="center small">T6963C Glcd HW connection</p>
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2018 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

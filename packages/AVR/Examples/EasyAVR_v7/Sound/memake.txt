@@ -1,0 +1,20 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: Sound
+
+type: executable
+
+sources: {
+    Sound.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.Button
+    MikroC.Sound
+}
+
+others: {
+    ./Sound.png
+}

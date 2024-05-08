@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_PWM_AB.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^AT90PWM316$|^ATTINY13$|^ATTINY84A$|^ATTINY24$|^ATTINY45$|^AT90USB82$|^ATTINY44A$|^ATTINY828$|^AT90PWM3B$|^ATTINY2313A$|^ATTINY1634$|^AT90PWM3$|^AT90USB162$|^AT90PWM2$|^ATMEGA32U2$|^ATTINY25$|^ATMEGA16U2$|^ATTINY43U$|^AT90PWM2B$|^ATMEGA16U4$|^ATTINY24A$|^ATTINY85$|^ATMEGA8U2$|^AT90PWM216$|^AT90PWM1$|^ATTINY4313$|^ATMEGA32U4$|^ATTINY2313$|^ATTINY84$|^ATTINY44$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

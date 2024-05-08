@@ -1,0 +1,16 @@
+{
+    "alias": "MikroC.FLASH",
+    "global_visibility": true,
+    "library_type": "legacy",
+    "arch": "LTE64K",
+    "binaries": [
+        "__Lib_FLASH_r.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^ATTINY26$|^AT90S4433$|^ATTINY814$|^AT90S4434$|^AT90S2343$|^ATTINY104$|^AT90S2313$|^ATMEGA103$|^ATTINY102$|^ATTINY22$|^AT90S8535$|^AT90S2323$|^AT90S4414$|^AT90S8515$|^ATTINY817$|^ATTINY816$|^ATMEGA328PB$|^ATTINY417$",
+    "toolchain": "mikrocavr",
+    "version": "1.0.0"
+}

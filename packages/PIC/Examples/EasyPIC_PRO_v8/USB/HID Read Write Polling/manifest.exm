@@ -1,0 +1,8 @@
+{
+    "name": "HID Read Write Polling",
+    "description": "This example establishes connection with the HID terminal that is active on the PC. Upon connection establishment, the HID Device Name ( USB HID Library ) will appear in the respective window. The character that user sends from the HID terminal will be re-sent back to user",
+    "image" : "../USB.png",
+    "toolchain": ["mikrocpic"],
+    "hw" : ["EasyPIC PRO v8"],
+    "category" : ["mikroC legacy PIC"]
+}

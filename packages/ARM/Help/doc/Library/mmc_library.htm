@@ -1,0 +1,4667 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Multi Media Card Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+
+	
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Multi Media Card Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="memory_manager_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="onewire_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+  <a name="top_of_page"><h2>Multi Media Card Library</h2></a>
+  <p>The Multi Media Card (MMC) is a Flash memory card standard. MMC cards are currently available in sizes up to and including 32 GB and are used in cellular phones, digital audio players, digital cameras and <acronym title="Personal Digital Assistant">PDA</acronym>&#8217;s. <br>mikroC PRO for ARM provides a library for accessing data on Multi Media Card via <acronym title="Serial Peripheral Interface">SPI</acronym> communication. This library also supports SD (Secure Digital) and high capacity SDHC (Secure Digital High Capacity) memory cards .</p>
+
+  <h3>Secure Digital Card</h3>
+  <p>Secure Digital (SD) is a Flash memory card standard, based on the older Multi Media Card (MMC) format. <br>SD cards are currently available in sizes of up to and including 2 GB, and are used in digital cameras, digital camcorders, handheld computers, media players, mobile phones, GPS receivers, video games and <acronym title="Personal Digital Assistant">PDA</acronym>s.</p>
+
+  <h3>Secure Digital High Capacity Card</h3>
+  <p>SDHC (Secure Digital High Capacity, SD 2.0) is an extension of the SD standard which increases card's storage capacity up to 32 GB by using sector addressing instead of byte addressing in the previous SD standard. 
+  <br>SDHC cards share the same physical and electrical form factor as older (SD 1.x) cards, allowing SDHC-devices to support both newer SDHC cards and older SD-cards. The current standard limits the maximum capacity of an SDHC card to 32 GB.</p>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>   
+      <ul>
+      	<li>Routines for file handling can be used only with FAT16 file system.</li>
+      	<li>Library functions create and read files from the root directory only.</li>
+      	<li>Library functions populate both FAT1 and FAT2 tables when writing to files, but the file data is being read from the FAT1 table only; i.e. there is no recovery if the FAT1 table gets corrupted.</li>
+      	<li>If MMC/SD card has Master Boot Record (MBR), the library will work with the first available primary (logical) partition that has non-zero size. If MMC/SD card has Volume Boot Record (i.e. there is only one logical partition and no MBRs), the library works with entire card as a single partition. For more information on MBR, physical and logical drives, primary/secondary partitions and partition tables, please consult other resources, e.g. Wikipedia and similar.</li>
+      	<li>Before write operation, make sure you don&#8217;t overwrite boot or FAT sector as it could make your card on PC or digital camera unreadable. Drive mapping tools, such as Winhex, can be of a great assistance.</li>
+      	<li>Library uses SPI module for communication. The user must initialize the appropriate SPI module before using the <acronym title="Multi Media Card">MMC</acronym> Library.</li>
+      	<li>For MCUs with multiple SPI modules it is possible to initialize all of them and then switch by using the <code>SPI_Set_Active()</code> function. See the <a href="spi_library.htm">SPI Library</a> functions.</li>
+      </ul>
+    </div>
+
+    <p>The <acronym title="Serial Peripheral Interface">SPI</acronym> module has to be initialized through <code>SPIx_Init_Advanced</code> routine with the following parameters:</p>
+		  <ul>
+			  <li>SPI Master</li>
+				<li>8bit mode</li>
+				<li>secondary prescaler 1</li>
+				<li>primary prescaler 64</li>
+				<li>Slave Select disabled</li>
+				<li>data sampled in the middle of data output time</li>
+				<li>clock idle high</li>
+				<li>Serial output data changes on transition from active clock state to idle clock state</li>
+			</ul>
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/tip.gif" align="absmiddle"><b>&nbsp;&nbsp;Tip :</b>  
+		  Once the MMC/SD card is initialized, SPI module can be reinitialized at higher a speed. See the <a href="#mmc_init">Mmc_Init</a> and <a href="#mmc_fat_init">Mmc_Fat_Init</a> routines.
+    </div>
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="MMC Library Dependency Tree" src="img/dependencies/mmc_dependency.gif">  
+    <p></p>
+
+    <h3>External dependencies of MMC Library</h3>
+   
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variable must be defined in all projects using MMC library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> Mmc_Chip_Select;</code></td>
+          <td align="left">Chip select pin.</td>
+          <td align="left"><code><b>sbit</b> Mmc_Chip_Select <b>at</b> GPIO_PORTA_DATA7_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> Mmc_Chip_Select_Direction;</code></td>
+          <td align="left">Direction of the chip select pin.</td>
+          <td align="left"><code><b>sbit</b> Mmc_Chip_Select_Direction <b>at</b> GPIO_PORTA_DIR7_bit;</code></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variable must be defined in all projects using MMC library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> Mmc_Chip_Select;</code></td>
+          <td align="left">Chip select pin.</td>
+          <td align="left"><code><b>sbit</b> Mmc_Chip_Select <b>at</b> DIO_P6OUT.B0;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> Mmc_Chip_Select_Direction;</code></td>
+          <td align="left">Direction of the chip select pin.</td>
+          <td align="left"><code><b>sbit</b> Mmc_Chip_Select_Direction <b>at</b> DIO_P6DIR.B0;</code></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variable must be defined in all projects using MMC library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> Mmc_Chip_Select;</code></td>
+          <td align="left">Chip select pin.</td>
+          <td align="left"><code><b>sbit</b> Mmc_Chip_Select <b>at</b> GPIOD_ODR.B3;</code></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variable must be defined in all projects using MMC library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> Mmc_Chip_Select;</code></td>
+          <td align="left">Chip select pin.</td>
+          <td align="left"><code><b>sbit</b> Mmc_Chip_Select <b>at</b> GPIO_OUTPUT_PIN_146_bit;</code></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+    </div>
+    
+  </div>
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#mmc_init">Mmc_Init</a></li>
+      <li><a href="#mmc_read_sector">Mmc_Read_Sector</a></li>
+      <li><a href="#mmc_write_sector">Mmc_Write_Sector</a></li>
+      <li><a href="#mmc_read_cid">Mmc_Read_Cid</a></li>
+      <li><a href="#mmc_read_csd">Mmc_Read_Csd</a></li>
+      <li><a href="#mmc_multi_read_start">Mmc_Multi_Read_Start</a></li>
+      <li><a href="#mmc_multi_read_sector">Mmc_Multi_Read_Sector</a></li>
+      <li><a href="#mmc_multi_read_stop">Mmc_Multi_Read_Stop</a></li>
+      <li><a href="#mmc_set_interface">Mmc_Set_Interface</a></li>
+      <li><a href="#mmc_settimeoutcallback">Mmc_SetTimeoutCallback</a></li>      
+    </ul>
+
+    <p>Routines for file handling:</p>
+
+    <ul>
+      <li><a href="#mmc_fat_init">Mmc_Fat_Init</a></li>
+      <li><a href="#mmc_fat_quickformat">Mmc_Fat_QuickFormat</a></li>
+			<li><a href="#mmc_fat_assign">Mmc_Fat_Assign</a></li>
+      <li><a href="#mmc_fat_reset">Mmc_Fat_Reset</a></li>
+      <li><a href="#mmc_fat_read">Mmc_Fat_Read</a></li>
+      <li><a href="#mmc_fat_rewrite">Mmc_Fat_Rewrite</a></li>
+      <li><a href="#mmc_fat_append">Mmc_Fat_Append</a></li>
+      <li><a href="#mmc_fat_delete">Mmc_Fat_Delete</a></li>
+      <li><a href="#mmc_fat_write">Mmc_Fat_Write</a></li>
+      <li><a href="#mmc_fat_set_file_date">Mmc_Fat_Set_File_Date</a></li>
+      <li><a href="#mmc_fat_get_file_date">Mmc_Fat_Get_File_Date</a></li>
+      <li><a href="#mmc_fat_get_file_date_modified">Mmc_Fat_Get_File_Date_Modified</a></li>
+      <li><a href="#mmc_fat_get_file_size">Mmc_Fat_Get_File_Size</a></li>
+      <li><a href="#mmc_get_file_write_sector">Mmc_Get_File_Write_Sector</a></li>
+      <li><a href="#mmc_fat_get_swap_file">Mmc_Fat_Get_Swap_File</a></li>
+      <li><a href="#mmc_fat_tell">Mmc_Fat_Tell</a></li>
+      <li><a href="#mmc_fat_seek">Mmc_Fat_Seek</a></li>
+      <li><a href="#mmc_fat_rename">Mmc_Fat_Rename</a></li>
+      <li><a href="#mmc_fat_makedir">Mmc_Fat_MakeDir</a></li>
+      <li><a href="#mmc_fat_renamedir">Mmc_Fat_RenameDir</a></li>
+      <li><a href="#mmc_fat_removedir">Mmc_Fat_RemoveDir</a></li>
+      <li><a href="#mmc_fat_changedir">Mmc_Fat_ChangeDir</a></li>
+      <li><a href="#mmc_fat_exists">Mmc_Fat_Exists</a></li>
+      <li><a href="#mmc_fat_dir">Mmc_Fat_Dir</a></li>
+      <li><a href="#mmc_fat_readdir">Mmc_Fat_ReadDir</a></li>
+      <li><a href="#mmc_fat_activate">Mmc_Fat_Activate</a></li>
+      <li><a href="#mmc_fat_readn">Mmc_Fat_ReadN</a></li>
+      <li><a href="#mmc_fat_open">Mmc_Fat_Open</a></li>
+      <li><a href="#mmc_fat_close">Mmc_Fat_Close</a></li>
+      <li><a href="#mmc_fat_eof">Mmc_Fat_EOF</a></li>
+
+    </ul>
+
+   <!-- -->
+
+
+    <h3 id="mmc_init">Mmc_Init</h3>
+
+
+    <!-- tabela: Mmc_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes MMC through hardware <acronym title="Serial Peripheral Interface">SPI</acronym> or <acronym title="Secure Digital Input/Output">SD I/O</acronym> interface.</p>
+            <p> <a href="#mmc_init">Mmc_Init</a> needs to be called before using other functions of this library.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+              <ul>
+              	<li><code>0</code> - if MMC/SD card was detected and successfully initialized</li>
+              	<li><code>1</code> - otherwise</li> 
+              </ul>
+						</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>External dependencies of the library from the top of the page must be defined before using this function.</p>
+            <p>The appropriate hardware <acronym title="Serial Peripheral Interface">SPI</acronym> or <acronym title="Secure Digital Input/Output">SD I/O</acronym> module must be previously initialized.
+            <br>See the <a href="spi_library.htm#spi_init">SPIx_Init</a>, <a href="spi_library.htm#spi_init_advanced">SPIx_Init_Advanced</a>, <a href="sdio_library.htm#sdio_init">SDIO_Init</a> and <a href="#mmc_set_interface">Mmc_Set_Interface</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> GPIO_PORTA_DATA7_bit;  <i>// for writing to output pin always use latch</i>
+<b>sbit</b> Mmc_Chip_Select_Direction <b>at</b> GPIO_PORTA_DIR7_bit;
+<i>// eof MMC module connections</i>
+...
+//--- initialize SPI1
+SPI2_Init();
+
+// initialize a MMC card
+mmc_error = Mmc_Init();
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> DIO_P6OUT.B0;  <i>// for writing to output pin always use latch</i>
+<b>sbit</b> Mmc_Chip_Select_Direction <b>at</b> DIO_P6DIR.B0;
+<i>// eof MMC module connections</i>
+...
+//--- initialize SPI
+SPI1_Init();
+
+// initialize a MMC card
+mmc_error = Mmc_Init();
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32 with SPI</h2>
+<pre>
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> GPIOD_ODR.B3;
+<i>// eof MMC module connections</i>
+...
+//--- initialize SPI3
+SPI3_Init_Advanced(_SPI_FPCLK_DIV4, _SPI_MASTER | _SPI_8_BIT |
+                   _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                   _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                   &_GPIO_MODULE_SPI3_PC10_11_12);
+
+// initialize a MMC card
+mmc_error = Mmc_Init();
+</pre>	
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32 with SDIO</h2>
+<pre>
+<i>// Reset module</i>
+SDIO_Reset();
+Delay_ms(100);
+
+<i>// SDIO_CK frequency must be less than 400 kHz in identification mode</i>
+SDIO_Init(_SDIO_CFG_POWER_SAVE_DISABLE | _SDIO_CFG_4_WIDE_BUS_MODE | _SDIO_CFG_CLOCK_BYPASS_DISABLE
+| _SDIO_CFG_CLOCK_RISING_EDGE | _SDIO_CFG_HW_FLOW_ENABLE, 120, &#38;_GPIO_MODULE_SDIO_D0_D3);
+
+<i>// Set pull-ups on SDIO lines (if there is no external pull-ups)</i>
+GPIOD_PUPDR |= 0x10;
+GPIOC_PUPDR |= 0x550000; 
+
+<i>// Set SDIO interface</i>
+Mmc_Set_Interface(_MMC_INTERFACE_SDIO);
+
+<i>// Init MMC</i>
+Mmc_Init();
+
+<i>// Once the MMC/SD card is initialized, SDIO speed (SDIO_CK) can be increased</i>
+SDIO_CLKCR &#38;= ~(<b>unsigned long</b>)0xff;
+SDIO_CLKCR |= (<b>unsigned long</b>)0x2;
+</pre>	
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+<pre>
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> GPIO_OUTPUT_PIN_146_bit;
+<i>// eof MMC module connections</i>
+
+// Initialize SPI
+SPI0_Init_Advanced(250000,0,0);
+
+<i>// Init MMC</i>
+Mmc_Init();
+</pre>	
+    </div>
+
+  </div>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="mmc_read_sector">Mmc_Read_Sector</h3>
+
+
+    <!-- tabela: Mmc_Read_Sector -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Read_Sector(<b>unsigned long</b> sector, <b>char</b> *dbuff);</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function reads one sector (512 bytes) from MMC card.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>sector:</code> MMC/SD card sector to be read.</li>
+			        <li><code>dbuff:</code> buffer of minimum 512 bytes in length for data storage.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+			      <p>
+              <ul>
+                <li><code>0</code> - if reading was successful</li>
+              	<li><code>1</code> - if an error occurred</li> 
+              </ul>
+			      </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card must be initialized. See <a href="#mmc_init">Mmc_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// read sector 510 of the MMC/SD card</i>
+<b>unsigned int</b> error;
+<b>unsigned long</b> sectorNo = 510;
+<b>char</b> dataBuffer[512];
+...
+error = Mmc_Read_Sector(sectorNo, dataBuffer);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="mmc_write_sector">Mmc_Write_Sector</h3>
+
+
+    <!-- tabela: Mmc_Write_Sector -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Write_Sector(<b>unsigned long</b> sector, <b>char</b> *dbuff);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function writes 512 bytes of data to one MMC card sector.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>sector:</code> MMC/SD card sector to be written to.</li>
+			        <li><code>dbuff:</code> data to be written (buffer of minimum 512 bytes in length).</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li> <code>0</code> - if writing was successful</li>
+            	<li> <code>1</code> - if there was an error in sending write command</li>
+		        	<li> <code>2</code> - if there was an error in writing (data rejected)</li> 
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card must be initialized. See <a href="#mmc_init">Mmc_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// write to sector 510 of the MMC/SD card</i>
+<b>unsigned int</b> error;
+<b>unsigned long</b> sectorNo = 510;
+<b>char</b> dataBuffer[512];
+...
+error = Mmc_Write_Sector(sectorNo, dataBuffer);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="mmc_read_cid">Mmc_Read_Cid</h3>
+
+
+    <!-- tabela: Mmc_Read_Cid -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+            <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Read_Cid(<b>char</b> *data_cid);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function reads 16-byte CID register.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>data_cid:</code> buffer of minimum 16 bytes in length for storing CID register content.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+            	<li><code>0</code> - if CID register was read successfully</li>
+             	<li><code>1</code> - if there was an error while reading</li> 
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card must be initialized. See <a href="#mmc_init">Mmc_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned int</b> error;
+<b>char</b> dataBuffer[16];
+...
+error = Mmc_Read_Cid(dataBuffer);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="mmc_read_csd">Mmc_Read_Csd</h3>
+
+
+    <!-- tabela: Mmc_Read_Csd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Read_Csd(<b>char</b> *data_csd);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function reads 16-byte CSD register.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>data_csd:</code> buffer of minimum 16 bytes in length for storing CSD register content.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+             	<li><code>0</code> - if CSD register was read successfully</li>
+             	<li><code>1</code> - if there was an error while reading</li> 
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card must be initialized. See <a href="#mmc_init">Mmc_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned int</b> error;
+<b>char</b> dataBuffer[16];
+...
+error = Mmc_Read_Csd(dataBuffer);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="mmc_multi_read_start">Mmc_Multi_Read_Start</h3>
+
+
+    <!-- tabela: Mmc_Multi_Read_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Multi_Read_Start(<b>unsigned long</b> sector);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function starts multi read mode, sectors are sequentially read starting from the sector given in the function argument.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>sector:</code> starting sector number.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+             	<li><code>0</code> - if multi read start was successful.</li>
+             	<li><code>1</code> - ir error occured.</li> 
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card must be initialized. See <a href="#mmc_init">Mmc_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned int</b> error;
+<b>char</b> sector;
+...
+error = Mmc_Multi_Read_Start(sector);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="mmc_multi_read_sector">Mmc_Multi_Read_Sector</h3>
+
+
+    <!-- tabela: Mmc_Multi_Read_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Multi_Read_Sector(char *dbuff);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The procedure reads sectors in multi read mode and places them in the buffer given as the function argument. Next function call reads the subsequent sector. Buffer size should be 512B.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>dbuff:</code> buffer for holding the sector data.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card must be initialized. See <a href="#mmc_init">Mmc_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned int</b> error;
+...
+Mmc_Multi_Read_Sector(buffer);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+
+    <h3 id="mmc_multi_read_stop">Mmc_Multi_Read_Stop</h3>
+
+
+    <!-- tabela: Mmc_Multi_Read_Start -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Multi_Read_Stop();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function stops multi read mode sequence.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+             	<li><code>0</code> - if stop was successful.</li>
+             	<li><code>1</code> - ir error was detected.</li> 
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card must be initialized. See <a href="#mmc_init">Mmc_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Mmc_Multi_Read_Stop;</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="mmc_set_interface">Mmc_Set_Interface</h3>
+
+
+    <!-- tabela: Mmc_Set_Interface -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Set_Interface(<b>char</b> setInterface);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>The function sets used MMC interface - <acronym title="Serial Peripheral Interface">SPI</acronym> or <acronym title="Secure Digital Input/Output">SD I/O</acronym>.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>setInterface:</code> parameter used to sed desired interface. Valid values :
+                <table class="small">
+              	  <thead>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                      <th valign="top">Value</th>
+                      <th valign="top">Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_MMC_INTERFACE_SPI</td>
+          					  <td valign="top">MMC <acronym title="Serial Peripheral Interface">SPI</acronym> Interface.</td>
+                    </tr>
+
+                    <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         					    <td class="code" valign="top">_MMC_INTERFACE_SDIO</td>
+          					  <td valign="top">MMC <acronym title="Secure Digital Input/Output">SD I/O</acronym> Interface.</td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+	            </li>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine must be called before the <a href="#mmc_init">Mmc_Init</a> routine.</li>
+            	<li>External dependencies of the library from the top of the page must be defined before using this function.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Set SDIO interface</i>
+Mmc_Set_Interface(_MMC_INTERFACE_SDIO);
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine is available only for MCUs with <acronym title="Secure Digital Input/Output">SD I/O</acronym> interface, STM32 Cortex M4.</li>
+            	<li>By default, the <acronym title="Serial Peripheral Interface">SPI</acronym> interface is set in the library.</li>
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="mmc_settimeoutcallback">Mmc_SetTimeoutCallback</h3>
+
+    <!-- tabela: Mmc_SetTimeoutCallback -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_SetTimeoutCallback(Mmc_Timeout_Values *Timeout_values, <b>void</b> (*MMC_Timeout)(<b>char</b>));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to set the adequate timeout values for the <acronym title="Serial Peripheral Interface">SPI</acronym>, CMD and INIT sequences used by the library routines.
+            <br>It will use these timeouts to compensate for the MMC/SD card speed differences which can greatly vary between MMC/SD cards.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>Timeout_values:</code> structure containing timeout fields for <acronym title="Serial Peripheral Interface">SPI</acronym>, CMD and INIT timeout sequences :
+<pre class="program">
+<b>typedef struct</b>
+{
+  <b>unsigned long</b> cmd_timeout;   <i>// timeout value for the CMD sequence</i>
+  <b>unsigned long</b> spi_timeout;   <i>// timeout value for the SPI sequence</i>
+  <b>unsigned long</b> init_timeout;  <i>// timeout value for the INIT sequence</i>
+} Mmc_Timeout_Values;
+</pre>
+              </li>
+              <li><code>MMC_Timeout:</code> a pointer to the callback function declared by user.</code> The function will return the following error codes through its parameter :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_MMC_CMD_TIMEOUT</td>
+                        <td valign="top">Error during CMD sequence.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_MMC_SPI_TIMEOUT</td>
+                        <td valign="top">Error during SPI sequence.</td>
+                      </tr>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_MMC_INIT_TIMEOUT</td>
+                        <td valign="top">Error during INIT sequence.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </li>
+              <br>
+              <p>If the callback function signals any of these errors, user must change the adequate timeout value in order to make the MMC/SD card working.</p>
+						</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>This routine must be called before the <a href="#mmc_init">Mmc_Init</a> routine.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// declare timeout structure</i>
+Mmc_Timeout_Values timeout;
+
+<i>// declare timeout callback function</i>
+<b>void</b> Mmc_TimeoutCallback(<b>char</b> errorCode) {
+  <i>// if there was error during the INIT sequence</i>
+  <b>if</b> (errorCode == _MMC_INIT_TIMEOUT) {
+    UART1_Write_Text("INIT ERROR - CHANGE INIT TIMEOUT VALUE!!!");
+    UART1_Write(13);
+    UART1_Write(10);
+  }
+  
+  <i>// if there was error during the CMD sequence</i>
+  <b>if</b> (errorCode == _MMC_CMD_TIMEOUT) {
+    UART1_Write_Text("READ ERROR - CHANGE CMD TIMEOUT VALUE!!!");
+    UART1_Write(13);
+    UART1_Write(10);
+  }
+  
+  <i>// if there was error during the SPI sequence</i>
+  <b>if</b> (errorCode == _MMC_SPI_TIMEOUT) {
+    UART1_Write_Text("SPI ERROR - CHANGE SPI TIMEOUT VALUE!!!");
+    UART1_Write(13);
+    UART1_Write(10);
+  }
+}
+
+...
+
+<i>// initialize timeout structure</i>
+timeout.cmd_timeout  = 1000;
+timeout.spi_timeout  = 10000;
+timeout.init_timeout = 100000;
+
+<i>// set the desired timeout values and callback function</i>
+Mmc_SetTimeoutCallback(timeout, &Mmc_TimeoutCallback); 
+</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>If this routine is not called, the library will set the default timeout values.</li>
+            </ul>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="mmc_fat_init">Mmc_Fat_Init</h3>
+
+
+    <!-- tabela: Mmc_Fat_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> Mmc_Fat_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes MMC/SD card, reads MMC/SD FAT16 boot sector and extracts necessary data needed by the library.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+             	<li><code>0</code> - if MMC/SD card was detected and successfully initialized</li>
+             	<li><code>1</code> - if FAT16 boot sector was not found</li>
+		        	<li><code>255</code> - if MMC/SD card was not detected</li> 
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>External dependencies of the library from the top of the page must be defined before using this function.</p>
+            <p>The appropriate hardware <acronym title="Serial Peripheral Interface">SPI</acronym> module must be previously initialized.
+            <br>See the <a href="spi_library.htm#spi_init">SPIx_Init</a>, <a href="spi_library.htm#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> GPIO_PORTA_DATA7_bit;  <i>// for writing to output pin always use latch</i>
+<b>sbit</b> Mmc_Chip_Select_Direction <b>at</b> GPIO_PORTA_DIR7_bit;
+<i>// eof MMC module connections</i>
+...
+<i>// set up SPI for MMC init</i>
+SPI1_Init();
+<i>// Loop until MMC is initialized</i>
+<b>while</b> (Mmc_Init())
+  ;  
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> DIO_P6OUT.B0;  <i>// for writing to output pin always use latch</i>
+<b>sbit</b> Mmc_Chip_Select_Direction <b>at</b> DIO_P6DIR.B0;
+<i>// eof MMC module connections</i>
+
+...
+<i>// set up SPI for MMC init</i>
+SPI1_Init();
+<i>// Loop until MMC is initialized</i>
+<b>while</b> (Mmc_Init())
+  ;  
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<pre>
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> GPIOD_ODR.B3;
+<i>// eof MMC module connections</i>
+...
+//--- set up SPI for MMC init (low speed)
+SPI3_Init_Advanced(_SPI_FPCLK_DIV64, _SPI_MASTER | _SPI_8_BIT |
+                   _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                   _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                   &_GPIO_MODULE_SPI3_PC10_11_12);
+
+<i>// Loop until MMC is initialized</i>
+<b>while</b> (Mmc_Init())
+  ;  
+<i>// reinitialize spi at higher speed</i>
+SPI3_Init_Advanced(_SPI_FPCLK_DIV2, _SPI_MASTER | _SPI_8_BIT |
+                   _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                   _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                   &_GPIO_MODULE_SPI3_PC10_11_12); 
+</pre>
+    </div>
+    
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+<pre>
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> GPIO_OUTPUT_PIN_146_bit;
+<i>// eof MMC module connections</i>
+...
+<i>//--- set up SPI for MMC init (low speed)</i>
+SPI0_Init_Advanced(250000,0,0);
+
+//--- init the FAT library
+<b>if</b> (!Mmc_Fat_Init()) {
+  <i>// reinitialize spi at higher speed</i>
+  SPI0_Init_Advanced(10000000,0,0);
+}
+</pre>
+    </div>
+
+  </div>          
+
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>MMC/SD card has to be formatted to FAT16 file system.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+		
+    <!-- -->
+
+
+    <h3 id="mmc_fat_quickformat">Mmc_Fat_QuickFormat</h3>
+
+
+    <!-- tabela: Mmc_Fat_QuickFormat -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Fat_QuickFormat(<b>char</b> *mmc_fat_label);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Formats to FAT16 and initializes MMC/SD card.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+							<li><code>mmc_fat_label:</code> volume label (11 characters in length). If less than 11 characters are provided, the label will be padded with spaces.  If null string is passed volume will not be labeled</li>                    
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+             	<li><code>0</code> - if MMC/SD card was detected, successfully formated and initialized</li>
+             	<li><code>1</code> - if FAT16 format was unseccessful</li>
+				      <li><code>255</code> - if MMC/SD card was not detected</li> 
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The appropriate hardware <acronym title="Serial Peripheral Interface">SPI</acronym> module must be previously initialized.
+            <br>See the <a href="spi_library.htm#spi_init">SPIx_Init</a>, <a href="spi_library.htm#spi_init_advanced">SPIx_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<pre>
+<i>// set up SPI for MMC init (low speed)</i>
+SPI0_Init_Advanced(SPI_400kHz, _SPI_MASTER, _SPI_8_BIT | _SPI_CLK_IDLE_HIGH | _SPI_SECOND_CLK_EDGE_TRANSITION, &#38;_GPIO_MODULE_SPI0_A245);
+
+Mmc_Fat_QuickFormat("mikroE");
+
+<i>// reinitialize spi at higher speed</i>
+SPI0_Init_Advanced(SPI_10MHz, _SPI_MASTER, _SPI_8_BIT | _SPI_CLK_IDLE_HIGH | _SPI_SECOND_CLK_EDGE_TRANSITION, &#38;_GPIO_MODULE_SPI0_A245);
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>MSP432</h2>
+<pre>
+<i>// set up SPI for MMC init)</i>
+SPI1_Init();
+
+<i>// Format and initialize MMC/SD card and MMC_FAT16 library globals</i>
+Mmc_Fat_QuickFormat("mikroE");
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<pre>
+<i>// set up SPI for MMC init (low speed)</i>
+SPI3_Init_Advanced(_SPI_FPCLK_DIV64, _SPI_MASTER | _SPI_8_BIT |
+                   _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                   _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                   &_GPIO_MODULE_SPI3_PC10_11_12);
+
+Mmc_Fat_QuickFormat("mikroE");
+
+<i>// reinitialize spi at higher speed</i>
+SPI3_Init_Advanced(_SPI_FPCLK_DIV2, _SPI_MASTER | _SPI_8_BIT |
+                   _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                   _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                   &_GPIO_MODULE_SPI3_PC10_11_12); 
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>CEC1x02</h2>
+<pre>
+<i>// set up SPI for MMC init (low speed)</i>
+SPI0_Init_Advanced(250000,0,0);
+
+Mmc_Fat_QuickFormat("mikroE");
+
+<i>// reinitialize spi at higher speed</i>
+SPI0_Init_Advanced(10000000,0,0);
+</pre>
+    </div>
+    
+  </div>
+
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+						<p>This routine can be used instead or in conjunction with <a href="#mmc_fat_init">Mmc_Fat_Init</a> routine.</p>
+						<p>If MMC/SD card already contains a valid boot sector, it will remain unchanged (except volume label field) and only FAT and ROOT tables will be erased. Also, the new volume label will be set.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele -->		
+    
+
+    <!-- -->
+
+
+    <h3 id="mmc_fat_assign">Mmc_Fat_Assign</h3>
+
+
+    <!-- tabela: Mmc_Fat_Assign -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Fat_Assign(<b>char</b> *filename, <b>char</b> file_cre_attr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Assigns file for file operations (read, write, delete...). All subsequent file operations will be applied on an assigned file.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>filename:</code> name of the file that should be assigned for file operations. File name should be in DOS 8.3 (file_name.extension) format. 
+							    The file name and extension will be automatically padded with spaces by the library if they have less than length required (i.e. "mikro.tx" -> "mikro   .tx "), so the user does not have to take care of that.
+		              The file name and extension are case insensitive. The library will convert them to proper case automatically, so the user does not have to take care of that.</li>
+							<li><code>file_cre_attr:</code> file creation and attributes flags. Each bit corresponds to the appropriate file attribute:</li>
+							<p>
+							  <table>
+                  <tr align="center">
+                  	<td><b>Bit</b></td>
+										<td><b>Mask</b></td>
+										<td><b>Description</b></td>
+                  </tr>
+									<tr align="center">
+                  	<td>0</td>
+										<td>0x01</td>
+										<td>Read Only</td>
+                  </tr>
+									<tr align="center">
+                  	<td>1</td>
+										<td>0x02</td>
+										<td>Hidden</td>
+                  </tr>
+									<tr align="center">
+                  	<td>2</td>
+										<td>0x04</td>
+										<td>System</td>
+                  </tr>
+									<tr align="center">
+                  	<td>3</td>
+										<td>0x08</td>
+										<td>Volume Label</td>
+                  </tr>
+									<tr align="center">
+                  	<td>4</td>
+										<td>0x10</td>
+										<td>Subdirectory</td>
+                  </tr>
+									<tr align="center">
+                  	<td>5</td>
+										<td>0x20</td>
+										<td>Archive</td>
+                  </tr>
+									<tr align="center">
+                  	<td>6</td>
+										<td>0x40</td>
+										<td>Device (internal use only, never found on disk)</td>
+                  </tr>
+									<tr align="center">
+                  	<td>7</td>
+										<td>0x80</td>
+										<td>File creation flag. If file does not exist and this flag is set, a new file with specified name will be created.</td>
+                  </tr>
+                </table>
+							</p>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+              	<li> <code>2</code> - if there are no more free file handlers, currently opened file is closed in order to free space.</li>
+             	<li><code>1</code> - if file already exists or file does not exist but a new file is created.</li>
+             	<li><code>0</code> - if file does not exist and no new file is created.</li>
+            </ul>
+          </td>
+        </tr>
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// create file with archive attribute if it does not already exist</i>
+Mmc_Fat_Assign("MIKRO007.TXT",0xA0);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+				    <p>Long File Names (LFN) are not supported.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+   
+    <!-- -->
+
+
+    <h3 id="mmc_fat_reset">Mmc_Fat_Reset</h3>
+
+
+    <!-- tabela: Mmc_Fat_Reset -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Reset(<b>unsigned long</b> *size);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Procedure resets the file pointer (moves it to the start of the file) of the assigned file, so that the file can be read.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>size:</code> buffer to store file size to. After file has been opened for reading, its size is returned through this parameter.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+						<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> size;
+...
+Mmc_Fat_Reset(&size);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="mmc_fat_read">Mmc_Fat_Read</h3>
+
+
+    <!-- tabela: Mmc_Fat_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Read(<b>unsigned short</b> *bdata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads a byte from the currently assigned file opened for reading. Upon function execution file pointers will be set to the next character in the file.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>bdata:</code> buffer to store read byte to. Upon this function execution read byte is returned through this parameter.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+            <p>The file must be opened for reading.	See <a href="#mmc_fat_reset">Mmc_Fat_Reset</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> character;
+...
+Mmc_Fat_Read(&#38;character);</pre>
+
+          </td>
+        </tr>
+
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="mmc_fat_rewrite">Mmc_Fat_Rewrite</h3>
+
+
+    <!-- tabela: Mmc_Fat_Rewrite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Rewrite();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Opens the currently assigned file for writing. If the file is not empty its content will be erased.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// open file for writing</i>
+Mmc_Fat_Rewrite();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    <!-- -->
+
+
+    <h3 id="mmc_fat_append">Mmc_Fat_Append</h3>
+
+
+    <!-- tabela: Mmc_Fat_Append -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Append();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Opens the currently assigned file for appending. Upon this function execution file pointers will be positioned after the last byte in the file, so any subsequent file write operation will start from there.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+			      <p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// open file for appending</i>
+Mmc_Fat_Append();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="mmc_fat_delete">Mmc_Fat_Delete</h3>
+
+
+    <!-- tabela: Mmc_Fat_Delete -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Delete();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Deletes currently assigned file from MMC/SD card.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// delete current file</i>
+Mmc_Fat_Delete();</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    <!-- -->
+
+
+    <h3 id="mmc_fat_write">Mmc_Fat_Write</h3>
+
+
+    <!-- tabela: Mmc_Fat_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Write(<b>char</b> *fdata, <b>unsigned</b> data_len);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes requested number of bytes to the currently assigned file opened for writing.</p>
+          </td>
+        </tr>     
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>fdata:</code> data to be written.</li>
+			        <li><code>data_len:</code> number of bytes to be written.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+			<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+            <p>The file must be opened for writing.	See <a href="#mmc_fat_rewrite ">Mmc_Fat_Rewrite </a> or <a href="#mmc_fat_append ">Mmc_Fat_Append</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> file_contents[42];
+...
+Mmc_Fat_Write(file_contents, 42); <i>// write data to the assigned file</i></pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    <!-- -->
+
+
+    <h3 id="mmc_fat_set_file_date">Mmc_Fat_Set_File_Date</h3>
+
+
+    <!-- tabela: Mmc_Fat_Set_File_Date -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Set_File_Date(<b>unsigned int</b> year, <b>unsigned short</b> day,<b>unsigned short</b> hours, <b>unsigned short</b> mins, <b>unsigned short</b> seconds);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the date/time stamp. Any subsequent file write operation will write this stamp to the currently assigned file's time/date attributes.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>year:</code> year attribute. Valid values: 1980-2107</li>
+          		<li><code>month:</code> month attribute. Valid values: 1-12</li>
+          		<li><code>day:</code> day attribute. Valid values: 1-31</li>
+          		<li><code>hours:</code> hours attribute. Valid values: 0-23</li>
+          		<li><code>mins:</code> minutes attribute. Valid values: 0-59</li>
+          		<li><code>seconds:</code> seconds attribute. Valid values: 0-59</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+		    	  <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+            <p>The file must be opened for writing. See <a href="#mmc_fat_rewrite ">Mmc_Fat_Rewrite </a> or <a href="#mmc_fat_append ">Mmc_Fat_Append</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// April 1st 2005, 18:07:00</i>
+Mmc_Fat_Set_File_Date(2005, 4, 1, 18, 7, 0);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="mmc_fat_get_file_date">Mmc_Fat_Get_File_Date</h3>
+
+
+    <!-- tabela: Mmc_Fat_Get_File_Date -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Get_File_Date(<b>unsigned int</b> *year, <b>unsigned short</b> *month, <b>unsigned short</b> *day, <b>unsigned short</b> *hours, <b>unsigned short</b> *mins);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads time/date attributes of the currently assigned file.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>year:</code> buffer to store year attribute to. Upon function execution year attribute is returned through this parameter.</li>
+          		<li><code>month:</code> buffer to store month attribute to. Upon function execution month attribute is returned through this parameter.</li>
+          		<li><code>day:</code> buffer to store day attribute to. Upon function execution day attribute is returned through this parameter.</li>
+          		<li><code>hours:</code> buffer to store hours attribute to. Upon function execution hours attribute is returned through this parameter.</li>
+          		<li><code>mins:</code> buffer to store minutes attribute to. Upon function execution minutes attribute is returned through this parameter.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+			      <p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// get Date/time of file</i>
+<b>unsigned</b> yr;
+<b>char</b> mnth, dat, hrs, mins;
+...
+file_Name = &#34;MYFILEABTXT&#34;;
+Mmc_Fat_Assign(file_Name);
+Mmc_Fat_Get_File_Date(&#38;yr, &#38;mnth, &#38;day, &#38;hrs, &#38;mins);</pre>
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+    
+    <h3 id="mmc_fat_get_file_date_modified">Mmc_Fat_Get_File_Date_Modified</h3>
+
+
+    <!-- tabela: Mmc_Fat_Get_File_Date_Modified -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Mmc_Fat_Get_File_Date_Modified(<b>unsigned int</b> *year, <b>unsigned short</b> *month, <b>unsigned short</b> *day, <b>unsigned short</b> *hours, <b>unsigned short</b> *mins);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Retrieves the last modification date/time for the currently selected file. Seconds are not being retrieved since they are written in 2-sec increments.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>year:</code> buffer to store year attribute to. Upon function execution year attribute is returned through this parameter.</li>
+          		<li><code>month:</code> buffer to store month attribute to. Upon function execution month attribute is returned through this parameter.</li>
+          		<li><code>day:</code> buffer to store day attribute to. Upon function execution day attribute is returned through this parameter.</li>
+          		<li><code>hours:</code> buffer to store hours attribute to. Upon function execution hours attribute is returned through this parameter.</li>
+          		<li><code>mins:</code> buffer to store minutes attribute to. Upon function execution minutes attribute is returned through this parameter.</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The file must be assigned, see <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// get modification Date/time of file</i>
+<b>unsigned</b> yr;
+<b>char</b> mnth, dat, hrs, mins;
+...
+file_Name = &#34;MYFILEABTXT&#34;;
+Mmc_Fat_Assign(file_Name);
+Mmc_Fat_Get_File_Date_Modified(&#38;yr, &#38;mnth, &#38;day, &#38;hrs, &#38;mins);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3 id="mmc_fat_get_file_size">Mmc_Fat_Get_File_Size</h3>
+
+
+    <!-- tabela: Mmc_Fat_Get_File_Size -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> Mmc_Fat_Get_File_Size();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function reads size of the currently assigned file in bytes.
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>This function returns size of active file (in bytes).</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> my_file_size;
+...
+my_file_size = Mmc_Fat_Get_File_Size();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+		
+		
+		<!-- -->
+    
+
+    <h3 id="mmc_get_file_write_sector">Mmc_Get_File_Write_Sector</h3>
+
+
+    <!-- tabela: Mmc_Get_File_Write_Sector -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> Mmc_Get_File_Write_Sector();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function returns the current file write sector.</p>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>This function returns the current file write sector.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> sector;
+...
+sector = Mmc_Get_File_Write_Sector();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+		
+		
+		<!-- -->
+
+  
+    <h3 id="mmc_fat_get_swap_file">Mmc_Fat_Get_Swap_File</h3>
+
+
+    <!-- tabela: Mmc_Fat_Get_File_Size -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> Mmc_Fat_Get_Swap_File(<b>unsigned long</b> sectors_cnt, char* filename, <b>char</b> file_attr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+						  This function is used to create a swap file of predefined name and size on the MMC/SD media. 
+  						If a file with specified name already exists on the media, search for consecutive sectors will ignore sectors occupied by this file. 
+  						Therefore, it is recommended to erase such file if it already exists before calling this function. 
+  						If it is not erased  and there is still enough space for a new swap file, this function will delete it after allocating new memory space for a new swap file.
+            </p>
+            <p>
+						  The purpose of the swap file is to make reading and writing to MMC/SD media as fast as possible, by using the <a href="#mmc_read_sector">Mmc_Read_Sector()</a> and <a href="#mmc_write_sector">Mmc_Write_Sector()</a> functions directly, without potentially damaging the FAT system. 
+					    The swap file can be considered as a &quot;window&quot; on the media where the user can freely write/read data. 
+						  It's main purpose in this library is to be used for fast data acquisition; when the time-critical acquisition has finished, the data can be re-written into a &quot;normal&quot; file, and formatted in the most suitable way.
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>sectors_cnt:</code>  number of consecutive sectors that user wants the swap file to have.</li>
+          		<li><code>filename:</code> name of the file that should be assigned for file operations. File name should be in DOS 8.3 (file_name.extension) format. 
+							    The file name and extension will be automatically padded with spaces by the library if they have less than length required (i.e. "mikro.tx" -> "mikro   .tx "), so the user does no have to take care of that.
+		              The file name and extension are case insensitive. The library will convert them to proper case automatically, so the user does not have to take care of that. 					
+	 						    <p>Also, in order to keep backward compatibility with the first version of this library, file names can be entered as UPPERCASE string of 11 bytes in length with no dot character between file name and extension (i.e. "MIKROELETXT" -> MIKROELE.TXT). 
+									   In this case last 3 characters of the string are considered to be file extension.</p></li>
+          		<li><code>file_attr:</code> file creation and attributes flags. Each bit corresponds to the appropriate file attribute:</li>
+							<p>
+							  <table>
+                  <tr align="center">
+                  	<td><b>Bit</b></td>
+										<td><b>Mask</b></td>
+										<td><b>Description</b></td>
+                  </tr>
+									<tr align="center">
+                  	<td>0</td>
+										<td>0x01</td>
+										<td>Read Only</td>
+                  </tr>
+									<tr align="center">
+                  	<td>1</td>
+										<td>0x02</td>
+										<td>Hidden</td>
+                  </tr>
+									<tr align="center">
+                  	<td>2</td>
+										<td>0x04</td>
+										<td>System</td>
+                  </tr>
+									<tr align="center">
+                  	<td>3</td>
+										<td>0x08</td>
+										<td>Volume Label</td>
+                  </tr>
+									<tr align="center">
+                  	<td>4</td>
+										<td>0x10</td>
+										<td>Subdirectory</td>
+                  </tr>
+									<tr align="center">
+                  	<td>5</td>
+										<td>0x20</td>
+										<td>Archive</td>
+                  </tr>
+									<tr align="center">
+                  	<td>6</td>
+										<td>0x40</td>
+										<td>Device (internal use only, never found on disk)</td>
+                  </tr>
+									<tr align="center">
+                  	<td>7</td>
+										<td>0x80</td>
+										<td>Not used</td>
+                  </tr>
+                </table>
+							</li>
+            </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+				<ul>
+					<li>Number of the start sector for the newly created swap file, if there was enough free space on the MMC/SD card to create file of required size.</li>
+					<li><code>0</code> - otherwise.</li>
+				</ul>
+			</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//-------------- Tries to create a swap file, whose size will be at least 100 sectors.
+//If it succeeds, it sends the No. of start sector over UART</i>
+<b>void</b> M_Create_Swap_File(){
+  size = Mmc_Fat_Get_Swap_File(100);
+  <b>if</b> (size &#60;&#62; 0) {
+    UART1_Write(0xAA);
+    UART1_Write(Lo(size));
+    UART1_Write(Hi(size));
+    UART1_Write(Higher(size));
+    UART1_Write(Highest(size));
+    UART1_Write(0xAA);
+  } 
+}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Long File Names (LFN) are not supported.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="mmc_fat_tell">Mmc_Fat_Tell</h3>
+
+
+    <!-- tabela: Mmc_Fat_Tell -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> Mmc_Fat_Tell();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to retrieve the cursor position within an opened file.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns the cursor position in currently assigned file.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> position;
+
+position = Mmc_Fat_Tell();
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_seek">Mmc_Fat_Seek</h3>
+
+
+    <!-- tabela: Mmc_Fat_Seek -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> Mmc_Fat_Seek(<b>unsigned long</b> position);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine is used to set the cursor position within an opened file and returns the cursor's new position within an opened file.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>position:</code> desired position on which we want to place the cursor.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns the cursor's new position in currently assigned file.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> position;
+
+position = Mmc_Fat_Seek(1000);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>If the desired cursor position exceeds file size, the cursor will be placed at the end of the file.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_rename">Mmc_Fat_Rename</h3>
+
+
+    <!-- tabela: Mmc_Fat_Rename -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_Rename(<b>char</b> *newname);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function renames the currently assigned file.</p>
+            </p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>newname:</code> new file name.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>1</code> - if there are no assigned files</li>
+							<li><code>2</code> - if the new name in invalied</li>
+							<li><code>3</code> - if the file with the new name already exists</li>
+							<li><code>4</code> - if an error occurred during renaming</li>
+							<li><code>0</code> - if renaming was successful</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+		      	<p>The file must be previously assigned. See <a href="#mmc_fat_assign">Mmc_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+if (0 == Mmc_Fat_Rename("NEWNAME.TXT")) {	<i>// if rename operation was successful...</i>
+...
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_makedir">Mmc_Fat_MakeDir</h3>
+
+
+    <!-- tabela: Mmc_Fat_MakeDir -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_MakeDir(<b>char</b> *name, <b>char</b> attrib);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function creates a new directory.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>name:</code> directory name.</li>
+          		<li><code>attrib:</code> directory attribute.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>0</code> - directory creation was successful</li>
+							<li><code>255</code> - if an error occurred</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (0 == Mmc_Fat_MakeDir("DIR_A", 0xA0)) {  <i>// create DIR_A directory</i>
+  ...
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_renamedir">Mmc_Fat_RenameDir</h3>
+
+
+    <!-- tabela: Mmc_Fat_RenameDir -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_RenameDir(<b>unsigned char</b> *oldname, <b>unsigned char</b> *newname);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function renames a directory.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>oldname:</code> old directory name.</li>
+          		<li><code>newname:</code> new directory name.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>1</code> - if directory name is invalid</li>
+							<li><code>2</code> - if there is no directry with the old name</li>
+							<li><code>3</code> - if an entry with the new name already exits</li>
+							<li><code>4</code> - if an error occurred during renaming</li>
+							<li><code>0</code> - if renaming was successful</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (0 == Mmc_Fat_RenameDir(&#34;DIR_A&#34;, &#34;DIR_B&#34;)) {	<i>// if rename operation was successful...</i>
+...
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_removedir">Mmc_Fat_RemoveDir</h3>
+
+
+    <!-- tabela: Mmc_Fat_RemoveDir -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_RemoveDir(<b>unsigned char</b> *name);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function removes directory entry from current directory.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>name:</code> directory name.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>1</code> - if directory name is invalid</li>
+							<li><code>2</code> - if directory name is non-existant</li>
+							<li><code>3</code> - if directory is not empty</li>
+							<li><code>4</code> - if an error occurred while writing</li>
+							<li><code>0</code> - if operation was successful</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (0 == Mmc_Fat_RemoveDir(&#34;DIR_A&#34;)) {	<i>// if removing operation was successful...</i>
+...
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Recursive removing is not supported, i.e. the directory must be empty before it can be removed.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_changedir">Mmc_Fat_ChangeDir</h3>
+
+
+    <!-- tabela: Mmc_Fat_ChangeDir -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_ChangeDir(<b>unsigned char</b> *name);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function changes the current directory to <code>name</code>.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>name:</code> directory name.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>0</code> - if operation was successful</li>
+							<li><code>1</code> - if there is no entry with given directory name</li>
+							<li><code>2</code> - if an entry with the given name is not a directory</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// enter DIR_A directory</i>
+<b>if</b> (0 == Mmc_Fat_ChangeDir(&#34;DIR_A&#34;)) {
+... 
+}
+
+<i>// go to parent directory</i>
+<b>if</b> (0 == Mmc_Fat_ChangeDir(&#34;..&#34;)) {
+... 
+}
+
+<i>// go to root directory</i>
+<b>if</b> (0 == Mmc_Fat_ChangeDir(&#34;\\&#34;)) {
+... 
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Special directory names like "<code>.</code>" and "<code>..</code>" are also supported.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_exists">Mmc_Fat_Exists</h3>
+
+
+    <!-- tabela: Mmc_Fat_Exists -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_Exists(<b>char</b> *name);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function returns information on file/directory existence.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>name:</code> file/directory name.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>0</code> - if file/directory doesn't exist</li>
+							<li><code>1</code> - if file/directory exists</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+status = Mmc_Fat_Exists(&#34;X_FILES.TXT&#34;);
+
+<b>if</b> (1 == status) { ... } 		<i>// if the file was found...</i>
+
+<b>else if</b> (0 == status) { ... }	<i>// or if the file was not found...</i>
+
+<b>else</b> { ... }			<i>// or if there was an error during function call,				
+                           // which needs to be handled separately.</i>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_dir">Mmc_Fat_Dir</h3>
+
+
+    <!-- tabela: Mmc_Fat_Dir -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_Dir(<b>void</b> (*print)(<b>char</b> ch))</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine displays contents of the current directory via user-defined medium (i.e. UART module, a file on FAT16 file system). The function displays character by character.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>ch:</code> function pointer to a routine which will display contents of the current directory.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>1</code> - if file nema is invalid</li>
+							<li><code>2</code> - if file already exists</li>
+							<li><code>3</code> - if error occured while writing</li>
+							<li><code>0</code> - if operation was successful</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Displaying routine</i>
+<b>void</b> PrintChar(<b>char</b> ch) {
+  UART1_Write(ch);
+}
+
+...
+
+Mmc_Fat_Dir(PrintChar);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_readdir">Mmc_Fat_ReadDir</h3>
+
+
+    <!-- tabela: Mmc_Fat_RemoveDir -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>static short</b> Mmc_Fat_ReadDir(DIR *d);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function gets next directory entry from current directory.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>d:</code> directory entry (valid if return value equals 1), consisted of the following fields :
+<br><br>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+<pre class="program">
+<b>typedef struct</b>               
+{                                   
+    <b>unsigned char</b> name[13];	 <i>// directory name</i>
+    <b>unsigned char</b> attrib;  	 <i>// directory attribute</i>
+    <b>unsigned char</b> ctime[6];	 <i>// create time and date</i>
+    <b>unsigned char</b> mtime[6];	 <i>// modification time and date</i>
+    <b>unsigned long</b> size;    	 <i>// directory size</i>
+    <b>unsigned int</b>  first;   	 <i>// directory start cluster</i>
+    <b>unsigned long</b> sect;    	 <i>// directory entry sector</i>
+    <b>unsigned int</b>  entry;   	 <i>// derectory entry number in the entry sector</i>
+} DIR;                              
+</pre>
+              	</li>
+            </ul>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>&lt; 0</code> - if an error occurred</li>
+							<li><code>0</code> - if no more entries</li>
+							<li><code>1</code> - if a valid entry is returned</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (1 == Mmc_Fat_ReadDir("DIR_A")) {
+...
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_activate">Mmc_Fat_Activate</h3>
+
+
+    <!-- tabela: Mmc_Fat_Activate -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_Activate(<b>short</b> fileHandle);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function selects active file of currently opened files.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>fileHandle:</code> file handle of the file which need to be activated.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>0</code> - if activation was successful</li>
+							<li><code>1</code> - if file handle is out of scope</li>
+							<li><code>2</code> - if file handle is empty</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>short</b> fhandle;
+
+fhandle = Mmc_Fat_Open("X_FILES.TXT", FILE_READ, 0x01);
+
+<b>if</b> (Mmc_Fat_Activate(fhandle)) == 0) {
+
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>Use <a href="#mmc_fat_open">Mmc_Fat_Open</a> function to get file handles.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_readn">Mmc_Fat_ReadN</h3>
+
+
+    <!-- tabela: Mmc_Fat_ReadN -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Mmc_Fat_ReadN(<b>char</b> *fdata, <b>unsigned int</b> n);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function reads multiple bytes.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>fdata:</code> data buffer.</li>
+          		<li><code>n:</code> number of bytes to read.</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Number of read bytes.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> data_buffer[512];
+<b>unsigned int</b> no_bytes;
+...
+no_bytes = Mmc_Fat_ReadN(&data_buffer, 500);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_open">Mmc_Fat_Open</h3>
+
+
+    <!-- tabela: Mmc_Fat_Open -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>short</b> Mmc_Fat_Open(<b>unsigned char</b> *name, <b>unsigned short</b> mode, <b>char</b> attrib);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function opens a file for manipulation.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+          		<li><code>name:</code> file name.</li>
+          		<li><code>mode:</code> file handling mode, <code>FILE_WRITE</code>, <code>FILE_READ</code> or <code>FILE_APPEND</code>.</li>
+							<li><code>attrib:</code> file creation and attributes flags. Each bit corresponds to the appropriate file attribute :</li>
+							<p>
+							  <table>
+                  <tr align="center">
+                  	<td><b>Bit</b></td>
+										<td><b>Mask</b></td>
+										<td><b>Description</b></td>
+                  </tr>
+									<tr align="center">
+                  	<td>0</td>
+										<td>0x01</td>
+										<td>Read Only</td>
+                  </tr>
+									<tr align="center">
+                  	<td>1</td>
+										<td>0x02</td>
+										<td>Hidden</td>
+                  </tr>
+									<tr align="center">
+                  	<td>2</td>
+										<td>0x04</td>
+										<td>System</td>
+                  </tr>
+									<tr align="center">
+                  	<td>3</td>
+										<td>0x08</td>
+										<td>Volume Label</td>
+                  </tr>
+									<tr align="center">
+                  	<td>4</td>
+										<td>0x10</td>
+										<td>Subdirectory</td>
+                  </tr>
+									<tr align="center">
+                  	<td>5</td>
+										<td>0x20</td>
+										<td>Archive</td>
+                  </tr>
+									<tr align="center">
+                  	<td>6</td>
+										<td>0x40</td>
+										<td>Device (internal use only, never found on disk)</td>
+                  </tr>
+									<tr align="center">
+                  	<td>7</td>
+										<td>0x80</td>
+										<td>File creation flag. If file does not exist and this flag is set, a new file with specified name will be created.</td>
+                  </tr>
+                </table>
+          		</li>
+          	</ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>&lt; 0</code> - if an error occurred</li>
+							<li>file handle for opened file otherwise</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>short</b> fhandle;
+
+fhandle = Mmc_Fat_Open("X_FILES.TXT", FILE_READ, 0x01);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_close">Mmc_Fat_Close</h3>
+
+
+    <!-- tabela: Mmc_Fat_Close -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> Mmc_Fat_Close();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function closes currently opened file.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>0</code> - if closing was successful</li>
+							<li><code>1</code> - if there are no assigned files</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (Mmc_Fat_Close() == 0) {
+
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+    <h3 id="mmc_fat_eof">Mmc_Fat_EOF</h3>
+
+
+    <!-- tabela: Mmc_Fat_EOF -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>short</b> Mmc_Fat_EOF();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function check if the end of file is reached.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <ul>
+							<li><code>-1</code> - if an error occurred</li>
+							<li><code>0</code> - if end of file was not reached</li>
+							<li><code>1</code> - if end of file was reached</li>
+						</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MMC/SD card and MMC library must be initialized for file operations. See <a href="#mmc_fat_init">Mmc_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>if</b> (Mmc_Fat_EOF() == 0) {
+
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- 
+
+
+    <h3>Library Example</h3>
+
+    <p>The following example demonstrates usage of the MMC and MMC_FAT routines.</p>
+
+  <div class="tabber">
+    <div class="tabbertab">
+    <h2>Stellaris</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> GPIO_PORTA_DATA7_bit;  <i>// for writing to output pin always use latch</i>
+<b>sbit</b> Mmc_Chip_Select_Direction <b>at</b> GPIO_PORTA_DIR7_bit;
+<i>// eof MMC module connections</i>
+
+<b>const</b> LINE_LEN = 43;
+<b>const unsigned long</b> SPI_400kHz = 400000;
+<b>const unsigned long</b> SPI_10MHz  = 10000000;
+
+<b>char</b> err_txt[20]             = &#34;FAT16 not found&#34;;
+<b>char</b> filename[14]            = &#34;MIKRO00x.TXT&#34;;          <i>// File names</i>
+<b>char</b> file_contents[LINE_LEN] = &#34;XX MMC/SD FAT16 library by Anton Rieckertn&#34;;
+
+<b>unsigned long</b>  i, size;
+<b>unsigned short</b> loop, loop2;
+<b>char</b>           Buffer[512];
+
+<i>// UART0 write text and new line (carriage return + line feed)</i>
+<b>void</b> UART0_Write_Line(<b>char</b> *uart_text) {
+  UART0_Write_Text(uart_text);
+  UART0_Write(13);
+  UART0_Write(10);
+}
+
+<i>// Creates new file and writes some data to it</i>
+<b>void</b> M_Create_New_File() {
+  filename[7] = 'A';
+  Mmc_Fat_Set_File_Date(2011,1,12,11,9,0);   <i>// Set file date &#38; time info</i>
+  Mmc_Fat_Assign(&#38;filename, 0xA0);            <i>// Find existing file or create a new one</i>
+  Mmc_Fat_Rewrite();                          <i>// To clear file and start with new data</i>
+  <b>for</b>(loop = 1; loop &#60;= 99; loop++) {
+    UART0_Write('.');
+    file_contents[0] = loop / 10 + 48;
+    file_contents[1] = loop % 10 + 48;
+    Mmc_Fat_Write(file_contents, LINE_LEN-1); <i>// write data to the assigned file</i>
+  }
+}
+
+<i>// Creates many new files and writes data to them</i>
+<b>void</b> M_Create_Multiple_Files() {
+  <b>for</b>(loop2 = 'B'; loop2 &#60;= 'Z'; loop2++) {
+    UART0_Write(loop2);                       <i>// signal the progress</i>
+    filename[7] = loop2;                      <i>// set filename</i>
+    Mmc_Fat_Set_File_Date(2011,1,12,11,9,0);  <i>// Set file date &#38; time info</i>
+    Mmc_Fat_Assign(&#38;filename, 0xA0);          <i>// find existing file or create a new one</i>
+    Mmc_Fat_Rewrite();                        <i>// To clear file and start with new data</i>
+    <b>for</b>(loop = 1; loop &#60;= 44; loop++) {
+      file_contents[0] = loop / 10 + 48;
+      file_contents[1] = loop % 10 + 48;
+      Mmc_Fat_Write(file_contents, LINE_LEN-1);  <i>// write data to the assigned file</i>
+    }
+  }
+}
+
+<i>// Opens an existing file and rewrites it</i>
+<b>void</b> M_Open_File_Rewrite() {
+  filename[7] = 'C';
+  Mmc_Fat_Assign(&#38;filename, 0);
+  Mmc_Fat_Rewrite();
+  <b>for</b>(loop = 1; loop &#60;= 55; loop++) {
+    file_contents[0] = loop / 10 + 48;
+    file_contents[1] = loop % 10 + 48;
+    Mmc_Fat_Write(file_contents, LINE_LEN-1);    <i>// write data to the assigned file</i>
+  }
+}
+
+<i>// Opens an existing file and appends data to it
+//               (and alters the date/time stamp)</i>
+<b>void</b> M_Open_File_Append() {
+   filename[7] = 'B';
+   Mmc_Fat_Assign(&#38;filename, 0);
+   Mmc_Fat_Set_File_Date(2009, 1, 23, 17, 22, 0);
+   Mmc_Fat_Append();                                    <i>// Prepare file for append</i>
+   Mmc_Fat_Write(&#34; <b>for</b> mikroElektronika 2009n&#34;, 27);   <i>// Write data to assigned file</i>
+}
+
+<i>// Opens an existing file, reads data from it and puts it to UART</i>
+<b>void</b> M_Open_File_Read() {
+  <b>char</b> character;
+
+  filename[7] = 'B';
+  Mmc_Fat_Assign(&#38;filename, 0);
+  Mmc_Fat_Reset(&#38;size);            <i>// To read file, procedure returns size of file</i>
+  <b>for</b> (i = 1; i &#60;= size; i++) {
+    Mmc_Fat_Read(&#38;character);
+    UART0_Write(character);        <i>// Write data to UART</i>
+  }
+}
+
+<i>// Deletes a file. If file doesn't exist, it will first be created
+// and then deleted.</i>
+<b>void</b> M_Delete_File() {
+  filename[7] = 'F';
+  Mmc_Fat_Assign(filename, 0);
+  Mmc_Fat_Delete();
+}
+
+<i>// Tests whether file exists, and if so sends its creation date
+// and file size via UART</i>
+<b>void</b> M_Test_File_Exist() {
+  <b>unsigned long</b>  fsize;
+  <b>unsigned int</b>   year;
+  <b>unsigned short</b> month, day, hour, minute;
+  <b>unsigned char</b>  outstr[12];
+  
+  Mmc_Fat_Get_File_Date(&#38;year, &#38;month, &#38;day, &#38;hour, &#38;minute);
+
+  filename[7] = 'B';       <i>//uncomment this line to search for file that DOES exists
+//  filename[7] = 'F';       //uncomment this line to search for file that DOES NOT exist</i>
+  <b>if</b> (Mmc_Fat_Assign(filename, 0)) {
+    <i>//--- file has been found - get its create date</i>
+    Mmc_Fat_Get_File_Date(&#38;year, &#38;month, &#38;day, &#38;hour, &#38;minute);
+    UART0_Write_Text(&#34; created: &#34;);
+    WordToStr(year, outstr);
+    UART0_Write_Text(outstr);
+    ByteToStr(month, outstr);
+    UART0_Write_Text(outstr);
+    WordToStr(day, outstr);
+    UART0_Write_Text(outstr);
+    WordToStr(hour, outstr);
+    UART0_Write_Text(outstr);
+    WordToStr(minute, outstr);
+    UART0_Write_Text(outstr);
+
+    <i>//--- file has been found - get its modified date</i>
+    Mmc_Fat_Get_File_Date_Modified(&#38;year, &#38;month, &#38;day, &#38;hour, &#38;minute);
+    UART0_Write_Text(&#34; modified: &#34;);
+    WordToStr(year, outstr);
+    UART0_Write_Text(outstr);
+    ByteToStr(month, outstr);
+    UART0_Write_Text(outstr);
+    WordToStr(day, outstr);
+    UART0_Write_Text(outstr);
+    WordToStr(hour, outstr);
+    UART0_Write_Text(outstr);
+    WordToStr(minute, outstr);
+    UART0_Write_Text(outstr);
+
+    <i>//--- get file size</i>
+    fsize = Mmc_Fat_Get_File_Size();
+    LongToStr((<b>signed long</b>)fsize, outstr);
+    UART0_Write_Line(outstr);
+  }
+  <b>else</b> {
+    <i>//--- file was not found - signal it</i>
+    UART0_Write(0x55);
+    Delay_ms(1000);
+    UART0_Write(0x55);
+  }
+}
+
+
+<i>// Tries to create a swap file, whose size will be at least 100
+// sectors (see Help for details)</i>
+<b>void</b> M_Create_Swap_File() {
+  <b>unsigned int</b> i;
+
+  <b>for</b>(i=0; i&#60;512; i++)
+    Buffer[i] = i;
+
+  size = Mmc_Fat_Get_Swap_File(5000, &#34;mikroE.txt&#34;, 0x20);   <i>// see help on this function for details</i>
+
+  <b>if</b> (size) {
+    LongToStr((<b>signed long</b>)size, err_txt);
+    UART0_Write_Line(err_txt);
+
+    <b>for</b>(i=0; i&#60;5000; i++) {
+      Mmc_Write_Sector(size++, Buffer);
+      UART0_Write('.');
+    }
+  }
+}
+
+      <b>unsigned long</b> clk;
+<i>//-------------- Main. Uncomment the function(s) to test the desired operation(s)</i>
+<b>void</b> main() {
+  #define COMPLETE_EXAMPLE               <i>// comment this line to make simpler/smaller example</i>
+  <i>// Initialize UART0 module</i>
+  UART0_Init(19200);
+  Delay_ms(10);
+  
+  UART0_Write_Line(&#34;MCU-Started&#34;); <i>// MCU present report</i>
+  
+  <i>//--- set up SPI for MMC init (low speed)</i>
+  SPI0_Init_Advanced(SPI_400kHz,
+                     _SPI_MASTER,
+                     _SPI_8_BIT | _SPI_CLK_IDLE_HIGH | _SPI_SECOND_CLK_EDGE_TRANSITION,
+                     &#38;_GPIO_MODULE_SPI0_A245);
+
+  Delay_ms(10);
+
+  <i>//--- init the FAT library</i>
+  <b>if</b> (!Mmc_Fat_Init()) {
+    <i>// reinitialize spi at higher speed</i>
+    SPI0_Init_Advanced(SPI_10MHz,
+                       _SPI_MASTER,
+                       _SPI_8_BIT | _SPI_CLK_IDLE_HIGH | _SPI_SECOND_CLK_EDGE_TRANSITION,
+                       &#38;_GPIO_MODULE_SPI0_A245);
+    <i>//--- Test start</i>
+    UART0_Write_Line(&#34;Test Start.&#34;);
+    <i>//--- Test routines. Uncomment them one-by-one to test certain features</i>
+    M_Create_New_File();
+    #ifdef COMPLETE_EXAMPLE
+      M_Create_Multiple_Files();
+      M_Open_File_Rewrite();
+      M_Open_File_Append();
+      M_Open_File_Read();
+      M_Delete_File();
+      M_Test_File_Exist();
+      M_Create_Swap_File();
+    #endif
+    UART0_Write_Line(&#34;Test End.&#34;);
+
+  }
+  <b>else</b> {
+    UART0_Write_Line(err_txt); <i>// Note: Mmc_Fat_Init tries to initialize a card more than once.</i>
+                               <i>//       If card is not present, initialization may last longer (depending on clock speed)</i>
+  }
+
+}
+</pre>
+    </div>
+
+    <div class="tabbertab">
+    <h2>STM32</h2>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>    
+<pre class="program">
+<i>// MMC module connections</i>
+<b>sbit</b> Mmc_Chip_Select           <b>at</b> GPIOD_ODR.B3;
+<i>// eof MMC module connections</i>
+
+<b>const</b> LINE_LEN = 43;
+
+<b>char</b> err_txt[20]             = &#34;FAT16 not found&#34;;
+<b>char</b> filename[14]            = &#34;MIKRO00x.TXT&#34;;          <i>// File names</i>
+<b>char</b> file_contents[LINE_LEN] = &#34;XX MMC/SD FAT16 library by Anton Rieckertn&#34;;
+
+<b>unsigned long</b>  i, size;
+<b>unsigned short</b> loop, loop2;
+<b>char</b>           Buffer[512];
+
+<i>// UART1 write text and new line (carriage return + line feed)</i>
+<b>void</b> UART1_Write_Line(<b>char</b> *uart_text) {
+  UART1_Write_Text(uart_text);
+  UART1_Write(13);
+  UART1_Write(10);
+}
+
+<i>// Creates new file and writes some data to it</i>
+<b>void</b> M_Create_New_File() {
+  filename[7] = 'A';
+  Mmc_Fat_Set_File_Date(2011,1,12,11,9,0);   <i>// Set file date &#38; time info</i>
+  Mmc_Fat_Assign(&#38;filename, 0xA0);            <i>// Find existing file or create a new one</i>
+  Mmc_Fat_Rewrite();                          <i>// To clear file and start with new data</i>
+  <b>for</b>(loop = 1; loop &#60;= 99; loop++) {
+    UART1_Write('.');
+    file_contents[0] = loop / 10 + 48;
+    file_contents[1] = loop % 10 + 48;
+    Mmc_Fat_Write(file_contents, LINE_LEN-1); <i>// write data to the assigned file</i>
+  }
+}
+
+<i>// Creates many new files and writes data to them</i>
+<b>void</b> M_Create_Multiple_Files() {
+  <b>for</b>(loop2 = 'B'; loop2 &#60;= 'Z'; loop2++) {
+    UART1_Write(loop2);                       <i>// signal the progress</i>
+    filename[7] = loop2;                      <i>// set filename</i>
+    Mmc_Fat_Set_File_Date(2011,1,12,11,9,0);  <i>// Set file date &#38; time info</i>
+    Mmc_Fat_Assign(&#38;filename, 0xA0);          <i>// find existing file or create a new one</i>
+    Mmc_Fat_Rewrite();                        <i>// To clear file and start with new data</i>
+    <b>for</b>(loop = 1; loop &#60;= 44; loop++) {
+      file_contents[0] = loop / 10 + 48;
+      file_contents[1] = loop % 10 + 48;
+      Mmc_Fat_Write(file_contents, LINE_LEN-1);  <i>// write data to the assigned file</i>
+    }
+  }
+}
+
+<i>// Opens an existing file and rewrites it</i>
+<b>void</b> M_Open_File_Rewrite() {
+  filename[7] = 'C';
+  Mmc_Fat_Assign(&#38;filename, 0);
+  Mmc_Fat_Rewrite();
+  <b>for</b>(loop = 1; loop &#60;= 55; loop++) {
+    file_contents[0] = loop / 10 + 48;
+    file_contents[1] = loop % 10 + 48;
+    Mmc_Fat_Write(file_contents, LINE_LEN-1);    <i>// write data to the assigned file</i>
+  }
+}
+
+<i>// Opens an existing file and appends data to it
+//               (and alters the date/time stamp)</i>
+<b>void</b> M_Open_File_Append() {
+   filename[7] = 'B';
+   Mmc_Fat_Assign(&#38;filename, 0);
+   Mmc_Fat_Set_File_Date(2009, 1, 23, 17, 22, 0);
+   Mmc_Fat_Append();                                    <i>// Prepare file for append</i>
+   Mmc_Fat_Write(&#34; <b>for</b> mikroElektronika 2009n&#34;, 27);   <i>// Write data to assigned file</i>
+}
+
+<i>// Opens an existing file, reads data from it and puts it to UART</i>
+<b>void</b> M_Open_File_Read() {
+  <b>char</b> character;
+
+  filename[7] = 'B';
+  Mmc_Fat_Assign(&#38;filename, 0);
+  Mmc_Fat_Reset(&#38;size);            <i>// To read file, procedure returns size of file</i>
+  <b>for</b> (i = 1; i &#60;= size; i++) {
+    Mmc_Fat_Read(&#38;character);
+    UART1_Write(character);        <i>// Write data to UART</i>
+  }
+}
+
+<i>// Deletes a file. If file doesn't exist, it will first be created
+// and then deleted.</i>
+<b>void</b> M_Delete_File() {
+  filename[7] = 'F';
+  Mmc_Fat_Assign(filename, 0);
+  Mmc_Fat_Delete();
+}
+
+<i>// Tests whether file exists, and if so sends its creation date
+// and file size via UART</i>
+<b>void</b> M_Test_File_Exist() {
+  <b>unsigned long</b>  fsize;
+  <b>unsigned int</b>   year;
+  <b>unsigned short</b> month, day, hour, minute;
+  <b>unsigned char</b>  outstr[12];
+  
+  Mmc_Fat_Get_File_Date(&#38;year, &#38;month, &#38;day, &#38;hour, &#38;minute);
+
+  filename[7] = 'B';       <i>//uncomment this line to search for file that DOES exists
+//  filename[7] = 'F';       //uncomment this line to search for file that DOES NOT exist</i>
+  <b>if</b> (Mmc_Fat_Assign(filename, 0)) {
+    <i>//--- file has been found - get its create date</i>
+    Mmc_Fat_Get_File_Date(&#38;year, &#38;month, &#38;day, &#38;hour, &#38;minute);
+    UART1_Write_Text(&#34; created: &#34;);
+    WordToStr(year, outstr);
+    UART1_Write_Text(outstr);
+    ByteToStr(month, outstr);
+    UART1_Write_Text(outstr);
+    WordToStr(day, outstr);
+    UART1_Write_Text(outstr);
+    WordToStr(hour, outstr);
+    UART1_Write_Text(outstr);
+    WordToStr(minute, outstr);
+    UART1_Write_Text(outstr);
+
+    <i>//--- file has been found - get its modified date</i>
+    Mmc_Fat_Get_File_Date_Modified(&#38;year, &#38;month, &#38;day, &#38;hour, &#38;minute);
+    UART1_Write_Text(&#34; modified: &#34;);
+    WordToStr(year, outstr);
+    UART1_Write_Text(outstr);
+    ByteToStr(month, outstr);
+    UART1_Write_Text(outstr);
+    WordToStr(day, outstr);
+    UART1_Write_Text(outstr);
+    WordToStr(hour, outstr);
+    UART1_Write_Text(outstr);
+    WordToStr(minute, outstr);
+    UART1_Write_Text(outstr);
+
+    <i>//--- get file size</i>
+    fsize = Mmc_Fat_Get_File_Size();
+    LongToStr((<b>signed long</b>)fsize, outstr);
+    UART1_Write_Line(outstr);
+  }
+  <b>else</b> {
+    <i>//--- file was not found - signal it</i>
+    UART1_Write(0x55);
+    Delay_ms(1000);
+    UART1_Write(0x55);
+  }
+}
+
+
+<i>// Tries to create a swap file, whose size will be at least 100
+// sectors (see Help for details)</i>
+<b>void</b> M_Create_Swap_File() {
+  <b>unsigned int</b> i;
+
+  <b>for</b>(i=0; i&#60;512; i++)
+    Buffer[i] = i;
+
+  size = Mmc_Fat_Get_Swap_File(5000, &#34;mikroE.txt&#34;, 0x20);   <i>// see help on this function for details</i>
+
+  <b>if</b> (size) {
+    LongToStr((<b>signed long</b>)size, err_txt);
+    UART1_Write_Line(err_txt);
+
+    <b>for</b>(i=0; i&#60;5000; i++) {
+      Mmc_Write_Sector(size++, Buffer);
+      UART1_Write('.');
+    }
+  }
+}
+
+      <b>unsigned long</b> clk;
+<i>//-------------- Main. Uncomment the function(s) to test the desired operation(s)</i>
+<b>void</b> main() {
+  #define COMPLETE_EXAMPLE               <i>// comment this line to make simpler/smaller example</i>
+  <i>// Initialize UART1 module</i>
+  UART1_Init(19200);
+  Delay_ms(10);
+  
+  UART1_Write_Line(&#34;MCU-Started&#34;); <i>// MCU present report</i>
+  
+  <i>//--- set up SPI for MMC init (low speed)</i>
+  SPI3_Init_Advanced(_SPI_FPCLK_DIV64, _SPI_MASTER | _SPI_8_BIT |
+                     _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                     _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                     &#38;_GPIO_MODULE_SPI3_PC10_11_12);
+
+  Delay_ms(10);
+
+  <i>//--- init the FAT library</i>
+  <b>if</b> (!Mmc_Fat_Init()) {
+    <i>// reinitialize spi at higher speed</i>
+    SPI3_Init_Advanced(_SPI_FPCLK_DIV2, _SPI_MASTER | _SPI_8_BIT |
+                       _SPI_CLK_IDLE_LOW | _SPI_FIRST_CLK_EDGE_TRANSITION |
+                       _SPI_MSB_FIRST | _SPI_SS_DISABLE | _SPI_SSM_ENABLE | _SPI_SSI_1,
+                       &#38;_GPIO_MODULE_SPI3_PC10_11_12);
+    <i>//--- Test start</i>
+    UART1_Write_Line(&#34;Test Start.&#34;);
+    <i>//--- Test routines. Uncomment them one-by-one to test certain features</i>
+    M_Create_New_File();
+    #ifdef COMPLETE_EXAMPLE
+      M_Create_Multiple_Files();
+      M_Open_File_Rewrite();
+      M_Open_File_Append();
+      M_Open_File_Read();
+      M_Delete_File();
+      M_Test_File_Exist();
+      M_Create_Swap_File();
+    #endif
+    UART1_Write_Line(&#34;Test End.&#34;);
+
+  }
+  <b>else</b> {
+    UART1_Write_Line(err_txt); <i>// Note: Mmc_Fat_Init tries to initialize a card more than once.</i>
+                               <i>//       If card is not present, initialization may last longer (depending on clock speed)</i>
+  }
+
+}
+</pre>
+    </div>
+  </div>
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Pin diagram of MMC memory card" src="img/Schemes/scheme_mmc.gif"></p>
+    <p class="center small">Pin diagram of MMC memory card</p>
+
+-->
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>

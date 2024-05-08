@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "P16_Enh",
+    "binaries": [
+        "__Lib_SPI_a120.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC12LF1840$|^PIC12F1840$|^PIC12F1822$|^PIC12LF1822$",
+    "toolchain": "mikrocpic",
+    "version": "1.0.0"
+}

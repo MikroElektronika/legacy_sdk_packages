@@ -1,0 +1,8 @@
+{
+    "name": "Led Blinking",
+    "description": "Simple \"Hello world\" example for the world of PIC32 MCUs",
+    "image" : "LEDs.png",
+    "toolchain": ["mikrocpic32"],
+    "hw" : ["Fusion for PIC32 v8"],
+    "category" : ["mikroC legacy PIC32"]
+}

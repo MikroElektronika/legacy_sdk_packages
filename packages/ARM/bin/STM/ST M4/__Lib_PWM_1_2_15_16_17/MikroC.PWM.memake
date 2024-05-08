@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_PWM_1_2_15_16_17.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F302R6$|^STM32F301C6$|^STM32F301R8$|^STM32F318K8$|^STM32F301K6$|^STM32F301R6$|^STM32F301K8$|^STM32F302C6$|^STM32F302C8$|^STM32F301C8$|^STM32F302K8$|^STM32F318C8$|^STM32F302K6$|^STM32F302R8$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

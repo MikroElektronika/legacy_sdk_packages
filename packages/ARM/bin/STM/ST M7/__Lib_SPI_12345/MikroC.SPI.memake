@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "M7",
+    "binaries": [
+        "__Lib_SPI_12345.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F722IC$|^STM32F722ZE$|^STM32F723IE$|^STM32F733ZE$|^STM32F722ZC$|^STM32F732IE$|^STM32F732ZE$|^STM32F723ZE$|^STM32F723IC$|^STM32F723ZC$|^STM32F722IE$|^STM32F733IE$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

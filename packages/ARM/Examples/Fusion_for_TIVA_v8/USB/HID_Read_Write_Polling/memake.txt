@@ -1,0 +1,21 @@
+:: Base project template
+
+:: project: HID_Read_Write_Polling
+target: HID_Read_Write_Polling
+
+type: executable
+
+sources: {
+    main.c
+    USBdsc.c
+}
+
+depends: {
+    MikroC.USB
+    MikroC.System
+}
+
+uses: {
+    MikroC.USB
+    MikroC.System
+}

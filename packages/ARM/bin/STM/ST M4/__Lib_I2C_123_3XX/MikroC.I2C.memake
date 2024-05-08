@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.I2C",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_I2C_123_3XX.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F302C6$|^STM32F302K8$|^STM32F302R6$|^STM32F303VD$|^STM32F303ZE$|^STM32F303ZD$|^STM32F303RD$|^STM32F303RE$|^STM32F302ZE$|^STM32F302R8$|^STM32F302VD$|^STM32F398VE$|^STM32F302RE$|^STM32F302ZD$|^STM32F303VE$|^STM32F302VE$|^STM32F302C8$|^STM32F302RD$|^STM32F302K6$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

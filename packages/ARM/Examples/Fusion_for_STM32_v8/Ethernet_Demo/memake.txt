@@ -1,0 +1,21 @@
+:: Empty project template by mikroE.
+
+type: executable
+target: Ethernet_Demo
+
+sources: {
+    Ethernet_Demo.c
+}
+
+
+uses: {
+    MikroC.System
+    MikroC.Ethernet_Internal
+    MikroC.Conversions
+}
+
+depends: {
+    MikroC.System
+    MikroC.Ethernet_Internal
+    MikroC.Conversions
+}

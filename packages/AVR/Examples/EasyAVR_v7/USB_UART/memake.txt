@@ -1,0 +1,19 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: USB_UART
+
+type: executable
+
+sources: {
+    USB_UART.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.UART
+}
+
+others: {
+    ./USB_UART.png
+}

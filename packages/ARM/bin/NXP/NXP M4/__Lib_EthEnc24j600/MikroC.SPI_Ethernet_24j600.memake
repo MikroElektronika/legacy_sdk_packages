@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI_Ethernet_24j600",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_EthEnc24j600.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MK64FN1M0.+12$|^MKV44F256.+16$|^MK66FN2M0.+18$|^MK22FN256.+12$|^MK22FN128.+12$|^MKV44F64.+16$|^MK80FN256.+15$|^MK65FN2M0.+18$|^MK66FX1M0.+18$|^MK22FN1M0.+12$|^MKV42F256.+16$|^MK22FX512.+12$|^MK82FN256.+15$|^MK64FX512.+12$|^MKV46F128.+16$|^MKV44F128.+16$|^MK22FN128.+10$|^MK65FX1M0.+18$|^MKV46F256.+16$|^MK22FN512.+12$|^MKV42F64.+16$|^MKV42F128.+16$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

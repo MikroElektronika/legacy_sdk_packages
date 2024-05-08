@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.CAN",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_CAN_12_L4.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32L496AE$|^STM32L4A6QG$|^STM32L4A6ZG$|^STM32L496QE$|^STM32L496RG$|^STM32L4A6VG$|^STM32L496VE$|^STM32L496VG$|^STM32L496RE$|^STM32L496ZG$|^STM32L496QG$|^STM32L496ZE$|^STM32L4A6AG$|^STM32L4A6RG$|^STM32L496AG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

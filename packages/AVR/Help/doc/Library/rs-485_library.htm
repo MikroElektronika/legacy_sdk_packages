@@ -1,0 +1,886 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>RS-485 Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Marko Jovanovic & Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">RS-485 Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="pwm16bit_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="software_i2c_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>RS-485 Library</h2></a>
+
+
+    <p>RS-485 is a multipoint communication which allows multiple devices to be connected to a single bus. 
+    	The mikroC PRO for AVR provides a set of library routines for comfortable work with RS485 system using Master/Slave architecture. 
+    	Master and Slave devices interchange packets of information. Each of these packets contains synchronization bytes, CRC byte, address byte and the data. 
+    	Each Slave has unique address and receives only packets addressed to it. The Slave can never initiate communication.</p>
+    <p>It is the user&#8217;s responsibility to ensure that only one device transmits via 485 bus at a time.</p>
+    <p>The RS-485 routines require the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module. 
+    	Pins of <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> need to be attached to RS-485 interface transceiver, 
+    	such as LTC485 or similar (see schematic at the bottom of this page).</p>
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top"><b>Library constants:</b></th>
+          <td valign="top">
+            	<ul>
+                <li>START byte value = <code>150</code></li>
+                <li>STOP byte value = <code>169</code></li>
+            <li>Address <code>50</code> is the broadcast address for all Slaves (packets containing address <code>50</code> will be received by all Slaves except the Slaves with addresses <code>150</code> and <code>169</code>).</li>
+              </ul>
+          </td>
+        </tr>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>      
+      <ul>
+        <li>The library uses the <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module for communication. The user must initialize the appropriate <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> module before using the RS-485 Library.</li>
+        <li>For MCUs with multiple <acronym title="Universal Asynchronous Receiver-Transmitter">UART</acronym> modules it is possible to initialize them and then switch by using the <a href="uart_library.htm#uart_set_active">UART_Set_Active</a> routine.</li>
+      </ul>
+    </div> 
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="RS485 Library Dependency Tree" src="img/dependencies/rs485_dependency.gif">  
+    <p></p>
+
+   <h3>External dependencies of RS-485 Library</h3>
+
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variable must be defined in all projects using RS-485 Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> RS485_rxtx_pin;</code></td>
+          <td align="left">Control RS-485 Transmit/Receive operation mode</td>
+          <td align="left"><code><b>sbit</b> RS485_rxtx_pin <b>at</b> PORTD2_bit;</code></td>
+        </tr>
+    
+       <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr sbit</b> RS485_rxtx_pin_direction;</code></td>
+          <td align="left">Direction of the RS-485 Transmit/Receive pin</td>
+          <td align="left"><code><b>sbit</b> RS485_rxtx_pin_direction <b>at</b> DDD2_bit;</code></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#rs485master_init">RS485Master_Init</a></li>
+      <li><a href="#rs485master_receive">RS485Master_Receive</a></li>
+      <li><a href="#rs485master_send">RS485Master_Send</a></li>
+      <li><a href="#rs485slave_init">RS485Slave_Init</a></li>
+      <li><a href="#rs485slave_receive">RS485Slave_Receive</a></li>
+      <li><a href="#rs485slave_send">RS485Slave_Send</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="rs485master_init">RS485Master_Init</h3>
+
+
+    <!-- tabela: RS485Master_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> RS485Master_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes MCU as a Master for RS-485 communication.</p>            
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          Global variables :
+          <ul>
+          	<li><code>RS485_rxtx_pin</code> - this pin is connected to RE/DE input of RS-485 transceiver(see schematic at the bottom of this page).
+              		  RE/DE signal controls RS-485 transceiver operation mode.</p>
+          	<li><code>RS485_rxtx_pin_direction</code> - direction of the RS-485 Transmit/Receive pin 
+          </ul>
+         must be defined before using this function.
+          <p><br>UART HW module needs to be initialized. See <a href="uart_library.htm#uartx_init">UARTx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// RS485 module pinout</i>
+<b>sbit</b> RS485_rxtx_pin <b>at</b> PORTD2_bit;  <i>// transmit/receive control set to PORTD2</i>
+
+<i>// Pin direction</i>
+<b>sbit</b> RS485_rxtx_pin_direction <b>at</b> DDD2_bit;   <i>// RxTx pin direction set as output</i>
+...
+UART1_Init(9600);                           <i>// initialize UART1 module</i>
+RS485Master_Init();                         <i>// intialize MCU as a Master for RS-485 communication</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="rs485master_receive">RS485Master_Receive</h3>
+
+
+    <!-- tabela: RS485Master_Receive -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> RS485Master_Receive(<b>char</b> *data_buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Receives messages from Slaves. Messages are multi-byte, so this routine must be called for each byte received.
+            <p>Parameters :
+            	<ul>
+            		<li><code>data_buffer</code>: 7 byte buffer for storing received data, in the following manner:</li>
+                  <br><li><code>data[0..2]:</code> message content</li>
+                  <li><code>data_buffer[3]:</code> number of message bytes received, 1&#8211;3</li>
+                  <li><code>data_buffer[4]:</code> is set to 255 when message is received</li>
+                  <li><code>data_buffer[5]:</code> is set to 255 if error has occurred</li>
+                  <li><code>data_buffer[6]:</code> address of the Slave which sent the message</li>
+              </ul>
+            </p>
+            <p>The function automatically adjusts <code>data[4]</code> and <code>data[5]</code> upon every received message. These flags need to be cleared by software.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU must be initialized as a Master for RS-485 communication. See <a href="#rs485master_init">RS485Master_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> msg[8];
+...
+RS485Master_Receive(msg);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="rs485master_send">RS485Master_Send</h3>
+
+
+    <!-- tabela: RS485Master_Send -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> RS485Master_Send(<b>char</b> *data_buffer, <b>char</b> datalen, <b>char</b> Slave_address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends message to Slave(s). Message format can be found at the bottom of this page.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>data_buffer:</code> data to be sent</li>
+              	<li><code>datalen:</code> number of bytes for transmition. Valid values: 0...3.</li>
+              	<li><code>Slave_address:</code> Slave(s) address</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU must be initialized as a Master for RS-485 communication. See <a href="#rs485master_init">RS485Master_Init</a>.</p>
+            <p>It is the user&#8217;s responsibility to ensure (by protocol) that only one device sends data via 485 bus at a time.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> msg[8];
+...
+<i>// send 3 bytes of data to Slave with address 0x12</i>
+RS485Master_Send(msg, 3, 0x12);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="rs485slave_init">RS485Slave_Init</h3>
+
+
+    <!-- tabela: RS485Slave_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> RS485Slave_Init(<b>char</b> Slave_address);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          <p>Initializes MCU as a Slave for RS-485 communication.</p>                     
+            <p>Parameters :
+            	<ul>
+              	<li><code>Slave_address:</code> Slave address</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+        Global variables :
+          <ul>
+          	<li><code>RS485_rxtx_pin</code> - this pin is connected to RE/DE input of RS-485 transceiver(see schematic at the bottom of this page). RE/DE signal controls RS-485 transceiver operation mode. Valid values: <code>1</code> (for transmitting) and <code>0</code> (for receiving</li>
+          	<li><code>RS485_rxtx_pin_direction</code> - direction of the RS-485 Transmit/Receive pin.</li> 
+          </ul>
+         must be defined before using this function.
+          <p><br>UART HW module needs to be initialized. See <a href="uart_library.htm#uartx_init">UARTx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+            <p>Initialize MCU as a Slave with address 160:</p>
+
+<pre>
+<i>// RS485 module pinout</i>
+<b>sbit</b> RS485_rxtx_pin <b>at</b> PORTD2_bit;     <i>// transmit/receive control set to PORTC.Bit2</i>
+
+<i>// Pin direction</i>
+<b>sbit</b> RS485_rxtx_pin_direction <b>at</b> DDD2_bit;   <i>// RxTx pin direction set as output</i>
+...
+UART1_Init(9600);                   <i>// initialize UART1 module</i>
+RS485Slave_Init(160);                <i>// intialize MCU as a Slave for RS-485 communication with address 160</i>
+</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="rs485slave_receive">RS485Slave_Receive</h3>
+
+
+    <!-- tabela: RS485Slave_Receive -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> RS485Slave_Receive(<b>char</b> *data_buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Receives messages from Master. If Slave address and Message address field don't match then the message will be discarded. Messages are multi-byte, so this routine must be called for each byte received.</p>
+            <p>Parameters :
+              <ul>
+                  <li><code>data_buffer</code>: 6 byte buffer for storing received data, in the following manner:</li> 
+              <br><li><code>data[0..2]:</code> message content</li>
+                  <li><code>data[3]:</code> number of message bytes received, 1&#8211;3</li>
+                  <li><code>data[4]:</code> is set to 255 when message is received</li>
+                  <li><code>data[5]:</code> is set to 255 if error has occurred</li>
+              </ul>
+            </p>
+            <p>The function automatically adjusts <code>data[4]</code> and <code>data[5]</code> upon every received message. These flags need to be cleared by software.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU must be initialized as a Slave for RS-485 communication. See <a href="#rs485slave_init">RS485Slave_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> msg[8];
+...
+RS485Slave_Read(msg);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="rs485slave_send">RS485Slave_Send</h3>
+
+
+    <!-- tabela: RS485Slave_Send -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> RS485Slave_Send(<b>char</b> *data_buffer, <b>char</b> datalen);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sends message to Master. Message format can be found at the bottom of this page.</p>
+            <p>Parameters :
+            	<ul>
+              	<li><code>data_buffer:</code> data to be sent</li>
+              	<li><code>datalen:</code> number of bytes for transmition. Valid values: 0...3.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>MCU must be initialized as a Slave for RS-485 communication. See <a href="#rs485slave_init">RS485Slave_Init</a>. It is the user&#8217;s responsibility to ensure (by protocol) that only one device sends data via 485 bus at a time.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> msg[8];
+...
+<i>// send 2 bytes of data to the Master</i>
+RS485Slave_Send(msg, 2);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>This is a simple demonstration of RS485 Library routines usage.</p> 
+    <p>Master sends message to Slave with address 160 and waits for a response.
+    	 The Slave accepts data, increments it and sends it back to the Master.
+		   Master then does the same and sends incremented data back to Slave, etc.</p>
+		<p>Master displays received data on PORTB, while error on receive (0xAA) and number of consecutive unsuccessful retries are displayed on PORTC.
+			 Slave displays received data on PORTB, while error on receive (0xAA) is displayed on PORTC.
+			 Hardware configurations in this example are made for the EasyAVR6 board and ATMEGA16.</p>
+
+    <p>RS485 Master code:</p>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>char</b> dat[10];                                <i>// buffer for receving/sending messages</i>
+<b>char</b> i,j;
+
+<b>sbit</b>  rs485_rxtx_pin  <b>at</b> PORTD2_bit;         <i>// set transcieve pin</i>
+<b>sbit</b>  rs485_rxtx_pin_direction <b>at</b> DDD2_bit;  <i>// set transcieve pin direction</i>
+
+<i>// Interrupt routine</i>
+<b>void</b> interrupt() org IVT_ADDR_USART_RXC {
+  RS485Master_Receive(dat);
+}
+
+<b>void</b> main(){
+
+  <b>long</b> cnt = 0;
+  
+  PORTA  = 0;                          <i>// clear PORTA</i>
+  PORTB  = 0;                          <i>// clear PORTB</i>
+  PORTC  = 0;                          <i>// clear PORTC</i>
+
+  DDRA   = 0xFF;                       <i>// set PORTA as output</i>
+  DDRB   = 0xFF;                       <i>// set PORTB as output</i>
+  DDRC   = 0xFF;                       <i>// set PORTB as output</i>
+  
+  UART1_Init(9600);                    <i>// initialize UART1 module</i>
+  Delay_ms(100);
+
+  RS485Master_Init();                  <i>// initialize MCU as Master</i>
+  dat[0] = 0xAA;
+  dat[1] = 0xF0;
+  dat[2] = 0x0F;
+  dat[4] = 0;                          <i>// ensure that message received flag is 0</i>
+  dat[5] = 0;                          <i>// ensure that error flag is 0</i>
+  dat[6] = 0;
+
+  RS485Master_Send(dat,1,160);
+
+  SREG_I_bit  = 1;                     <i>// enable global interrupt</i>
+  RXCIE_bit   = 1;                     <i>// enable interrupt on UART receive</i>
+
+  <b>while</b> (1){
+                                       <i>// upon completed valid message receiving</i>
+                                       <i>//   data[4] is set to 255</i>
+    cnt++;
+    <b>if</b> (dat[5])  {                     <i>// if an error detected, signal it</i>
+      PORTC = dat[5];                  <i>//   by setting PORTC</i>
+    }
+    <b>if</b> (dat[4]) {                      <i>// if message received successfully</i>
+      cnt = 0;
+      dat[4] = 0;                      <i>// clear message received flag</i>
+      j = dat[3];
+      <b>for</b> (i = 1; i &#60;= dat[3]; i++) {  <i>// show data on PORTB</i>
+        PORTB = dat[i-1];
+      }                                <i>// increment received dat[0]</i>
+      dat[0] = dat[0]+1;               <i>// send back to slave</i>
+      Delay_ms(1);
+      RS485Master_Send(dat,1,160);
+
+    }
+
+    <b>if</b> (cnt &#62; 100000) {                <i>// if in 100000 poll-cycles the answer</i>
+      PORTA++;                         <i>//   was not detected, signal</i>
+      cnt = 0;                         <i>//   failure of send-message</i>
+      RS485Master_Send(dat,1,160);
+      <b>if</b> (PORTA &#62; 10){                 <i>// if sending failed 10 times</i>
+        PORTA = 0;
+        RS485Master_Send(dat,1,50);    <i>//   send message on broadcast address</i>
+      }
+    }
+  }
+}</pre>
+
+    <p>RS485 Slave code:</p>
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>char</b> dat[9];             <i>// buffer for receving/sending messages</i>
+<b>char</b> i,j;
+
+<b>sbit</b>  rs485_rxtx_pin  <b>at</b> PORTD2_bit;         <i>// set transcieve pin</i>
+<b>sbit</b>  rs485_rxtx_pin_direction <b>at</b> DDD2_bit;  <i>// set transcieve pin direction</i>
+
+<i>// Interrupt routine</i>
+<b>void</b> interrupt() org IVT_ADDR_USART_RXC {
+  RS485Slave_Receive(dat);
+}
+
+<b>void</b> main() {
+  PORTB = 0;                         <i>// clear PORTB</i>
+  PORTC = 0;                         <i>// clear PORTC</i>
+
+  DDRB = 0xFF;                       <i>// set PORTB as output</i>
+  DDRC = 0xFF;                       <i>// set PORTB as output</i>
+
+  UART1_Init(9600);                  <i>// initialize UART1 module</i>
+  Delay_ms(100);
+  RS485Slave_Init(160);              <i>// Intialize MCU as slave, address 160</i>
+
+  dat[4] = 0;                        <i>// ensure that message received flag is 0</i>
+  dat[5] = 0;                        <i>// ensure that message received flag is 0</i>
+  dat[6] = 0;                        <i>// ensure that error flag is 0</i>
+
+  SREG_I_bit = 1;                    <i>// enable global interrupt</i>
+  RXCIE_bit  = 1;                    <i>// enable interrupt on UARTs receive</i>
+
+  <b>while</b> (1) {
+  
+    <b>if</b> (dat[5])  {                   <i>// if an error detected, signal it by</i>
+      PORTC = dat[5];                <i>//   setting PORTC</i>
+      dat[5] = 0;
+    }
+    <b>if</b> (dat[4]) {                    <i>// upon completed valid message receive</i>
+      dat[4] = 0;                    <i>//   data[4] is set to 0xFF</i>
+      j = dat[3];
+
+      <b>for</b> (i = 1; i &#60;= dat[3];i++){  <i>// show data on PORTB</i>
+        PORTB = dat[i-1];
+      }
+      dat[0] = dat[0]+1;             <i>// increment received dat[0]</i>
+      Delay_ms(1);
+      RS485Slave_Send(dat,1);        <i>//   and send it back to master</i>
+    }
+  }
+}</pre>
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Example of interfacing PC to AVR MCU via RS485 bus with LTC485 as RS-485 transceiver" src="img/schemes/scheme_rs485.gif"></p>
+    <p class="center small">Example of interfacing PC to AVR MCU via RS485 bus with LTC485 as RS-485 transceiver</p>
+
+
+
+    <!-- -->
+
+    <h3>Message format and CRC calculations</h3>
+    
+    <p><b>Q:</b> How is CRC checksum calculated on RS485 Master side?</p>
+    <div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">START_BYTE = 0x96; <i>// 10010110</i>
+STOP_BYTE  = 0xA9; <i>// 10101001</i>
+
+
+PACKAGE:
+-------- 
+START_BYTE 0x96
+ADDRESS
+DATALEN
+[DATA1]            <i>// if exists</i>
+[DATA2]            <i>// if exists</i>
+[DATA3]            <i>// if exists</i>
+CRC
+STOP_BYTE  0xA9
+
+
+DATALEN bits
+------------
+bit7 = 1  MASTER SENDS
+       0  SLAVE  SENDS
+bit6 = 1  ADDRESS WAS XORed with 1, IT WAS EQUAL TO START_BYTE or STOP_BYTE
+       0  ADDRESS UNCHANGED
+bit5 = 0  FIXED
+bit4 = 1  DATA3 (if exists) WAS XORed with 1, IT WAS EQUAL TO START_BYTE or STOP_BYTE
+       0  DATA3 (if exists) UNCHANGED
+bit3 = 1  DATA2 (if exists) WAS XORed with 1, IT WAS EQUAL TO START_BYTE or STOP_BYTE
+       0  DATA2 (if exists) UNCHANGED
+bit2 = 1  DATA1 (if exists) WAS XORed with 1, IT WAS EQUAL TO START_BYTE or STOP_BYTE
+       0  DATA1 (if exists) UNCHANGED
+bit1bit0 = 0 to 3 NUMBER OF DATA BYTES SEND
+
+
+CRC generation :
+----------------
+crc_send  = datalen ^ address;
+crc_send ^= data[0];    <i>// if exists</i>
+crc_send ^= data[1];    <i>// if exists</i>
+crc_send ^= data[2];    <i>// if exists</i>
+crc_send = ~crc_send;
+if ((crc_send == START_BYTE) || (crc_send == STOP_BYTE))
+   crc_send++;
+  
+NOTE: DATALEN&#60;4..0&#62; can not take the START_BYTE&#60;4..0&#62; or STOP_BYTE&#60;4..0&#62; values.</pre>
+
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

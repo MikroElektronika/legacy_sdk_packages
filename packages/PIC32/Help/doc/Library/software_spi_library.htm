@@ -1,0 +1,567 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Software SPI Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2007.">
+<meta name="Author" content="Marko Jovanovic & Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Software SPI Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="software_i2c_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="software_uart_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Software <acronym title="Serial Peripheral Interface">SPI</acronym> Library</h2></a>
+
+
+    <p>The mikroC PRO for PIC32 provides routines for implementing Software <acronym title="Serial Peripheral Interface">SPI</acronym> communication. These routines are hardware independent and can be used with any MCU. The Software <acronym title="Serial Peripheral Interface">SPI</acronym> Library provides easy communication with other devices via <acronym title="Serial Peripheral Interface">SPI</acronym>: A/D converters, D/A converters, MAX7219, LTC1290, etc.</p>
+       <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top"><b>Library configuration:</b></th>
+          <td valign="top">
+            <p>
+            	<ul>
+                <li>SPI to Master mode</li>
+                <li>Clock value = 20 kHz.</li>
+                <li>Data sampled at the middle of interval.</li>
+                <li>Clock idle state low.</li>
+                <li>Data sampled at the middle of interval.</li>
+                <li>Data transmitted at low to high edge.</li>
+              </ul>
+            </p>
+          </td>
+        </tr>
+    <p>The library configures SPI to the master mode, clock = 20kHz, data sampled at the middle of interval, clock idle state low and data transmitted at low to high edge.</p>
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b>     
+       The Software <acronym title="Serial Peripheral Interface">SPI</acronym> library implements time-based activities, so interrupts need to be disabled when using it.
+    </div>
+
+    <!-- -->
+    
+    <p></p>
+    <h3>External dependencies of Software SPI Library</h3>
+
+    <!-- tabela: Ext_depend -->
+
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Software SPI Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> SoftSpi_SDI;</code></td>
+          <td align="left">Data In line.</td>
+          <td align="left"><code><b>sbit</b> SoftSpi_SDI <b>at</b> RF4_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> SoftSpi_SDO;</code></td>
+          <td align="left">Data Out line.</td>
+          <td align="left"><code><b>sbit</b> SoftSpi_SDO <b>at</b> LATF3_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> SoftSpi_CLK;</code></td>
+          <td align="left">Clock line.</td>
+          <td align="left"><code><b>sbit</b> SoftSpi_CLK <b>at</b> LATF6_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> SoftSpi_SDI_Direction;</code></td>
+          <td align="left">Direction of the Data In pin.</td>
+          <td align="left"><code><b>sbit</b> SoftSpi_SDI_Direction <b>at</b> TRISF4_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> SoftSpi_SDO_Direction;</code></td>
+          <td align="left">Direction of the Data Out pin</td>
+          <td align="left"><code><b>sbit</b> SoftSpi_SDO_Direction <b>at</b> TRISF3_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> SoftSpi_CLK_Direction;</code></td>
+          <td align="left">Direction of the Clock pin.</td>
+          <td align="left"><code><b>sbit</b> SoftSpi_CLK_Direction <b>at</b> TRISF6_bit;</code></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+ 
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#soft_spi_init">Soft_SPI_Init</a></li>
+      <li><a href="#soft_spi_read">Soft_SPI_Read</a></li>
+      <li><a href="#soft_spi_write">Soft_SPI_Write</a></li>
+    </ul>
+
+    
+
+    <!-- -->
+
+
+    <h3 id="soft_spi_init">Soft_SPI_Init</h3>
+
+
+    <!-- tabela: Soft_SPI_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Soft_SPI_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          	<p>Routine initializes the software <acronym title="Serial Peripheral Interface">SPI</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables:</p>
+              <ul>              
+                <li><code>SoftSpi_SDI</code>: Data in line</li>
+                <li><code>SoftSpi_SDO</code>: Data out line</li>
+                <li><code>SoftSpi_CLK</code>: Data clock line</li>
+                <li><code>SoftSpi_SDI_Direction</code>: Direction of the Data in pin</li>                
+                <li><code>SoftSpi_SDO_Direction</code>: Direction of the Data out pin</li>
+                <li><code>SoftSpi_CLK_Direction</code>: Direction of the Data clock pin</li>
+             </ul> 
+             	must be defined before using this function.    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Software SPI module connections</i>
+<b>sbit</b> SoftSpi_SDI <b>at</b> RF4_bit;
+<b>sbit</b> SoftSpi_SDO <b>at</b> LATF3_bit;
+<b>sbit</b> SoftSpi_CLK <b>at</b> LATF6_bit;
+
+<b>sbit</b> SoftSpi_SDI_Direction <b>at</b> TRISF4_bit;
+<b>sbit</b> SoftSpi_SDO_Direction <b>at</b> TRISF3_bit;
+<b>sbit</b> SoftSpi_CLK_Direction <b>at</b> TRISF6_bit;
+<i>// End Software SPI module connections</i>
+...
+Soft_SPI_Init(); <i>// Init Soft_SPI</i>
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_spi_read">Soft_SPI_Read</h3>
+
+
+    <!-- tabela: Soft_SPI_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> Soft_SPI_Read(<b>char</b> sdata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine performs 3 operations simultaneously. It provides clock for the Software <acronym title="Serial Peripheral Interface">SPI</acronym> bus, reads a byte and sends	a byte.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>sdata:</code> data to be sent.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Byte received via the SPI bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Soft <acronym title="Serial Peripheral Interface">SPI</acronym> must be initialized before using this function. See <a href="#soft_spi_init">Soft_SPI_Init</a> routine.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned short</b> data_read;
+<b>char</b> data_send;
+...
+<i>// Read a byte and assign it to data_read variable</i>
+<i>// (data_send byte will be sent via SPI during the Read operation)</i>
+data_read = Soft_SPI_Read(data_send);
+</pre>
+
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="soft_spi_write">Soft_SPI_Write</h3>
+
+
+    <!-- tabela: Soft_SPI_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Soft_SPI_Write(<b>char</b> sdata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine sends one byte via the Software <acronym title="Serial Peripheral Interface">SPI</acronym> bus.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+             	<li><code>sdata:</code> data to be sent.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+           <p>Soft <acronym title="Serial Peripheral Interface">SPI</acronym> must be initialized before using this function. See <a href="#soft_spi_init">Soft_SPI_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Write a byte to the Soft SPI bus</i>
+Soft_SPI_Write(0xAA);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Example</h3>
+
+    <p>This code demonstrates using library routines for Soft_SPI communication. Also,
+     this example demonstrates working with max7219. Eight 7 segment displays
+     are connected to MAX7219. MAX7219 is connected to SDO, SDI, SCK
+     pins are connected accordingly.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-comment">//&nbsp;DAC&nbsp;module&nbsp;connections
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Chip_Select</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD0_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">SoftSpi_CLK</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD6_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">SoftSpi_SDI</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RD2_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">SoftSpi_SDO</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD3_bit;
+
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Chip_Select_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD0_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">SoftSpi_CLK_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD6_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">SoftSpi_SDI_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD2_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">SoftSpi_SDO_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD3_bit;
+</span><span class="cpp1-comment">//&nbsp;End&nbsp;DAC&nbsp;module&nbsp;connections
+
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">value;
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">InitMain()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">TRISB0_bit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;RB0&nbsp;pin&nbsp;as&nbsp;input
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">TRISB1_bit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;RB1&nbsp;pin&nbsp;as&nbsp;input
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Chip_Select</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Deselect&nbsp;DAC
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Chip_Select_Direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;CS#&nbsp;pin&nbsp;as&nbsp;Output
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_SPI_Init();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;Soft_SPI
+</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-comment">//&nbsp;DAC&nbsp;increments&nbsp;(0..4095)&nbsp;--&gt;&nbsp;output&nbsp;voltage&nbsp;(0..Vref)
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">DAC_Output(</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">valueDAC)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">temp;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Chip_Select</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Select&nbsp;DAC&nbsp;chip
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Send&nbsp;High&nbsp;Byte
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">temp</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(valueDAC</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&gt;&gt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">8</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x0F</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Store&nbsp;valueDAC[11..8]&nbsp;to&nbsp;temp[3..0]
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">temp</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">|=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x30</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Define&nbsp;DAC&nbsp;setting,&nbsp;see&nbsp;MCP4921&nbsp;datasheet
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_SPI_Write(temp);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Send&nbsp;high&nbsp;byte&nbsp;via&nbsp;Soft&nbsp;SPI
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Send&nbsp;Low&nbsp;Byte
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">temp</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">valueDAC;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Store&nbsp;valueDAC[7..0]&nbsp;to&nbsp;temp[7..0]
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Soft_SPI_Write(temp);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Send&nbsp;low&nbsp;byte&nbsp;via&nbsp;Soft&nbsp;SPI
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Chip_Select</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Deselect&nbsp;DAC&nbsp;chip
+</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CHECON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x32</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">AD1PCFG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Configure&nbsp;AN&nbsp;pins&nbsp;as&nbsp;digital
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">InitMain();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Perform&nbsp;main&nbsp;initialization
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">value</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">2048</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;When&nbsp;program&nbsp;starts,&nbsp;DAC&nbsp;gives
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;&nbsp;&nbsp;the&nbsp;output&nbsp;in&nbsp;the&nbsp;mid-range
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">while</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Endless&nbsp;loop
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">((RB0_bit)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(value</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&lt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">4095</span><span class="cpp1-symbol">))</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;If&nbsp;RB0&nbsp;button&nbsp;is&nbsp;pressed
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">value++;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;&nbsp;&nbsp;increment&nbsp;value
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">else</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">((RB1_bit)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;&amp;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(value</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&gt;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">))</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;If&nbsp;RB1&nbsp;button&nbsp;is&nbsp;pressed
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">value--;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;&nbsp;&nbsp;decrement&nbsp;value
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">DAC_Output(value);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Send&nbsp;value&nbsp;to&nbsp;DAC&nbsp;chip
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Slow&nbsp;down&nbsp;key&nbsp;repeat&nbsp;pace
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+</span></code>
+</pre>
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

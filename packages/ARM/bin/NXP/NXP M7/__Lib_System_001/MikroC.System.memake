@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M7",
+    "binaries": [
+        "__Lib_GPIO_MKV58_Defs.emcl",
+        "__Lib_System.emcl",
+        "__Lib_GPIO.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_MathDouble.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^MKV58F1M0.+24$|^MKV58F512.+24$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

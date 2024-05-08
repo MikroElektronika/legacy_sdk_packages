@@ -1,0 +1,30 @@
+:: Base project template
+
+:: project: Ethernet_Demo
+target: Ethernet_Demo
+
+type: executable
+
+sources: {
+    main.c
+}
+
+depends: {
+    MikroC.Ethernet
+    MikroC.System
+    MikroC.Conversions
+    MikroC.C_String
+    MikroC.C_Type
+}
+
+uses: {
+    MikroC.Ethernet
+    MikroC.System
+    MikroC.Conversions
+    MikroC.C_String
+    MikroC.C_Type
+}
+
+headers: {
+    __Ethernet_Intern.h
+}

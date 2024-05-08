@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_ADC_1_EP64_AB.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33EP128MC502$|^dsPIC33EP64MC202$|^PIC24EP32MC202$|^PIC24EP256GP202$|^PIC24EP32GP202$|^dsPIC33EP512MC202$|^PIC24EP512GP202$|^PIC24EP512MC202$|^dsPIC33EP32GP502$|^PIC24EP256MC202$|^dsPIC33EP32MC202$|^dsPIC33EP32MC502$|^dsPIC33EP128MC202$|^PIC24EP64MC202$|^PIC24EP128GP202$|^dsPIC33EP256GP502$|^dsPIC33EP64MC502$|^dsPIC33EP512GP502$|^dsPIC33EP128GP502$|^PIC24EP64GP202$|^PIC24EP128MC202$|^dsPIC33EP64GP502$|^dsPIC33EP256MC202$|^dsPIC33EP256MC502$|^dsPIC33EP512MC502$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

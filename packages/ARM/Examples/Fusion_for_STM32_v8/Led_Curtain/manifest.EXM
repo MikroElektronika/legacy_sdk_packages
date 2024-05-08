@@ -1,0 +1,8 @@
+{
+    "name": "Led Curtain",
+    "description": "Simple \"Hello world\" example for the world of ARM MCUs",
+    "image" : "LEDs.png",
+    "toolchain": ["mikrocarm"],
+    "hw" : ["Fusion for STM32"],
+    "category" : ["mikroC legacy ARM"]
+}

@@ -1,0 +1,1210 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Vectors Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_dspic.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_C_dsPIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Vectors Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for dsPIC30/33 and PIC24 Libraries</A> &gt; <A href="dsp_library.htm">DSP Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="bit_reverse_complex_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="matrix_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    
+    <a name="top_of_page"><h2>Vectors Library</h2></a>
+
+
+    <p>mikroC PRO for dsPIC30/33 and PIC24 includes a library for working and using vectors. All routines work with fractional Q15 format.</p>
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+    	<li><a href="#vector_set">Vector_Set</a></li>
+    	<li><a href="#vectorpower">Vector_Power</a></li> 
+    	<li><a href="#vector_subtract">Vector_Subtract</a></li>
+    	<li><a href="#vectorscale">Vector_Scale</a></li>
+    	<li><a href="#vector_negate">Vector_Negate</a></li>
+    	<li><a href="#vector_multiply">Vector_Multiply</a></li>
+    	<li><a href="#vector_min">Vector_Min</a></li>
+    	<li><a href="#vector_max">Vector_Max</a></li>
+    	<li><a href="#vector_dot">Vector_Dot</a></li>
+    	<li><a href="#vector_correlate">Vector_Correlate</a></li>
+    	<li><a href="#vector_convolve">Vector_Convolve</a></li>
+    	<li><a href="#vector_add">Vector_Add</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="vector_set">Vector_Set</h3>
+
+
+    <!-- tabela: Vector_Set -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Vector_Set(<b>unsigned</b> *input, <b>unsigned</b> size, <b>unsigned</b> value);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Sets <code>size</code> elements of <code>input</code> to <code>value</code>, starting from the first element.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>input:</code> pointer to original vector</li>
+            	<li><code>size:</code> number of vector elements</li>
+            	<li><code>value:</code> value written to the elements</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>   
+          </td>
+        </tr> 
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>  
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec2[3] = {1,1,1};
+
+Vector_Set(vec2, 3, 0x4000);
+</pre>
+          </td>
+        </tr>  
+  
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+						<ul>
+							<li><code>size</code> must be &gt; 0</li>
+							<li>Length of <code>input</code> is limited by available RAM</li>
+						</ul>
+          </td>
+        </tr>                           
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vectorpower">Vector_Power</h3>
+
+
+    <!-- tabela: VectorPower -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>unsigned</b> Vector_Power(<b>unsigned</b> numElems, <b>unsigned</b> *srcV);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+		        <p>Function returns result of power value (powVal) in radix point 1.15</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+            	<li><code>numElems:</code> number elements in vector(s)</li>
+            	<li><code>srcV:</code> pointer to source vector</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p><img src="img/math/math4.gif" align="absmiddle"></p>    
+          </td>
+        </tr> 
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>  
+ 
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec1[3] = {1,2,3};
+
+Vector_Power(3, vec1);
+</pre>
+          </td>
+        </tr>  
+  
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+						<ul>
+							<li>[W0..W2] used, not restored</li>
+							<li>[W4] used, not restored</li>
+							<li>AccuA used, not restored</li>
+							<li>CORCON saved, used, restored</li>
+						</ul>
+          </td>
+        </tr>                           
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+  	<!-- -->
+
+
+    <h3 id="vector_subtract">Vector_Subtract</h3>
+
+
+    <!-- tabela: Vector_Subtract -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Vector_Subtract(<b>unsigned</b> *dest, <b>unsigned</b> *v1, <b>unsigned</b> *v2, <b>unsigned</b> numElems);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+		    	  <p>This function does subtraction of two vectors.</p>
+            <p><b>dstV[n] = v1[n] - v2[n]</b>, n <font face="symbol">&#206;</font> [0, numElems-1]</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>dest:</code> result vector</li>
+	        	<li><code>v1:</code> first vector</li>
+	        	<li><code>v2:</code> second vector</li>
+	        	<li><code>numElems:</code> must be less or equal to minimum size of two vectors.</li>
+	        </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr> 
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec1[3] = {1,2,3};
+<b>unsigned</b> vec2[3] = {1,1,1};
+<b>unsigned</b> vecDest[3];
+
+Vector_Subtract(vecDest, vec1, vec2, 3);
+</pre>
+          </td>
+        </tr>  
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>AccuA used, not restored.</li>
+            	<li>CORCON saved, used, restored.</li>
+            </ul>
+          </td>
+        </tr>           
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vectorscale">Vector_Scale</h3>
+
+
+    <!-- tabela: VectorScale -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Vector_Scale(<b>unsigned</b> N, <b>int</b> ScaleValue, <b>unsigned</b> *SrcVector, <b>unsigned</b> *DestVector);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+	    		  <p>This function does vector scaling with scale value.</p>
+            <p><b>dstV[n] = sclVal * srcV[n]</b>, n <font face="symbol">&#206;</font> [0, numElems-1]</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+				  <ul>
+				  	<li><code>N:</code> buffer length (number of elements to be scaled)</li>
+				  	<li><code>ScaleValue:</code> scale value</li>
+				  	<li><code>SrcVector:</code> pointer to original vector</li>
+				  	<li><code>DestVector:</code> pointer to scaled vector</li>
+				  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec1[3] = {1,2,3};
+<b>unsigned</b> vecDest[3];
+
+Vector_Scale(3, 2, vec1, vecDest);
+</pre>
+          </td>
+        </tr>   
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+						<ul>
+							<li>[W0..W5] used, not restored</li>
+							<li>AccuA	used, not restored</li>
+							<li>CORCON saved, used, restored</li>
+						</ul>
+          </td>
+        </tr>           
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vector_negate">Vector_Negate</h3>
+
+
+    <!-- tabela: Vector_Negate -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Vector_Negate(<b>unsigned</b> *srcVector, <b>unsigned</b> *DestVector, <b>unsigned</b> numElems);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>This function does negation of vector.</p>
+            <p><b>dstV[n] = (-1)*srcV1[n] + 0</b>, n <font face="symbol">&#206;</font> [0, numElems)</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+				  <ul>
+				  	<li><code>srcVector:</code> pointer to original vector</li>
+				  	<li><code>destVector:</code> pointer to result vector</li>
+				  	<li><code>numElems:</code> number of elements in vector(s)</li>
+				  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vecDest[3];
+<b>unsigned</b> vec1[3] = {1,2,3};
+
+Vector_Negate(vec1, vecDest, 3);
+</pre>
+          </td>
+        </tr>   
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          	<ul>
+          		<li>Negate of 0x8000 is 0x7FFF<br></li>
+          		<li>[W0]..[W5] used, not restored</li>
+          		<li>AccuA	used, not restored</li>
+          		<li>CORCON saved, used, restored</li>
+          	</ul>
+          </td>
+        </tr>          
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vector_multiply">Vector_Multiply</h3>
+
+
+    <!-- tabela: Vector_Multiply -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Vector_Multiply(<b>unsigned</b> *v1, <b>unsigned</b> *v2, <b>unsigned</b> *dest, <b>unsigned</b> numElems);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+  		    	<p>This function does multiplication of two vectors.</p>
+            <p><b>dstV[n] = srcV1[n] * srcV2[n]</b>, n <font face="symbol">&#206;</font> [0, numElems-1]</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>v1:</code> pointer to first vector</li>
+	        	<li><code>v2:</code> pointer to second vector</li>
+	        	<li><code>dest:</code> pointer to result vector</li>
+	        	<li><code>numElems:</code> number elements in vector(s) (must be less or equal to minimum size of two vectors)</li>
+	        </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec1[3] = {1,2,3};
+<b>unsigned</b> vec2[3] = {1,1,1};
+<b>unsigned</b> vConDest[10];
+
+Vector_Multiply(vec1, vConDest, vec2, 3); 
+</pre>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+						<ul>
+							<li>[W0..W5] used, not restored</li>
+							<li>AccuA used, not restored</li>
+							<li>CORCON saved, used, restored</li>
+            </ul>
+          </td>
+        </tr>            
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vector_min">Vector_Min</h3>
+
+
+    <!-- tabela: Vector_Min -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> Vector_Min(<b>unsigned</b> *Vector, <b>unsigned</b> numElems, <b>unsigned</b> *MinIndex);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+		      	<p>This function finds minimal value in vector.</p>
+            <p><b>minVal = min (srcV[n])</b>, n <font face="symbol">&#206;</font> [0, numElems-1]<br><br>
+	          If <code>srcV[i]</code> = <code>srcV[j]</code> = <code>minVal</code>, and <code>i</code> &lt; <code>j</code>, then <code>MinIndex</code> = <code>j</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>Vector:</code> pointer to original vector</li>
+	        	<li><code>numElems:</code> number of elements in vector</li>
+	        	<li><code>MinIndex:</code> pointer to index of minimum value</li>
+	        </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Minimum value (<code>minVal</code>).</p>
+          </td>
+        </tr>  
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec1[3] = {1,2,3};
+<b>unsigned</b> index;
+<b>unsigned</b> rslt;
+
+rslt = Vector_Min(vec1, 3, &index);
+</pre>
+          </td>
+        </tr>          
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            [W0..W5] used, not restored
+          </td>
+        </tr>            
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vector_max">Vector_Max</h3>
+
+
+    <!-- tabela: Vector_Max -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> Vector_Max(<b>unsigned</b> *srcV, <b>unsigned</b> numElems, <b>unsigned</b> *MaxIndex);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>This function find maximal value in vector.</p>
+				  	<p><b>maxVal = max (srcV[n])</b>, n <font face="symbol">&#206;</font> [0, numElems-1]<br><br>
+	          If <code>srcV[i]</code> = <code>srcV[j]</code> = <code>maxVal</code>, and <code>i</code> &lt; <code>j</code>, then <code>maxIndex</code> = <code>j</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>srcV:</code> pointer to original vector</li>
+	        	<li><code>numElems:</code> number of elements in vector(s)</li>
+	        	<li><code>MaxIndex:</code> pointer to index of maximum value</li>
+	        </ul>      
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Maximum value (<code>maxVal</code>).</p>
+          </td>
+        </tr>         
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec1[3] = {1,2,3};
+<b>unsigned</b> index;
+<b>unsigned</b> rslt;
+
+rslt = Vector_Max(vec1, 3, &index);
+</pre>
+          </td>
+        </tr>          
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            [W0..W5] used, not restored
+          </td>
+        </tr>  
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vector_dot">Vector_Dot</h3>
+
+
+    <!-- tabela: Vector_Dot -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> Vector_Dot(<b>unsigned</b> *v1, <b>unsigned</b> *v2, <b>unsigned</b> numElems);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+  		    	<p>Function calculates vector dot product.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>v1:</code> pointer to first vector</li>
+	        	<li><code>v2:</code> pointer to second vector</li>
+	        	<li><code>numElems:</code> number of elements in vector(s)</li>
+	        </ul>		
+          </td>
+        </tr>
+  
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Dot product value :
+              <br><br><img src="img/math/math5.gif" align="absmiddle">
+            </p>  
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec2[3] = {1,1,1};
+<b>unsigned</b> rslt;
+
+rslt = Vector_Dot(vec2,vec2,3);
+</pre>
+          </td>
+        </tr>    
+  
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+						<ul>
+							<li>[W0..W2] used, not restored</li>
+							<li>[W4..W5] used, not restored</li>
+							<li>AccuA used, not restored</li>
+							<li>CORCON saved, used, restored</li>
+						</ul>
+          </td>
+        </tr>          
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vector_correlate">Vector_Correlate</h3>
+
+
+    <!-- tabela: Vector_Correlate -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Vector_Correlate(<b>unsigned</b> *v1, <b>unsigned</b> *v2, <b>unsigned</b> *dest, <b>unsigned</b> numElemsV1, <b>unsigned</b> numElemsV2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Function calculates Vector correlation (using convolution).</p>
+            <p><img src="img/math/math6.gif" align="absmiddle"> 
+  				  <br>where:
+	      	  <br><code>x[n]</code> defined for n <font face="symbol">&#206;</font> [0, N)<br>
+	          <code>y[n]</code> defined for n <font face="symbol">&#206;</font> [0, M), M <font face="symbol">&#163;</font> N<br>
+	          <code>r[n]</code> defined for n <font face="symbol">&#206;</font> [0, N+M-1)<br></p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>v1:</code> pointer to first vector</li>
+	        	<li><code>v2:</code> pointer to second vector</li>
+	        	<li><code>dest:</code> pointer to result vector</li>
+	        	<li><code>numElemsV1:</code> number of the first vector elements</li>
+	        	<li><code>numElemsV2:</code> number of the second vector elements</li>
+	        </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vConDest[10];
+<b>unsigned</b> vec2[3] = {1,1,1};
+
+Vector_Correlate(vec2,vec2,vConDest,3,3); 
+</pre>
+          </td>
+        </tr>          
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            [W0..W7] used, not restored
+          </td>      
+        </tr>  
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vector_convolve">Vector_Convolve</h3>
+
+
+    <!-- tabela: Vector_Convolve -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Vector_Convolve(<b>unsigned</b> *v1, <b>unsigned</b> *v2, <b>unsigned</b> *dest, <b>unsigned</b> numElemsV1, <b>unsigned</b> numElemsV2);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>Function calculates Vector using convolution.</p>
+            <p><img src="img/math/math7.gif" align="absmiddle">, n <font face="symbol">&#206;</font> [0, M)
+            <br><img src="img/math/math8.gif" align="absmiddle">, n <font face="symbol">&#206;</font> [M, N)           
+            <br><img src="img/math/math9.gif" align="absmiddle">,	n <font face="symbol">&#206;</font> [N, N+M-1) </p>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>v1:</code> pointer to first vector</li>
+	        	<li><code>v2:</code> pointer to second vector</li>
+	        	<li><code>dest:</code> pointer to result vector</li>
+	        	<li><code>numElemsV1:</code> number of the first vector elements</li>
+	        	<li><code>numElemsV2:</code> number of the second vector elements</li>
+	        </ul>	
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec2[3] = {1,1,1};
+<b>unsigned</b> vConDest2[10];
+
+Vector_Convolve(vec2,vec2,vConDest2,3,3); 
+</pre>
+          </td>
+        </tr>    
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+						<ul>
+							<li>[W0..W7] used, not restored</li>
+							<li>[W8..W10]	saved, used, restored</li>
+							<li>AccuA	used, not restored</li>
+							<li>CORCON saved, used, restored</li>
+						</ul>
+          </td>
+        </tr>  
+        	    
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+	<!-- -->
+
+
+    <h3 id="vector_add">Vector_Add</h3>
+
+
+    <!-- tabela: Vector_Add -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> Vector_Add(<b>unsigned</b> *dest, <b>unsigned</b> *v1, <b>unsigned</b> *v2, <b>unsigned</b> numElems);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+		    	<p>Function calculates vector addition.
+          <p><b>dstV[n] = srcV1[n] + srcV2[n]</b>, n <font face="symbol">&#206;</font> [0, numElems-1]</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+	        <ul>
+	        	<li><code>dest:</code> pointer to result vector</li>
+	        	<li><code>v1:</code> pointer to first vector</li>
+	        	<li><code>v2:</code> pointer to second vector</li>
+	        	<li><code>numElemsV1:</code> number of vector(s) elements</li>
+	        </ul>	
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> vec1[3] = {1,2,3};
+<b>unsigned</b> vec2[3] = {1,1,1};
+<b>unsigned</b> vecDest[3];
+
+Vector_Add(vecDest, vec1, vec2, 3);
+</pre>
+          </td>
+        </tr>    
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <ul>
+            	<li>[W0..W4] used, not restored</li>
+            	<li>AccuA	used, not restored</li>
+            	<li>CORCON saved, used, restored</li>
+            </ul>
+          </td>
+        </tr>          
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <div class="feedback">
+            Copyright (c) 2002-2018 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

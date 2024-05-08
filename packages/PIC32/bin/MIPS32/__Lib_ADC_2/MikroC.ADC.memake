@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.ADC",
+    "global_visibility": true,
+    "arch": "MIPS32",
+    "binaries": [
+        "__Lib_ADC_2.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MX220F032B$|^PIC32MX230F064B$|^PIC32MX230F256B$|^PIC32MX210F016D$|^PIC32MX210F016B$|^PIC32MX230F064D$|^PIC32MX250F128D$|^PIC32MX210F016C$|^PIC32MX250F128B$|^PIC32MX230F256D$|^PIC32MX220F032D$|^PIC32MX230F064C$|^PIC32MX250F128C$|^PIC32MX220F032C$|^PIC32MX270F256D$|^PIC32MX270F256DB$|^PIC32MX270F256B$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

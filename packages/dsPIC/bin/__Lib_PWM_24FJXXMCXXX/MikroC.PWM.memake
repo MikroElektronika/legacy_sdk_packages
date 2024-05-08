@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_PWM_24FJXXMCXXX.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC24FJ32MC102$|^dsPIC33FJ32GP102$|^dsPIC33FJ32MC101$|^dsPIC33FJ32MC102$|^dsPIC33FJ32GP104$|^PIC24FJ32MC104$|^dsPIC33FJ32GP101$|^dsPIC33FJ32MC104$|^PIC24FJ32MC101$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

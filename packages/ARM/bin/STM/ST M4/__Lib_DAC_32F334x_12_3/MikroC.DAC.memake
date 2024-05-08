@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.DAC",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_DAC_32F334x_12_3.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F334C4$|^STM32F334K6$|^STM32F334K8$|^STM32F334K4$|^STM32F334R8$|^STM32F334C6$|^STM32F334R6$|^STM32F334C8$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

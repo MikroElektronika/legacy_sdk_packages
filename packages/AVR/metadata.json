@@ -1,0 +1,9 @@
+{
+    "mcu.uid": "ATMEGA32",
+    "commit.hash": "{5d1ca283e12bc0de1026566710e4ef475efb6f08}",
+    "toolchain.uid": "mikrocavr",
+    "mikrosdk.version": "v7.0.1",
+    "board.uid": "generic",
+    "mikrosdk.name": "mikroC PRO for AVR Libraries",
+    "guid": "sdk.mikroc.legacy.avr"
+}

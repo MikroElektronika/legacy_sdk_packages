@@ -1,0 +1,38 @@
+:: Base project template
+
+:: project: EthV2_Demo
+target: EthV2_Demo
+
+type: executable
+
+uses: {
+    MikroC.System
+    MikroC.ETHERNET
+    MikroC.C_String
+    MikroC.Lcd
+    MikroC.Lcd_Constants
+    MikroC.Conversions
+    MikroC.C_Type
+    MikroC.C_Stdlib
+    MikroC.Time
+}
+
+depends: {
+    MikroC.System
+    MikroC.ETHERNET
+    MikroC.C_String
+    MikroC.Lcd
+    MikroC.Lcd_Constants
+    MikroC.Conversions
+    MikroC.C_Type
+    MikroC.C_Stdlib
+    MikroC.Time
+}
+
+
+sources: {
+    httpUtils.c
+    EthV2_Demo.c
+}
+
+

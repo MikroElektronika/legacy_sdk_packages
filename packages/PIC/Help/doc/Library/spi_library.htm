@@ -1,0 +1,834 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>SPI Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_PIC.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_PIC.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">SPI Library</div><div class="navigation">&nbsp;&nbsp;<A href="index.htm">mikroC PRO for PIC Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="sound_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="spi_ethernet_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    <a name="top_of_page"><h2><acronym title="Serial Peripheral Interface">SPI</acronym> Library</h2></a>
+
+
+    <p>The mikroC PRO for PIC provides a library for comfortable with <acronym title="Serial Peripheral Interface">SPI</acronym> work in Master mode. 
+    	The PIC <acronym title="MicroController Unit">MCU</acronym> can easily communicate with other devices via <acronym title="Serial Peripheral Interface">SPI</acronym>: 
+    A/D converters, D/A converters, MAX7219, LTC1290, etc. </p>
+    
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+      <ul>
+    	  <li><acronym title="Serial Peripheral Interface">SPI</acronym> routines require you to specify the module you want to use. To select the desired <acronym title="Serial Peripheral Interface">SPI</acronym>, simply change the letter <code>x</code> in the prototype for a number from <code>1</code> to <code>2</code>. <br>Number of <acronym title="Serial Peripheral Interface">SPI</acronym> modules per MCU differs from chip to chip. Please, read the appropriate datasheet before utilizing this library.</li>
+    	  <li>Some MCUs have multiple <acronym title="Serial Peripheral Interface">SPI</acronym> modules. Switching between the <acronym title="Serial Peripheral Interface">SPI</acronym> modules in the <acronym title="Serial Peripheral Interface">SPI</acronym> library is done by the <a href="#spi_set_active">SPI_Set_Active</a> function (<acronym title="Serial Peripheral Interface">SPI</acronym> module has to be previously initialized).</li>
+    	  <li>Some of the MCUs do not support <a href="#spi1_init_advanced">SPIx_Init_Advanced</a> routine. Please, refer to the appropriate datasheet.</li>
+        <li>Certain <acronym title="Serial Peripheral Interface">SPI</acronym> lines on some PIC16 Enhanced Family MCUs can be routed through a alternative pins. These pins are selected by configuring APFCON register and appropriate TRIS register.</li>
+<!--        <li>When using PIC18FxxJ94 or PIC16F170x/171x family MCU, make sure that <a href="peripheral_pin_select_library.htm">Peripheral Pin Select Library</a> is checked in the <a href="library_manager.htm">Library Manager</a>.</li>-->
+      </ul>
+    </div> 
+    <p></p>
+          
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#spi1_init">SPIx_Init</a></li>
+      <li><a href="#spi1_init_advanced">SPIx_Init_Advanced</a></li>
+      <li><a href="#spi1_read">SPIx_Read</a></li>
+      <li><a href="#spi1_write">SPIx_Write</a></li>
+      <li><a href="#spi_set_active">SPI_Set_Active</a></li>  
+    </ul>
+
+    <h4>Generic Routines</h4>
+
+    <ul>
+      <li><a href="#spi_read_gen">SPI_Read</a></li>  
+      <li><a href="#spi_write_gen">SPI_Write</a></li>    
+    </ul>
+
+    <!-- -->
+
+
+    <h3 id="spi1_init">SPIx_Init</h3>
+
+
+    <!-- tabela: SPIx_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+     <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPIx_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This routine configures and enables <acronym title="Serial Peripheral Interface">SPI</acronym> module with the following settings:</p>
+            	<ul>
+            		<li>master mode</li> 
+                <li>clock Fosc/4</li>
+                <li>clock idle state low</li>
+                <li>data transimtted on low to high edge</li>
+                <li>input data sampled at the middle of interval</li>
+            	</ul>
+<!--            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <br><br><b>PIC16F170x/171x family specifics :</b>
+                <ul>
+                  <li><acronym title="Serial Peripheral Interface">SPI</acronym>1 module is initialized on the RC3, RC4, RC5 pins (SCK, SDI, SDO, respectively).</li>
+                </ul>
+                <b>PIC18FxxJ94 family specifics :</b>
+                <ul>
+                  <li><acronym title="Serial Peripheral Interface">SPI</acronym>1 module is initialized on the RC3, RC4, RC5 pins (SCK, SDI, SDO, respectively).</li>
+                  <li><acronym title="Serial Peripheral Interface">SPI</acronym>2 module is initialized on the RD6, RD5, RD4 pins (SCK, SDI, SDO, respectively).</li>
+                </ul>
+            </div>-->
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You need PIC MCU with hardware integrated <acronym title="Serial Peripheral Interface">SPI</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Initialize the SPI1 module with default settings</i>
+SPI1_Init();</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi1_init_advanced">SPIx_Init_Advanced</h3>
+
+
+    <!-- tabela: SPIx_Init_Advanced -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPIx_Init_Advanced(<b>unsigned short</b> master_slav, <b>unsigned short</b> data_sample, <b>unsigned short</b> clock_idle, <b>unsigned short</b> transmit_edge);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Configures and initializes <acronym title="Serial Peripheral Interface">SPI</acronym>. <a href="#spi1_init">SPIx_Init</a> or <a href="#spi1_init_advanced">SPIx_Init_Advanced</a> needs to be called before using other functions of <acronym title="Serial Peripheral Interface">SPI</acronym> Library.
+            <p>Parameters <code>mode</code>, <code>data_sample</code> and <code>clock_idle</code> configure the SPI module, and can have the following values:</p>
+            	<ul>
+                <table>
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>									                
+
+                  <tr align="center">
+                 	  <td colspan=2><b>SPI work mode:</b></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>Master clock = Fosc/4</code></td>
+										<td><code>_SPI_MASTER_OSC_DIV4</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>Master clock = Fosc/16</code></td>
+										<td><code>_SPI_MASTER_OSC_DIV16</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>Master clock = Fosc/64</code></td>
+										<td><code>_SPI_MASTER_OSC_DIV64</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>Master clock source TMR2</code></td>
+										<td><code>_SPI_MASTER_TMR2 </code></td>
+                  </tr>                    
+                  
+                  <tr align="center">
+										<td><code>Slave select enabled</code></td>
+										<td><code>_SPI_SLAVE_SS_ENABLE</code></td>
+                  </tr>                  
+                  
+                  <tr align="center">
+										<td><code>Slave select disabled</code></td>
+										<td><code>_SPI_SLAVE_SS_DIS</code></td>
+                  </tr>
+
+                 <tr align="center">
+										<td colspan=2><b>Data sampling interval:</b></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Input data sampled in middle of interval</code></td>
+										<td><code>_SPI_DATA_SAMPLE_MIDDLE</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Input data sampled at the end of interval</code></td>
+										<td><code>_SPI_DATA_SAMPLE_END</code></td>
+                  </tr>
+                  
+                  <tr align="center">	
+                  	<td colspan=2><b>SPI clock idle state:</b></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Clock idle HIGH</code></td>
+										<td><code>_SPI_CLK_IDLE_HIGH</code></td>
+                  </tr>
+              
+                  <tr align="center">
+										<td><code>Clock idle LOW</code></td>
+										<td><code>_SPI_CLK_IDLE_LOW</code></td>
+                  </tr>
+                  
+                  <tr align="center">	
+                  	<td colspan=2><b>Transmit edge:</b></td>
+                  </tr>
+							
+									<tr align="center">
+										<td><code>Data is valid on low to high edge</code></td>
+										<td><code>_SPI_LOW_2_HIGH</code></td>
+                  </tr>
+              
+                  <tr align="center">
+										<td><code>Data is valid on high to low edge</code></td>
+										<td><code>_SPI_HIGH_2_LOW</code></td>
+                  </tr>                                                    
+ 
+                </table> 
+              </ul> 
+            </p>
+<!--            <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">
+              <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Note :</b>
+                <br><br><b>PIC16F170x/171x family specifics :</b>
+                <ul>
+                  <li><acronym title="Serial Peripheral Interface">SPI</acronym>1 module is initialized on the RC3, RC4, RC5 pins (SCK, SDI, SDO, respectively).</li>
+                </ul>
+                <b>PIC18FxxJ94 family specifics :</b>
+                <ul>
+                  <li><acronym title="Serial Peripheral Interface">SPI</acronym>1 module is initialized on the RC3, RC4, RC5 pins (SCK, SDI, SDO, respectively).</li>
+                  <li><acronym title="Serial Peripheral Interface">SPI</acronym>2 module is initialized on the RD6, RD5, RD4 pins (SCK, SDI, SDO, respectively).</li>
+                </ul>
+            </div>            -->
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You need PIC MCU with hardware integrated <acronym title="Serial Peripheral Interface">SPI</acronym>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre><i>// Set SPI1 module to master mode, clock = Fosc/4, data sampled at the middle of interval, clock idle state low and data transmitted at low to high edge:</i>
+SPI1_Init_Advanced(_SPI_MASTER_OSC_DIV4, _SPI_DATA_SAMPLE_MIDDLE, _SPI_CLK_IDLE_LOW, _SPI_LOW_2_HIGH);</pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi1_read">SPIx_Read</h3>
+
+
+    <!-- tabela: SPIx_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> SPIx_Read(<b>unsigned short</b> buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns the received data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one byte from the SPI bus.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>buffer:</code> dummy data for clock generation (see device Datasheet for SPI modules implementation details)</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You need PIC MCU with hardware integrated <acronym title="Serial Peripheral Interface">SPI</acronym>.</p>
+            <p><acronym title="Serial Peripheral Interface">SPI</acronym> must be initialized and communication established before using this function. See <a href="#spi1_init_advanced">SPIx_Init_Advanced</a> or <a href="#spi1_init">SPIx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>short</b> take, buffer;
+...
+take = SPI1_Read(buffer);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi1_write">SPIx_Write</h3>
+
+
+    <!-- tabela: SPIx_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPIx_Write(<b>unsigned short</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes byte via the SPI bus.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>wrdata:</code> data to be sent</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You need PIC MCU with hardware integrated <acronym title="Serial Peripheral Interface">SPI</acronym>.</p>
+            <p><acronym title="Serial Peripheral Interface">SPI</acronym> must be initialized and communication established before using this function. See <a href="#spi1_init_advanced">SPIx_Init_Advanced</a> or <a href="#spi1_init">SPIx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// write a byte to the SPI bus</i>
+<b>char</b> buffer;
+...
+SPI1_Write(buffer);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+
+    <!-- kraj tabele -->
+
+
+
+    <h3 id="spi_set_active">SPI_Set_Active</h3>
+
+
+    <!-- tabela: Spi_Set_Active -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Set_Active(<b>char</b> (*read_ptr)(<b>char</b>), <b>void</b>(*write_ptr)(<b>char</b>))</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the active SPI module which will be used by the <acronym title="Serial Peripheral Interface">SPI</acronym> routines.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>read_ptr:</code> <a href="#spi1_read">SPIx_Read</a> handler</li>
+            		<li><code>write_ptr:</code> <a href="#spi1_write">SPIx_Write</a> handler</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>Routine is available only for MCUs with two SPI modules.</p>
+            <p>Used <acronym title="Serial Peripheral Interface">SPI</acronym> module must be initialized before using this function. See the 
+            	<a href="#spi1_init">SPIx_Init</a>, <a href="#spi1_init_advanced">SPIx_Init_Advanced</a><p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+SPI_Set_Active(&SPI2_Read, &SPI2_Write); <i>// Sets the SPI2 module active</i> </pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- kraj tabele --> 
+
+
+
+    <!-- -->
+
+
+    <h3 id="spi_read_gen">SPI_Read</h3>
+
+
+    <!-- tabela: SPI_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned short</b> SPI_Read(<b>unsigned short</b> buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns the received data.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one byte from the SPI bus.</p>
+            <p>This is a generic routine which uses the active SPI module previously activated by the <a href="#spi_set_active">SPI_Set_Active</a> routine.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>buffer:</code> dummy data for clock generation (see device Datasheet for SPI modules implementation details)</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You need PIC MCU with hardware integrated <acronym title="Serial Peripheral Interface">SPI</acronym>.</p>
+            <p><acronym title="Serial Peripheral Interface">SPI</acronym> must be initialized and communication established before using this function. See <a href="#spi1_init_advanced">SPIx_Init_Advanced</a> or <a href="#spi1_init">SPIx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>short</b> take, buffer;
+...
+take = SPI_Read(buffer);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="spi_write_gen">SPI_Write</h3>
+
+
+    <!-- tabela: SPI_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SPI_Write(<b>unsigned short</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes byte via the SPI bus.</p>
+            <p>This is a generic routine which uses the active SPI module previously activated by the <a href="#spi_set_active">SPI_Set_Active</a> routine.</p>
+            <p>Parameters : 
+            	<ul>
+            		<li><code>wrdata:</code> data to be sent</li>
+            	</ul>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>You need PIC MCU with hardware integrated <acronym title="Serial Peripheral Interface">SPI</acronym>.</p>
+            <p><acronym title="Serial Peripheral Interface">SPI</acronym> must be initialized and communication established before using this function. See <a href="#spi1_init_advanced">SPIx_Init_Advanced</a> or <a href="#spi1_init">SPIx_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// write a byte to the SPI bus</i>
+<b>char</b> buffer;
+...
+SPI_Write(buffer);</pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3>Library Example</h3>
+
+    <p>The code demonstrates how to use <acronym title="Serial Peripheral Interface">SPI</acronym> library functions for communication between SPI module of the MCU and Microchip's MCP4921 12-bit D/A converter</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<i>// DAC module connections</i>
+<b>sbit</b> Chip_Select <b>at</b> RC0_bit;
+<b>sbit</b> Chip_Select_Direction <b>at</b> TRISC0_bit;
+<i>// End DAC module connections</i>
+
+<b>unsigned int</b> value;                     
+
+<b>void</b> InitMain() {
+  TRISA0_bit = 1;                        <i>// Set RA0 pin as input</i>
+  TRISA1_bit = 1;                        <i>// Set RA1 pin as input</i>
+  Chip_Select = 1;                       <i>// Deselect DAC</i>
+  Chip_Select_Direction = 0;             <i>// Set CS# pin as Output</i>
+  SPI1_Init();                           <i>// Initialize SPI module</i>
+}
+
+<i>// DAC increments (0..4095) --&#62; output voltage (0..Vref)</i>
+<b>void</b> DAC_Output(<b>unsigned int</b> valueDAC) {
+  <b>char</b> temp;
+ 
+  Chip_Select = 0;                       <i>// Select DAC chip</i>
+  
+  <i>// Send High Byte                                         </i>
+  temp = (valueDAC &#62;&#62; 8) &#38; 0x0F;         <i>// Store valueDAC[11..8] to temp[3..0]</i>
+  temp |= 0x30;                          <i>// Define DAC setting, see MCP4921 datasheet</i>
+  SPI1_Write(temp);                      <i>// Send high byte via SPI</i>
+  
+  <i>// Send Low Byte</i>
+  temp = valueDAC;                       <i>// Store valueDAC[7..0] to temp[7..0]</i>
+  SPI1_Write(temp);                      <i>// Send low byte via SPI</i>
+  
+  Chip_Select = 1;                       <i>// Deselect DAC chip</i>
+}
+
+<b>void</b> main() {
+  ANSEL = 0;
+  ANSELH = 0;
+  InitMain();                            <i>// Perform main initialization</i>
+
+  value = 2048;                          <i>// When program starts, DAC gives</i>
+                                         <i>//   the output in the mid-range</i>
+                                          
+ <b>while</b> (1) {                             <i>// Endless loop</i>
+
+    <b>if</b> ((RA0_bit) &#38;&#38; (value &#60; 4095)) {   <i>// If RA0 button is pressed</i>
+      value++;                           <i>//   increment value</i>
+      }
+    <b>else</b> {
+      <b>if</b> ((RA1_bit) &#38;&#38; (value &#62; 0)) {    <i>// If RA1 button is pressed</i>
+        value--;                         <i>//   decrement value</i>
+        }
+      }
+    DAC_Output(value);                   <i>// Send value to DAC chip</i>
+    Delay_ms(1);                         <i>// Slow down key repeat pace</i>
+  }
+}</pre>
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="SPI connection" src="img/schemes/scheme_spi.gif"></p>
+    <p class="center small">SPI HW connection</p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

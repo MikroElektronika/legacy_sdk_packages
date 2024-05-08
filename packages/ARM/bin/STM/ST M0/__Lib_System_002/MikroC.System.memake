@@ -1,0 +1,19 @@
+{
+    "alias": "MikroC.System",
+    "global_visibility": true,
+    "arch": "M0",
+    "binaries": [
+        "__Lib_System.emcl",
+        "__Lib_Math.emcl",
+        "__Lib_MathDouble.emcl",
+        "__Lib_GPIO_32F0xx.emcl",
+        "__Lib_GPIO_32F042x_Defs.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F042T6$|^STM32F042K4$|^STM32F042G6$|^STM32F042C6$|^STM32F042F6$|^STM32F042G4$|^STM32F042K6$|^STM32F042F4$|^STM32F042C4$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

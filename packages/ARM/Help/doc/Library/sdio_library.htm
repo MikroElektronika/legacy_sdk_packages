@@ -1,0 +1,3252 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>SDIO Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Zivanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+<link rel="stylesheet" type="text/css" href="css/example.css">
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+<script type="text/javascript" src="css/tabber.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_arm.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">SDIO Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="sdhc_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="software_i2c_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+<div id="main">
+
+
+  <a name="top_of_page"><h2>SDIO Library</h2></a>
+
+  <p>The SD/SDIO MMC card host interface (SDIO) provides an interface between the APB2 peripheral bus and MultiMediaCards (MMCs), SD memory cards, SDIO cards and CE-ATA devices. It is available only for the Cortex M4 devices.
+  <br>The MultiMediaCard/SD bus connects cards to the controller.</p>
+  
+  <p>The SDIO features include the following : </p>
+  <ul>
+  	<li>Full compliance with MultiMediaCard System Specification Version 4.2 Card support for three different databus modes: 1-bit (default), 4-bit and 8-bit.</li>
+  	<li>Full compatibility with previous versions of MultiMediaCards (forward compatibility).</li>
+  	<li>Full compliance with SD Memory Card Specifications Version 2.0.</li>
+  	<li>Full compliance with SD I/O Card Specification Version 2.0: card support for two different databus modes: 1-bit (default) and 4-bit.</li>
+  	<li>Full support of the CE-ATA features (full compliance with CE-ATA digital protocol Rev1.1).</li>
+  	<li>Data transfer up to 48 MHz for the 8 bit mode.</li>
+  	<li>Data and command output enable signals to control external bidirectional drivers.</li>
+  </ul>
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      	<li><a href="#sdio_reset">SDIO_Reset</a></li>
+      	<li><a href="#sdio_init">SDIO_Init</a></li>
+      	<li><a href="#sdio_clockcmd">SDIO_ClockCmd</a></li>
+      	<li><a href="#sdio_setpowerstate">SDIO_SetPowerState</a></li>
+      	<li><a href="#sdio_getpowerstate">SDIO_GetPowerState</a></li>
+      	<li><a href="#sdio_sendcommand">SDIO_SendCommand</a></li>
+      	<li><a href="#sdio_getcommandresponse">SDIO_GetCommandResponse</a></li>
+      	<li><a href="#sdio_dataconfig">SDIO_DataConfig</a></li>
+      	<li><a href="#sdio_getdatacounter">SDIO_GetDataCounter</a></li>
+      	<li><a href="#sdio_readdata">SDIO_ReadData</a></li>
+      	<li><a href="#sdio_writedata">SDIO_WriteData</a></li>
+      	<li><a href="#sdio_getfifocount">SDIO_GetFIFOCount</a></li>
+      	<li><a href="#sdio_startsdioreadwait">SDIO_StartSDIOReadWait</a></li>
+      	<li><a href="#sdio_stopsdioreadwait">SDIO_StopSDIOReadWait</a></li>
+      	<li><a href="#sdio_setsdioreadwaitmode">SDIO_SetSDIOReadWaitMode</a></li>
+      	<li><a href="#sdio_setsdiooperation">SDIO_SetSDIOOperation</a></li>
+      	<li><a href="#sdio_sendsdiosuspendcmd">SDIO_SendSDIOSuspendCmd</a></li>
+      	<li><a href="#sdio_commandcompletioncmd">SDIO_CommandCompletionCmd</a></li>
+      	<li><a href="#sdio_ceataitcmd">SDIO_CEATAITCmd</a></li>
+      	<li><a href="#sdio_sendceatacmd">SDIO_SendCEATACmd</a></li>
+      	<li><a href="#sdio_dmacmd">SDIO_DMACmd</a></li>
+      	<li><a href="#sdio_itconfig">SDIO_ITConfig</a></li>
+      	<li><a href="#sdio_getflagstatus">SDIO_GetFlagStatus</a></li>
+      	<li><a href="#sdio_clearflag">SDIO_ClearFlag</a></li>
+      	<li><a href="#sdio_getitstatus">SDIO_GetITStatus</a></li>
+      	<li><a href="#sdio_clearitpendingbit">SDIO_ClearITPendingBit</a></li>
+    </ul>
+
+   <!-- -->
+
+
+    <h3 id="sdio_reset">SDIO_Reset</h3>
+
+
+    <!-- tabela: SDIO_Reset -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_Reset();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Deinitializes the <acronym title="Secure Digital Input/Output">SD I/O</acronym> peripheral registers to their default reset values.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>         
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_init">SDIO_Init</h3>
+
+
+    <!-- tabela: SDIO_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_Init(<b>unsigned long</b> cfg, <b>char</b> clockDiv, <b>const</b> Module_Struct *module);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the <acronym title="Secure Digital Input/Output">SD I/O</acronym> peripheral according to the specified parameters.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          <ul>
+          	<li><code>cfg</code> : Configuration paramerer. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_CFG_POWER_SAVE_DISABLE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock output is disabled when the bus is idle.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_POWER_SAVE_ENABLE</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock output is enabled when the bus is idle.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_CFG_1_WIDE_BUS_MODE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> bus width.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_4_WIDE_BUS_MODE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> bus width.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_8_WIDE_BUS_MODE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> bus width.</td>
+                      </tr>  
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_CLOCK_BYPASS_DISABLE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock divider bypass is disabled.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_CLOCK_BYPASS_ENABLE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock divider bypass is enabled.</td>
+                      </tr>  
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_CLOCK_RISING_EDGE</td>
+                        <td valign="top">Bit capture is made on rising edge.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_CLOCK_FALING_EDGE</td>
+                        <td valign="top">Bit capture is made on falling edge.</td>
+                      </tr> 
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_HW_FLOW_DISABLE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> hardware flow control is disabled.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_CFG_HW_FLOW_ENABLE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> hardware flow control is enabled.</td>
+                      </tr> 
+
+                    </tbody>
+                  </table>
+          	</li>
+          	<li><code>clockDiv:</code> Specifies the divide factor between the input clock (SDIOCLK) and the output clock (SDIO_CK) (<code>SDIO_CK frequency = SDIOCLK / [clockDiv + 2]</code>).</li>
+          	<li><code>module:</code> Appropriate <acronym title="Secure Digital Input/Output">SD I/O</acronym> module pinout. Valid values :
+   <table class="small" width="350">
+
+      <tbody>
+
+        <tr>
+          <th colspan="3" class="center"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Module Pinouts</th>
+        </tr>
+
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_GPIO_MODULE_SDIO_D0_D7</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_GPIO_MODULE_SDIO_D0_D3</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_GPIO_MODULE_SDIO_D0</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+          	</li>
+          </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>         
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_clockcmd">SDIO_ClockCmd</h3>
+
+
+    <!-- tabela: SDIO_ClockCmd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_ClockCmd(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables or disables the <acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          <ul>
+          	<li><code>cfg</code> : New state of the <acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock is disabled.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock is enabled.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+          	</li>
+          </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>         
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_setpowerstate">SDIO_SetPowerState</h3>
+
+
+    <!-- tabela: SDIO_SetPowerState -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_SetPowerState(<b>char</b> powerState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the power status of the controller.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          <ul>
+          	<li><code>cfg</code> : New power state of the <acronym title="Secure Digital Input/Output">SD I/O</acronym> controller. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_POWER_STATE_OFF</td>
+                        <td valign="top">The clock to card is stopped.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_POWER_STATE_ON</td>
+          						  <td valign="top">The card is clocked.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_POWER_STATE_UP</td>
+          						  <td valign="top">Reserved power-up.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+          	</li>
+          </ul>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>         
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_getpowerstate">SDIO_GetPowerState</h3>
+
+
+    <!-- tabela: SDIO_GetPowerState -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> SDIO_GetPowerState();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Returns the power status of the controller.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Power status of the controller. The returned value can be one of the following values :</p>
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Symbolic Name</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">0</td>
+                        <td class="code" valign="top">_SDIO_POWER_STATE_OFF</td>
+                        <td valign="top">The clock to card is stopped.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">%11</td>
+         							  <td class="code" valign="top">_SDIO_POWER_STATE_ON</td>
+          						  <td valign="top">The card is clocked.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">%10</td>
+         							  <td class="code" valign="top">_SDIO_POWER_STATE_UP</td>
+          						  <td valign="top">Reserved power-up.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>      
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_sendcommand">SDIO_SendCommand</h3>
+
+
+    <!-- tabela: SDIO_SendCommand -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_SendCommand(SDIO_CmdInitTypeDef *SDIO_CmdInitStruct);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the <acronym title="Secure Digital Input/Output">SD I/O</acronym> Command according to the specified parameters in the <code>SDIO_CmdInitStruct</code> and sends the command.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          <ul>
+          	<li><code>SDIO_CmdInitStruct</code> : record consisted of the following fields :
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>typedef struct</b> {
+  <b>unsigned long</b> argument;  <i>// Specifies the SD I/O command argument which is sent
+                           // to a card as part of a command message. If a command
+                           // contains an argument, it must be loaded into this register
+                           // before writing the command to the command register.</i>     
+  <b>unsigned long</b> cmdIndex;  <i>// Specifies the SD I/O command index. It must be lower than 0x40.</i>
+  <b>unsigned long</b> response;  <i>// Specifies the SD I/O response type.</i>
+  <b>unsigned long</b> wait;      <i>// Specifies whether SD I/O wait-for-interrupt request is enabled or disabled.</i>
+  <b>unsigned long</b> CPSM;      <i>// Specifies whether SD I/O Command path state machine (CPSM) is enabled or disabled.</i>
+} SDIO_CmdInitTypeDef;
+</pre>
+          	</li>
+          </ul>
+   <table class="small" width="350">
+
+      <tbody>
+
+        <tr>
+          <th colspan="4" class="center"><code><b>SDIO_CmdInitTypeDef</b> Record Field Values</code></th>
+        </tr>
+
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"><code>response</code></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_RESPONSE_NO</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_RESPONSE_SHORT</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_RESPONSE_LONG</td>
+        </tr>
+
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"><code>wait</code></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_WAIT_NO</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_WAIT_IT</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_WAIT_PEND</td>
+        </tr>
+        
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"><code>CPSM</code></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_CPSM_DISABLE</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_CPSM_ENABLE</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+        </tr>
+
+      </tbody>
+
+    </table>          
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>None.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_getcommandresponse">SDIO_GetCommandResponse</h3>
+
+
+    <!-- tabela: SDIO_GetCommandResponse -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> SDIO_GetCommandResponse();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Returns command index of last command for which response received.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p></p>
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Command index of the last command response received.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_dataconfig">SDIO_DataConfig</h3>
+
+
+    <!-- tabela: SDIO_DataConfig -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_DataConfig(SDIO_DataInitTypeDef* SDIO_DataInitStruct);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes the <acronym title="Secure Digital Input/Output">SD I/O</acronym> data path according to the specified parameters in the <code>SDIO_DataInitStruct</code> parameter.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          <ul>
+          	<li><code>SDIO_DataInitStruct</code> : record consisted of the following fields :
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<b>typedef struct</b>
+  <b>unsigned long</b> dataTimeOut    <i>// Specifies the data timeout period in card bus clock periods.</i>
+  <b>unsigned long</b> dataLength     <i>// Specifies the number of data bytes to be transferred.</i>
+  <b>unsigned long</b> dataBlockSize  <i>// Specifies the data block size for block transfer.</i>
+  <b>unsigned long</b> transferDir    <i>// Specifies the data transfer direction, whether the transfer is a read or write.</i>
+  <b>unsigned long</b> transferMode   <i>// Specifies whether data transfer is in stream or block mode.</i>
+  <b>unsigned long</b> DPSM           <i>// Specifies whether SD I/O Data path state machine (DPSM)  is enabled or disabled.</i>
+} SDIO_DataInitTypeDef;
+</pre>
+          	</li>
+          </ul>
+
+   <table class="small" width="350">
+
+      <tbody>
+
+        <tr>
+          <th colspan="6" class="center"><code><b>SDIO_DataInitTypeDef</b> Record Field Values</code></th>
+        </tr>
+
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"><code>dataBlockSize</code></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_1</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_2</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_4</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_8</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_16</td>
+        </tr>
+
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_32</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_64</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_128</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_256</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_512</td>
+        </tr>
+
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_32</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_64</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_128</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_256</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_512</td>
+        </tr>
+
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_1024</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_2048</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_4096</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_8192</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DATA_BLOCK_SIZE_16384</td>
+        </tr>
+        
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"><code>transferDir</code></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_TRANSFER_DIR_TO_CARD</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_TRANSFER_DIR_TO_SDIO</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+
+        </tr>
+        
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"><code>transferMode</code></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_TRANSFER_MODE_BLOCK</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_TRANSFER_MODE_STREAM</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+        </tr>
+
+        <tr>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"><code>DPSM</code></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DPSM_DISABLE</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">_SDIO_DPSM_ENABLE</td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+<td style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';"></td>
+        </tr>
+                
+      </tbody>
+
+    </table>
+           
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_getdatacounter">SDIO_GetDataCounter</h3>
+
+
+    <!-- tabela: SDIO_GetDataCounter -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> SDIO_GetDataCounter();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Returns number of remaining data bytes to be transferred.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>           
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Number of remaining data bytes to be transferred.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_readdata">SDIO_ReadData</h3>
+
+
+    <!-- tabela: SDIO_ReadData -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> SDIO_ReadData();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Read one data word from Rx FIFO.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>           
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>One data word from Rx FIFO.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_writedata">SDIO_WriteData</h3>
+
+
+    <!-- tabela: SDIO_WriteData -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_WriteData(<b>unsigned long</b> dat);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Write one data word to Tx FIFO.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+						  <li><code>dat:</code> 32-bit data word to write.</li>
+						</ul>         
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_getfifocount">SDIO_GetFIFOCount</h3>
+
+
+    <!-- tabela: SDIO_GetFIFOCount -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> SDIO_GetFIFOCount();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Returns the number of words left to be written to or read from FIFO.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Remaining number of words.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_startsdioreadwait">SDIO_StartSDIOReadWait</h3>
+
+
+    <!-- tabela: SDIO_StartSDIOReadWait -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_StartSDIOReadWait(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Starts the <acronym title="Secure Digital Input/Output">SD I/O</acronym> Read Wait operation.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>newState:</code> new state of the Start <acronym title="Secure Digital Input/Output">SD I/O</acronym> Read Wait operation. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock is disabled.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock is enabled.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_stopsdioreadwait">SDIO_StopSDIOReadWait</h3>
+
+
+    <!-- tabela: SDIO_StopSDIOReadWait -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_StopSDIOReadWait(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Stops the <acronym title="Secure Digital Input/Output">SD I/O</acronym> Read Wait operation.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>newState:</code> new state of the Stop <acronym title="Secure Digital Input/Output">SD I/O</acronym> Read Wait operation. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+                        <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock is disabled.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> Clock is enabled.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_setsdioreadwaitmode">SDIO_SetSDIOReadWaitMode</h3>
+
+
+    <!-- tabela: SDIO_SetSDIOReadWaitMode -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_SetSDIOReadWaitMode(<b>char</b> readWaitMode);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets one of the two options of inserting read wait interval.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>readWaitMode:</code> <acronym title="Secure Digital Input/Output">SD I/O</acronym> Read Wait operation mode. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_READ_WAIT_MODE_CLK</td>
+                        <td valign="top">Read Wait control by stopping SDIOCLK.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_READ_WAIT_MODE_DATA2</td>
+          						  <td valign="top">Read Wait control using SDIO_DATA2.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_setsdiooperation">SDIO_SetSDIOOperation</h3>
+
+
+    <!-- tabela: SDIO_SetSDIOOperation -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_SetSDIOOperation(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables or disables the <acronym title="Secure Digital Input/Output">SD I/O</acronym> Mode Operation.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>NewState:</code> new state of <acronym title="Secure Digital Input/Output">SD I/O</acronym> specific operation. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+          						  <td valign="top">Disable <acronym title="Secure Digital Input/Output">SD I/O</acronym> operation.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top">Enable <acronym title="Secure Digital Input/Output">SD I/O</acronym> operation.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_sendsdiosuspendcmd">SDIO_SendSDIOSuspendCmd</h3>
+
+
+    <!-- tabela: SDIO_SendSDIOSuspendCmd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_SendSDIOSuspendCmd(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables or disables the <acronym title="Secure Digital Input/Output">SD I/O</acronym> Mode suspend command sending.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>NewState:</code> new state of the <acronym title="Secure Digital Input/Output">SD I/O</acronym> Mode suspend command. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+          						  <td valign="top">Disable <acronym title="Secure Digital Input/Output">SD I/O</acronym> command sending.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top">Enable <acronym title="Secure Digital Input/Output">SD I/O</acronym> command sending.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_commandcompletioncmd">SDIO_CommandCompletionCmd</h3>
+
+
+    <!-- tabela: SDIO_CommandCompletionCmd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_CommandCompletionCmd(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables or disables the command completion signal.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>NewState:</code> new state of command completion signal. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+          						  <td valign="top">Disable <acronym title="Secure Digital Input/Output">SD I/O</acronym> command completion signal.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top">Enable <acronym title="Secure Digital Input/Output">SD I/O</acronym> command completion signal.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_ceataitcmd">SDIO_CEATAITCmd</h3>
+
+
+    <!-- tabela: SDIO_CEATAITCmd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_CEATAITCmd(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables or disables the CE-ATA interrupt.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>NewState:</code> new state of CE-ATA interrupt. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+          						  <td valign="top">Disable <acronym title="Secure Digital Input/Output">SD I/O</acronym> CE-ATA interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top">Enable <acronym title="Secure Digital Input/Output">SD I/O</acronym> CE-ATA interrupt.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_sendceatacmd">SDIO_SendCEATACmd</h3>
+
+
+    <!-- tabela: SDIO_SendCEATACmd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_SendCEATACmd(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables or disables CE-ATA (CMD61) command sending.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>NewState:</code> new state of CE-ATA command. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+          						  <td valign="top">Disable CE-ATA (CMD61) command sending.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top">Enable CE-ATA (CMD61) command sending.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_dmacmd">SDIO_DMACmd</h3>
+
+
+    <!-- tabela: SDIO_DMACmd -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_DMACmd(<b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables or disables the <acronym title="Secure Digital Input/Output">SD I/O</acronym> DMA request.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>NewState:</code> new state of the selected <acronym title="Secure Digital Input/Output">SD I/O</acronym> DMA request. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+          						  <td valign="top">Disable <acronym title="Secure Digital Input/Output">SD I/O</acronym> DMA request.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top">Enable <acronym title="Secure Digital Input/Output">SD I/O</acronym> DMA request.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_itconfig">SDIO_ITConfig</h3>
+
+
+    <!-- tabela: SDIO_ITConfig -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_ITConfig(<b>unsigned long</b> it, <b>char</b> newState);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables or disables the <acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupts.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>it:</code> specifies the <acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupt sources to be enabled or disabled.
+	            <br>This parameter can be one or a OR-ed combination of the following values: 
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CCRCFAIL</td>
+          						  <td valign="top">Command response received (CRC check failed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DCRCFAIL</td>
+          						  <td valign="top">Data block sent/received (CRC check failed) interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CTIMEOUT</td>
+          						  <td valign="top">Command response timeout interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DTIMEOUT</td>
+          						  <td valign="top">Data timeout interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXUNDERR</td>
+          						  <td valign="top">Transmit FIFO underrun error interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXOVERR</td>
+          						  <td valign="top">Received FIFO overrun error interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CMDREND</td>
+          						  <td valign="top">Command response received (CRC check passed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CMDSENT</td>
+          						  <td valign="top">Command sent (no response required) interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DATAEND</td>
+          						  <td valign="top">Data end (data counter, SDIDCOUNT, is zero) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_STBITERR</td>
+          						  <td valign="top">Start bit not detected on all data signals in wide bus mode interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DBCKEND</td>
+          						  <td valign="top">Data block sent/received (CRC check passed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CMDACT</td>
+          						  <td valign="top">Command transfer in progress interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXACT</td>
+          						  <td valign="top">Data transmit in progress interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXACT</td>
+          						  <td valign="top">Data receive in progress interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOHE</td>
+          						  <td valign="top">Transmit FIFO Half Empty interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOHF</td>
+          						  <td valign="top">Receive FIFO Half Full interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOF</td>
+          						  <td valign="top">Transmit FIFO full interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOF</td>
+          						  <td valign="top">Receive FIFO full interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOE</td>
+          						  <td valign="top">Transmit FIFO empty interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOE</td>
+          						  <td valign="top">Receive FIFO empty interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXDAVL</td>
+          						  <td valign="top">Data available in transmit FIFO interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXDAVL</td>
+          						  <td valign="top">Data available in receive FIFO interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_SDIOIT</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupt received interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CEATAEND</td>
+          						  <td valign="top">CE-ATA command completion signal received for CMD61 interrupt.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+	            <li><code>NewState:</code> new state of the specified <acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupts. Valid values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_DISABLE</td>
+          						  <td valign="top">Disable <acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupts.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_ENABLE</td>
+          						  <td valign="top">Enable <acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupts.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_getflagstatus">SDIO_GetFlagStatus</h3>
+
+
+    <!-- tabela: SDIO_GetFlagStatus -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> SDIO_GetFlagStatus(<b>unsigned long</b> flag);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Checks whether the specified <acronym title="Secure Digital Input/Output">SD I/O</acronym> flag is set or not.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>it:</code> specifies the flag to check. This parameter can be one of the following values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CCRCFAIL</td>
+          						  <td valign="top">Command response received (CRC check failed).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DCRCFAIL</td>
+          						  <td valign="top">Data block sent/received (CRC check failed).</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CTIMEOUT</td>
+          						  <td valign="top">Command response timeout.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DTIMEOUT</td>
+          						  <td valign="top">Data timeout.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXUNDERR</td>
+          						  <td valign="top">Transmit FIFO underrun error.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXOVERR</td>
+          						  <td valign="top">Received FIFO overrun error.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CMDREND</td>
+          						  <td valign="top">Command response received (CRC check passed).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CMDSENT</td>
+          						  <td valign="top">Command sent (no response required).</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DATAEND</td>
+          						  <td valign="top">Data end (data counter, SDIDCOUNT, is zero).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_STBITERR</td>
+          						  <td valign="top">Start bit not detected on all data signals in wide bus mode.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DBCKEND</td>
+          						  <td valign="top">Data block sent/received (CRC check passed).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CMDACT</td>
+          						  <td valign="top">Command transfer in progress.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXACT</td>
+          						  <td valign="top">Data transmit in progress.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXACT</td>
+          						  <td valign="top">Data receive in progress.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOHE</td>
+          						  <td valign="top">Transmit FIFO Half Empty.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOHF</td>
+          						  <td valign="top">Receive FIFO Half Full.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOF</td>
+          						  <td valign="top">Transmit FIFO full.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOF</td>
+          						  <td valign="top">Receive FIFO full.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOE</td>
+          						  <td valign="top">Transmit FIFO empty.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOE</td>
+          						  <td valign="top">Receive FIFO empty.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXDAVL</td>
+          						  <td valign="top">Data available in transmit FIFO.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXDAVL</td>
+          						  <td valign="top">Data available in receive FIFO.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_SDIOIT</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupt received.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CEATAEND</td>
+          						  <td valign="top">CE-ATA command completion signal received for CMD61.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>The new state of SDIO_FLAG.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_clearflag">SDIO_ClearFlag</h3>
+
+
+    <!-- tabela: SDIO_ClearFlag -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_ClearFlag(<b>unsigned long</b> flags);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Clears the <acronym title="Secure Digital Input/Output">SD I/O</acronym>'s pending flags.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>it:</code> specifies the flag to clear. This parameter can be one or a OR-ed combination of the following values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CCRCFAIL</td>
+          						  <td valign="top">Command response received (CRC check failed).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DCRCFAIL</td>
+          						  <td valign="top">Data block sent/received (CRC check failed).</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CTIMEOUT</td>
+          						  <td valign="top">Command response timeout.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DTIMEOUT</td>
+          						  <td valign="top">Data timeout.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXUNDERR</td>
+          						  <td valign="top">Transmit FIFO underrun error.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXOVERR</td>
+          						  <td valign="top">Received FIFO overrun error.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CMDREND</td>
+          						  <td valign="top">Command response received (CRC check passed).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CMDSENT</td>
+          						  <td valign="top">Command sent (no response required).</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DATAEND</td>
+          						  <td valign="top">Data end (data counter, SDIDCOUNT, is zero).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_STBITERR</td>
+          						  <td valign="top">Start bit not detected on all data signals in wide bus mode.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DBCKEND</td>
+          						  <td valign="top">Data block sent/received (CRC check passed).</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_SDIOIT</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupt received.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CEATAEND</td>
+          						  <td valign="top">CE-ATA command completion signal received for CMD61.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_getitstatus">SDIO_GetITStatus</h3>
+
+
+    <!-- tabela: SDIO_GetITStatus -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>char</b> SDIO_GetITStatus(<b>unsigned long</b> i);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Checks whether the specified <acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupt has occurred or not.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>it:</code> specifies the <acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupt source to check. This parameter can be one of the following values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CCRCFAIL</td>
+          						  <td valign="top">Command response received (CRC check failed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DCRCFAIL</td>
+          						  <td valign="top">Data block sent/received (CRC check failed) interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CTIMEOUT</td>
+          						  <td valign="top">Command response timeout interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DTIMEOUT</td>
+          						  <td valign="top">Data timeout interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXUNDERR</td>
+          						  <td valign="top">Transmit FIFO underrun error interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXOVERR</td>
+          						  <td valign="top">Received FIFO overrun error interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CMDREND</td>
+          						  <td valign="top">Command response received (CRC check passed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CMDSENT</td>
+          						  <td valign="top">Command sent (no response required) interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DATAEND</td>
+          						  <td valign="top">Data end (data counter, SDIDCOUNT, is zero) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_STBITERR</td>
+          						  <td valign="top">Start bit not detected on all data signals in wide bus mode interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DBCKEND</td>
+          						  <td valign="top">Data block sent/received (CRC check passed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CMDACT</td>
+          						  <td valign="top">Command transfer in progress interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXACT</td>
+          						  <td valign="top">Data transmit in progress interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXACT</td>
+          						  <td valign="top">Data receive in progress interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOHE</td>
+          						  <td valign="top">Transmit FIFO Half Empty interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOHF</td>
+          						  <td valign="top">Receive FIFO Half Full interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOF</td>
+          						  <td valign="top">Transmit FIFO full interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOF</td>
+          						  <td valign="top">Receive FIFO full interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXFIFOE</td>
+          						  <td valign="top">Transmit FIFO empty interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXFIFOE</td>
+          						  <td valign="top">Receive FIFO empty interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXDAVL</td>
+          						  <td valign="top">Data available in transmit FIFO interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXDAVL</td>
+          						  <td valign="top">Data available in receive FIFO interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_SDIOIT</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupt received interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CEATAEND</td>
+          						  <td valign="top">CE-ATA command completion signal received for CMD61 interrupt.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>The new state of SDIO_IT.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="sdio_clearitpendingbit">SDIO_ClearITPendingBit</h3>
+
+
+    <!-- tabela: SDIO_ClearITPendingBit -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> SDIO_ClearITPendingBit(<b>unsigned long</b> it);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Clears the <acronym title="Secure Digital Input/Output">SD I/O</acronym>'s interrupt pending bits.</p>
+          </td>
+        </tr>
+     
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+	            <li><code>it:</code> specifies the interrupt pending bit to clear. This parameter can be one or a OR-ed combination of the following values :
+                  <table class="small">
+              		  <thead>
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <th valign="top">Value</th>
+                        <th valign="top">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CCRCFAIL</td>
+          						  <td valign="top">Command response received (CRC check failed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DCRCFAIL</td>
+          						  <td valign="top">Data block sent/received (CRC check failed) interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CTIMEOUT</td>
+          						  <td valign="top">Command response timeout interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_DTIMEOUT</td>
+          						  <td valign="top">Data timeout interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_TXUNDERR</td>
+          						  <td valign="top">Transmit FIFO underrun error interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_RXOVERR</td>
+          						  <td valign="top">Received FIFO overrun error interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_CMDREND</td>
+          						  <td valign="top">Command response received (CRC check passed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CMDSENT</td>
+          						  <td valign="top">Command sent (no response required) interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DATAEND</td>
+          						  <td valign="top">Data end (data counter, SDIDCOUNT, is zero) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_STBITERR</td>
+          						  <td valign="top">Start bit not detected on all data signals in wide bus mode interrupt.</td>
+                      </tr>
+ 
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_DBCKEND</td>
+          						  <td valign="top">Data block sent/received (CRC check passed) interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+                        <td class="code" valign="top">_SDIO_IT_SDIOIT</td>
+          						  <td valign="top"><acronym title="Secure Digital Input/Output">SD I/O</acronym> interrupt received interrupt.</td>
+                      </tr>
+
+                      <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+         							  <td class="code" valign="top">_SDIO_IT_CEATAEND</td>
+          						  <td valign="top">CE-ATA command completion signal received for CMD61 interrupt.</td>
+                      </tr>
+ 
+                    </tbody>
+                  </table>
+	            </li>
+
+						</ul>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>    
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+<!--        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+
+</pre>-->	
+
+          </td>
+        </tr>
+       
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>

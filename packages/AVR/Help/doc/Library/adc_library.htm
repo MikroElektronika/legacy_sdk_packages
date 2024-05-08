@@ -1,0 +1,617 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+<title>ADC Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Nikola Topalovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_AVR.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print">
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_avr.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+  PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+  padding-left: 15px;
+  padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">ADC Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_PRO_libraries.htm">mikroC PRO for AVR Libraries</A> &gt; <A href="mikroC_PRO_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="mikroC_PRO_hardware_libraries.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="can_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+
+
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2><acronym title="Analog to Digital Conversion">ADC</acronym> Library</h2></a>
+
+    <p>ADC (Analog to Digital Converter) module is available with a number of AVR MCUs. Several library routines are included to provide you comfortable work with the module in single-ended mode.</p>
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#adc_init">ADC_Init</a></li>
+      <li><a href="#adc_init_advanced">ADCx_Init_Advanced</a></li>
+      <li><a href="#adc_get_sample">ADC_Get_Sample</a></li>
+      <li><a href="#adc_read">ADC_Read</a></li>
+    </ul>
+
+    <!-- -->
+
+    <h3 id="adc_init">ADC_Init</h3>
+
+
+    <!-- tabela: ADC_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> ADC_Init();</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>void</b> ADCx_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes internal ADC module to work with XTAL frequency prescaled by 128. Clock determines the time period necessary for performing A/D conversion.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>A</b> or <b>B</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+ADC_Init();   <i>// Initialize ADC module with default settings</i>
+ADCA_Init();  <i>// Initialize ADC module with default settings</i></pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+    <h3 id="adc_init_advanced">ADCx_Init_Advanced</h3>
+
+
+    <!-- tabela: ADC_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> ADC_Init_Advanced(<b>char</b> Reference);</p>
+            <i>// for XMEGA family of MCUs</i>          	
+            <p><b>void</b> ADCx_Init_Advanced(<b>unsigned</b> AdcMode, <b>unsigned</b> Reference);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <ul>
+            	<li>Initializes internal ADC module to work with user defined settings. For XMEGA family, change the <b>X</b> in the routine prototype with <b>A</b> or <b>B</b>.</li>
+            </ul>
+            <p>Parameters <code>AdcMode</code> and <code>Reference</code> determine the work mode for ADC module and can have the following values:</p>
+            	<ul>
+                <table>
+                  <tr align="center">
+										<td bgcolor=#f5f2ec><b>Description</b></td>
+										<td bgcolor=#f5f2ec><b>Predefined library const</b></td>
+                  </tr>
+
+								  <tr align="center">                  	
+                  	<td colspan=2><b>Resolution of ADC module - XMEGA MCUs :</b></td>
+                  </tr>
+             
+                  <tr align="center">
+										<td><code>8 bit resolution</code></td>
+										<td><code>_ADC_8bit</code></td>
+                  </tr>
+             
+                  <tr align="center">
+										<td><code>12 bit resolution</code></td>
+										<td><code>_ADC_12bit</code></td>
+                  </tr>
+                  
+                  <tr align="center">	
+										<td colspan=2><b>Voltage Reference - XMEGA MCUs :</b></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Internal 1V</code></td>
+										<td><code>_ADC_INTERNAL_REF_1V</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>Internal VCC/1.6V</code></td>
+										<td><code>_ADC_INTERNAL_REF_VCC</code></td>
+                  </tr>
+									
+									<tr align="center">
+										<td><code>External Reference on PORTA</code></td>
+										<td><code>_ADC_EXTERNAL_REF_A</code></td>
+                  </tr>
+                  
+                  <tr align="center">
+										<td><code>External Reference on PORTB</code></td>
+										<td><code>_ADC_EXTERNAL_REF_B</code></td>
+                  </tr>
+
+                  <tr align="center">	
+										<td colspan=2><b>Voltage Reference - other MCUs :</b></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>External reference - Aref</code></td>
+										<td><code>_ADC_EXTERNAL_REF</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Internal reference - AVcc</code></td>
+										<td><code>_ADC_INTERNAL_REF</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Internal 0.55V</code></td>
+										<td><code>_ADC_INTERNAL_0_55</code></td>
+                  </tr>
+                  
+									<tr align="center">
+										<td><code>Internal 1.1V</code></td>
+										<td><code>_ADC_INTERNAL_1_1</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Internal 1.5V</code></td>
+										<td><code>_ADC_INTERNAL_1_5</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Internal 2.2V</code></td>
+										<td><code>_ADC_INTERNAL_2_2</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Internal 2.5V</code></td>
+										<td><code>_ADC_INTERNAL_2_5</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Internal 2.56V</code></td>
+										<td><code>_ADC_INTERNAL_2_56</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Internal 4V</code></td>
+										<td><code>_ADC_INTERNAL_4</code></td>
+                  </tr>
+
+									<tr align="center">
+										<td><code>Internal 4.3V</code></td>
+										<td><code>_ADC_INTERNAL_4_3</code></td>
+                  </tr>
+
+                </table> 
+              </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+ADCA_Init_Advanced(_ADC_12bit, _ADC_INTERNAL_REF_1V);  <i>// Initialize ADC module with 12bit resolution and internal voltage reference of 1V</i></pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+    
+    <h3 id="adc_get_sample">ADC_Get_Sample</h3>
+
+
+    <!-- tabela: ADC_Get_Sample -->
+
+    <table class="routine" width="100%">
+
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> ADC_Get_Sample(<b>unsigned short</b> channel);</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>unsigned</b> ADCx_Get_Sample(<b>unsigned short</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>10-bit or 12-bit unsigned value (MCU dependent) from the specified <code>channel</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Routine acquires analog value from the specified channel.</p>
+            <p>Parameter <code>channel</code> represents the channel from which the analog value is to be acquired. Refer to the appropriate datasheet for channel-to-pin mapping.</p>           
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>A</b> or <b>B</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <ul>
+            	<li>The MCU with built-in <acronym title="Analog to Digital Conversion">ADC</acronym> module.</li>
+            	<li>Prior to using this routine, ADC module needs to be initialized. See <a href="#adc_init">ADC_Init</a>.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<b>unsigned</b> adc_value;
+...
+ADC_Init();                       <i>// Initialize ADC module with default settings</i>
+adc_value = ADC_Get_Sample(2);    <i>// Acquire analog value from channel 2</i></pre>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele --> 
+
+    <!-- -->
+
+    <h3 id="adc_read">ADC_Read</h3>
+
+
+    <!-- tabela: ADC_Read -->
+
+    <table class="routine" width="100%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned</b> ADC_Read(<b>char</b> channel);</p>
+            <i>// for XMEGA family of MCUs</i>
+            <p><b>unsigned</b> ADCx_Read(<b>char</b> channel);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>10-bit or 12-bit unsigned value (MCU dependent) from the specified <code>channel</code>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Routine initializes internal ADC module <!--to work with XTAL frequency prescaled by 128--> and acquires analog value from the specified <code>channel</code>. Clock determines the time period necessary for performing A/D conversion.</p>
+            <p>Parameter <code>channel</code> represents the channel from which the analog value is to be acquired. Refer to the appropriate datasheet for channel-to-pin mapping.</p>
+            <p>For XMEGA family of MCUs change the <b>X</b> in the routine prototype with <b>A</b> or <b>B</b>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned</b> adc_value;
+...
+adc_value = ADC_Read(2);  <i>// initialize ADC module and acquire analog value from ADC module channel 2</i></pre>
+
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <h3 id="adc_set_active">ADC_Set_Active</h3>
+
+    <!-- tabela: UART_Set_Active -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> ADC_Set_Active(<b>unsigned</b> (*adc_gs)(<b>unsigned short</b>));</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets active <acronym title="Analog to Digital Conversion">ADC</acronym> module.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>Parameters :</p> 
+            	<ul>
+            		<li><code>adc_gs:</code> <a href="#adc_get_sample">ADC_Get_Sample</a> handler.</li>
+            	</ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+          	<p>Routine is available only for MCUs with multiple <acronym title="Analog to Digital Conversion">ADC</acronym> modules.</p>
+            <p>Used <acronym title="Analog to Digital Conversion">ADC</acronym> module must be initialized before using this routine. See <a href="#adc_init">ADC_Init</a> and <a href="#adc_init_advanced">ADCx_Init_Advanced</a> routines.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Activate ADC2 module</i>
+ADC_Set_Active(&ADC2_Get_Sample); 
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>  
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3>Library Example</h3>
+
+    <p>This example code reads analog value from channel 2 and displays it on PORTB and PORTC.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.png" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+#include &#60;built_in.h&#62;
+<b>unsigned int</b> adc_rd;
+
+<b>void</b> main() {
+
+  DDRB = 0xFF;               <i>// Set PORTB as output</i>
+  DDRC = 0xFF;               <i>// Set PORTC as output</i>
+  
+  <b>while</b> (1) {
+    adc_rd = ADC_Read(2);    <i>// get ADC value from 2nd channel</i>
+    PORTB = adc_rd;          <i>// display adc_rd[7..0]</i>
+    PORTC = Hi(adc_rd);      <i>// display adc_rd[9..8]</i>
+  }
+}
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="ADC HW connection" src="img/schemes/scheme_adc.gif"></p>
+    <p class="center small"><acronym title="Analog to Digital Converter">ADC</acronym> HW connection</p>
+
+
+      <div class="feedback">
+      Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+    <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+</body>
+
+</html>

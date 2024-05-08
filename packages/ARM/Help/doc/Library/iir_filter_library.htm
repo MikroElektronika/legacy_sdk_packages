@@ -1,0 +1,435 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>IIR Filter Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2006.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_ARM.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/c_ARM.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">IIR library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for ARM Libraries</A> &gt; <A href="dsp_library.htm">DSP Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="fir_filter_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="fft_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+    
+    <a name="top_of_page"><h2>IIR Filter Library</h2></a>
+
+    <p>This library implements arbitrary order recursive (IIR) filters. The filters are implemented as a cascade of second order Biquad sections. The functions support fast version of Q15 data type on Cortex-M4.</p>
+    <p>The functions operate on blocks of input and output data and each call to the function processes blockSize samples through the filter. 
+    <br><code>pSrc</code> points to the array of input data and <code>pDst</code> points to the array of output data. Both arrays contain <code>blockSize</code> values.</p>
+
+
+    <h3>Algorithm</h3>
+
+    <p>Each Biquad stage implements a second order filter using the difference equation :</p>
+
+<pre class="program">
+y[n] = b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
+</pre>
+ 
+    <p>A Direct Form I algorithm is used with 5 coefficients and 4 state variables per stage. Coefficients <code>b0</code>, <code>b1</code> and <code>b2</code> multiply the input signal <code>x[n]</code> and are referred to as the feedforward coefficients. 
+    <br>Coefficients <code>a1</code> and <code>a2</code> multiply the output signal <code>y[n]</code> and are referred to as the feedback coefficients.    <code>numStages</code> is the number of Biquad stages in the filter; 
+    <code>pState</code> is the address of the state buffer; 
+    <code>pCoeffs</code> is the address of the coeffi * y[n-2]
+</pre>
+
+    <p>In this case the feedback coefficients <code>a1</code> and <code>a2</code> must be negated when used with the library.</p>
+
+    <p>Higher order filters are realized as a cascade of second order sections. <code>numStages</code> refers to the number of second order stages used. For example, an 8th order filter would be realized with <code>numStages = 4</code> second order stages.
+    <br>A 9th order filter would be realized with numStages=5 second order stages with the coefficients for one of the stages configured as a first order filter (<code>b2 = 0</code> and <code>a2 = 0</code>).</p>
+
+    <p>The <code>pState</code> points to state variables array. Each Biquad stage has 4 state variables <code>x[n-1]</code>, <code>x[n-2]</code>, <code>y[n-1]</code>, and <code>y[n-2]</code>. The state variables are arranged in the <code>pState</code> array as :</p>
+
+<pre class="program">
+{x[n-1], x[n-2], y[n-1], y[n-2]}
+</pre>
+
+    <p>The 4 state variables for stage 1 are first, then the 4 state variables for stage 2, and so on. The state array has a total length of <code>4*numStages</code> values. 
+    <br>The state variables are updated after each block of data is processed, however the coefficients remain unchanged.</p>
+
+    <h3>Instance structure</h3>
+
+    <p>The coefficients and state variables for a filter are stored together in an instance data structure. A separate instance structure must be defined for each filter. 
+    <br>Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.</p>
+
+    <h3>Initialization function</h3>
+
+    <p>The initialization function performs following operations:
+    
+    <ul>
+    	<li>Sets the values of the internal structure fields.</li>
+    	<li>Zeros out the values in the state buffer.</li>
+    </ul>
+		
+		<p>Use of the initialization function is optional. However, if the initialization function is used, then the instance structure cannot be placed into a const data section. 
+		<br>To place an instance structure into a const data section, the instance structure must be manually initialized. Set the values in the state buffer to zeros before static initialization.</p>
+		
+		<p>The code below statically initializes Q15 data type filter instance structure :</p>
+
+<pre class="program">
+TIIR_Instance iirInstance = {numStages, pState, pCoeffs, postShift};
+</pre>
+
+    <p>where : </p>
+    <ul>
+    	<li><code>numStages</code> ie number of Biquad stages in the filter;</li>
+    	<li><code>pState</code> is the address of the state buffer;</li>
+    	<li><code>pCoeffs</code> is the address of the coefficient buffer;</li>
+    	<li><code>postShift</code> shift to be applied.</li>
+    </ul>
+    
+    <h3>Fixed-Point Behavior</h3>
+		<p>Care must be taken when using the Q15 Biquad Cascade filter function. Following issues must be considered :</p>
+		<ul>
+			<li>Scaling of coefficients,</li>
+			<li>Filter gain,</li>
+			<li>Overflow and saturation.</li>
+		</ul>
+
+    <h3>Scaling of coefficients</h3>
+    <p>Filter coefficients are represented as fractional values and coefficients are restricted to lie in the range [-1 +1). The fixed-point functions have an additional scaling parameter <code>postShift</code> which allow the filter coefficients to exceed the range [+1 -1). 
+    <br>At the output of the filter's accumulator is a shift register which shifts the result by <code>postShift</code> bits.</p>
+
+    <p>This essentially scales the filter coefficients by <code>2^postShift</code>. For example, to realize the coefficients :</p>
+
+<pre class="program">
+{1.5, -0.8, 1.2, 1.6, -0.9}   
+</pre>
+
+<p>set the <code>pCoeffs</code> array to :</p>
+
+<pre class="program">
+{0.75, -0.4, 0.6, 0.8, -0.45}   
+</pre>
+
+<p>and set <code>postShift = 1</code>.
+
+		<h3>Filter gain</h3> 
+    
+    <p>The frequency response of a Biquad filter is a function of its coefficients. It is possible for the gain through the filter to exceed 1.0 meaning that the filter increases the amplitude of certain frequencies. 
+    <br>This means that an input signal with amplitude < 1.0 may result in an output > 1.0 and these are saturated or overflowed based on the implementation of the filter. 
+    <br>To avoid this behavior the filter needs to be scaled down such that its peak gain < 1.0 or the input signal must be scaled down so that the combination of input and filter are never overflowed.</p>
+
+    <h3>Overflow and saturation</h3> 
+    
+    <p>This fast Q15 version uses a 32-bit accumulator with 2.30 format. The accumulator maintains full precision of the intermediate multiplication results but provides only a single guard bit. 
+    <br>Thus, if the accumulator result overflows it wraps around and distorts the result. In order to avoid overflows completely the input signal must be scaled down by two bits and lie in the range [-0.25 +0.25). 
+    <br>The 2.30 accumulator is then shifted by postShift bits and the result truncated to 1.15 format by discarding the low 16 bits.</p>
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+    	<li><a href="#iir_init">IIR_Init</a></li>
+    	<li><a href="#iir_fast">IIR_Fast</a></li>
+    </ul>
+
+
+    <!-- -->
+
+
+    <h3 id="iir_init">IIR_Init</h3>
+
+
+    <!-- tabela: IIR -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> IIR_Init(TIIR_Instance *iirInstance, uint8_t numStages, q15_t *pCoeffs, q15_t *pState, int8_t postShift);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>This function initializes IIR filter .</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+				    <ul>
+				      <li><code>iirInstance:</code> points to an instance of the Q15 Biquad cascade structure.</li>
+				      <li><code>numStages:</code> number of 2nd order stages in the filter.</li>
+				      <li><code>pCoeffs:</code> points to the filter coefficients.</li>
+				      <li><code>pState:</code> points to the state buffer.</li>
+				      <li><code>postShift:</code> shift to be applied to the accumulator result.</li>
+				    </ul>
+
+<p>The coefficients are stored in the array <code>pCoeffs</code> in the following order : </p>
+
+<pre class="program">
+{b10, 0, b11, b12, a11, a12, b20, 0, b21, b22, a21, a22, ...}
+</pre>
+
+<p>where <code>b1x</code> and <code>a1x</code> are the coefficients for the first stage, <code>b2x</code> and <code>a2x</code> are the coefficients for the second stage, and so on. The <code>pCoeffs</code> array contains a total of <code>6*numStages</code> values. 
+<br>The zero coefficient between <code>b1</code> and <code>b2</code> facilitates use of 16-bit SIMD instructions on the Cortex-M4.</p>
+
+<p>The state variables are stored in the array <code>pState</code>. Each Biquad stage has 4 state variables <code>x[n-1]</code>, <code>x[n-2]</code>, <code>y[n-1]</code>, and <code>y[n-2]</code>. The state variables are arranged in the <code>pState</code> array as :</p>
+
+<pre class="program">
+{x[n-1], x[n-2], y[n-1], y[n-2]}   
+</pre>
+
+<p>The 4 state variables for stage 1 are first, then the 4 state variables for stage 2, and so on. The state array has a total length of <code>4*numStages</code> values. 
+<br>The state variables are updated after each block of data is processed; the coefficients are untouched.</p>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>         
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+#define NUMSTAGES 2
+
+<b>static</b> q15_t biquadState1[4*NUMSTAGES];
+TIIR_Instance S1;
+q15_t coeffTable[6*NUMSTAGES] =
+    {1053, 0, 2107, 1053, 19100, -6930, 1053, 0, 2107, 1053, 19100, -6930};
+
+<i>// Initialize the state and coefficient buffers for biquad section</i>
+IIR_Init(&#38;S1, NUMSTAGES,  (q15_t *) coeffTable, biquadState1, 1);
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->     
+
+    <!-- -->
+
+
+    <h3 id="iir_fast">IIR_Fast</h3>
+
+
+    <!-- tabela: IIR -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+          	<p><b>void</b> IIR_Fast(<b>const</b> TIIR_Instance *iirInstance, q15_t *pSrc, q15_t *pDst, uint32_t blockSize);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+			      <p>This function applies IIR filter.</p> 
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+				    <ul>
+				      <li><code>S:</code> points to an instance of the Q15 Biquad cascade structure.</li>
+				      <li><code>pSrc:</code> points to the block of input data.</li>
+				      <li><code>pDst:</code> points to the block of output data.</li>
+				      <li><code>blockSize:</code> number of samples to process per call.</li>
+				    </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>         
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+#define BLOCKSIZE 32
+
+<i>// Input and output blocks temporary buffers</i>
+q15_t outputQ15[BLOCKSIZE];
+q15_t inputQ15[BLOCKSIZE];
+
+TIIR_Instance S1;
+
+<i>// Call one double cascade of 2nd order section
+// Total filter order = 12</i>
+IIR_Fast(&#38;S1, inputQ15,  outputQ15, BLOCKSIZE);
+</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+    </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->     
+
+    <div class="feedback">
+            Copyright (c) 2002-2019 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="https://helpdesk.mikroe.com/conversation/new/3" target="_blank">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+</body>
+
+</html>

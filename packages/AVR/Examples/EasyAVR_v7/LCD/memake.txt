@@ -1,0 +1,20 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: LCD
+
+type: executable
+
+sources: {
+    LCD.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.Lcd
+    MikroC.Lcd_Constants
+}
+
+others: {
+    ./LCD.png
+}

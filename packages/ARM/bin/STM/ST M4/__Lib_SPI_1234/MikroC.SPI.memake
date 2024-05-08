@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_SPI_1234.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^STM32F446MC$|^STM32F446RC$|^STM32F469ZG$|^STM32F469ZE$|^STM32F446ME$|^STM32F479ZI$|^STM32F401VB$|^STM32F479VI$|^STM32F469ZI$|^STM32F446ZE$|^STM32F446ZC$|^STM32F469VG$|^STM32F401VC$|^STM32F446VE$|^STM32F479ZG$|^STM32F446RE$|^STM32F446VC$|^STM32F469VE$|^STM32F401VD$|^STM32F401VE$|^STM32F469VI$|^STM32F479VG$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

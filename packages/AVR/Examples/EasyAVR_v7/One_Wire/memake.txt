@@ -1,0 +1,21 @@
+:: Description:
+:: This file contains a set of directives used by a memake build automation tool to generate a target/goal.
+
+target: One_Wire
+
+type: executable
+
+sources: {
+    One_Wire.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.One_Wire
+    MikroC.Lcd
+    MikroC.Lcd_Constants
+}
+
+others: {
+    ./One_Wire.png
+}

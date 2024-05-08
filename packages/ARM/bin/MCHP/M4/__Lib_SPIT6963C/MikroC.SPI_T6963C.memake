@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.SPI_T6963C",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_SPIT6963C.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^CEC1302$|^CEC1702$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

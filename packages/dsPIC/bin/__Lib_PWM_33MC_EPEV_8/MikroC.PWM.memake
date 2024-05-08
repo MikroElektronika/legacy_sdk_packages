@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.PWM",
+    "global_visibility": true,
+    "arch": "DSPIC",
+    "binaries": [
+        "__Lib_PWM_33MC_EPEV_8.mcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^dsPIC33EP128GS705$|^dsPIC33EP128GS706$|^dsPIC33EP128GS805$|^dsPIC33EP128GS808$|^dsPIC33EP128GS704$|^dsPIC33EP64GS804$|^dsPIC33EP128GS804$|^dsPIC33EP64GS805$|^dsPIC33EP128GS702$|^dsPIC33EP64GS808$|^dsPIC33EP128GS708$|^dsPIC33EP128GS806$|^dsPIC33EP64GS708$|^dsPIC33EP64GS806$",
+    "toolchain": "mikrocdspic",
+    "version": "1.0.0"
+}

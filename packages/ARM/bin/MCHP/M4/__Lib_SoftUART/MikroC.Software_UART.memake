@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Software_UART",
+    "global_visibility": true,
+    "arch": "M4EF",
+    "binaries": [
+        "__Lib_SoftUART.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^CEC1302$",
+    "toolchain": "mikrocarm",
+    "version": "1.0.0"
+}

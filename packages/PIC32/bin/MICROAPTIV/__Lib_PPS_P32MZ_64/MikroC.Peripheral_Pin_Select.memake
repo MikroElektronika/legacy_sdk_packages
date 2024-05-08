@@ -1,0 +1,15 @@
+{
+    "alias": "MikroC.Peripheral_Pin_Select",
+    "global_visibility": true,
+    "arch": "MICROAPTIV",
+    "binaries": [
+        "__Lib_PPS_P32MZ_64.emcl"
+    ],
+    "include_paths": [
+        "."
+    ],
+    "library_type": "legacy",
+    "selector": "^PIC32MZ1024ECG064$|^PIC32MZ2048ECG064$",
+    "toolchain": "mikrocpic32",
+    "version": "1.0.0"
+}

@@ -1,0 +1,20 @@
+:: Base project template
+
+:: project: UART
+target: UART
+
+type: executable
+
+sources: {
+    main.c
+}
+
+depends: {
+    MikroC.System
+    MikroC.UART
+}
+
+uses: {
+    MikroC.System
+    MikroC.UART
+}

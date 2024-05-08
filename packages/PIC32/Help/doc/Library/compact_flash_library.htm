@@ -1,0 +1,2709 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>Compact Flash Library</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="Copyright" content="mikroElektronika 2005.">
+<meta name="Author" content="Marko Jovanovic. mailto:office@mikroe.com">
+
+<link rel="stylesheet" type="text/css" href="css/help_c_pic32.css">
+
+<script defer type="text/javascript" src="css/pngfix.js"></script>
+
+
+	
+
+
+
+
+
+
+<style type="text/css">
+#top {
+  background:transparent url(template/background_c_PIC32.png); 
+}
+
+.title{
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 70px; 
+	FONT-WEIGHT: bold; 
+	FONT-SIZE: 14px; 
+	PADDING-BOTTOM: 3px; 
+	PADDING-TOP: 0px; 
+	FONT-FAMILY: Verdana;
+  color:white;
+}
+
+.navigation{
+                     PADDING-TOP: -5px;
+	PADDING-RIGHT: 2px; 
+	PADDING-LEFT: 63px; 
+	FONT-SIZE: 11px; 
+	FONT-FAMILY: Verdana;
+                     color:white;
+}
+
+.navigation a:link {text-decoration: none; color: white;}
+.navigation a:visited {text-decoration: none; color: white;}
+.navigation a:active {text-decoration: none; color: white;}
+.navigation a:hover {text-decoration: none; color: white; background:black;}
+
+.nav_bar {
+}
+
+#top td p,td pre {
+	margin:0 0 0 0;
+}
+</style>
+
+<style type="text/css" media="screen">
+#main{
+	border-top: 1px solid #000000;
+    padding-left: 15px;
+    padding-right: 15px;
+	position: absolute;
+	top: 59px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+
+	width: expression(document.body.offsetWidth - 3);
+	height: expression(document.body.offsetHeight -  65);
+	overflow: auto;
+}
+</style>
+
+</head>
+
+
+<body>
+
+<div id="top">
+<table height="60" width="100%">
+  <tbody>
+	  <tr>
+		  <td>
+			  <pre class="nav_bar"><div class="title">Compact Flash Library</div><div class="navigation">&nbsp;&nbsp;<A href="mikroc_libraries.htm">mikroC PRO for PIC32 Libraries</A> &gt; <A href="mikroC_hardware_libraries.htm">Hardware Libraries</A> &gt; </div></pre>
+			</td>
+		  <td style="WIDTH: 120px" align="right">
+			  <pre class="nav_bar"><A href="canspi_library.htm" title="Previous"><img src="template\btn_prev_n.png" border="0"></a>&nbsp;<A title="Top of the Page" href="#top_of_page" alt="Top of the Page"><IMG src="template/btn_up_n.png" border=0 ></a>&nbsp;<A href="epson_graphic_lcd_library.htm" title="Next"><img src="template\btn_next_n.png" border="0"></a></pre>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+	
+
+
+  <div id="main">
+
+
+    <a name="top_of_page"><h2>Compact Flash Library</h2></a>
+
+
+    <p>The Compact Flash Library provides routines for accessing data on Compact Flash card (abbr. CF further in text). CF cards are widely used memory elements, commonly used with digital cameras. Great capacity and excellent access time of only a few microseconds make them very attractive for microcontroller applications.</p>
+    <p>In CF card, data is divided into sectors. One sector usually comprises  512 bytes. Routines for file handling, the <code>Cf_Fat</code> routines, are not performed directly but successively through 512B buffer.</p> 
+
+    <div style="border: 1.00pt solid #cccccc; padding: 5.00pt; background: #f5f2ec">	  
+	    <img src="img/note.gif" align="absmiddle"><b>&nbsp;&nbsp;Important :</b> 
+	    <ul>
+	  	  <li>Routines for file handling can be used only with FAT16 file system.</li>
+	  	  <li>Library functions create and read files from the root directory only.</li>
+	  	  <li>Library functions populate both FAT1 and FAT2 tables when writing to files, but the file data is being read from the FAT1 table only; i.e. there is no recovery if the FAT1 table gets corrupted.</li>
+	  	  <li>If MMC/SD card has Master Boot Record (MBR), the library will work with the first available primary (logical) partition that has non-zero size. If MMC/SD card has Volume Boot Record (i.e. there is only one logical partition and no MBRs), the library works with entire card as a single partition. For more information on MBR, physical and logical drives, primary/secondary partitions and partition tables, please consult other resources, e.g. Wikipedia and similar.</li>
+	  	  <li>Before writing operation, make sure not to overwrite boot or FAT sector as it could make your card on PC or digital camera unreadable. Drive mapping tools, such as Winhex, can be of great assistance.</li>
+	    </ul>
+    </div>
+
+    <p></p>
+    <h3>Library Dependency Tree</h3>
+    <p></p>
+    <img alt="Compact Flash Library Dependency Tree" src="img/dependencies/cf_dependency.gif">  
+
+    <p></p>
+    <h3>External dependencies of Compact Flash Library</h3>
+
+    <!-- tabela: Ext_depend -->
+ 
+    <table class="Dependencies" width="75%">
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="40%">The following variables must be defined in all projects using Compact Flash Library:</th>
+          <th width="30%">Description : </th>
+          <th width="30%">Example : </th>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic unsigned long</b> CF_Data_Port;</code></td>
+          <td align="left">Compact Flash Data Port.</td>
+          <td align="left"><code><b>unsigned long</b> CF_Data_Port <b>at</b> PORTF;</code></td>
+        </tr>
+   
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_RDY;</code></td>
+          <td align="left">Ready signal line.</td>
+          <td align="left"><code><b>sbit</b> CF_RDY <b>at</b> RD7_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_WE;</code></td>
+          <td align="left">Write Enable signal line.</td>
+          <td align="left"><code><b>sbit</b> CF_WE <b>at</b> RD6_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_OE;</code></td>
+          <td align="left">Output Enable signal line.</td>
+          <td align="left"><code><b>sbit</b> CF_OE <b>at</b> RD5_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_CD1;</code></td>
+          <td align="left">Chip Detect signal line.</td>
+          <td align="left"><code><b>sbit</b> CF_CD1 <b>at</b> RD4_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_CE1;</code></td>
+          <td align="left">Chip Enable signal line.</td>
+          <td align="left"><code><b>sbit</b> CF_CE1 <b>at</b> RD3_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_A2;</code></td>
+          <td align="left">Address pin 2.</td>
+          <td align="left"><code><b>sbit</b> CF_A2 <b>at</b> RD2_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_A1;</code></td>
+          <td align="left">Address pin 1.</td>
+          <td align="left"><code><b>sbit</b> CF_A1 <b>at</b> RD1_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_A0;</code></td>
+          <td align="left">Address pin 0.</td>
+          <td align="left"><code><b>sbit</b> CF_A0 <b>at</b> RD0_bit;</code></td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_RDY_direction;</code></td>
+          <td align="left">Direction of the Ready pin.</td>
+          <td align="left"><code><b>sbit</b> CF_RDY_direction <b>at </b>TRISD7_bit;</td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_WE_direction;</code></td>
+          <td align="left">Direction of the Write Enable pin.</td>
+          <td align="left"><code><b>sbit</b> CF_WE_direction <b>at </b>TRISDB6_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_OE_direction;</code></td>
+          <td align="left">Direction of the Output Enable pin.</td>
+          <td align="left"><code><b>sbit</b> CF_OE_direction <b>at </b>TRISD5_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_CD1_direction;</code></td>
+          <td align="left">Direction of the Chip Detect pin.</td>
+          <td align="left"><code><b>sbit</b> CF_CD1_direction <b>at </b>TRISD4_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_CE1_direction;</code></td>
+          <td align="left">Direction of the Chip Enable pin.</td>
+          <td align="left"><code><b>sbit</b> CF_CE1_direction <b>at </b>TRISD3_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_A2_direction;</code></td>
+          <td align="left">Direction of the Address 2 pin.</td>
+          <td align="left"><code><b>sbit</b> CF_A2_direction <b>at </b>TRISD2_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_A1_direction;</code></td>
+          <td align="left">Direction of the Address 1 pin.</td>
+          <td align="left"><code><b>sbit</b> CF_A1_direction <b>at </b>TRISD1_bit;</code></td>
+        </tr>
+        
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <td align="left"><code><b>extern sfr atomic sbit</b> CF_A0_direction;</code></td>
+          <td align="left">Direction of the Address 0 pin.</td>
+          <td align="left"><code><b>sbit</b> CF_A0_direction <b>at </b>TRISD0_bit;</code></td>
+        </tr>
+              
+      </tbody>
+
+    </table>
+    
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3>Library Routines</h3>
+
+    <ul>
+      <li><a href="#cf_init">Cf_Init</a></li>
+      <li><a href="#cf_detect">Cf_Detect</a></li>
+      <li><a href="#cf_enable">Cf_Enable</a></li>
+      <li><a href="#cf_disable">Cf_Disable</a></li>
+      <li><a href="#cf_read_init">Cf_Read_Init</a></li>
+      <li><a href="#cf_read_byte">Cf_Read_Byte</a></li>
+      <li><a href="#cf_write_init">Cf_Write_Init</a></li>
+      <li><a href="#cf_write_byte">Cf_Write_Byte</a></li>
+      <li><a href="#cf_read_sector">Cf_Read_Sector</a></li>
+      <li><a href="#cf_write_sector">Cf_Write_Sector</a></li>
+    </ul>
+
+    <p>Routines for file handling:</p>
+
+    <ul>
+      <li><a href="#cf_fat_init">Cf_Fat_Init</a></li>
+      <li><a href="#cf_fat_quickformat">Cf_Fat_QuickFormat</a></li>
+      <li><a href="#cf_fat_assign">Cf_Fat_Assign</a></li>
+      <li><a href="#cf_fat_reset">Cf_Fat_Reset</a></li>
+      <li><a href="#cf_fat_read">Cf_Fat_Read</a></li>
+      <li><a href="#cf_fat_rewrite">Cf_Fat_Rewrite</a></li>
+      <li><a href="#cf_fat_append">Cf_Fat_Append</a></li>
+      <li><a href="#cf_fat_delete">Cf_Fat_Delete</a></li>
+      <li><a href="#cf_fat_write">Cf_Fat_Write</a></li>
+      <li><a href="#cf_fat_set_file_date">Cf_Fat_Set_File_Date</a></li>
+      <li><a href="#cf_fat_get_file_date">Cf_Fat_Get_File_Date</a></li>
+      <li><a href="#cf_fat_get_file_date_modified">Cf_Fat_Get_File_Date_Modified</a></li>
+      <li><a href="#cf_fat_get_file_size">Cf_Fat_Get_File_Size</a></li>
+      <li><a href="#cf_fat_get_swap_file">Cf_Fat_Get_Swap_File</a></li>
+    </ul>
+
+     <!-- -->
+
+    <p>The following routine is for the internal use by compiler only:</p>
+    <ul>
+      <li>Cf_Issue_ID_Command</li>
+    </ul>
+
+
+    <h3 id="cf_init">Cf_Init</h3>
+
+
+    <!-- tabela: Cf_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+          <p>Initializes ports appropriately for communication with CF card.</p>         
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Global variables :            	
+            	<ul>
+                <li><code>CF_Data_Port </code>: Compact Flash data port</li>
+                <li><code>CF_RDY </code>: Ready signal line</li>
+                <li><code>CF_WE </code>: Write enable signal line</li>
+                <li><code>CF_OE </code>: Output enable signal line</li>
+                <li><code>CF_CD1 </code>: Chip detect signal line</li>
+                <li><code>CF_CE1 </code>: Enable signal line</li>
+                <li><code>CF_A2 </code>: Address pin 2</li>
+                <li><code>CF_A1 </code>: Address pin 1</li>
+                <li><code>CF_A0 </code>: Address pin 0</li>                
+                <br>
+                <li><code>CF_RDY_direction </code>: Direction of the Ready pin</li>
+                <li><code>CF_WE_direction </code>: Direction of the Write enable pin</li>
+                <li><code>CF_OE_direction </code>: Direction of the Output enable pin</li>
+                <li><code>CF_CD1_direction </code>: Direction of the Chip detect pin</li>
+                <li><code>CF_CE1_direction </code>: Direction of the Chip enable pin</li>
+                <li><code>CF_A2_direction </code>: Direction of the Address 2 pin</li>
+                <li><code>CF_A1_direction </code>: Direction of the Address 1 pin</li>
+                <li><code>CF_A0_direction </code>: Direction of the Address 0 pin</li> 
+              </ul>
+              must be defined before using this function.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// set compact flash pinout </i>
+<b>char</b> Cf_Data_Port <b>at</b> PORTF;
+
+<b>sbit</b> CF_RDY <b>at</b> RD7_bit;
+<b>sbit</b> CF_WE  <b>at</b> RD6_bit;
+<b>sbit</b> CF_OE  <b>at</b> RD5_bit;
+<b>sbit</b> CF_CD1 <b>at</b> RD4_bit;
+<b>sbit</b> CF_CE1 <b>at</b> RD3_bit;
+<b>sbit</b> CF_A2  <b>at</b> RD2_bit;
+<b>sbit</b> CF_A1  <b>at</b> RD1_bit;
+<b>sbit</b> CF_A0  <b>at</b> RD0_bit;
+
+<b>sbit</b> CF_RDY_direction <b>at</b> TRISD7_bit;
+<b>sbit</b> CF_WE_direction  <b>at</b> TRISD6_bit;
+<b>sbit</b> CF_OE_direction  <b>at</b> TRISD5_bit;
+<b>sbit</b> CF_CD1_direction <b>at</b> TRISD4_bit;
+<b>sbit</b> CF_CE1_direction <b>at</b> TRISD3_bit;
+<b>sbit</b> CF_A2_direction  <b>at</b> TRISD2_bit;
+<b>sbit</b> CF_A1_direction  <b>at</b> TRISD1_bit;
+<b>sbit</b> CF_A0_direction  <b>at</b> TRISD0_bit;
+<i>// end of compact flash pinout</i>
+...
+Cf_Init();      <i>// initialize CF</i> 
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cf_detect">Cf_Detect</h3>
+
+
+    <!-- tabela: Cf_Detect -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Cf_Detect();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Checks for presence of CF card by reading the <code>chip detect</code> pin.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+						  <ul>
+							  <li><code>1</code> - if CF card was detected</li>
+						    <li><code>0</code> - otherwise</li>
+						  </ul>		
+						</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Wait until CF card is inserted:</i>
+<b>do</b>
+  asm nop;
+<b>while</b> (!Cf_Detect());</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>PIC32 family <acronym title="MicroController Unit">MCU</acronym> and CF card voltage levels are different. The user must ensure that <acronym title="MicroController Unit">MCU</acronym>'s pin connected to CD line can read CF card Logical One correctly.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+   <!-- -->
+
+
+    <h3 id="cf_enable">Cf_Enable</h3>
+
+
+    <!-- tabela: Cf_Enable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Enable();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Enables the device. Routine needs to be called only if you have disabled the device by means of the <a href="#cf_disable">Cf_Disable</a> routine. These two routines in conjunction allow you to free/occupy data line when working with multiple devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// enable compact flash</i>
+Cf_Enable();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cf_disable">Cf_Disable</h3>
+
+
+    <!-- tabela: Cf_Disable -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Disable();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Routine disables the device and frees the data lines for other devices. 
+						   To enable the device again, call <a href="#cf_enable">Cf_Enable</a>. These two routines in conjunction allow you to free/occupy data line when working with multiple devices.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// disable compact flash</i>
+Cf_Disable();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cf_read_init">Cf_Read_Init</h3>
+
+
+    <!-- tabela: Cf_Read_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Read_Init(<b>unsigned long</b> address, <b>unsigned short</b> sector_count);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes CF card for reading.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>address:</code> the first sector to be prepared for reading operation.</li>
+              <li><code>sector_count:</code> number of sectors to be prepared for reading operation.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// initialize compact flash for reading from sector 590</i>
+Cf_Read_Init(590, 1);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cf_read_byte">Cf_Read_Byte</h3>
+
+
+    <!-- tabela: Cf_Read_Byte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned char</b> Cf_Read_Byte();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one byte from Compact Flash sector buffer location currently pointed to by internal read pointers. These pointers will be autoicremented upon reading.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Returns a byte read from Compact Flash sector buffer.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+            <p>CF card must be initialized for reading operation. See <a href="#cf_read_init">Cf_Read_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+<pre>
+<i>// Read a byte from compact flash:</i>
+<b>unsigned char</b> data_;
+...
+data_ = Cf_Read_Byte();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          	Higher byte of the <code>unsigned</code> return value is cleared.
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cf_write_init">Cf_Write_Init</h3>
+
+
+    <!-- tabela: Cf_Write_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Write_Init(<b>unsigned long</b> address, <b>unsigned short</b> sectcnt);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes CF card for writing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+             	<li><code>address:</code> the first sector to be prepared for writing operation.</li>
+             	<li><code>sectcnt:</code> number of sectors to be prepared for writing operation.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// initialize compact flash for writing to sector 590</i>
+Cf_Write_Init(590, 1);</pre>
+
+          </td>
+        </tr>
+
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cf_write_byte">Cf_Write_Byte</h3>
+
+
+    <!-- tabela: Cf_Write_Byte -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Write_Byte(<b>unsigned short</b> data_);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes a byte to Compact Flash sector buffer location currently pointed to by writing pointers. These pointers will be autoicremented upon reading. 
+            	 When sector buffer is full, its contents will be transfered to appropriate flash memory sector.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          	<ul>
+             	<li><code>data_:</code> byte to be written.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+            <p>CF card must be initialized for writing operation. See <a href="#cf_write_init">Cf_Write_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> data_ = 0xAA;
+...
+Cf_Write_Byte(data_);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+
+
+    <h3 id="cf_read_sector">Cf_Read_Sector</h3>
+
+
+    <!-- tabela: Cf_Read_Sector -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Read_Sector(<b>unsigned long</b> sector_number, <b>unsigned short</b> *buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads one sector (512 bytes). Read data is stored into buffer provided by the <code>buffer</code> parameter.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+            	<li><code>sector_number:</code> sector to be read.</li>
+             	<li><code>buffer:</code> data buffer of at least 512 bytes in length.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// read sector 22</i>
+<b>unsigned short</b> data[512];
+...
+Cf_Read_Sector(22, data);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cf_write_sector">Cf_Write_Sector</h3>
+
+
+    <!-- tabela: Cf_Write_Sector -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Write_Sector(<b>unsigned long</b> sector_number, <b>unsigned short</b> *buffer);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes 512 bytes of data provided by the <code>buffer</code> parameter to one CF sector.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>sector_number:</code> sector to be written to.</li>
+              <li><code>buffer:</code> data buffer of 512 bytes in length.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>The corresponding <acronym title="MicroController Unit">MCU</acronym> ports must be appropriately initialized for CF card. See <a href="#cf_init">Cf_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// write to sector 22</i>
+<b>unsigned short</b> data[512];
+...
+Cf_Write_Sector(22, data);</pre>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+
+    <!-- -->
+
+
+    <h3 id="cf_fat_init">Cf_Fat_Init</h3>
+
+
+    <!-- tabela: Cf_Fat_Init -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Cf_Fat_Init();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Initializes CF card, reads CF FAT16 boot sector and extracts necessary data needed by the library.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+						  <ul >
+						    <li><code>0</code> - if CF card was detected and successfully initialized</li>
+						    <li><code>1</code> - if FAT16 boot sector was not found</li>
+							  <li><code>255</code> - if card was not detected</li>
+							</ul>	
+						</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// Init the FAT library</i>
+<b>if</b> (!Cf_Fat_Init()) {    // Init the FAT library
+...
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+		<!-- -->
+
+
+    <h3 id="cf_fat_quickformat">Cf_Fat_QuickFormat</h3>
+
+
+    <!-- tabela: Cf_Fat_QuickFormat -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top"><p align="justify"></p>Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Cf_Fat_QuickFormat(<b>char</b> *cf_fat_label);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Formats to FAT16 and initializes CF card.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+          <ul>
+					  <li><code>cf_fat_label:</code> volume label (11 characters in length). If less than 11 characters are provided, the label will be padded with spaces. If null string is passed, the volume will not be labeled.</li>
+          </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+						  <ul >
+						    <li><code>0</code> - if CF card was detected, successfully formated and initialized</li>
+						    <li><code>1</code> - if FAT16 format was unsuccessful</li>
+							  <li><code>255</code> - if card was not detected</li>
+							</ul>	
+						</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//  format and initialize the FAT library - </i>
+<b>if</b> (!Cf_Fat_QuickFormat(&cf_fat_label)) {
+...
+}
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+          <ul>
+          	<li>This routine can be used instead or in conjunction with <a href="#cf_fat_init">Cf_Fat_Init</a> routine.</li>
+          	<li>If CF card already contains a valid boot sector, it will remain unchanged (except volume label field) and only FAT and ROOT tables will be erased. Also, the new volume label will be set.</li>
+          </ul>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+		
+    <!-- -->
+
+
+    <h3 id="cf_fat_assign">Cf_Fat_Assign</h3>
+
+
+    <!-- tabela: Cf_Fat_Assign -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned int</b> Cf_Fat_Assign(<b>char</b> *filename, <b>char</b> file_cre_attr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Assigns file for file operations (read, write, delete...). All subsequent file operations will be applied over the assigned file.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            	<ul>
+            		<li><code>filename:</code> name of the file that should be assigned for file operations. The file name should be in DOS 8.3 (file_name.extension) format. 
+							    The file name and extension will be automatically padded with spaces by the library if they have less than length required (i.e. "mikro.tx" -> "mikro   .tx "), so the user does not have to take care of that.
+		              The file name and extension are case insensitive. The library will convert them to proper case automatically, so the user does not have to take care of that. 					
+	 						    <p>Also, in order to keep backward compatibility with the first version of this library, file names can be entered as UPPERCASE string of 11 bytes in length with no dot character between the file name and extension (i.e. "MIKROELETXT" -> MIKROELE.TXT). 
+									   In this case the last 3 characters of the string are considered to be file extension.</p></li>
+            		<li><code>file_cre_attr:</code>  file creation and attributes flags. Each bit corresponds to the appropriate file attribute:</li>
+
+							  <table>
+                  <tr align="center">
+                  	<td><b>Bit</b></td>
+										<td><b>Mask</b></td>
+										<td><b>Description</b></td>
+                  </tr>
+									<tr align="center">
+                  	<td>0</td>
+										<td>0x01</td>
+										<td>Read Only</td>
+                  </tr>
+									<tr align="center">
+                  	<td>1</td>
+										<td>0x02</td>
+										<td>Hidden</td>
+                  </tr>
+									<tr align="center">
+                  	<td>2</td>
+										<td>0x04</td>
+										<td>System</td>
+                  </tr>
+									<tr align="center">
+                  	<td>3</td>
+										<td>0x08</td>
+										<td>Volume Label</td>
+                  </tr>
+									<tr align="center">
+                  	<td>4</td>
+										<td>0x10</td>
+										<td>Subdirectory</td>
+                  </tr>
+									<tr align="center">
+                  	<td>5</td>
+										<td>0x20</td>
+										<td>Archive</td>
+                  </tr>
+									<tr align="center">
+                  	<td>6</td>
+										<td>0x40</td>
+										<td>Device (internal use only, never found on disk)</td>
+                  </tr>
+									<tr align="center">
+                  	<td>7</td>
+										<td>0x80</td>
+										<td>File creation flag. If the file does not exist and this flag is set, a new file with specified name will be created.</td>
+                  </tr>
+                </table>
+						  </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>
+						  <ul>
+							  <li><code>0</code> if file does not exist and no new file is created. 
+								<li><code>1</code> if file already exists or file does not exist but a new file is created. 
+							</ul>	
+						</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>
+            	CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// create file with archive attributes if it does not already exist</i>
+Cf_Fat_Assign("MIKRO007.TXT",0xA0);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+	          Long File Names (LFN) are not supported.
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+   
+
+    <!-- -->
+
+
+    <h3 id="cf_fat_reset">Cf_Fat_Reset</h3>
+
+
+    <!-- tabela: Cf_Fat_Reset -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Reset(<b>unsigned long</b> *size);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Opens currently assigned file for reading.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>size:</code> buffer to store file size to. After file has been open for reading its size is returned through this parameter.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> size;
+...
+Cf_Fat_Reset(size);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="cf_fat_read">Cf_Fat_Read</h3>
+
+
+    <!-- tabela: Cf_Fat_Read -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Read(<b>unsigned short</b> *bdata);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads a byte from currently assigned file opened for reading. Upon function execution file pointers will be set to the next character in the file.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+           	  <li><code>bdata:</code> buffer to store read byte to. Upon this function execution read byte is returned through this parameter.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+					  <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+            <p>File must be open for reading.	See <a href="#cf_fat_reset">Cf_Fat_Reset</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> character;
+...
+Cf_Fat_Read(&#38;character);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+
+    <h3 id="cf_fat_rewrite">Cf_Fat_Rewrite</h3>
+
+
+    <!-- tabela: Cf_Fat_Rewrite -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Rewrite();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Opens currently assigned file for writing. If the file is not empty its content will be erased.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>The file must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// open file for writing</i>
+Cf_Fat_Rewrite();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="cf_fat_append">Cf_Fat_Append</h3>
+
+
+    <!-- tabela: Cf_Fat_Append -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Append();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Opens currently assigned file for appending. Upon this function execution file pointers will be positioned after the last byte in the file, so any subsequent file writing operation will start from there.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// open file for appending</i>
+Cf_Fat_Append();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    <!-- -->
+
+
+    <h3 id="cf_fat_delete">Cf_Fat_Delete</h3>
+
+
+    <!-- tabela: Cf_Fat_Delete -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Delete();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Deletes currently assigned file from CF card.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>// delete current file</i>
+Cf_Fat_Delete();</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+    <!-- -->
+
+
+    <h3 id="cf_fat_write">Cf_Fat_Write</h3>
+
+
+    <!-- tabela: Cf_Fat_Write -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Write(<b>char</b> *fdata, <b>unsigned</b> data_len);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Writes requested number of bytes to currently assigned file opened for writing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>fdata:</code> data to be written.</li>
+           		<li><code>data_len:</code> number of bytes to be written.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+            <p>File must be open for writing.	See <a href="#cf_fat_rewrite ">Cf_Fat_Rewrite </a> or <a href="#cf_fat_append ">Cf_Fat_Append</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>char</b> file_contents[42];
+...
+Cf_Fat_Write(file_contents, 42); <i>// write data to the assigned file</i>
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    <!-- -->
+
+
+    <h3 id="cf_fat_set_file_date">Cf_Fat_Set_File_Date</h3>
+
+
+    <!-- tabela: Cf_Fat_Set_File_Date -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Set_File_Date(<b>unsigned int</b> year, <b>unsigned short</b> month, <b>unsigned short</b> day, <b>unsigned short</b> hours, <b>unsigned short</b> mins, <b>unsigned short</b> seconds);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Sets the date/time stamp. Any subsequent file writing operation will write this stamp to currently assigned file's time/date attributes.</p>
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>year:</code> year attribute. Valid values: 1980-2107</li>
+           		<li><code>month:</code> month attribute. Valid values: 1-12</li>
+           		<li><code>day:</code> day attribute. Valid values: 1-31</li>
+           		<li><code>hours:</code> hours attribute. Valid values: 0-23</li>
+           		<li><code>mins:</code> minutes attribute. Valid values: 0-59</li>
+           		<li><code>seconds:</code> seconds attribute. Valid values: 0-59</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+            <p>File must be open for writing.	See <a href="#cf_fat_rewrite ">Cf_Fat_Rewrite </a> or <a href="#cf_fat_append ">Cf_Fat_Append</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+Cf_Fat_Set_File_Date(2005,9,30,17,41,0);</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <!-- -->
+
+
+    <h3 id="cf_fat_get_file_date">Cf_Fat_Get_File_Date</h3>
+
+
+    <!-- tabela: Cf_Fat_Get_File_Date -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Get_File_Date(<b>unsigned int</b> *year, <b>unsigned short</b> *month, <b>unsigned short</b> *day, <b>unsigned short</b> *hours, <b>unsigned short</b> *mins);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Reads time/date attributes of currently assigned file.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>year:</code> buffer to store year attribute to. Upon function execution year attribute is returned through this parameter.</li>
+           		<li><code>month:</code> buffer to store month attribute to. Upon function execution month attribute is returned through this parameter.</li>
+           		<li><code>day:</code> buffer to store day attribute to. Upon function execution day attribute is returned through this parameter.</li>
+           		<li><code>hours:</code> buffer to store hours attribute to. Upon function execution hours attribute is returned through this parameter.</li>
+           		<li><code>mins:</code> buffer to store minutes attribute to. Upon function execution minutes attribute is returned through this parameter.</li>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned</b> year;
+<b>char</b> month, day, hours, mins;
+...
+Cf_Fat_Get_File_Date(&#38;year, &#38;month, &#38;day, &#38;hours, &#38;mins);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+    
+    <!-- -->
+
+    <h3 id="cf_fat_get_file_date_modified">Cf_Fat_Get_File_Date_Modified</h3>
+
+    <!-- tabela: Cf_Fat_Get_File_Date_Modified -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>void</b> Cf_Fat_Get_File_Date_Modified(<b>unsigned int</b> *year, <b>unsigned short</b> *month, <b>unsigned short</b> *day, <b>unsigned short</b> *hours, <b>unsigned short</b> *mins);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>Retrieves the last modification date/time of the currently assigned file.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+           	<ul>
+           		<li><code>year:</code> buffer to store year of modification attribute to. Upon function execution year of modification attribute is returned through this parameter.</li>
+           		<li><code>month:</code> buffer to store month of modification attribute to. Upon function execution month of modification attribute is returned through this parameter.</li>
+           		<li><code>day:</code> buffer to store day of modification attribute to. Upon function execution day of modification attribute is returned through this parameter.</li>
+           		<li><code>hours:</code> buffer to store hours of modification attribute to. Upon function execution hours of modification attribute is returned through this parameter.</li>
+           		<li><code>mins:</code> buffer to store minutes of modification attribute to. Upon function execution minutes of modification attribute is returned through this parameter.</li>
+             </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Nothing.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned</b> year;
+<b>char</b> month, day, hours, mins;
+...
+Cf_Fat_Get_File_Date_Modified(&#38;year, &#38;month, &#38;day, &#38;hours, &#38;mins);
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+ 
+   <!-- -->
+
+
+    <h3 id="cf_fat_get_file_size">Cf_Fat_Get_File_Size</h3>
+
+
+    <!-- tabela: Cf_Fat_Get_File_Size -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> Cf_Fat_Get_File_Size();</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>This function reads size of currently assigned file in bytes.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p>Size of the currently assigned file in bytes.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+					  <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+            <p>File must be previously assigned. See <a href="#cf_fat_assign">Cf_Fat_Assign</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<b>unsigned long</b> my_file_size;
+...
+my_file_size = Cf_Fat_Get_File_Size();
+</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+            <p>None.</p>
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+
+		<!-- -->
+<h3 id="cf_fat_get_swap_file">Cf_Fat_Get_Swap_File</h3>
+
+
+    <!-- tabela: Cf_Fat_Get_Swap_File -->
+
+    <table class="routine" width="100%">
+
+      <!--
+      <caption></caption>
+
+      <thead></thead>
+      -->
+
+      <tbody>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th width="0" valign="top">Prototype</th>
+          <td class="code" width="100%" valign="top">
+            <p><b>unsigned long</b> Cf_Fat_Get_Swap_File(<b>unsigned long</b> sectors_cnt, <b>char</b> *filename, <b>char</b> file_attr);</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Description</th>
+          <td valign="top">
+            <p>
+						  This function is used to create a swap file of predefined name and size on the CF media. 
+  						If a file with specified name already exists on the media, search for consecutive sectors will ignore sectors occupied by this file. 
+  						Therefore, it is recommended to erase such file if it exists before calling this function. 
+  						If it is not erased  and there is still enough space for a new swap file, this function will delete it after allocating new memory space for a new swap file.
+            </p>
+            <p>
+						  The purpose of the swap file is to make reading and writing to CF media as fast as possible, by using the <a href="#cf_read_sector">Cf_Read_Sector()</a> and <a href="#cf_write_sector">Cf_Write_Sector()</a> functions directly, without potentially damaging the FAT system. 
+					    Swap file can be considered as a &quot;window&quot; on the media where the user can freely write/read data. 
+						  It's main purpose in the this library is to be used for fast data acquisition; when the time-critical acquisition has finished, the data can be re-written into a &quot;normal&quot; file, and formatted in the most suitable way.
+            </p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Parameters</th>
+          <td valign="top">
+            <ul>
+              <li><code>sectors_cnt:</code>  number of consecutive sectors that user wants the swap file to have.</li>
+          		<li><code>filename:</code> name of the file that should be assigned for file operations. The file name should be in DOS 8.3 (file_name.extension) format. 
+							    The file name and extension will be automatically padded with spaces by the library if they have less than length required (i.e. "mikro.tx" -> "mikro   .tx "), so the user does not have to take care of that.
+		              The file name and extension are case insensitive. The library will convert them to proper case automatically, so the user does not have to take care of that. 					
+	 						    <p>Also, in order to keep backward compatibility with the first version of this library, file names can be entered as UPPERCASE string of 11 bytes in length with no dot character between the file name and extension (i.e. "MIKROELETXT" -> MIKROELE.TXT). 
+									   In this case the last 3 characters of the string are considered to be file extension.</p></li>
+          		<li><code>file_attr:</code> file creation and attributes flags. Each bit corresponds to the appropriate file attribute:</li>
+							<p>
+							  <table>
+                  <tr align="center">
+                  	<td><b>Bit</b></td>
+										<td><b>Mask</b></td>
+										<td><b>Description</b></td>
+                  </tr>
+									<tr align="center">
+                  	<td>0</td>
+										<td>0x01</td>
+										<td>Read Only</td>
+                  </tr>
+									<tr align="center">
+                  	<td>1</td>
+										<td>0x02</td>
+										<td>Hidden</td>
+                  </tr>
+									<tr align="center">
+                  	<td>2</td>
+										<td>0x04</td>
+										<td>System</td>
+                  </tr>
+									<tr align="center">
+                  	<td>3</td>
+										<td>0x08</td>
+										<td>Volume Label</td>
+                  </tr>
+									<tr align="center">
+                  	<td>4</td>
+										<td>0x10</td>
+										<td>Subdirectory</td>
+                  </tr>
+									<tr align="center">
+                  	<td>5</td>
+										<td>0x20</td>
+										<td>Archive</td>
+                  </tr>
+									<tr align="center">
+                  	<td>6</td>
+										<td>0x40</td>
+										<td>Device (internal use only, never found on disk)</td>
+                  </tr>
+									<tr align="center">
+                  	<td>7</td>
+										<td>0x80</td>
+										<td>Not used</td>
+                  </tr>
+                </table>
+            </ul>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Returns</th>
+          <td valign="top">
+            <p><ul>
+							  <li>Number of the start sector for the newly created swap file, if there was enough free space on CF card to create file of required size.</li>
+								<li><code>0</code> - otherwise.</li>
+							</ul>
+						</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Requires</th>
+          <td valign="top">
+            <p>CF card and CF library must be initialized for file operations. See <a href="#cf_fat_init">Cf_Fat_Init</a>.</p>
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Example</th>
+          <td valign="top">
+
+<pre>
+<i>//-------------- Try to create a swap file with archive atribute, whose size will be at least 1000 sectors.
+//               If it succeeds, it sends the No. of start sector over UART</i>
+<b>unsigned long</b> size;
+...
+size = Cf_Fat_Get_Swap_File(1000, "mikroE.txt", 0x20);
+if (size) {
+  UART1_Write(0xAA);
+  UART1_Write(Lo(size));
+  UART1_Write(Hi(size));
+  UART1_Write(Higher(size));
+  UART1_Write(Highest(size));
+  UART1_Write(0xAA);
+}</pre>
+
+          </td>
+        </tr>
+
+        <tr style="background:'white'" onmouseover="this.style.background='#f8f8f8';" onmouseout="this.style.background='white';">
+          <th valign="top">Notes</th>
+          <td valign="top">
+					  Long File Names (LFN) are not supported.
+          </td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+    <!-- kraj tabele -->
+
+    <h3>Library Example</h3>
+
+    <p>The following example writes 512 bytes at sector no.620, and then reads the data and sends it over UART1 for a visual check. Hardware configurations in this example are made for the LV-32MX v6 development system and PIC32MX460F512L.</p>
+
+<div class="example">
+  <textarea style="display:none;"></textarea> 
+  <span class="copytoclipboard"><a onclick="copyToClipboard(this); return false;" href="#"><img align="absmiddle" alt="Copy Code To Clipboard" src="img/copy_to_clipboard.gif" border="0" /><span class="clipboard_text">Copy Code To Clipboard</span></a></span>
+</div>
+
+<pre class="program">
+<code><span class="cpp1-comment">//&nbsp;set&nbsp;compact&nbsp;flash&nbsp;pinout
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Cf_Data_Port</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">PORTE;
+
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_RDY</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RD7_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_WE</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD6_bit;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;for&nbsp;writing&nbsp;to&nbsp;output&nbsp;pin&nbsp;always&nbsp;use&nbsp;latch
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_OE</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD5_bit;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;for&nbsp;writing&nbsp;to&nbsp;output&nbsp;pin&nbsp;always&nbsp;use&nbsp;latch
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_CD1</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">RD4_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_CE1</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD3_bit;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;for&nbsp;writing&nbsp;to&nbsp;output&nbsp;pin&nbsp;always&nbsp;use&nbsp;latch
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_A2</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD2_bit;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;for&nbsp;writing&nbsp;to&nbsp;output&nbsp;pin&nbsp;always&nbsp;use&nbsp;latch
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_A1</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD1_bit;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;for&nbsp;writing&nbsp;to&nbsp;output&nbsp;pin&nbsp;always&nbsp;use&nbsp;latch
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_A0</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LATD0_bit;</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;for&nbsp;writing&nbsp;to&nbsp;output&nbsp;pin&nbsp;always&nbsp;use&nbsp;latch
+
+</span><span class="cpp1-identifier">sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_RDY_direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD7_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_WE_direction</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD6_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_OE_direction</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD5_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_CD1_direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD4_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_CE1_direction</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD3_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_A2_direction</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD2_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_A1_direction</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD1_bit;
+sbit</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">CF_A0_direction</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">at</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">TRISD0_bit;
+</span><span class="cpp1-comment">//&nbsp;end&nbsp;of&nbsp;cf&nbsp;pinout
+
+</span><span class="cpp1-reservedword">const</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LINE_LEN</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">39</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">err_txt[</span><span class="cpp1-number">20</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;FAT16&nbsp;not&nbsp;found&quot;</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">file_contents[LINE_LEN]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;XX&nbsp;CF&nbsp;FAT16&nbsp;library&nbsp;by&nbsp;Anton&nbsp;Rieckert\n&quot;</span><span class="cpp1-symbol">;
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">filename[</span><span class="cpp1-number">14</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;MIKRO00x.TXT&quot;</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;File&nbsp;names
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop2;
+</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">long</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">i,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">size;
+</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Buffer[</span><span class="cpp1-number">512</span><span class="cpp1-symbol">];
+
+</span><span class="cpp1-comment">//&nbsp;UART1&nbsp;write&nbsp;text&nbsp;and&nbsp;new&nbsp;line&nbsp;(carriage&nbsp;return&nbsp;+&nbsp;line&nbsp;feed)
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">UART1_Write_Line(</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">*uart_text)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(uart_text);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-number">13</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-number">10</span><span class="cpp1-symbol">);
+}
+
+</span><span class="cpp1-comment">//&nbsp;Creates&nbsp;new&nbsp;file&nbsp;and&nbsp;writes&nbsp;some&nbsp;data&nbsp;to&nbsp;it
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">M_Create_New_File()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">filename[</span><span class="cpp1-number">7</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-character">'A'</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Set_File_Date(</span><span class="cpp1-number">2005</span><span class="cpp1-symbol">,</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,</span><span class="cpp1-number">21</span><span class="cpp1-symbol">,</span><span class="cpp1-number">10</span><span class="cpp1-symbol">,</span><span class="cpp1-number">35</span><span class="cpp1-symbol">,</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;file&nbsp;date&nbsp;&amp;&nbsp;time&nbsp;info
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Assign(&amp;filename,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xA0</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Find&nbsp;existing&nbsp;file&nbsp;or&nbsp;create&nbsp;a&nbsp;new&nbsp;one
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Rewrite();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;To&nbsp;clear&nbsp;file&nbsp;and&nbsp;start&nbsp;with&nbsp;new&nbsp;data
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&lt;=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">99</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-character">'.'</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">file_contents[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">/</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">file_contents[</span><span class="cpp1-number">1</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">%</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Write(file_contents,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LINE_LEN-</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;write&nbsp;data&nbsp;to&nbsp;the&nbsp;assigned&nbsp;file
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+
+</span><span class="cpp1-comment">//&nbsp;Creates&nbsp;many&nbsp;new&nbsp;files&nbsp;and&nbsp;writes&nbsp;data&nbsp;to&nbsp;them
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">M_Create_Multiple_Files()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(loop2</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-character">'B'</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop2</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&lt;=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-character">'Z'</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop2++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(loop2);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;signal&nbsp;the&nbsp;progress
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">filename[</span><span class="cpp1-number">7</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop2;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;set&nbsp;filename
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Set_File_Date(</span><span class="cpp1-number">2005</span><span class="cpp1-symbol">,</span><span class="cpp1-number">6</span><span class="cpp1-symbol">,</span><span class="cpp1-number">21</span><span class="cpp1-symbol">,</span><span class="cpp1-number">10</span><span class="cpp1-symbol">,</span><span class="cpp1-number">35</span><span class="cpp1-symbol">,</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Set&nbsp;file&nbsp;date&nbsp;&amp;&nbsp;time&nbsp;info
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Assign(&amp;filename,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xA0</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;find&nbsp;existing&nbsp;file&nbsp;or&nbsp;create&nbsp;a&nbsp;new&nbsp;one
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Rewrite();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;To&nbsp;clear&nbsp;file&nbsp;and&nbsp;start&nbsp;with&nbsp;new&nbsp;data
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&lt;=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">44</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">file_contents[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">/</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">file_contents[</span><span class="cpp1-number">1</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">%</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Write(file_contents,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LINE_LEN-</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;write&nbsp;data&nbsp;to&nbsp;the&nbsp;assigned&nbsp;file
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+
+</span><span class="cpp1-comment">//&nbsp;Opens&nbsp;an&nbsp;existing&nbsp;file&nbsp;and&nbsp;rewrites&nbsp;it
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">M_Open_File_Rewrite()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">filename[</span><span class="cpp1-number">7</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-character">'C'</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Assign(&amp;filename,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Rewrite();
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&lt;=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">55</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">file_contents[</span><span class="cpp1-number">0</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">/</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">file_contents[</span><span class="cpp1-number">1</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">loop</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">%</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">10</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">+</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">48</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Write(file_contents,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">LINE_LEN-</span><span class="cpp1-number">1</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;write&nbsp;data&nbsp;to&nbsp;the&nbsp;assigned&nbsp;file
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+
+</span><span class="cpp1-comment">//&nbsp;Opens&nbsp;an&nbsp;existing&nbsp;file&nbsp;and&nbsp;appends&nbsp;data&nbsp;to&nbsp;it
+//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(and&nbsp;alters&nbsp;the&nbsp;date/time&nbsp;stamp)
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">M_Open_File_Append()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">filename[</span><span class="cpp1-number">7</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-character">'B'</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Assign(&amp;filename,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Set_File_Date(</span><span class="cpp1-number">2009</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">23</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">17</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">22</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Append();</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Prepare&nbsp;file&nbsp;for&nbsp;append
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Write(</span><span class="cpp1-string">&quot;&nbsp;for&nbsp;mikroElektronika&nbsp;2009\n&quot;</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">27</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Write&nbsp;data&nbsp;to&nbsp;assigned&nbsp;file
+</span><span class="cpp1-symbol">}
+
+</span><span class="cpp1-comment">//&nbsp;Opens&nbsp;an&nbsp;existing&nbsp;file,&nbsp;reads&nbsp;data&nbsp;from&nbsp;it&nbsp;and&nbsp;puts&nbsp;it&nbsp;to&nbsp;UART
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">M_Open_File_Read()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">character;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">filename[</span><span class="cpp1-number">7</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-character">'B'</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Assign(&amp;filename,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Reset(&amp;size);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;To&nbsp;read&nbsp;file,&nbsp;procedure&nbsp;returns&nbsp;size&nbsp;of&nbsp;file
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(i</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">1</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&lt;=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">size;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Read(&amp;character);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(character);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Write&nbsp;data&nbsp;to&nbsp;UART
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+
+</span><span class="cpp1-comment">//&nbsp;Deletes&nbsp;a&nbsp;file.&nbsp;If&nbsp;file&nbsp;doesn't&nbsp;exist,&nbsp;it&nbsp;will&nbsp;first&nbsp;be&nbsp;created
+//&nbsp;and&nbsp;then&nbsp;deleted.
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">M_Delete_File()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">filename[</span><span class="cpp1-number">7</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-character">'F'</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Assign(filename,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Delete();
+}
+
+</span><span class="cpp1-comment">//&nbsp;Tests&nbsp;whether&nbsp;file&nbsp;exists,&nbsp;and&nbsp;if&nbsp;so&nbsp;sends&nbsp;its&nbsp;creation&nbsp;date
+//&nbsp;and&nbsp;file&nbsp;size&nbsp;via&nbsp;UART
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">M_Test_File_Exist()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">long</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">fsize;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">year;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">short</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">month,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">day,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">hour,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">minute;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">char</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">outstr[</span><span class="cpp1-number">12</span><span class="cpp1-symbol">];
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">filename[</span><span class="cpp1-number">7</span><span class="cpp1-symbol">]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-character">'B'</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//uncomment&nbsp;this&nbsp;line&nbsp;to&nbsp;search&nbsp;for&nbsp;file&nbsp;that&nbsp;DOES&nbsp;exists
+//&nbsp;&nbsp;filename[7]&nbsp;=&nbsp;'F';&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//uncomment&nbsp;this&nbsp;line&nbsp;to&nbsp;search&nbsp;for&nbsp;file&nbsp;that&nbsp;DOES&nbsp;NOT&nbsp;exist
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(Cf_Fat_Assign(filename,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">))</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//---&nbsp;file&nbsp;has&nbsp;been&nbsp;found&nbsp;-&nbsp;get&nbsp;its&nbsp;date
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Get_File_Date(&amp;year,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;month,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;day,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;hour,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;minute);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(</span><span class="cpp1-string">&quot;&nbsp;created:&nbsp;&quot;</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">WordToStr(year,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">ByteToStr(month,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">WordToStr(day,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">WordToStr(hour,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">WordToStr(minute,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//---&nbsp;file&nbsp;has&nbsp;been&nbsp;found&nbsp;-&nbsp;get&nbsp;its&nbsp;modified&nbsp;date
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Get_File_Date_Modified(&amp;year,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;month,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;day,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;hour,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">&amp;minute);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(</span><span class="cpp1-string">&quot;&nbsp;modified:&nbsp;&quot;</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">WordToStr(year,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">ByteToStr(month,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">WordToStr(day,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">WordToStr(hour,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">WordToStr(minute,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Text(outstr);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//---&nbsp;get&nbsp;file&nbsp;size
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">fsize</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Get_File_Size();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">LongToStr((</span><span class="cpp1-reservedword">signed</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">long</span><span class="cpp1-symbol">)fsize,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Line(outstr);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">else</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//---&nbsp;file&nbsp;was&nbsp;not&nbsp;found&nbsp;-&nbsp;signal&nbsp;it
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-hexadecimal">0x55</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">1000</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-hexadecimal">0x55</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+
+
+</span><span class="cpp1-comment">//&nbsp;Tries&nbsp;to&nbsp;create&nbsp;a&nbsp;swap&nbsp;file,&nbsp;whose&nbsp;size&nbsp;will&nbsp;be&nbsp;at&nbsp;least&nbsp;100
+//&nbsp;sectors&nbsp;(see&nbsp;Help&nbsp;for&nbsp;details)
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">M_Create_Swap_File()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">unsigned</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">int</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(i=</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i&lt;</span><span class="cpp1-number">512</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i++)
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Buffer[i]</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i;
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">size</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Cf_Fat_Get_Swap_File(</span><span class="cpp1-number">5000</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-string">&quot;mikroE.txt&quot;</span><span class="cpp1-symbol">,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x20</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;see&nbsp;help&nbsp;on&nbsp;this&nbsp;function&nbsp;for&nbsp;details
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(size)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">LongToStr((</span><span class="cpp1-reservedword">signed</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-reservedword">long</span><span class="cpp1-symbol">)size,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">err_txt);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Line(err_txt);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-reservedword">for</span><span class="cpp1-symbol">(i=</span><span class="cpp1-number">0</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i&lt;</span><span class="cpp1-number">5000</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">i++)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Cf_Write_Sector(size++,</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">Buffer);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write(</span><span class="cpp1-character">'.'</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+
+</span><span class="cpp1-comment">//&nbsp;Main.&nbsp;Uncomment&nbsp;the&nbsp;function(s)&nbsp;to&nbsp;test&nbsp;the&nbsp;desired&nbsp;operation(s)
+</span><span class="cpp1-reservedword">void</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-identifier">main()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-preprocessor">#define&nbsp;COMPLETE_EXAMPLE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;comment&nbsp;this&nbsp;line&nbsp;to&nbsp;make&nbsp;simpler/smaller&nbsp;example
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">CHECON</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0x32</span><span class="cpp1-symbol">;
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">AD1PCFG</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">=</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-hexadecimal">0xFFFF</span><span class="cpp1-symbol">;</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;disable&nbsp;A/D&nbsp;inputs
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;Initialize&nbsp;UART1&nbsp;module
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Init(</span><span class="cpp1-number">56000</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">10</span><span class="cpp1-symbol">);
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Line(</span><span class="cpp1-string">&quot;MCU-Started&quot;</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;MCU&nbsp;present&nbsp;report
+
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;use&nbsp;fat16&nbsp;quick&nbsp;format&nbsp;instead&nbsp;of&nbsp;init&nbsp;routine&nbsp;if&nbsp;a&nbsp;formatting&nbsp;is&nbsp;needed
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">if</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">(Cf_Fat_Init()</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">==</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-number">0</span><span class="cpp1-symbol">)</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">Delay_ms(</span><span class="cpp1-number">2000</span><span class="cpp1-symbol">);</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;wait&nbsp;for&nbsp;a&nbsp;while&nbsp;until&nbsp;the&nbsp;card&nbsp;is&nbsp;stabilized
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;&nbsp;&nbsp;period&nbsp;depends&nbsp;on&nbsp;used&nbsp;CF&nbsp;card
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//---&nbsp;Test&nbsp;start
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Line(</span><span class="cpp1-string">&quot;Test&nbsp;Start.&quot;</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//---&nbsp;Test&nbsp;routines.&nbsp;Uncomment&nbsp;them&nbsp;one-by-one&nbsp;to&nbsp;test&nbsp;certain&nbsp;features
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">M_Create_New_File();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-preprocessor">#ifdef&nbsp;COMPLETE_EXAMPLE
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">M_Create_Multiple_Files();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">M_Open_File_Rewrite();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">M_Open_File_Append();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">M_Open_File_Read();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">M_Delete_File();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">M_Test_File_Exist();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">M_Create_Swap_File();
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-preprocessor">#endif
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Line(</span><span class="cpp1-string">&quot;Test&nbsp;End.&quot;</span><span class="cpp1-symbol">);
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-reservedword">else</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-symbol">{
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-identifier">UART1_Write_Line(err_txt);</span><span class="cpp1-space">&nbsp;</span><span class="cpp1-comment">//&nbsp;Note:&nbsp;Cf_Fat_Init&nbsp;tries&nbsp;to&nbsp;initialize&nbsp;a&nbsp;card&nbsp;more&nbsp;than&nbsp;once.
+</span><span class="cpp1-space">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="cpp1-comment">//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;card&nbsp;is&nbsp;not&nbsp;present,&nbsp;initialization&nbsp;may&nbsp;last&nbsp;longer&nbsp;(depending&nbsp;on&nbsp;clock&nbsp;speed)
+</span><span class="cpp1-space">&nbsp;&nbsp;</span><span class="cpp1-symbol">}
+}
+</span></code>
+</pre>
+
+
+    <!-- -->
+
+
+    <h3>HW Connection</h3>
+
+    <p class="center"><img alt="Pin diagram of CF memory card" src="img/Schemes/scheme_cf.gif"></p>
+    <p class="center small">Pin diagram of CF memory card</p>
+
+
+    <div class="feedback">
+            Copyright (c) 2002-2017 mikroElektronika. All rights reserved.
+      <br>What do you think about this topic ?  <a href="http://www.mikroe.com/en/support/">Send us feedback!</a>
+    </div>
+
+      <div class="libstock">Want more examples and libraries?&nbsp;
+     <br>Find them on
+     <a href="http://www.libstock.com/" target="_blank"><img alt="LibStock - A place for the code" src="img/libstock.gif" border="0" align="absmiddle"></a>
+    </div>
+
+  </div><!--/main-->
+
+
+
+
+
+</body>
+
+</html>
