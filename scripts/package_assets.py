@@ -7,6 +7,7 @@ import shutil
 
 def prepare_dir(source_dir, version):
     result_dir = f"temp/{source_dir}/v{version}"
+    print(f"Copying files to {result_dir} ...")
     shutil.copytree(source_dir, result_dir, dirs_exist_ok=True)
     return result_dir
     
@@ -21,6 +22,7 @@ def zip_dir(dirToZip):
     cwd = os.getcwd()
     os.chdir(result_dir)
     os.chdir("..")
+    print(f"Creating {dirToZip}.7z")
     with py7zr.SevenZipFile(f"{dirToZip}.7z", mode='w') as z:
         z.writeall(f"v{version}")
        
@@ -42,6 +44,7 @@ def upload_release_asset(token, repo, tag_name, asset_path):
     headers.update({'Content-Type': 'application/octet-stream'})
     with open(asset_path, 'rb') as f:
         data = f.read()
+    print(f"Uploading {asset_path} file...")
     response = requests.post(upload_url, headers=headers, data=data)
     return response.json()
 
