@@ -1,4 +1,4 @@
-name: Release Asset Upload Workflow
+name: Create packages
 
 on:
   release:
