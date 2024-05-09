@@ -1,3 +1,5 @@
+name: Auto respond to contribution
+
 on: pull_request
 
 jobs:
