@@ -58,7 +58,7 @@ def index_release_to_elasticsearch(es : Elasticsearch, index_name, release_detai
         name_without_extension = os.path.splitext(os.path.basename(asset['name']))[0]
         if asset['name'].endswith('.7z'):
             doc = {
-                'name': name_without_extension,
+                'name': f'legacy_{name_without_extension.lower()}',
                 'display_name': f"Legacy-SDK-{name_without_extension}",
                 'author': 'MIKROE',
                 'hidden': False,
