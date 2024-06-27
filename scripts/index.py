@@ -52,7 +52,7 @@ def find_item_by_name(items, name):
 
 # Function to index release details into Elasticsearch
 def index_release_to_elasticsearch(es : Elasticsearch, index_name, release_details):
-    version = release_details['tag_name']
+    version = release_details['tag_name'][1:]
     for asset in release_details.get('assets', []):
         doc = None
         name_without_extension = os.path.splitext(os.path.basename(asset['name']))[0]
@@ -68,8 +68,8 @@ def index_release_to_elasticsearch(es : Elasticsearch, index_name, release_detai
                 'updated_at' : asset['updated_at'],
                 'category': 'Software Development Kit',
                 'download_link': asset['url'],  # Adjust as needed for actual URL
-                'package_changed': True,
-                'install_location' : "%APPLICATION_DATA_DIR%/sdk"
+                'install_location' : "%APPLICATION_DATA_DIR%/packages/sdk",
+                'package_changed': True
             }
 
         # Index the document
