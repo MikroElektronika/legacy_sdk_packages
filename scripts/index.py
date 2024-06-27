@@ -62,7 +62,7 @@ def index_release_to_elasticsearch(es : Elasticsearch, index_name, release_detai
                 'display_name': f"Legacy-SDK-{name_without_extension}",
                 'author': 'MIKROE',
                 'hidden': False,
-                'type': 'legacy',
+                'type': 'sdk',
                 'version': version,
                 'created_at' : asset['created_at'],
                 'updated_at' : asset['updated_at'],
