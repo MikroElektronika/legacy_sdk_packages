@@ -82,6 +82,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Upload directories as release assets.")
     parser.add_argument("repo", help="Repository name, e.g., 'username/repo'")
     parser.add_argument("token", help="GitHub Token")
+    parser.add_argument("select_index", help="Provided index name")
     args = parser.parse_args()
 
     # Elasticsearch instance used for indexing
@@ -101,6 +102,6 @@ if __name__ == '__main__':
 
     # Now index the new release
     index_release_to_elasticsearch(
-        es, os.environ['ES_INDEX'],
+        es, args.select_index,
         fetch_release_details(args.repo, args.token)
     )
