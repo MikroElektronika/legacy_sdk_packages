@@ -11,14 +11,14 @@ from concurrent.futures import ProcessPoolExecutor
 def zip_directory(data):
     dirToZip, version = data
     source_dir = f"packages/{dirToZip}"
-    result_dir = f"temp/{source_dir}/legacy-{dirToZip}"
+    result_dir = f"temp/{source_dir}/legacy-{dirToZip.lower()}"
     print(f"Starting to copy files from {source_dir} to {result_dir}...")
     shutil.copytree(source_dir, result_dir, dirs_exist_ok=True)
     print(f"Files copied successfully to {result_dir}.")
     archive_name = f"{os.path.dirname(result_dir)}/{dirToZip}.7z"
     print(f"Starting to create archive {archive_name}...")
     with py7zr.SevenZipFile(archive_name, mode='w') as z:
-        z.writeall(result_dir, f"legacy-{dirToZip}")
+        z.writeall(result_dir, f"legacy-{dirToZip.lower()}")
     print(f"Archive {archive_name} created successfully.")
     return archive_name
 
