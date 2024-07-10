@@ -68,7 +68,7 @@ def index_release_to_elasticsearch(es : Elasticsearch, index_name, release_detai
                 'updated_at' : asset['updated_at'],
                 'category': 'Software Development Kit',
                 'download_link': asset['url'],  # Adjust as needed for actual URL
-                'install_location' : "%APPLICATION_DATA_DIR%/packages/sdk",
+                'install_location' : f"%APPLICATION_DATA_DIR%/packages/legacy/{name_without_extension}",
                 'package_changed': True
             }
 
