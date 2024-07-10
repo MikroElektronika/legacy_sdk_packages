@@ -19,7 +19,7 @@ def zip_directory(data):
     print(f"Starting to create archive {archive_name}...")
     with py7zr.SevenZipFile(archive_name, mode='w') as z:
         z.writeall(result_dir, f"legacy-{dirToZip.lower()}")
-    print(f"Archive {archive_name} created successfully.")
+    print(f"Archive {dirToZip}.7z created successfully.")
     return archive_name
 
 def prepare_zip_data(dir):
