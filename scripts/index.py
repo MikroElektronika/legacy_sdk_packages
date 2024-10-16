@@ -59,7 +59,7 @@ def index_release_to_elasticsearch(es : Elasticsearch, index_name, release_detai
         if asset['name'].endswith('.7z'):
             doc = {
                 'name': f'legacy_{name_without_extension.lower()}',
-                'display_name': f"Legacy-SDK-{name_without_extension}",
+                'display_name': f"mikroC PRO for {name_without_extension} - legacy",
                 'author': 'MIKROE',
                 'hidden': False,
                 'type': 'legacy_sdk',
