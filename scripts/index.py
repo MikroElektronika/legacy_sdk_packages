@@ -88,19 +88,19 @@ if __name__ == '__main__':
 
     # Elasticsearch instance used for indexing
     num_of_retries = 1
-    print(f"Trying to connect to ES")
+    print("Trying to connect to ES")
     while True:
         es = Elasticsearch([os.environ['ES_HOST']], http_auth=(os.environ['ES_USER'], os.environ['ES_PASSWORD']))
         if es.ping():
             break
-        # Wait for 2 seconds and try again if connection fails
+        # Wait 1 second and try again if connection fails
         if 10 == num_of_retries:
             # Exit if it fails 10 times, something is wrong with the server
             raise ValueError("Connection to ES failed!")
         print(f"Connection retry: {num_of_retries}")
         num_of_retries += 1
 
-        time.sleep(2)
+        time.sleep(1)
 
     # Now index the new release
     index_release_to_elasticsearch(
