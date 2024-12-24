@@ -64,17 +64,18 @@ def index_release_to_elasticsearch(es : Elasticsearch, index_name, release_detai
                 'hidden': False,
                 'type': 'legacy_sdk',
                 'version': version,
-                'created_at' : asset['created_at'],
-                'updated_at' : asset['updated_at'],
+                'created_at': asset['created_at'],
+                'updated_at': asset['updated_at'],
                 'category': 'Software Development Kit',
                 'download_link': asset['url'],  # Adjust as needed for actual URL
-                'install_location' : f"%APPLICATION_DATA_DIR%/packages/legacy/{name_without_extension.lower()}",
-                'package_changed': True
+                'install_location': f"%APPLICATION_DATA_DIR%/packages/legacy/{name_without_extension.lower()}",
+                'package_changed': True,
+                'gh_package_name': f"{name_without_extension}.7z"
             }
 
         # Index the document
         if doc:
-            resp = es.index(index=index_name, doc_type='necto_package', id=name_without_extension, body=doc)
+            resp = es.index(index=index_name, doc_type=None, id=name_without_extension, body=doc)
             print(f"{resp["result"]} {resp['_id']}")
 
 if __name__ == '__main__':
@@ -87,18 +88,19 @@ if __name__ == '__main__':
 
     # Elasticsearch instance used for indexing
     num_of_retries = 1
+    print("Trying to connect to ES")
     while True:
-        print(f"Trying to connect to ES. Connection retry:  {num_of_retries}")
         es = Elasticsearch([os.environ['ES_HOST']], http_auth=(os.environ['ES_USER'], os.environ['ES_PASSWORD']))
         if es.ping():
             break
-        # Wait for 30 seconds and try again if connection fails
+        # Wait 1 second and try again if connection fails
         if 10 == num_of_retries:
             # Exit if it fails 10 times, something is wrong with the server
             raise ValueError("Connection to ES failed!")
+        print(f"Connection retry: {num_of_retries}")
         num_of_retries += 1
 
-        time.sleep(30)
+        time.sleep(1)
 
     # Now index the new release
     index_release_to_elasticsearch(
